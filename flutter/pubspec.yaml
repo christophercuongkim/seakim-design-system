@@ -13,7 +13,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  phosphor_flutter: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -22,6 +21,22 @@ dev_dependencies:
 
 flutter:
   fonts:
+    # Icon fonts. Bundled here rather than pulled from a package, because every
+    # Flutter icon package subclasses IconData, which Flutter sealed in 3.27.
+    # Code points are generated into lib/src/tokens/sk_icons.g.dart — keep the
+    # two in step. Phosphor Icons, MIT: assets/icons/LICENSE-phosphor.txt
+    - family: PhosphorRegular
+      fonts:
+        - asset: assets/icons/Phosphor-Regular.ttf
+    - family: PhosphorBold
+      fonts:
+        - asset: assets/icons/Phosphor-Bold.ttf
+    - family: PhosphorFill
+      fonts:
+        - asset: assets/icons/Phosphor-Fill.ttf
+    - family: PhosphorDuotone
+      fonts:
+        - asset: assets/icons/Phosphor-Duotone.ttf
     - family: Outfit
       fonts:
         - asset: assets/fonts/Outfit-Regular.ttf

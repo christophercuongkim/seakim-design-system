@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/sk_theme.dart';
+import '../tokens/sk_icons.g.dart';
 import 'sk_icon.dart';
 import 'sk_pressable.dart';
 
@@ -84,8 +84,8 @@ class SkCheckbox extends StatelessWidget {
                         child: marked
                             ? SkIcon(
                                 indeterminate
-                                    ? PhosphorIcons.minus
-                                    : PhosphorIcons.check,
+                                    ? SkIcons.minus
+                                    : SkIcons.check,
                                 size: 11,
                                 weight: SkIconWeight.bold,
                                 color: c.onAccent,

@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/sk_theme.dart';
+import '../tokens/sk_icons.g.dart';
 import 'sk_icon.dart';
 
 /// What a container says before it has contents.
@@ -52,7 +52,7 @@ class SkEmptyState extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SkIcon(
-                glyph ?? PhosphorIcons.tray,
+                glyph ?? SkIcons.tray,
                 size: compact ? 24 : 32,
                 weight: SkIconWeight.duotone,
                 color: c.textTertiary,

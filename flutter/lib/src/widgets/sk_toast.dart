@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/sk_theme.dart';
+import '../tokens/sk_icons.g.dart';
 import 'sk_icon.dart';
 import 'sk_icon_button.dart';
 import 'sk_pressable.dart';
@@ -37,10 +37,10 @@ class SkToast extends StatelessWidget {
   Widget build(BuildContext context) {
     final SkColors c = context.skColors;
     final (SkGlyph glyph, Color tint) = switch (tone) {
-      SkToastTone.success => (PhosphorIcons.checkCircle, c.textSuccess),
-      SkToastTone.warning => (PhosphorIcons.warning, c.textWarning),
-      SkToastTone.danger => (PhosphorIcons.xCircle, c.textDanger),
-      SkToastTone.neutral => (PhosphorIcons.info, c.textSecondary),
+      SkToastTone.success => (SkIcons.checkCircle, c.textSuccess),
+      SkToastTone.warning => (SkIcons.warning, c.textWarning),
+      SkToastTone.danger => (SkIcons.xCircle, c.textDanger),
+      SkToastTone.neutral => (SkIcons.info, c.textSecondary),
     };
 
     return Semantics(
@@ -93,7 +93,7 @@ class SkToast extends StatelessWidget {
               if (onDismiss != null) ...<Widget>[
                 const SizedBox(width: SkSpace.s3),
                 SkIconButton(
-                  icon: PhosphorIcons.x,
+                  icon: SkIcons.x,
                   label: 'Dismiss',
                   size: SkControl.sm,
                   onPressed: onDismiss,

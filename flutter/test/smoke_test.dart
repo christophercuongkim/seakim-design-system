@@ -1,6 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:seakim_flutter/seakim_flutter.dart';
 
 void main() {
@@ -20,7 +20,7 @@ void main() {
             return Center(
               child: SkButton(
                 label: 'Book trip',
-                iconLeft: PhosphorIcons.mapPin, // exercises the SkGlyph path
+                iconLeft: SkIcons.mapPin, // exercises the SkGlyph path
                 onPressed: () => taps++,
               ),
             );
@@ -34,5 +34,35 @@ void main() {
     await tester.tap(find.text('Book trip'));
     await tester.pump();
     expect(taps, 1);
+  });
+
+  testWidgets('every icon weight renders, duotone as a layered pair',
+      (WidgetTester tester) async {
+    for (final SkIconWeight weight in SkIconWeight.values) {
+      await tester.pumpWidget(
+        SkApp(
+          child: Center(child: SkIcon(SkIcons.tray, weight: weight)),
+        ),
+      );
+      expect(tester.takeException(), isNull, reason: 'weight $weight threw');
+
+      // Duotone stacks a knocked-back backdrop under the line layer; the other
+      // weights are a single glyph.
+      expect(
+        find.byType(Icon),
+        weight == SkIconWeight.duotone ? findsNWidgets(2) : findsOneWidget,
+        reason: 'unexpected glyph count for $weight',
+      );
+    }
+  });
+
+  test('bundled font licences are registered for showLicensePage', () async {
+    registerSkLicenses();
+    final List<LicenseEntry> entries = await LicenseRegistry.licenses.toList();
+    expect(
+      entries.any((LicenseEntry e) => e.packages.contains('Phosphor Icons')),
+      isTrue,
+      reason: 'the MIT notice for the bundled icon font must ship with the app',
+    );
   });
 }

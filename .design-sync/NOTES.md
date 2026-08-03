@@ -83,46 +83,46 @@ git config core.hooksPath scripts/hooks
 
 (Already set in this working copy.)
 
-## Flutter port — build status (verified 2026-08-03)
+## Flutter port — build status (RESOLVED 2026-08-03)
 
-Toolchain used: Flutter 3.44.3 / Dart 3.12.2.
+Toolchain: Flutter 3.44.x / Dart 3.12.2. `flutter analyze` clean, `flutter test`
+green. The port compiles AND runs.
 
-- `flutter pub get` + `flutter analyze` → **clean (No issues found)** after fixing
-  the code-level issues below. So the port's own Dart is correct.
-- Fixes applied (the README's "Before you trust this" predictions were accurate):
-  - `SkGlyph` typedef used a nullable optional param `[PhosphorIconsStyle? style]`;
-    phosphor 2.1.0 exposes glyphs with a non-nullable optional param. Made it
-    non-nullable (`sk_icon.dart`).
-  - `sk_button.dart` / `sk_icon_button.dart` typed their icon fields as bare
-    `PhosphorIconData`; changed to `SkGlyph` (+ dropped now-unused phosphor imports).
-  - `sk_input.dart` imported `TextSelectionTheme` but used `TextSelectionThemeData`
-    — fixed the `show` list.
-  - `sk_textarea.dart` missed `import 'package:flutter/services.dart'` for
-    `TextInputAction`.
-  - Removed unused imports in `sk_theme.dart` and `sk_type.dart`.
-- A runtime smoke test lives at `flutter/test/smoke_test.dart`.
+**The blocker and its fix.** `phosphor_flutter` subclasses `IconData`, which
+Flutter sealed (`final class`) in 3.27+; the DS also uses `Color.withValues`,
+which requires 3.27+. No stock SDK satisfied both. Resolved by dropping the
+package and bundling the Phosphor fonts directly:
+- `assets/icons/Phosphor-{Regular,Bold,Fill,Duotone}.ttf` (MIT, licence carried).
+- `tool/phosphor_codepoints.json` (all 1512 glyphs) -> `tool/gen_icons.dart` ->
+  `lib/src/tokens/sk_icons.g.dart`. Same generated-artifact pattern as
+  `palette.g.dart`; never hand-edit the `.g.dart`.
+- `SkGlyph` is now a value type holding four `const IconData` (const is required
+  for `--tree-shake-icons`), not a phosphor function typedef.
+- Duotone is a glyph pair rendered as a stack, backdrop at 20% opacity.
+- Call sites swept: `PhosphorIcons.x` -> `SkIcons.x` across 6 widgets.
 
-**Runtime build is blocked by an upstream/SDK version squeeze (not the DS code):**
-- `phosphor_flutter` (latest 2.1.0, and even its git `main`) does
-  `class PhosphorIconData extends IconData`. Flutter sealed `IconData`
-  (`final class`) in 3.27+, so this fails the kernel compile on 3.44.3
-  (analyzer allows it; `flutter test`/build does not). No published phosphor
-  version fixes this.
-- Meanwhile the DS itself uses `Color.withValues` (5 sites), which needs
-  Flutter **>= 3.27**. So phosphor wants `< 3.27`, the DS code wants `>= 3.27`
-  — no single stock Flutter satisfies both today.
+**Bugs found and fixed along the way** (all pre-existing, unreachable while the
+package would not compile):
+- `SkGlyph` optional param nullable vs phosphor's non-nullable.
+- `sk_button` / `sk_icon_button` typed icon fields as bare `PhosphorIconData`.
+- `sk_input` imported `TextSelectionTheme` but used `TextSelectionThemeData`.
+- `sk_textarea` missed `services.dart` for `TextInputAction`.
+- **`SkApp` never provided a `Directionality`** despite its doc claiming to. Any
+  app using `SkApp` without a `WidgetsApp` above it crashed on the first `Icon`.
+  Caught only by running the widget test — the analyzer cannot see it.
 
-Paths to a green runtime build (pick one; not yet done):
-1. Swap the icon dependency off phosphor (or use a fork that stops subclassing
-   `IconData`), staying on modern Flutter. Cleanest long-term.
-2. Pin Flutter `< 3.27` AND replace the 5 `Color.withValues(alpha: x)` with
-   `withOpacity(x)` (the README's own note #2). Makes it build on the port's
-   intended older SDK.
-3. Wait for a phosphor release compatible with sealed `IconData`.
+**Licensing.** `registerSkLicenses()` (called by `SkApp`, idempotent) registers
+the Phosphor MIT notice with `LicenseRegistry`, so `showLicensePage()` satisfies
+attribution for every consuming app. MIT does not require consuming apps to be
+open source; it requires the notice to ship. The three text families are SIL OFL
+and still need their notices added once the binaries are committed.
 
-Fonts: `pubspec.yaml` declares 10 `.ttf` assets under `assets/fonts/` that are
-not committed (licensing). A real build/test needs them present; the smoke test
-was exercised with temporary empty placeholders (removed after).
+**Still open:**
+- Text fonts (10 `.ttf`) are not committed (licensing); the asset bundle will not
+  build without them. Tests were run against temporary empty placeholders.
+- Tree shaking is designed for but UNVERIFIED — needs a release build of a real
+  app target, which this library package does not have.
+- Screens are still not ported.
 
 ## Skipped from the working tree
 

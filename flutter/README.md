@@ -133,18 +133,57 @@ The **screens** are not ported. This is the component library and token layer; t
 Voyage and Bench kits still exist only as React. Porting a screen is now mostly
 mechanical — say which one and I will do it.
 
+## Icons are bundled, not depended on
+
+The icon fonts ship inside this package — `assets/icons/Phosphor-{Regular,Bold,Fill,Duotone}.ttf`
+(Phosphor Icons, MIT) — and the code points are generated:
+
+```bash
+dart run tool/gen_icons.dart      # tool/phosphor_codepoints.json -> lib/src/tokens/sk_icons.g.dart
+```
+
+```dart
+SkIcon(SkIcons.mapPin)                             // regular
+SkIcon(SkIcons.mapPin, weight: SkIconWeight.fill)  // active
+```
+
+**Why not the `phosphor_flutter` package:** every Flutter icon package subclasses
+`IconData`, and Flutter sealed that class (`final class`) in 3.27. Since this system also
+uses `Color.withValues`, which *needs* 3.27+, no single SDK could satisfy both. Bundling
+the font sidesteps it entirely — nothing subclasses `IconData`, so the widgets stay on
+modern Flutter, and three apps stop sharing a third party's release cadence.
+
+`SkGlyph` is a value type carrying all four weights as `const IconData`. The const matters:
+Flutter's `--tree-shake-icons` only recognises const `IconData`, and resolving a code point
+at render time would silently ship all four fonts (~2 MB) whole.
+
+Duotone is a glyph *pair* — a solid backdrop under a line layer — so `SkIcon` stacks the two
+and knocks the backdrop back to 20%. The other three weights are a single glyph.
+
+Adding an icon is nothing: all 1512 Phosphor glyphs are already generated. Never hand-edit
+the `.g.dart`.
+
 ## Before you trust this
 
-It has not been compiled. I can write and review Dart but cannot run `flutter analyze`
-in this environment, so expect a handful of first-build errors — most likely in these
-three places, in order of probability:
+It compiles and it runs. On Flutter 3.44 / Dart 3.12:
 
-1. **`phosphor_flutter` API surface.** `SkGlyph` assumes v2.x exposes each glyph as a
-   function taking an optional `PhosphorIconsStyle`. If your installed version differs,
-   `sk_icon.dart` is the only file to change.
-2. **`Color.withValues`.** Requires Flutter 3.27+. On older SDKs replace with
-   `withOpacity`.
-3. **`EditableText` required parameters.** These have shifted across versions; the
-   analyzer will name any that are missing.
+```bash
+flutter analyze     # No issues found!
+flutter test        # All tests passed!
+```
 
-Paste the output of `flutter analyze` and I will clear them.
+`test/smoke_test.dart` mounts a real `SkButton` inside `SkApp`, reads tokens from context,
+taps it, renders every icon weight, and checks the bundled font licence is registered.
+
+Two things to know before shipping an app on it:
+
+1. **The fonts are not committed.** `pubspec.yaml` declares ten `.ttf` files under
+   `assets/fonts/` — Outfit, Plus Jakarta Sans, IBM Plex Mono, all on Google Fonts under
+   the SIL OFL. Drop them in or the asset bundle will not build. The OFL notice has to
+   ship with your app; add it in `lib/src/tokens/sk_licenses.dart` next to the icon one.
+2. **Tree shaking is unverified.** The const `IconData` shape is designed for
+   `--tree-shake-icons`, but that only proves out in a release build of a real app —
+   this package has no app target. Check with `flutter build apk --release` and look for
+   `Font asset ... tree-shaken`. If it does not fire, the fonts ship whole.
+
+The screens still are not ported — this is the component library and token layer.

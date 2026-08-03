@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/sk_theme.dart';
+import '../tokens/sk_icons.g.dart';
 import 'sk_icon.dart';
 import 'sk_pressable.dart';
 
@@ -139,7 +139,7 @@ class _SkSelectState<T> extends State<SkSelect<T>> {
                       ),
                     ),
                     const SizedBox(width: SkSpace.s4),
-                    SkIcon(PhosphorIcons.caretDown,
+                    SkIcon(SkIcons.caretDown,
                         size: 14, color: c.textTertiary),
                   ],
                 ),
@@ -213,7 +213,7 @@ class _Menu<T> extends StatelessWidget {
                         ),
                       ),
                       if (on)
-                        SkIcon(PhosphorIcons.check,
+                        SkIcon(SkIcons.check,
                             size: 14,
                             weight: SkIconWeight.bold,
                             color: c.textAccent),

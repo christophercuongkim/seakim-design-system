@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/sk_theme.dart';
+import '../tokens/sk_icons.g.dart';
 import 'sk_icon_button.dart';
 
 /// A modal that interrupts.
@@ -84,7 +84,7 @@ class SkDialog extends StatelessWidget {
                 if (onClose != null) ...<Widget>[
                   const SizedBox(width: SkSpace.s5),
                   SkIconButton(
-                    icon: PhosphorIcons.x,
+                    icon: SkIcons.x,
                     label: 'Close',
                     size: SkControl.sm,
                     onPressed: onClose,

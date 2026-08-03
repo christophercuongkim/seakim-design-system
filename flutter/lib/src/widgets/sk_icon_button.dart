@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/sk_theme.dart';
 import 'sk_icon.dart';
@@ -24,7 +23,7 @@ class SkIconButton extends StatelessWidget {
     this.tooltip = true,
   });
 
-  final PhosphorIconData icon;
+  final SkGlyph icon;
 
   /// Announced by screen readers and shown on hover. Sentence case, 1 to 4 words.
   final String label;

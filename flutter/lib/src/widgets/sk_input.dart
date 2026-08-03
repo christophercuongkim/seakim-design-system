@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show TextSelectionTheme, Theme, ThemeData;
+import 'package:flutter/material.dart' show Theme, ThemeData, TextSelectionThemeData;
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 

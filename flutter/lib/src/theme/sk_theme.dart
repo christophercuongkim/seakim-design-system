@@ -1,9 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 import '../tokens/sk_colors.dart';
-import '../tokens/sk_depth.dart';
-import '../tokens/sk_motion.dart';
-import '../tokens/sk_space.dart';
 import '../tokens/sk_type.dart';
 
 export '../tokens/sk_colors.dart';

@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/sk_theme.dart';
 import 'sk_icon.dart';
@@ -35,8 +34,8 @@ class SkButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final SkButtonVariant variant;
   final SkButtonSize size;
-  final PhosphorIconData? iconLeft;
-  final PhosphorIconData? iconRight;
+  final SkGlyph? iconLeft;
+  final SkGlyph? iconRight;
 
   /// While loading, the label is replaced in place by a mono progress word and
   /// the control keeps its width. There are no spinners in this system.

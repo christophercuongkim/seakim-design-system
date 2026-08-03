@@ -1,6 +1,11 @@
 import 'package:flutter/widgets.dart';
 
 /// Three families, strictly divided by job. Bundled as assets — see pubspec.yaml.
+/// The package that bundles the text fonts. A TextStyle must carry this or
+/// the family resolves only when the *app* happens to declare it too — which
+/// silently falls back to the platform font for every consuming app.
+const String skFontPackage = 'seakim_flutter';
+
 class SkFonts {
   const SkFonts._();
 
@@ -43,6 +48,7 @@ class SkText {
 
   static const TextStyle display = TextStyle(
     fontFamily: SkFonts.display,
+    package: skFontPackage,
     fontSize: SkFontSize.xl5,
     fontWeight: FontWeight.w600,
     height: 1.1,
@@ -51,6 +57,7 @@ class SkText {
 
   static const TextStyle title = TextStyle(
     fontFamily: SkFonts.display,
+    package: skFontPackage,
     fontSize: SkFontSize.xl3,
     fontWeight: FontWeight.w600,
     height: 1.1,
@@ -59,6 +66,7 @@ class SkText {
 
   static const TextStyle heading = TextStyle(
     fontFamily: SkFonts.display,
+    package: skFontPackage,
     fontSize: SkFontSize.xl,
     fontWeight: FontWeight.w600,
     height: 1.3,
@@ -67,6 +75,7 @@ class SkText {
 
   static const TextStyle subheading = TextStyle(
     fontFamily: SkFonts.display,
+    package: skFontPackage,
     fontSize: SkFontSize.lg,
     fontWeight: FontWeight.w500,
     height: 1.3,
@@ -75,6 +84,7 @@ class SkText {
 
   static const TextStyle body = TextStyle(
     fontFamily: SkFonts.sans,
+    package: skFontPackage,
     fontSize: SkFontSize.md,
     fontWeight: FontWeight.w400,
     height: 1.55,
@@ -82,6 +92,7 @@ class SkText {
 
   static const TextStyle bodySm = TextStyle(
     fontFamily: SkFonts.sans,
+    package: skFontPackage,
     fontSize: SkFontSize.sm,
     fontWeight: FontWeight.w400,
     height: 1.55,
@@ -89,6 +100,7 @@ class SkText {
 
   static const TextStyle label = TextStyle(
     fontFamily: SkFonts.sans,
+    package: skFontPackage,
     fontSize: SkFontSize.sm,
     fontWeight: FontWeight.w600,
     height: 1.3,
@@ -96,6 +108,7 @@ class SkText {
 
   static const TextStyle caption = TextStyle(
     fontFamily: SkFonts.sans,
+    package: skFontPackage,
     fontSize: SkFontSize.xs,
     fontWeight: FontWeight.w400,
     height: 1.3,
@@ -104,6 +117,7 @@ class SkText {
   /// Tabular by default, so columns of figures always align.
   static const TextStyle data = TextStyle(
     fontFamily: SkFonts.mono,
+    package: skFontPackage,
     fontSize: SkFontSize.sm,
     fontWeight: FontWeight.w500,
     height: 1.2,
@@ -114,6 +128,7 @@ class SkText {
   /// the original string stays readable in source and in Semantics.
   static const TextStyle eyebrow = TextStyle(
     fontFamily: SkFonts.mono,
+    package: skFontPackage,
     fontSize: SkFontSize.xs2,
     fontWeight: FontWeight.w500,
     height: 1.2,

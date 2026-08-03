@@ -30,6 +30,7 @@ export 'src/tokens/sk_icons.g.dart';
 export 'src/tokens/sk_licenses.dart';
 
 export 'src/theme/sk_theme.dart';
+export 'src/theme/sk_material_theme.dart';
 export 'src/theme/sk_breakpoints.dart';
 
 export 'src/widgets/sk_avatar.dart';

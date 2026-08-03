@@ -127,6 +127,50 @@ steps therefore sit at slightly lower chroma than the CSS asks for — most visi
 - **Hover exists on desktop and web, not on touch.** Every hover affordance has a
   non-hover equivalent — that is why table row actions become inline buttons at `sm`.
 
+## Adopting it into an app that already exists
+
+The rest of this package replaces Material rather than themes it. If you would
+rather build the app first with stock Material widgets, get it working, and only
+then make it look like SeaKim, start here instead.
+
+```dart
+MaterialApp(
+  theme: SkMaterialTheme.light(SkAppBrand.voyage),
+  darkTheme: SkMaterialTheme.dark(SkAppBrand.voyage),
+  home: MyAlreadyWorkingScreen(),   // unchanged
+)
+```
+
+Your existing `Card`, `TextField`, `FilledButton`, `AppBar`, and `ListTile` take
+the brand immediately: colour, typography, square corners, elevation discipline,
+hairline dividers, and no ink ripple. **Nothing is rewritten.**
+
+To mix `Sk*` widgets in as you go, put the tokens in scope too. `SkThemeScope`
+follows the ambient Material brightness, so it tracks `themeMode` on its own:
+
+```dart
+MaterialApp(
+  theme: SkMaterialTheme.light(SkAppBrand.voyage),
+  darkTheme: SkMaterialTheme.dark(SkAppBrand.voyage),
+  builder: (context, child) =>
+      SkThemeScope(brand: SkAppBrand.voyage, child: child!),
+  home: MyScreen(),
+)
+```
+
+Under a `MaterialApp` the `Overlay`, `Navigator`, and `MediaQuery` that
+`SkToast`, `SkDialog`, and `SkSelect` need are already present — a bare `SkApp`
+supplies none of them.
+
+**Where the ramp ends.** A theme carries the look, not the feel. Material has no
+hook for the scale-press, so buttons themed this way lose the ripple but do not
+gain the press; duotone empty states and the exact focus-ring geometry are also
+widget-only. Swap in `SkButton`, `SkCard`, `SkEmptyState` and the rest where that
+fidelity earns its keep — screen by screen, not all at once.
+
+`test/adoption_test.dart` holds this path to it: an app written in plain Material
+widgets, themed, asserted on.
+
 ## Not yet built
 
 The **screens** are not ported. This is the component library and token layer; the

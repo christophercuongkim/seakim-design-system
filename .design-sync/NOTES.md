@@ -83,6 +83,47 @@ git config core.hooksPath scripts/hooks
 
 (Already set in this working copy.)
 
+## Flutter port — build status (verified 2026-08-03)
+
+Toolchain used: Flutter 3.44.3 / Dart 3.12.2.
+
+- `flutter pub get` + `flutter analyze` → **clean (No issues found)** after fixing
+  the code-level issues below. So the port's own Dart is correct.
+- Fixes applied (the README's "Before you trust this" predictions were accurate):
+  - `SkGlyph` typedef used a nullable optional param `[PhosphorIconsStyle? style]`;
+    phosphor 2.1.0 exposes glyphs with a non-nullable optional param. Made it
+    non-nullable (`sk_icon.dart`).
+  - `sk_button.dart` / `sk_icon_button.dart` typed their icon fields as bare
+    `PhosphorIconData`; changed to `SkGlyph` (+ dropped now-unused phosphor imports).
+  - `sk_input.dart` imported `TextSelectionTheme` but used `TextSelectionThemeData`
+    — fixed the `show` list.
+  - `sk_textarea.dart` missed `import 'package:flutter/services.dart'` for
+    `TextInputAction`.
+  - Removed unused imports in `sk_theme.dart` and `sk_type.dart`.
+- A runtime smoke test lives at `flutter/test/smoke_test.dart`.
+
+**Runtime build is blocked by an upstream/SDK version squeeze (not the DS code):**
+- `phosphor_flutter` (latest 2.1.0, and even its git `main`) does
+  `class PhosphorIconData extends IconData`. Flutter sealed `IconData`
+  (`final class`) in 3.27+, so this fails the kernel compile on 3.44.3
+  (analyzer allows it; `flutter test`/build does not). No published phosphor
+  version fixes this.
+- Meanwhile the DS itself uses `Color.withValues` (5 sites), which needs
+  Flutter **>= 3.27**. So phosphor wants `< 3.27`, the DS code wants `>= 3.27`
+  — no single stock Flutter satisfies both today.
+
+Paths to a green runtime build (pick one; not yet done):
+1. Swap the icon dependency off phosphor (or use a fork that stops subclassing
+   `IconData`), staying on modern Flutter. Cleanest long-term.
+2. Pin Flutter `< 3.27` AND replace the 5 `Color.withValues(alpha: x)` with
+   `withOpacity(x)` (the README's own note #2). Makes it build on the port's
+   intended older SDK.
+3. Wait for a phosphor release compatible with sealed `IconData`.
+
+Fonts: `pubspec.yaml` declares 10 `.ttf` assets under `assets/fonts/` that are
+not committed (licensing). A real build/test needs them present; the smoke test
+was exercised with temporary empty placeholders (removed after).
+
 ## Skipped from the working tree
 
 - `.thumbnail` — remote-generated preview image; tracked in the manifest, not

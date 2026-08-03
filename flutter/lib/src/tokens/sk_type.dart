@@ -1,5 +1,3 @@
-import 'dart:ui' show FontFeature;
-
 import 'package:flutter/widgets.dart';
 
 /// Three families, strictly divided by job. Bundled as assets — see pubspec.yaml.

@@ -11,7 +11,7 @@ import '../theme/sk_theme.dart';
 ///
 ///     SkIcon(PhosphorIcons.mapPin)                      // regular
 ///     SkIcon(PhosphorIcons.mapPin, weight: SkIconWeight.fill)
-typedef SkGlyph = PhosphorIconData Function([PhosphorIconsStyle? style]);
+typedef SkGlyph = PhosphorIconData Function([PhosphorIconsStyle style]);
 
 /// Which Phosphor weight to draw. One job each.
 enum SkIconWeight {

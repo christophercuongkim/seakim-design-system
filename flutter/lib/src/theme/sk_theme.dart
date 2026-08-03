@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../tokens/sk_colors.dart';
+import '../tokens/sk_licenses.dart';
 import '../tokens/sk_type.dart';
 
 export '../tokens/sk_colors.dart';
@@ -79,22 +80,35 @@ class SkApp extends StatelessWidget {
     required this.child,
     this.brand = SkAppBrand.seakim,
     this.mode = SkThemeMode.dark,
+    this.textDirection = TextDirection.ltr,
   });
 
   final Widget child;
   final SkAppBrand brand;
   final SkThemeMode mode;
 
+  /// Reading direction for the subtree. [Icon], [Row], and every
+  /// `*Directional` value assert on this, so SkApp supplies it rather than
+  /// making each app remember a [Directionality] of its own. Override when the
+  /// app localises to an RTL language.
+  final TextDirection textDirection;
+
   @override
   Widget build(BuildContext context) {
+    // Idempotent; the bundled icon font is MIT and owes an attribution notice.
+    registerSkLicenses();
+
     final SkThemeData data = SkThemeData.of(brand, mode);
     return SkTheme(
       data: data,
-      child: DefaultTextStyle(
-        style: SkText.body.copyWith(color: data.colors.textPrimary),
-        child: ColoredBox(
-          color: data.colors.surfacePage,
-          child: child,
+      child: Directionality(
+        textDirection: textDirection,
+        child: DefaultTextStyle(
+          style: SkText.body.copyWith(color: data.colors.textPrimary),
+          child: ColoredBox(
+            color: data.colors.surfacePage,
+            child: child,
+          ),
         ),
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/sk_theme.dart';
+import '../tokens/sk_icons.g.dart';
 import 'sk_icon.dart';
 
 enum SkStatSize { sm, md, lg }
@@ -105,7 +105,7 @@ class SkStat extends StatelessWidget {
             if (deltaText != null) ...<Widget>[
               const SizedBox(width: SkSpace.s3),
               SkIcon(
-                down ? PhosphorIcons.arrowDownRight : PhosphorIcons.arrowUpRight,
+                down ? SkIcons.arrowDownRight : SkIcons.arrowUpRight,
                 size: 11,
                 weight: SkIconWeight.bold,
                 color: down ? c.textDanger : c.textSuccess,

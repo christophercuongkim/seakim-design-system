@@ -1,17 +1,11 @@
 import 'package:flutter/widgets.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../theme/sk_theme.dart';
+import '../tokens/sk_glyph.dart';
 
-/// A Phosphor glyph, before a weight has been chosen.
-///
-/// In phosphor_flutter 2.x each glyph is exposed as a function that takes an
-/// optional style, so PhosphorIcons.mapPin is itself a value of this type. That
-/// is what lets [SkIcon] own the weight decision instead of the caller:
-///
-///     SkIcon(PhosphorIcons.mapPin)                      // regular
-///     SkIcon(PhosphorIcons.mapPin, weight: SkIconWeight.fill)
-typedef SkGlyph = PhosphorIconData Function([PhosphorIconsStyle style]);
+// Re-exported so `import 'sk_icon.dart'` still names the glyph type, which is
+// what every control that takes an icon does.
+export '../tokens/sk_glyph.dart' show SkGlyph, SkIconFont, skIconFontPackage;
 
 /// Which Phosphor weight to draw. One job each.
 enum SkIconWeight {
@@ -33,9 +27,12 @@ enum SkIconWeight {
 
 /// Phosphor icon at a system size and weight.
 ///
-/// Always go through this rather than a bare PhosphorIcon, so the weight rules and
+/// Always go through this rather than a bare [Icon], so the weight rules and
 /// the 20px default live in one place. Icons inherit the surrounding text colour
 /// and are never accent-coloured unless the text beside them is.
+///
+///     SkIcon(SkIcons.mapPin)
+///     SkIcon(SkIcons.mapPin, weight: SkIconWeight.fill)
 class SkIcon extends StatelessWidget {
   const SkIcon(
     this.glyph, {
@@ -61,20 +58,42 @@ class SkIcon extends StatelessWidget {
   /// of the accessibility tree.
   final String? semanticLabel;
 
-  static PhosphorIconsStyle _style(SkIconWeight w) => switch (w) {
-        SkIconWeight.regular => PhosphorIconsStyle.regular,
-        SkIconWeight.bold => PhosphorIconsStyle.bold,
-        SkIconWeight.fill => PhosphorIconsStyle.fill,
-        SkIconWeight.duotone => PhosphorIconsStyle.duotone,
-      };
+  /// Phosphor's duotone glyphs are a pair: a solid backdrop under a line layer.
+  /// Both are drawn in the same colour and the backdrop is knocked back, which is
+  /// what keeps a duotone icon reading as one mark rather than two.
+  static const double _duotoneBackdropOpacity = 0.20;
 
   @override
   Widget build(BuildContext context) {
     final Color resolved = color ??
         DefaultTextStyle.of(context).style.color ??
         context.skColors.textPrimary;
-    return PhosphorIcon(
-      glyph(_style(weight)),
+
+    if (weight == SkIconWeight.duotone) {
+      return Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Opacity(
+            opacity: _duotoneBackdropOpacity,
+            child: Icon(glyph.duotoneSecondary, size: size, color: resolved),
+          ),
+          Icon(
+            glyph.duotone,
+            size: size,
+            color: resolved,
+            semanticLabel: semanticLabel,
+          ),
+        ],
+      );
+    }
+
+    return Icon(
+      switch (weight) {
+        SkIconWeight.regular => glyph.regular,
+        SkIconWeight.bold => glyph.bold,
+        SkIconWeight.fill => glyph.fill,
+        SkIconWeight.duotone => glyph.duotone, // handled above
+      },
       size: size,
       color: resolved,
       semanticLabel: semanticLabel,

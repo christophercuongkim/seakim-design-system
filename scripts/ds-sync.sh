@@ -14,6 +14,11 @@
 #   scripts/ds-sync.sh push     # repo -> Claude Design (upload local changes)
 #   scripts/ds-sync.sh status   # show remote changes since last sync (no writes)
 #
+# Add --auto as a second arg to run headless (claude -p, no interactive prompts):
+#   scripts/ds-sync.sh push --auto
+# --auto skips permission prompts, so only use it where you trust the diff (e.g.
+# the pre-push hook). Without it, the command opens a normal interactive session.
+#
 set -euo pipefail
 
 # Resolve repo root from this script's location so it works from any cwd.
@@ -66,7 +71,7 @@ case "$cmd" in
   push)   prompt="$PUSH_PROMPT" ;;
   status) prompt="$STATUS_PROMPT" ;;
   help|-h|--help)
-    sed -n '3,15p' "$SCRIPT_DIR/ds-sync.sh"
+    sed -n '3,20p' "$SCRIPT_DIR/ds-sync.sh"
     exit 0 ;;
   *)
     echo "unknown command: $cmd" >&2
@@ -75,4 +80,11 @@ case "$cmd" in
 esac
 
 cd "$REPO_ROOT"
+if [[ "${2:-}" == "--auto" ]]; then
+  # Headless, non-interactive. Runs under your normal Claude permission settings
+  # (NOT --dangerously-skip-permissions): if the Claude Design write tools aren't
+  # allowlisted, the push fails safe instead of bypassing the gate. To make
+  # unattended pushes work, allowlist those tools in your own Claude settings.
+  exec claude -p "$prompt"
+fi
 exec claude "$prompt"

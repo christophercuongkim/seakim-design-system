@@ -1,0 +1,750 @@
+{
+  "projectId": "d4854e4e-47cd-4ae1-a94c-b85f3db05760",
+  "projectName": "Design system foundations",
+  "files": {
+    ".thumbnail": {
+      "etag": "1785500333170274",
+      "size": 17382
+    },
+    "SKILL.md": {
+      "etag": "1785484605825213",
+      "size": 871
+    },
+    "components/core/Avatar.d.ts": {
+      "etag": "1785493961940410",
+      "size": 625
+    },
+    "components/core/Avatar.jsx": {
+      "etag": "1785493961940410",
+      "size": 1900
+    },
+    "components/core/Avatar.prompt.md": {
+      "etag": "1785493961940410",
+      "size": 461
+    },
+    "components/core/Badge.d.ts": {
+      "etag": "1785484935150809",
+      "size": 674
+    },
+    "components/core/Badge.jsx": {
+      "etag": "1785484935150809",
+      "size": 1800
+    },
+    "components/core/Badge.prompt.md": {
+      "etag": "1785484935150809",
+      "size": 382
+    },
+    "components/core/Button.d.ts": {
+      "etag": "1785484935150809",
+      "size": 1084
+    },
+    "components/core/Button.jsx": {
+      "etag": "1785484935150809",
+      "size": 3122
+    },
+    "components/core/Button.prompt.md": {
+      "etag": "1785484935150809",
+      "size": 668
+    },
+    "components/core/Card.d.ts": {
+      "etag": "1785484935150809",
+      "size": 973
+    },
+    "components/core/Card.jsx": {
+      "etag": "1785484935150809",
+      "size": 1939
+    },
+    "components/core/Card.prompt.md": {
+      "etag": "1785484935150809",
+      "size": 489
+    },
+    "components/core/Icon.d.ts": {
+      "etag": "1785484935150809",
+      "size": 532
+    },
+    "components/core/Icon.jsx": {
+      "etag": "1785484935150809",
+      "size": 550
+    },
+    "components/core/Icon.prompt.md": {
+      "etag": "1785484935150809",
+      "size": 391
+    },
+    "components/core/IconButton.d.ts": {
+      "etag": "1785484935150809",
+      "size": 662
+    },
+    "components/core/IconButton.jsx": {
+      "etag": "1785484935150809",
+      "size": 1631
+    },
+    "components/core/IconButton.prompt.md": {
+      "etag": "1785484935150809",
+      "size": 352
+    },
+    "components/core/Stat.d.ts": {
+      "etag": "1785493961940410",
+      "size": 898
+    },
+    "components/core/Stat.jsx": {
+      "etag": "1785493961940410",
+      "size": 2207
+    },
+    "components/core/Stat.prompt.md": {
+      "etag": "1785493961940410",
+      "size": 461
+    },
+    "components/core/Tag.d.ts": {
+      "etag": "1785484935150809",
+      "size": 631
+    },
+    "components/core/Tag.jsx": {
+      "etag": "1785484935150809",
+      "size": 1828
+    },
+    "components/core/Tag.prompt.md": {
+      "etag": "1785484935150809",
+      "size": 344
+    },
+    "components/core/core.card.html": {
+      "etag": "1785497023881186",
+      "size": 1619
+    },
+    "components/core/core.demo.jsx": {
+      "etag": "1785494938480119",
+      "size": 3666
+    },
+    "components/feedback/Dialog.d.ts": {
+      "etag": "1785494064369100",
+      "size": 818
+    },
+    "components/feedback/Dialog.jsx": {
+      "etag": "1785494064369100",
+      "size": 2194
+    },
+    "components/feedback/Dialog.prompt.md": {
+      "etag": "1785494064369100",
+      "size": 537
+    },
+    "components/feedback/EmptyState.d.ts": {
+      "etag": "1785494064369100",
+      "size": 700
+    },
+    "components/feedback/EmptyState.jsx": {
+      "etag": "1785494064369100",
+      "size": 1156
+    },
+    "components/feedback/EmptyState.prompt.md": {
+      "etag": "1785494064369100",
+      "size": 381
+    },
+    "components/feedback/Toast.d.ts": {
+      "etag": "1785494064369100",
+      "size": 675
+    },
+    "components/feedback/Toast.jsx": {
+      "etag": "1785494064369100",
+      "size": 1896
+    },
+    "components/feedback/Toast.prompt.md": {
+      "etag": "1785494064369100",
+      "size": 395
+    },
+    "components/feedback/Tooltip.d.ts": {
+      "etag": "1785494064369100",
+      "size": 513
+    },
+    "components/feedback/Tooltip.jsx": {
+      "etag": "1785494064369100",
+      "size": 1625
+    },
+    "components/feedback/Tooltip.prompt.md": {
+      "etag": "1785494064369100",
+      "size": 272
+    },
+    "components/feedback/feedback.card.html": {
+      "etag": "1785497023881186",
+      "size": 1639
+    },
+    "components/feedback/feedback.demo.jsx": {
+      "etag": "1785494938480119",
+      "size": 2107
+    },
+    "components/forms/Checkbox.d.ts": {
+      "etag": "1785493961940410",
+      "size": 692
+    },
+    "components/forms/Checkbox.jsx": {
+      "etag": "1785493961940410",
+      "size": 2147
+    },
+    "components/forms/Checkbox.prompt.md": {
+      "etag": "1785493961940410",
+      "size": 369
+    },
+    "components/forms/Field.d.ts": {
+      "etag": "1785493961940410",
+      "size": 555
+    },
+    "components/forms/Field.jsx": {
+      "etag": "1785493961940410",
+      "size": 936
+    },
+    "components/forms/Field.prompt.md": {
+      "etag": "1785493961940410",
+      "size": 365
+    },
+    "components/forms/Input.d.ts": {
+      "etag": "1785493961940410",
+      "size": 826
+    },
+    "components/forms/Input.jsx": {
+      "etag": "1785493961940410",
+      "size": 2274
+    },
+    "components/forms/Input.prompt.md": {
+      "etag": "1785493961940410",
+      "size": 433
+    },
+    "components/forms/Radio.d.ts": {
+      "etag": "1785493961940410",
+      "size": 860
+    },
+    "components/forms/Radio.jsx": {
+      "etag": "1785493961940410",
+      "size": 2759
+    },
+    "components/forms/Radio.prompt.md": {
+      "etag": "1785493961940410",
+      "size": 410
+    },
+    "components/forms/SegmentedControl.d.ts": {
+      "etag": "1785493961940410",
+      "size": 879
+    },
+    "components/forms/SegmentedControl.jsx": {
+      "etag": "1785493961940410",
+      "size": 2345
+    },
+    "components/forms/SegmentedControl.prompt.md": {
+      "etag": "1785493961940410",
+      "size": 463
+    },
+    "components/forms/Select.d.ts": {
+      "etag": "1785493961940410",
+      "size": 660
+    },
+    "components/forms/Select.jsx": {
+      "etag": "1785493961940410",
+      "size": 2270
+    },
+    "components/forms/Select.prompt.md": {
+      "etag": "1785493961940410",
+      "size": 320
+    },
+    "components/forms/Switch.d.ts": {
+      "etag": "1785493961940410",
+      "size": 651
+    },
+    "components/forms/Switch.jsx": {
+      "etag": "1785493961940410",
+      "size": 2304
+    },
+    "components/forms/Switch.prompt.md": {
+      "etag": "1785493961940410",
+      "size": 333
+    },
+    "components/forms/Textarea.d.ts": {
+      "etag": "1785493961940410",
+      "size": 356
+    },
+    "components/forms/Textarea.jsx": {
+      "etag": "1785493961940410",
+      "size": 1255
+    },
+    "components/forms/Textarea.prompt.md": {
+      "etag": "1785493961940410",
+      "size": 284
+    },
+    "components/forms/forms.card.html": {
+      "etag": "1785497023881186",
+      "size": 1624
+    },
+    "components/forms/forms.demo.jsx": {
+      "etag": "1785495066145795",
+      "size": 3055
+    },
+    "components/navigation/SideNav.d.ts": {
+      "etag": "1785494064369100",
+      "size": 1080
+    },
+    "components/navigation/SideNav.jsx": {
+      "etag": "1785494064369100",
+      "size": 3595
+    },
+    "components/navigation/SideNav.prompt.md": {
+      "etag": "1785494064369100",
+      "size": 579
+    },
+    "components/navigation/TabBar.d.ts": {
+      "etag": "1785494064369100",
+      "size": 611
+    },
+    "components/navigation/TabBar.jsx": {
+      "etag": "1785494064369100",
+      "size": 1911
+    },
+    "components/navigation/TabBar.prompt.md": {
+      "etag": "1785494064369100",
+      "size": 515
+    },
+    "components/navigation/Tabs.d.ts": {
+      "etag": "1785494064369100",
+      "size": 890
+    },
+    "components/navigation/Tabs.jsx": {
+      "etag": "1785494064369100",
+      "size": 2563
+    },
+    "components/navigation/Tabs.prompt.md": {
+      "etag": "1785494064369100",
+      "size": 430
+    },
+    "components/navigation/navigation.card.html": {
+      "etag": "1785497023881186",
+      "size": 1637
+    },
+    "components/navigation/navigation.demo.jsx": {
+      "etag": "1785495049102426",
+      "size": 2993
+    },
+    "ds-shim.js": {
+      "etag": "1785495131845814",
+      "size": 5350
+    },
+    "flutter-decisions.html": {
+      "etag": "1785499045632965",
+      "size": 14237
+    },
+    "flutter/README.md": {
+      "etag": "1785500329575488",
+      "size": 6091
+    },
+    "flutter/lib/seakim_flutter.dart": {
+      "etag": "1785500329575488",
+      "size": 1756
+    },
+    "flutter/lib/src/theme/sk_breakpoints.dart": {
+      "etag": "1785499722531678",
+      "size": 2344
+    },
+    "flutter/lib/src/theme/sk_theme.dart": {
+      "etag": "1785499722531678",
+      "size": 3346
+    },
+    "flutter/lib/src/tokens/palette.g.dart": {
+      "etag": "1785499672820812",
+      "size": 5013
+    },
+    "flutter/lib/src/tokens/sk_colors.dart": {
+      "etag": "1785499672820812",
+      "size": 6902
+    },
+    "flutter/lib/src/tokens/sk_depth.dart": {
+      "etag": "1785499672820812",
+      "size": 2982
+    },
+    "flutter/lib/src/tokens/sk_motion.dart": {
+      "etag": "1785499672820812",
+      "size": 1414
+    },
+    "flutter/lib/src/tokens/sk_space.dart": {
+      "etag": "1785499672820812",
+      "size": 1656
+    },
+    "flutter/lib/src/tokens/sk_type.dart": {
+      "etag": "1785499672820812",
+      "size": 3699
+    },
+    "flutter/lib/src/widgets/sk_avatar.dart": {
+      "etag": "1785499885142665",
+      "size": 3414
+    },
+    "flutter/lib/src/widgets/sk_badge.dart": {
+      "etag": "1785499885142665",
+      "size": 3414
+    },
+    "flutter/lib/src/widgets/sk_button.dart": {
+      "etag": "1785499795223681",
+      "size": 6416
+    },
+    "flutter/lib/src/widgets/sk_card.dart": {
+      "etag": "1785499885142665",
+      "size": 4215
+    },
+    "flutter/lib/src/widgets/sk_checkbox.dart": {
+      "etag": "1785500119200712",
+      "size": 4494
+    },
+    "flutter/lib/src/widgets/sk_dialog.dart": {
+      "etag": "1785500269970702",
+      "size": 7775
+    },
+    "flutter/lib/src/widgets/sk_empty_state.dart": {
+      "etag": "1785500183002620",
+      "size": 3865
+    },
+    "flutter/lib/src/widgets/sk_field.dart": {
+      "etag": "1785500119200712",
+      "size": 1808
+    },
+    "flutter/lib/src/widgets/sk_icon.dart": {
+      "etag": "1785499885142665",
+      "size": 2603
+    },
+    "flutter/lib/src/widgets/sk_icon_button.dart": {
+      "etag": "1785499795223681",
+      "size": 5612
+    },
+    "flutter/lib/src/widgets/sk_input.dart": {
+      "etag": "1785500119200712",
+      "size": 7826
+    },
+    "flutter/lib/src/widgets/sk_pressable.dart": {
+      "etag": "1785499795223681",
+      "size": 4706
+    },
+    "flutter/lib/src/widgets/sk_radio.dart": {
+      "etag": "1785500119200712",
+      "size": 5418
+    },
+    "flutter/lib/src/widgets/sk_segmented_control.dart": {
+      "etag": "1785500119200712",
+      "size": 3761
+    },
+    "flutter/lib/src/widgets/sk_select.dart": {
+      "etag": "1785500183002620",
+      "size": 7829
+    },
+    "flutter/lib/src/widgets/sk_side_nav.dart": {
+      "etag": "1785500269970702",
+      "size": 6937
+    },
+    "flutter/lib/src/widgets/sk_stat.dart": {
+      "etag": "1785499885142665",
+      "size": 3870
+    },
+    "flutter/lib/src/widgets/sk_switch.dart": {
+      "etag": "1785500119200712",
+      "size": 4182
+    },
+    "flutter/lib/src/widgets/sk_tab_bar.dart": {
+      "etag": "1785500269970702",
+      "size": 3569
+    },
+    "flutter/lib/src/widgets/sk_tabs.dart": {
+      "etag": "1785500269970702",
+      "size": 4421
+    },
+    "flutter/lib/src/widgets/sk_tag.dart": {
+      "etag": "1785499885142665",
+      "size": 3693
+    },
+    "flutter/lib/src/widgets/sk_textarea.dart": {
+      "etag": "1785500329575488",
+      "size": 4628
+    },
+    "flutter/lib/src/widgets/sk_toast.dart": {
+      "etag": "1785500183002620",
+      "size": 5088
+    },
+    "flutter/lib/src/widgets/sk_tooltip.dart": {
+      "etag": "1785500183002620",
+      "size": 786
+    },
+    "flutter/pubspec.yaml": {
+      "etag": "1785499672820812",
+      "size": 1395
+    },
+    "flutter/tool/gen_tokens.dart": {
+      "etag": "1785499722531678",
+      "size": 3875
+    },
+    "guidelines/colors-accents.html": {
+      "etag": "1785494854501809",
+      "size": 2920
+    },
+    "guidelines/colors-semantic.html": {
+      "etag": "1785484741512527",
+      "size": 2777
+    },
+    "guidelines/colors-stone.html": {
+      "etag": "1785484741512527",
+      "size": 1921
+    },
+    "guidelines/colors-surfaces-dark.html": {
+      "etag": "1785484741512527",
+      "size": 2299
+    },
+    "guidelines/colors-surfaces-light.html": {
+      "etag": "1785495630505092",
+      "size": 2318
+    },
+    "guidelines/colors-text.html": {
+      "etag": "1785484836442133",
+      "size": 2279
+    },
+    "guidelines/depth.html": {
+      "etag": "1785484741512527",
+      "size": 1787
+    },
+    "guidelines/icons.html": {
+      "etag": "1785495630505092",
+      "size": 5254
+    },
+    "guidelines/motion.html": {
+      "etag": "1785484741512527",
+      "size": 2731
+    },
+    "guidelines/radius.html": {
+      "etag": "1785484741512527",
+      "size": 2175
+    },
+    "guidelines/spacing-controls.html": {
+      "etag": "1785484741512527",
+      "size": 2185
+    },
+    "guidelines/spacing-in-use.html": {
+      "etag": "1785484741512527",
+      "size": 1536
+    },
+    "guidelines/spacing-scale.html": {
+      "etag": "1785484741512527",
+      "size": 3213
+    },
+    "guidelines/states.html": {
+      "etag": "1785484741512527",
+      "size": 2855
+    },
+    "guidelines/type-data.html": {
+      "etag": "1785484741512527",
+      "size": 1718
+    },
+    "guidelines/type-display.html": {
+      "etag": "1785495630505092",
+      "size": 2455
+    },
+    "guidelines/type-families.html": {
+      "etag": "1785495630505092",
+      "size": 1502
+    },
+    "guidelines/type-ui.html": {
+      "etag": "1785495630505092",
+      "size": 2058
+    },
+    "guidelines/voice-and-tone.md": {
+      "etag": "1785495681510881",
+      "size": 3577
+    },
+    "guidelines/wordmark.html": {
+      "etag": "1785495630505092",
+      "size": 1510
+    },
+    "index.html": {
+      "etag": "1785500534785005",
+      "size": 28095
+    },
+    "next/README.md": {
+      "etag": "1785500021111420",
+      "size": 5411
+    },
+    "next/app/fonts.ts": {
+      "etag": "1785500021111420",
+      "size": 1144
+    },
+    "next/app/layout.tsx": {
+      "etag": "1785500021111420",
+      "size": 1880
+    },
+    "next/app/page.tsx": {
+      "etag": "1785500021111420",
+      "size": 2659
+    },
+    "next/lib/seakim.ts": {
+      "etag": "1785500021111420",
+      "size": 2220
+    },
+    "next/lib/useSkTheme.ts": {
+      "etag": "1785500021111420",
+      "size": 2067
+    },
+    "next/tsconfig.paths.json": {
+      "etag": "1785500021111420",
+      "size": 230
+    },
+    "readme.md": {
+      "etag": "1785500345426554",
+      "size": 15911
+    },
+    "slides/AgendaSlide.html": {
+      "etag": "1785495567139321",
+      "size": 3350
+    },
+    "slides/ComparisonSlide.html": {
+      "etag": "1785495567139321",
+      "size": 3650
+    },
+    "slides/QuoteSlide.html": {
+      "etag": "1785495567139321",
+      "size": 2816
+    },
+    "slides/README.md": {
+      "etag": "1785495567139321",
+      "size": 1390
+    },
+    "slides/SectionSlide.html": {
+      "etag": "1785495567139321",
+      "size": 2350
+    },
+    "slides/StatSlide.html": {
+      "etag": "1785495567139321",
+      "size": 3696
+    },
+    "slides/TitleSlide.html": {
+      "etag": "1785495567139321",
+      "size": 2571
+    },
+    "styles.css": {
+      "etag": "1785493688786856",
+      "size": 387
+    },
+    "tokens/apps.css": {
+      "etag": "1785495049102426",
+      "size": 2730
+    },
+    "tokens/base.css": {
+      "etag": "1785493688786856",
+      "size": 1285
+    },
+    "tokens/colors.css": {
+      "etag": "1785494854501809",
+      "size": 3778
+    },
+    "tokens/depth.css": {
+      "etag": "1785493688786856",
+      "size": 1755
+    },
+    "tokens/fonts.css": {
+      "etag": "1785485487952643",
+      "size": 766
+    },
+    "tokens/layout.css": {
+      "etag": "1785497739647639",
+      "size": 768
+    },
+    "tokens/motion.css": {
+      "etag": "1785493688786856",
+      "size": 1617
+    },
+    "tokens/radius.css": {
+      "etag": "1785493688786856",
+      "size": 673
+    },
+    "tokens/spacing.css": {
+      "etag": "1785493688786856",
+      "size": 827
+    },
+    "tokens/theme-light.css": {
+      "etag": "1785493698029023",
+      "size": 1836
+    },
+    "tokens/typography.css": {
+      "etag": "1785493688786856",
+      "size": 2118
+    },
+    "ui_kits/bench/App.jsx": {
+      "etag": "1785498041015926",
+      "size": 3015
+    },
+    "ui_kits/bench/BenchShell.jsx": {
+      "etag": "1785497933410069",
+      "size": 4922
+    },
+    "ui_kits/bench/LeagueScreen.jsx": {
+      "etag": "1785498041015926",
+      "size": 3760
+    },
+    "ui_kits/bench/LineupScreen.jsx": {
+      "etag": "1785498041015926",
+      "size": 3852
+    },
+    "ui_kits/bench/MatchupScreen.jsx": {
+      "etag": "1785498041015926",
+      "size": 6728
+    },
+    "ui_kits/bench/PlayerSheet.jsx": {
+      "etag": "1785498041015926",
+      "size": 4718
+    },
+    "ui_kits/bench/PlayersScreen.jsx": {
+      "etag": "1785498041015926",
+      "size": 2680
+    },
+    "ui_kits/bench/README.md": {
+      "etag": "1785498626481777",
+      "size": 2036
+    },
+    "ui_kits/bench/RosterList.jsx": {
+      "etag": "1785497933410069",
+      "size": 6589
+    },
+    "ui_kits/bench/index.html": {
+      "etag": "1785498041015926",
+      "size": 1799
+    },
+    "ui_kits/bench/roster.js": {
+      "etag": "1785497933410069",
+      "size": 2530
+    },
+    "ui_kits/shared/Frames.jsx": {
+      "etag": "1785497672636506",
+      "size": 7403
+    },
+    "ui_kits/voyage/AccountScreen.jsx": {
+      "etag": "1785497872068078",
+      "size": 3428
+    },
+    "ui_kits/voyage/App.jsx": {
+      "etag": "1785497872068078",
+      "size": 3611
+    },
+    "ui_kits/voyage/AppShell.jsx": {
+      "etag": "1785497739647639",
+      "size": 6470
+    },
+    "ui_kits/voyage/CheckoutScreen.jsx": {
+      "etag": "1785497872068078",
+      "size": 7749
+    },
+    "ui_kits/voyage/README.md": {
+      "etag": "1785498626481777",
+      "size": 1968
+    },
+    "ui_kits/voyage/SearchScreen.jsx": {
+      "etag": "1785497872068078",
+      "size": 10820
+    },
+    "ui_kits/voyage/TripDetailScreen.jsx": {
+      "etag": "1785497872068078",
+      "size": 10706
+    },
+    "ui_kits/voyage/TripsScreen.jsx": {
+      "etag": "1785497739647639",
+      "size": 7235
+    },
+    "ui_kits/voyage/index.html": {
+      "etag": "1785498041015926",
+      "size": 1751
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "projectId": "d4854e4e-47cd-4ae1-a94c-b85f3db05760",
+  "projectName": "Design system foundations",
+  "projectUrl": "https://claude.ai/design/p/d4854e4e-47cd-4ae1-a94c-b85f3db05760",
+  "role": "mirror",
+  "syncModel": "hybrid",
+  "notes": "This repo is a git mirror of a Claude Design project. It was PULLED down (design -> repo), not built by the standard design-sync converter. The project is a regular Claude Design project holding the design system as source; the design agent in that project already builds with these components. Manifest of remote etags lives in .design-sync/manifest.json and drives incremental re-pulls / safe push-backs. See .design-sync/NOTES.md."
+}

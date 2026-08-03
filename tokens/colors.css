@@ -1,0 +1,106 @@
+/* ============================================================
+   SeaKim — color
+   A warm-neutral stone chassis shared by every product, plus exactly ONE
+   accent hue live at a time. Apps rotate the hue via [data-app]; they never
+   introduce new neutrals. Dark is the default theme.
+   ============================================================ */
+
+:root {
+  /* ---- Accent hues. Same lightness + chroma ramp, only H moves. ---- */
+  --hue-clay: 55;    /* SeaKim house hue */
+  --hue-sea: 245;    /* Voyage — travel */
+  --hue-turf: 145;   /* Bench — fantasy sport */
+  --hue-plum: 320;   /* held in reserve for app #3 */
+  --hue-brand: var(--hue-clay);
+
+  /* ---- Brand ramp, generated from --hue-brand ---- */
+  --brand-050: oklch(0.96 0.022 var(--hue-brand));
+  --brand-100: oklch(0.91 0.045 var(--hue-brand));
+  --brand-200: oklch(0.84 0.075 var(--hue-brand));
+  --brand-300: oklch(0.80 0.100 var(--hue-brand));
+  --brand-400: oklch(0.72 0.130 var(--hue-brand));
+  --brand-500: oklch(0.64 0.140 var(--hue-brand));
+  --brand-600: oklch(0.56 0.140 var(--hue-brand));
+  --brand-700: oklch(0.46 0.120 var(--hue-brand));
+  --brand-800: oklch(0.36 0.095 var(--hue-brand));
+  --brand-900: oklch(0.26 0.070 var(--hue-brand));
+  --brand-wash: oklch(0.24 0.045 var(--hue-brand));
+
+  /* ---- Stone: the warm neutral spine. Never per-app. ---- */
+  --stone-0:   #ffffff;
+  --stone-50:  #faf9f7;
+  --stone-100: #f0efec;
+  --stone-200: #e0deda;
+  --stone-300: #c6c3bd;
+  --stone-400: #a09c95;
+  --stone-500: #7c7873;
+  --stone-600: #5c5955;
+  --stone-700: #413f3c;
+  --stone-800: #2b2a27;
+  --stone-850: #211f1d;
+  --stone-900: #181614;
+  --stone-950: #0f0e0d;
+
+  /* ---- Status ramps. 400 = dark-theme tuning, 500 = light-theme tuning. ---- */
+  --success-400: oklch(0.78 0.145 150);
+  --success-500: oklch(0.62 0.150 150);
+  --warning-400: oklch(0.82 0.140 85);
+  --warning-500: oklch(0.68 0.145 75);
+  --danger-400:  oklch(0.72 0.155 25);
+  --danger-500:  oklch(0.60 0.185 25);
+  --info-400:    oklch(0.76 0.120 240);
+  --info-500:    oklch(0.58 0.155 250);
+}
+
+/* ---- Semantic layer: DARK (default) ---- */
+:root, [data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg-base:          var(--stone-950);
+  --surface-page:     var(--stone-950);
+  --surface-sunken:   #0a0908;
+  --surface-card:     var(--stone-900);
+  --surface-raised:   var(--stone-850);
+  --surface-overlay:  var(--stone-800);
+  --surface-inset:    #0a0908;
+  --surface-hover:    var(--stone-800);
+  --surface-active:   var(--stone-700);
+  --surface-selected: var(--brand-wash);
+  --surface-scrim:    color-mix(in oklab, #000 68%, transparent);
+
+  --text-primary:    #f5f3f0;
+  --text-secondary:  var(--stone-400);
+  --text-tertiary:   var(--stone-500);
+  --text-inverse:    var(--stone-950);
+  --text-accent:     var(--brand-300);
+  --text-link:       var(--brand-300);
+  --text-link-hover: var(--brand-200);
+
+  --border-subtle:  #2a2724;
+  --border-default: #383431;
+  --border-strong:  #4c4844;
+  --border-accent:  var(--brand-400);
+  --border-focus:   var(--brand-400);
+
+  --fill-accent:        var(--brand-400);
+  --fill-accent-hover:  var(--brand-300);
+  --fill-accent-active: var(--brand-500);
+  --on-accent:          var(--stone-950);
+
+  --fill-neutral:        var(--stone-800);
+  --fill-neutral-hover:  var(--stone-700);
+  --fill-neutral-active: var(--stone-600);
+
+  --text-success: var(--success-400);
+  --text-warning: var(--warning-400);
+  --text-danger:  var(--danger-400);
+  --text-info:    var(--info-400);
+  --fill-success-subtle: oklch(0.30 0.055 150);
+  --fill-warning-subtle: oklch(0.30 0.055 80);
+  --fill-danger-subtle:  oklch(0.30 0.065 25);
+  --fill-info-subtle:    oklch(0.30 0.055 245);
+  --fill-danger: var(--danger-500);
+  --on-danger:   #fdf6f4;
+
+  --accent: var(--fill-accent);
+}

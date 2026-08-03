@@ -1,0 +1,76 @@
+<!-- @dsCard group="Slides" viewport="1280x720" name="Comparison" subtitle="Two columns, hairline split. Accent marks the recommendation, not both sides." -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-app="seakim">
+<head>
+<meta charset="utf-8">
+<title>Comparison</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+  body { margin: 0; }
+  .slide {
+    width: 1280px; height: 720px; box-sizing: border-box;
+    background: var(--surface-page);
+    display: flex; flex-direction: column;
+    padding: 64px 72px;
+    position: relative; overflow: hidden;
+  }
+  .eyebrow {
+    font: var(--type-eyebrow); font-size: 14px; text-transform: uppercase;
+    letter-spacing: var(--tracking-caps); color: var(--text-tertiary);
+  }
+  .wordmark {
+    position: absolute; left: 72px; bottom: 40px;
+    font-family: var(--font-display); font-size: 20px; font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight); color: var(--text-tertiary);
+  }
+  .pagenum {
+    position: absolute; right: 72px; bottom: 40px;
+    font-family: var(--font-mono); font-size: 14px; color: var(--text-tertiary);
+    font-variant-numeric: tabular-nums;
+  }
+  .rule { height: 1px; background: var(--border-subtle); }
+  h1 { font-size: 92px; line-height: 1.02; letter-spacing: var(--tracking-tighter); font-weight: var(--weight-semibold); }
+  h2 { font-size: 56px; line-height: 1.08; letter-spacing: var(--tracking-tighter); font-weight: var(--weight-semibold); }
+  h3 { font-size: 30px; line-height: 1.2; letter-spacing: var(--tracking-tight); font-weight: var(--weight-semibold); }
+  p { font-size: 24px; line-height: 1.5; color: var(--text-secondary); max-width: 46ch; }
+  .col { padding:36px; display:flex; flex-direction:column; gap:18px; }
+  .col + .col { border-left:1px solid var(--border-subtle); }
+  .col.accent { background:var(--surface-selected); }
+  .tag { font: var(--type-eyebrow); font-size:14px; text-transform:uppercase; letter-spacing:var(--tracking-caps); color:var(--text-tertiary); }
+  .col ul { margin:0; padding-left:22px; display:flex; flex-direction:column; gap:14px; }
+  .col li { font-size:21px; line-height:1.42; color:var(--text-secondary); }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="eyebrow">Decision · accent strategy</div>
+  <h3 style="margin-top:20px;max-width:34ch">One brand colour everywhere, or one hue per app</h3>
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border-subtle);margin-top:36px">
+    <div class="col">
+      <div class="tag">Rejected</div>
+      <h3 style="font-size:26px">Single brand colour</h3>
+      <ul>
+        <li>One palette to maintain</li>
+        <li>Instant cross-product recognition</li>
+        <li>But: Bench and Voyage stop being distinguishable at a glance</li>
+        <li>But: the colour ends up owned by whichever app shipped first</li>
+      </ul>
+    </div>
+    <div class="col accent">
+      <div class="tag" style="color:var(--text-accent)">Chosen</div>
+      <h3 style="font-size:26px">One hue per app</h3>
+      <ul>
+        <li>Achromatic shared layer, so nothing to renegotiate</li>
+        <li>Same lightness and chroma — contrast holds across apps</li>
+        <li>App three picks a hue and inherits everything else</li>
+        <li>Cost: no single colour means "SeaKim"</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wordmark">SeaKim</div>
+  <div class="pagenum">14 / 24</div>
+</div>
+</body>
+</html>

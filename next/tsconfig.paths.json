@@ -1,0 +1,9 @@
+{
+  "//": "Merge these into your tsconfig.json compilerOptions. The two aliases are all the design system needs.",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/seakim/*": ["./src/seakim/*"]
+    }
+  }
+}

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-app="seakim">
+<head>
+<meta charset="utf-8">
+<title>Flutter port — two decisions</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+  body { padding: 56px 44px 96px; }
+  .wrap { max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--space-11); }
+  .eyebrow { font: var(--type-eyebrow); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--text-tertiary); }
+  h1 { font-size: 42px; letter-spacing: var(--tracking-tighter); margin-top: var(--space-4); }
+  .lede { font-size: 19px; line-height: 1.5; color: var(--text-secondary); max-width: 62ch; margin-top: var(--space-5); }
+  section { display: flex; flex-direction: column; gap: var(--space-6); }
+  h2 { font-size: 24px; letter-spacing: var(--tracking-tight); }
+  h3 { font-size: 16px; font-weight: var(--weight-semibold); letter-spacing: var(--tracking-tight); }
+  p { font: var(--type-body-sm); color: var(--text-secondary); max-width: 64ch; }
+  .qlabel { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--fill-accent); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border-subtle); }
+  .col { padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-5); }
+  .col + .col { border-left: 1px solid var(--border-subtle); }
+  .col.rec { background: var(--surface-selected); }
+  .tag { font: var(--type-eyebrow); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--text-tertiary); }
+  .tag.on { color: var(--text-accent); }
+  pre {
+    margin: 0; padding: var(--space-5); overflow-x: auto;
+    background: var(--surface-inset); border: 1px solid var(--border-subtle);
+    font-family: var(--font-mono); font-size: 11.5px; line-height: 1.65;
+    color: var(--text-secondary);
+  }
+  pre .c { color: var(--text-tertiary); }
+  pre .k { color: var(--text-accent); }
+  ul { margin: 0; padding-left: 19px; display: flex; flex-direction: column; gap: var(--space-3); }
+  li { font: var(--type-body-sm); color: var(--text-secondary); }
+  li strong { color: var(--text-primary); font-weight: var(--weight-semibold); }
+  li.bad::marker { color: var(--text-danger); }
+  li.good::marker { color: var(--text-success); }
+  table { border-collapse: collapse; width: 100%; }
+  td, th { text-align: left; padding: var(--space-4) var(--space-5); border-top: 1px solid var(--border-subtle); font: var(--type-body-sm); vertical-align: top; }
+  th { font: var(--type-eyebrow); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--text-tertiary); border-top: none; }
+  code { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
+  .note { padding: var(--space-5); border: 1px solid var(--border-subtle); background: var(--surface-card); font: var(--type-body-sm); color: var(--text-secondary); }
+  .note strong { color: var(--text-primary); font-weight: var(--weight-semibold); }
+  .rule { height: 1px; background: var(--border-subtle); }
+  .ask { border-top: 2px solid var(--fill-accent); padding-top: var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); }
+  .ask p { font: var(--type-body); max-width: 66ch; }
+  .demo { display: flex; gap: var(--space-4); align-items: center; flex-wrap: wrap; }
+  .btn-sk {
+    height: 34px; padding: 0 14px; display: inline-flex; align-items: center; gap: 8px;
+    background: var(--fill-accent); color: var(--on-accent); border: none;
+    font-family: var(--font-sans); font-size: 13px; font-weight: 600;
+  }
+  .btn-mat {
+    height: 40px; padding: 0 24px; display: inline-flex; align-items: center; gap: 8px;
+    background: var(--fill-accent); color: var(--on-accent); border: none;
+    border-radius: 20px;
+    font-family: var(--font-sans); font-size: 14px; font-weight: 500; letter-spacing: 0.1px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.5);
+  }
+  .caption { font: var(--type-caption); color: var(--text-tertiary); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">SeaKim → Flutter</div>
+    <h1>Two decisions before I write Dart</h1>
+    <p class="lede">
+      Locked in from your answers: mirror the whole library, one codebase for mobile and
+      desktop/web, bundled .ttf assets, <code>phosphor_flutter</code> for icons.
+      These two are worth seeing rather than reading about.
+    </p>
+  </header>
+
+  <section>
+    <div class="qlabel">QUESTION 1</div>
+    <h2>Custom widgets, or themed Material?</h2>
+    <p>
+      Flutter ships Material Design as its default widget set. You can restyle it heavily,
+      but some of its shape and behaviour is baked into the widgets themselves. The question
+      is whether you fight that or skip it.
+    </p>
+
+    <div class="two">
+      <div class="col">
+        <div class="tag">Option A · themed Material</div>
+        <h3>Configure ThemeData, use Material widgets</h3>
+        <p>
+          You write a <code>ThemeData</code> that maps SeaKim tokens onto Material's slots,
+          then use <code>FilledButton</code>, <code>Card</code>, <code>NavigationBar</code>
+          and friends.
+        </p>
+        <pre><span class="c">// theme mapped from SeaKim tokens</span>
+ThemeData(
+  colorScheme: ColorScheme.dark(
+    primary: tokens.fillAccent,
+    surface: tokens.surfaceCard,
+  ),
+  filledButtonTheme: FilledButtonThemeData(
+    style: FilledButton.styleFrom(
+      shape: <span class="k">RoundedRectangleBorder</span>(
+        borderRadius: BorderRadius.zero,
+      ),
+      minimumSize: const Size(0, 34),
+    ),
+  ),
+)
+
+<span class="c">// then, everywhere</span>
+FilledButton(onPressed: …, child: Text('Book trip'))</pre>
+        <div class="caption">Roughly what Material gives you by default:</div>
+        <div class="demo">
+          <button class="btn-mat"><i class="ph ph-plus"></i>Book trip</button>
+        </div>
+        <div class="rule"></div>
+        <ul>
+          <li class="good"><strong>Much less code.</strong> Maybe 800 lines total instead of 4,000.</li>
+          <li class="good"><strong>Free accessibility and platform behaviour</strong> — semantics, focus traversal, keyboard shortcuts, desktop scrollbars, text selection, right-click menus.</li>
+          <li class="good"><strong>Free updates.</strong> Flutter improves Material every release.</li>
+          <li class="bad"><strong>Material's ink ripple fights your motion rules.</strong> Your system says press = 0.97 scale at 80ms; Material says expanding ink splash. Removing the ripple properly is fiddly.</li>
+          <li class="bad"><strong>Elevation is Material's organising idea</strong>, and "borders define, shadows lift" is yours. You'd be suppressing elevation in a lot of places.</li>
+          <li class="bad"><strong>Density and sizing constantly drift back</strong> to Material's 40/48px minimums against your 28/34/42.</li>
+        </ul>
+      </div>
+
+      <div class="col rec">
+        <div class="tag on">Option B · custom widgets — my recommendation</div>
+        <h3>Build SeaKim widgets on Flutter primitives</h3>
+        <p>
+          You skip Material's widget layer and compose from <code>Container</code>,
+          <code>InkWell</code>-free <code>GestureDetector</code>, <code>Focus</code>,
+          <code>AnimatedScale</code> — the same primitives Material itself is built on.
+        </p>
+        <pre><span class="c">// widget owns the system's rules directly</span>
+class SkButton extends StatefulWidget {
+  <span class="c">// … variant, size, iconLeft, loading</span>
+}
+
+<span class="c">// build():</span>
+<span class="k">AnimatedScale</span>(
+  scale: _pressed ? t.pressScale : 1.0,   <span class="c">// 0.97</span>
+  duration: t.durInstant,                 <span class="c">// 80ms</span>
+  child: <span class="k">DecoratedBox</span>(
+    decoration: BoxDecoration(
+      color: t.fillAccent,
+      border: Border.all(color: t.borderDefault, width: 1),
+      <span class="c">// no borderRadius. no boxShadow.</span>
+    ),
+    child: …,
+  ),
+)
+
+<span class="c">// then, everywhere</span>
+SkButton(onPressed: …, child: Text('Book trip'))</pre>
+        <div class="caption">What your system actually specifies:</div>
+        <div class="demo">
+          <button class="btn-sk"><i class="ph ph-plus"></i>Book trip</button>
+        </div>
+        <div class="rule"></div>
+        <ul>
+          <li class="good"><strong>Exact fidelity.</strong> Square corners, hairline borders, 34px controls, scale-press, no ripple — because nothing else is in the widget.</li>
+          <li class="good"><strong>Your rules are enforced by the API</strong>, not by remembering to override. There is no radius parameter to misuse.</li>
+          <li class="good"><strong>One mental model with the web kit.</strong> <code>SkButton</code> takes the same props as <code>Button.jsx</code>.</li>
+          <li class="bad"><strong>You own accessibility.</strong> I'd add <code>Semantics</code>, <code>Focus</code>, and keyboard handling per widget — real work, and easy to under-do.</li>
+          <li class="bad"><strong>~4× the code</strong>, and it's yours to maintain forever.</li>
+          <li class="bad"><strong>Desktop niceties you'd rebuild:</strong> hover cursors, scrollbar styling, tooltip timing, text field context menus.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>Why I lean B for you:</strong> your system's three loudest decisions — 0px
+      radius everywhere, shadows only on floating things, and springy scale-press — are
+      exactly the three Material resists hardest. Under Option A you'd spend the saved code
+      on override plumbing, and the result would still read slightly Material. That said,
+      <strong>a hybrid is legitimate and might be the real answer</strong>: custom widgets for
+      everything visual, but keep Material's <code>TextField</code>, <code>Scrollbar</code>,
+      and route/dialog machinery underneath, since those carry the most invisible platform
+      behaviour and the least SeaKim styling. Say the word and I'll scope it that way.
+    </div>
+  </section>
+
+  <section>
+    <div class="qlabel">QUESTION 2</div>
+    <h2>Where the Dart lives</h2>
+    <p>
+      You said let's talk it through. Three shapes, and the trade is between convenience now
+      and versioning later.
+    </p>
+
+    <table>
+      <tr>
+        <th style="width:26%">Shape</th>
+        <th style="width:37%">What it looks like</th>
+        <th>When it's right</th>
+      </tr>
+      <tr>
+        <td><strong>1. Folder in here</strong><br><span class="caption">simplest</span></td>
+        <td><pre style="padding:var(--space-4);font-size:11px">seakim/
+  styles.css
+  components/
+  flutter/
+    lib/
+      seakim.dart
+      tokens/
+      widgets/
+    pubspec.yaml</pre></td>
+        <td>
+          The web and Flutter sides stay in one place, so a token change is one commit and
+          reviewers see both. Good while the system is young and both sides are moving.
+          <strong>Downside:</strong> your Flutter apps can't depend on it cleanly — they'd
+          use a path or git dependency pointing into a subfolder.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>2. Standalone pub package</strong><br><span class="caption">most correct</span></td>
+        <td><pre style="padding:var(--space-4);font-size:11px">seakim_flutter/
+  lib/
+    seakim_flutter.dart
+    src/tokens/
+    src/widgets/
+  assets/fonts/
+  pubspec.yaml
+  CHANGELOG.md</pre></td>
+        <td>
+          A real package your apps add as a versioned dependency — private git or a hosted
+          pub server. Voyage can pin 1.2.0 while Bench is still on 1.1.0, which matters the
+          moment two apps ship on different schedules. <strong>Downside:</strong> tokens now
+          live in two repos, so they can drift.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>3. Package here + generated tokens</strong><br><span class="caption">what I'd do</span></td>
+        <td><pre style="padding:var(--space-4);font-size:11px">seakim/
+  tokens/*.css      <span style="color:var(--text-accent)">← source of truth</span>
+  flutter/
+    tool/gen_tokens.dart
+    lib/src/tokens.g.dart  <span style="color:var(--text-tertiary)">generated</span>
+    lib/src/widgets/       <span style="color:var(--text-tertiary)">handwritten</span>
+    pubspec.yaml</pre></td>
+        <td>
+          Package-shaped so apps can depend on it properly, but the colour and spacing values
+          are <em>generated</em> from your CSS rather than retyped. The CSS stays the single
+          source of truth; drift becomes impossible instead of merely discouraged. Widgets are
+          handwritten. <strong>Downside:</strong> one small generator script to maintain.
+        </td>
+      </tr>
+    </table>
+
+    <div class="note">
+      <strong>The reason I favour 3:</strong> your accent system is computed —
+      <code>oklch(0.72 0.13 H)</code> with H rotating per app. Dart can't evaluate that, so
+      every ramp step has to be baked to sRGB. Retyping ~50 colour values per app by hand is
+      where a design system quietly dies. Generating them means adding app four is still
+      "pick a hue, run the script."
+    </div>
+  </section>
+
+  <section class="ask">
+    <h2>What I need from you</h2>
+    <p>
+      <strong>Question 1:</strong> A, B, or the hybrid I described. If you're unsure, the
+      hybrid is the safe answer and I'd default there.
+    </p>
+    <p>
+      <strong>Question 2:</strong> 1, 2, or 3 — or tell me whether your Flutter apps will live
+      in this repo or their own, and I'll pick for you.
+    </p>
+    <p>
+      One thing to set expectations: I can write and review the Dart, but I can't run
+      <code>flutter analyze</code> or see it render. Expect to hit a few compile errors on
+      first build — I'd rather tell you that now than have you discover it. If you can paste
+      the first error output back to me, I'll fix them quickly.
+    </p>
+  </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+/* ============================================================
+   Per-app accent binding. The neutral chassis never changes; only the hue
+   rotates. Set data-app on <html>, <body>, or any subtree:
+
+     voyage  -> sea  245   travel planning + booking
+     bench   -> turf 145   fantasy sport
+     reserve -> plum 320   held for app #3
+     seakim  -> clay  55   house / cross-product surfaces
+
+   Note: custom properties are substituted where they are DECLARED, so the whole
+   ramp is re-declared per app rather than deriving from a single --hue-brand at
+   :root. That is what makes a nested [data-app] subtree retheme correctly — e.g.
+   a Bench card embedded in a Voyage page.
+   ============================================================ */
+
+[data-app="seakim"], [data-app="house"] {
+  --hue-brand: var(--hue-clay);
+  --brand-050: oklch(0.96 0.022 55);
+  --brand-100: oklch(0.91 0.045 55);
+  --brand-200: oklch(0.84 0.075 55);
+  --brand-300: oklch(0.80 0.100 55);
+  --brand-400: oklch(0.72 0.130 55);
+  --brand-500: oklch(0.64 0.140 55);
+  --brand-600: oklch(0.56 0.140 55);
+  --brand-700: oklch(0.46 0.120 55);
+  --brand-800: oklch(0.36 0.095 55);
+  --brand-900: oklch(0.26 0.070 55);
+  --brand-wash: oklch(0.24 0.045 55);
+}
+
+[data-app="voyage"], [data-app="travel"] {
+  --hue-brand: var(--hue-sea);
+  --brand-050: oklch(0.96 0.022 245);
+  --brand-100: oklch(0.91 0.045 245);
+  --brand-200: oklch(0.84 0.075 245);
+  --brand-300: oklch(0.80 0.100 245);
+  --brand-400: oklch(0.72 0.130 245);
+  --brand-500: oklch(0.64 0.140 245);
+  --brand-600: oklch(0.56 0.140 245);
+  --brand-700: oklch(0.46 0.120 245);
+  --brand-800: oklch(0.36 0.095 245);
+  --brand-900: oklch(0.26 0.070 245);
+  --brand-wash: oklch(0.24 0.045 245);
+}
+
+[data-app="bench"], [data-app="fantasy"] {
+  --hue-brand: var(--hue-turf);
+  --brand-050: oklch(0.96 0.022 145);
+  --brand-100: oklch(0.91 0.045 145);
+  --brand-200: oklch(0.84 0.075 145);
+  --brand-300: oklch(0.80 0.100 145);
+  --brand-400: oklch(0.72 0.130 145);
+  --brand-500: oklch(0.64 0.140 145);
+  --brand-600: oklch(0.56 0.140 145);
+  --brand-700: oklch(0.46 0.120 145);
+  --brand-800: oklch(0.36 0.095 145);
+  --brand-900: oklch(0.26 0.070 145);
+  --brand-wash: oklch(0.24 0.045 145);
+}
+
+[data-app="reserve"], [data-app="reserved"] {
+  --hue-brand: var(--hue-plum);
+  --brand-050: oklch(0.96 0.022 320);
+  --brand-100: oklch(0.91 0.045 320);
+  --brand-200: oklch(0.84 0.075 320);
+  --brand-300: oklch(0.80 0.100 320);
+  --brand-400: oklch(0.72 0.130 320);
+  --brand-500: oklch(0.64 0.140 320);
+  --brand-600: oklch(0.56 0.140 320);
+  --brand-700: oklch(0.46 0.120 320);
+  --brand-800: oklch(0.36 0.095 320);
+  --brand-900: oklch(0.26 0.070 320);
+  --brand-wash: oklch(0.24 0.045 320);
+}

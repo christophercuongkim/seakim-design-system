@@ -1,0 +1,75 @@
+<!-- @dsCard group="Slides" viewport="1280x720" name="Numbers" subtitle="Two to four figures, mono and tabular, with the source stated." -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-app="seakim">
+<head>
+<meta charset="utf-8">
+<title>Numbers</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+  body { margin: 0; }
+  .slide {
+    width: 1280px; height: 720px; box-sizing: border-box;
+    background: var(--surface-page);
+    display: flex; flex-direction: column;
+    padding: 64px 72px;
+    position: relative; overflow: hidden;
+  }
+  .eyebrow {
+    font: var(--type-eyebrow); font-size: 14px; text-transform: uppercase;
+    letter-spacing: var(--tracking-caps); color: var(--text-tertiary);
+  }
+  .wordmark {
+    position: absolute; left: 72px; bottom: 40px;
+    font-family: var(--font-display); font-size: 20px; font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight); color: var(--text-tertiary);
+  }
+  .pagenum {
+    position: absolute; right: 72px; bottom: 40px;
+    font-family: var(--font-mono); font-size: 14px; color: var(--text-tertiary);
+    font-variant-numeric: tabular-nums;
+  }
+  .rule { height: 1px; background: var(--border-subtle); }
+  h1 { font-size: 92px; line-height: 1.02; letter-spacing: var(--tracking-tighter); font-weight: var(--weight-semibold); }
+  h2 { font-size: 56px; line-height: 1.08; letter-spacing: var(--tracking-tighter); font-weight: var(--weight-semibold); }
+  h3 { font-size: 30px; line-height: 1.2; letter-spacing: var(--tracking-tight); font-weight: var(--weight-semibold); }
+  p { font-size: 24px; line-height: 1.5; color: var(--text-secondary); max-width: 46ch; }
+  .cell { padding:40px 36px; display:flex; flex-direction:column; gap:14px; }
+  .lab { font: var(--type-eyebrow); font-size:14px; text-transform:uppercase; letter-spacing:var(--tracking-caps); color:var(--text-tertiary); }
+  .big { font-family:var(--font-mono); font-size:88px; line-height:1; font-weight:var(--weight-medium); letter-spacing:var(--tracking-tighter); font-variant-numeric:tabular-nums; }
+  .big .unit { font-size:40px; color:var(--text-tertiary); margin-left:4px; }
+  .sub { font-family:var(--font-sans); font-size:20px; color:var(--text-secondary); }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="eyebrow">Nine months on the shared system</div>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:56px">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border-subtle);background:var(--surface-card)">
+      <div class="cell">
+        <div class="lab">Screens shipped</div>
+        <div class="big">148</div>
+        <div class="sub">Voyage 91 · Bench 57</div>
+      </div>
+      <div class="cell" style="border-left:1px solid var(--border-subtle)">
+        <div class="lab">Reused from shared</div>
+        <div class="big">73<span class="unit">%</span></div>
+        <div class="sub">by component instance</div>
+      </div>
+      <div class="cell" style="border-left:1px solid var(--border-subtle)">
+        <div class="lab">Net new primitives</div>
+        <div class="big">6</div>
+        <div class="sub">4 promoted from Bench</div>
+      </div>
+    </div>
+    <p style="font-size:22px;max-width:60ch">
+      Measured from the component manifest, not from self-report. A screen counts once,
+      the week it went to production.
+    </p>
+  </div>
+  <div class="wordmark">SeaKim</div>
+  <div class="pagenum">11 / 24</div>
+</div>
+</body>
+</html>

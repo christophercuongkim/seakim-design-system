@@ -1,0 +1,37 @@
+<!-- @dsCard group="Voyage" viewport="1440x900" name="Voyage — travel app" subtitle="One responsive build. Pin the viewport to 390 / 768 / 1280 in the bar to watch it reflow." -->
+<!-- @startingPoint section="Voyage" subtitle="Travel planning — responsive, 6 screens, click-through" viewport="1440x900" -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-app="voyage">
+<head>
+<meta charset="utf-8">
+<title>Voyage — SeaKim UI kit</title>
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="../../ds-shim.js"></script>
+<style>
+  html, body { height: 100%; }
+  body { margin: 0; overflow: hidden; }
+  #root { height: 100vh; }
+</style>
+</head>
+<body>
+<div id="root"><div style="padding:24px;font-family:var(--font-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-tertiary)">Loading components…</div></div>
+<script>
+SeaKimMount('../../', [
+  'ui_kits/shared/Frames.jsx',
+  'ui_kits/voyage/AppShell.jsx',
+  'ui_kits/voyage/TripsScreen.jsx',
+  'ui_kits/voyage/SearchScreen.jsx',
+  'ui_kits/voyage/TripDetailScreen.jsx',
+  'ui_kits/voyage/CheckoutScreen.jsx',
+  'ui_kits/voyage/AccountScreen.jsx',
+  'ui_kits/voyage/App.jsx'
+], 'root', 'VoyageApp');
+</script>
+</body>
+</html>

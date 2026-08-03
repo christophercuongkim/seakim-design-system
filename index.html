@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-app="seakim">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SeaKim Design System</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<style>
+  body { padding: 64px 48px 96px; }
+  .wrap { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--space-11); }
+  .eyebrow { font: var(--type-eyebrow); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--text-tertiary); }
+  h1 { font-size: 52px; letter-spacing: var(--tracking-tighter); margin-top: var(--space-5); }
+  .lede { font-size: 20px; line-height: 1.5; color: var(--text-secondary); max-width: 58ch; margin-top: var(--space-5); }
+  section { display: flex; flex-direction: column; gap: var(--space-5); }
+  h2 { font: var(--type-eyebrow); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--text-tertiary); }
+  h3 { font-size: 17px; font-weight: var(--weight-semibold); letter-spacing: var(--tracking-tight); }
+  p { font: var(--type-body); color: var(--text-secondary); max-width: 68ch; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(228px, 1fr)); gap: var(--space-5); }
+  a.card {
+    display: flex; flex-direction: column; gap: var(--space-3);
+    padding: var(--space-5); background: var(--surface-card);
+    border: 1px solid var(--border-subtle); text-decoration: none;
+    transition: var(--transition-surface);
+  }
+  a.card:hover { background: var(--surface-hover); border-color: var(--border-strong); text-decoration: none; }
+  a.card .t { font: var(--type-label); font-size: var(--text-md); color: var(--text-primary); }
+  a.card .d { font: var(--type-caption); color: var(--text-tertiary); }
+  .hues { display: flex; gap: 2px; }
+  .hues span { height: 40px; flex: 1; }
+  table { border-collapse: collapse; width: 100%; }
+  td, th { text-align: left; padding: var(--space-4) var(--space-5); border-top: 1px solid var(--border-subtle); font: var(--type-body-sm); }
+  th { font: var(--type-eyebrow); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--text-tertiary); border-top: none; }
+  code { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
+  section[id] { scroll-margin-top: 24px; }
+  p a { color: var(--text-link); text-decoration: none; border-bottom: 1px solid var(--border-accent); }
+  p a:hover { color: var(--text-link-hover); text-decoration: none; }
+  pre {
+    margin: 0; padding: var(--space-5); overflow-x: auto;
+    background: var(--surface-inset); border: 1px solid var(--border-subtle);
+    font-family: var(--font-mono); font-size: 12px; line-height: 1.65;
+    color: var(--text-secondary); tab-size: 2;
+  }
+  pre b { color: var(--text-primary); font-weight: var(--weight-regular); }
+  .step { display: flex; flex-direction: column; gap: var(--space-4); }
+  .stepnum {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em;
+    color: var(--fill-accent);
+  }
+  .note {
+    padding: var(--space-5); border: 1px solid var(--border-subtle);
+    background: var(--surface-card); font: var(--type-body-sm); color: var(--text-secondary);
+  }
+  .note strong { color: var(--text-primary); font-weight: var(--weight-semibold); }
+  ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: var(--space-3); }
+  li { font: var(--type-body-sm); color: var(--text-secondary); }
+  li strong { color: var(--text-primary); font-weight: var(--weight-semibold); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Design system · v1</div>
+    <h1>SeaKim</h1>
+    <p class="lede">
+      One warm-neutral chassis shared by every SeaKim product, and exactly one accent hue
+      live at a time. Dark is the default. Corners are square. Borders define, shadows lift.
+    </p>
+  </header>
+
+  <section>
+    <h2>Accent per app</h2>
+    <div class="hues">
+      <span style="background:oklch(0.72 0.13 55)" title="clay · house"></span>
+      <span style="background:oklch(0.72 0.13 245)" title="sea · Voyage"></span>
+      <span style="background:oklch(0.72 0.13 145)" title="turf · Bench"></span>
+      <span style="background:oklch(0.72 0.13 320)" title="plum · reserved"></span>
+    </div>
+    <table>
+      <tr><th>App</th><th>Hue</th><th>Bind with</th></tr>
+      <tr><td>SeaKim · house, decks</td><td>clay 55</td><td><code>data-app="seakim"</code></td></tr>
+      <tr><td>Voyage · travel</td><td>sea 245</td><td><code>data-app="voyage"</code></td></tr>
+      <tr><td>Bench · fantasy sport</td><td>turf 145</td><td><code>data-app="bench"</code></td></tr>
+      <tr><td>reserved · app three</td><td>plum 320</td><td><code>data-app="reserve"</code></td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>How to use it · plain HTML and React</h2>
+    <p>
+      Everything below works in a plain HTML file with no build step — the kits in this
+      project are built exactly this way. The two sections after this one cover
+      <a href="#nextjs">Next.js</a> and <a href="#flutter">Flutter</a>, using the same six
+      steps so you can read them side by side.
+    </p>
+
+    <div class="step">
+      <div class="stepnum">STEP 1 — THE PAGE</div>
+      <h3>Link one stylesheet, set two attributes</h3>
+      <p>
+        <code>styles.css</code> imports every token file in the right order. The two
+        attributes on <code>&lt;html&gt;</code> decide theme and which app's accent is live.
+      </p>
+      <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="en" data-theme="dark" data-app="voyage"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+
+  &lt;!-- 1. The whole system: tokens, themes, resets. One file. --&gt;
+  &lt;link rel="stylesheet" href="styles.css"&gt;
+
+  &lt;!-- 2. Icons: Phosphor webfont, the three weights the system uses. --&gt;
+  &lt;link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css"&gt;
+  &lt;link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css"&gt;
+  &lt;link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id="root"&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    </div>
+
+    <div class="step">
+      <div class="stepnum">STEP 2 — THEME AND APP</div>
+      <h3>Retheming is an attribute, never a rebuild</h3>
+      <pre>&lt;!-- Theme and app are attributes, not builds. Dark + Voyage: --&gt;
+&lt;html data-theme="dark" data-app="voyage"&gt;
+
+&lt;!-- Light + Bench: --&gt;
+&lt;html data-theme="light" data-app="bench"&gt;
+
+&lt;!-- Either can be set on a subtree, so a Bench card can sit in a Voyage page: --&gt;
+&lt;div data-app="bench"&gt;…turf accent in here only…&lt;/div&gt;</pre>
+      <pre>// Theme toggle — one attribute, every token follows
+document.documentElement.setAttribute('data-theme', 'light');</pre>
+    </div>
+
+    <div class="step">
+      <div class="stepnum">STEP 3 — STYLING</div>
+      <h3>Build from semantic tokens</h3>
+      <p>
+        Use the semantic layer (<code>--surface-*</code>, <code>--text-*</code>,
+        <code>--border-*</code>, <code>--fill-accent</code>) so light, dark, and every app
+        follow for free. Reaching for <code>--stone-900</code> or a hex value breaks that.
+      </p>
+      <pre>/* Always reach for semantic tokens, never raw ramp steps. */
+.thing {
+  background: var(--surface-card);      /* not --stone-900   */
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  padding: var(--space-5);
+  font: var(--type-body-sm);
+  border-radius: var(--radius-none);    /* square. always.   */
+}
+.thing--primary {
+  background: var(--fill-accent);       /* the one accent    */
+  color: var(--on-accent);
+}</pre>
+    </div>
+
+    <div class="step">
+      <div class="stepnum">STEP 4 — COMPONENTS</div>
+      <h3>Import the React components you need</h3>
+      <p>
+        Each component is a standalone <code>.jsx</code> file with a <code>.d.ts</code> for
+        its props and a <code>.prompt.md</code> for when to use it. They only depend on
+        React and on each other.
+      </p>
+      <pre>import { Button } from './components/core/Button.jsx';
+import { Field }  from './components/forms/Field.jsx';
+import { Input }  from './components/forms/Input.jsx';
+
+&lt;Field label="Where to" hint="City or airport code" htmlFor="dest"&gt;
+  &lt;Input id="dest" iconLeft="magnifying-glass" placeholder="Lisbon, LIS" /&gt;
+&lt;/Field&gt;
+&lt;Button iconRight="arrow-right"&gt;Continue&lt;/Button&gt;</pre>
+    </div>
+
+    <div class="step">
+      <div class="stepnum">STEP 5 — RESPONSIVE</div>
+      <h3>One layout, measured by container width</h3>
+      <p>
+        The system styles inline, so screens cannot use CSS media queries. They branch on a
+        measured <em>container</em> width instead — stricter than a media query, because a
+        screen dropped into a narrow panel reflows the same way it would on a phone.
+      </p>
+      <pre>import { Viewport } from './ui_kits/shared/Frames.jsx';
+
+// Viewport measures itself and hands the screen a breakpoint.
+// sm &lt; 640 · md 640–1023 · lg &gt;= 1024
+&lt;Viewport width={0}&gt;
+  {({ bp }) =&gt; &lt;TripsScreen bp={bp} /&gt;}
+&lt;/Viewport&gt;
+
+// Screens branch on it — one layout, three shapes.
+function TripsScreen({ bp }) {
+  const isSm = bp === 'sm';
+  return (
+    &lt;div style={{
+      display: 'grid',
+      gridTemplateColumns: isSm ? '1fr' : 'repeat(auto-fill, minmax(260px, 1fr))',
+      gap: isSm ? 0 : 'var(--space-5)',
+    }}&gt;…&lt;/div&gt;
+  );
+}</pre>
+      <ul>
+        <li><strong>sm</strong> — under 640px. One column, bottom tab bar, tappable rows, 44px targets.</li>
+        <li><strong>md</strong> — 640–1023px. Side nav collapses to icons, two columns where they help.</li>
+        <li><strong>lg</strong> — 1024px and up. Full chrome, dense tables, side rails.</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="stepnum">STEP 6 — ICONS</div>
+      <h3>Phosphor, one weight per job</h3>
+      <pre>&lt;i class="ph ph-map-pin"&gt;&lt;/i&gt;          &lt;!-- regular: all UI, 20px default --&gt;
+&lt;i class="ph-fill ph-map-pin"&gt;&lt;/i&gt;     &lt;!-- fill: the ACTIVE nav item, nothing else --&gt;
+&lt;i class="ph-bold ph-arrow-right"&gt;&lt;/i&gt; &lt;!-- bold: 14px and under, or inside solid buttons --&gt;
+
+&lt;!-- In React always go through the wrapper, never a raw &lt;i&gt; --&gt;
+&lt;Icon name="map-pin" size={20} /&gt;</pre>
+    </div>
+
+    <div class="note">
+      <strong>About <code>ds-shim.js</code>:</strong> the kits and specimen cards in this
+      project load their components through it, because it fetches and transpiles the
+      <code>.jsx</code> files in the browser with no build step. It exists so this system can
+      be browsed as plain files. In a real app, bundle the components normally and delete it.
+    </div>
+  </section>
+
+  <section id="nextjs">
+    <h2>How to use it · Next.js</h2>
+    <p>
+      The React components have no framework coupling, so they work in Next as-is — but
+      five things need handling and four of them fail <em>silently</em> rather than
+      erroring. The files below are in <code>next/</code>, ready to copy.
+    </p>
+    <div class="step">
+      <div class="stepnum">STEP 1 — LAYOUT</div>
+      <h3>Decide where the system lives</h3>
+      <p>Vendor it, link it as a workspace package, or use a git dependency. <code>styles.css</code> is a chain of relative <code>@import</code> lines, so it has to keep its <code>tokens/</code> neighbours.</p>
+      <pre>src/
+  seakim/            ← the design system, vendored or workspace-linked
+    styles.css
+    tokens/
+    components/
+    ui_kits/
+  lib/
+    seakim.ts        ← client barrel (from next/lib/)
+    useSkTheme.ts
+  app/
+    layout.tsx       ← from next/app/
+    fonts.ts
+    page.tsx</pre>
+    </div>
+
+    <div class="step">
+      <div class="stepnum">STEP 2 — ROOT LAYOUT</div>
+      <h3>Global CSS, icons, and the two attributes</h3>
+      <p>Next only allows global stylesheets in <code>app/layout.tsx</code>. Theme and app are attributes here, exactly as in plain HTML.</p>
+      <pre>// app/layout.tsx
+import "@/seakim/styles.css";            // global CSS is ONLY legal here
+import "@phosphor-icons/web/regular";
+import "@phosphor-icons/web/bold";
+import "@phosphor-icons/web/fill";
+
+import { fontVariables } from "./fonts";
+
+export default function RootLayout({ children }) {
+  return (
+    &lt;html
+      lang="en"
+      data-theme="dark"                  // the system default
+      data-app="voyage"                  // which accent is live
+      className={fontVariables}
+      suppressHydrationWarning           // required — see step 4
+    &gt;
+      &lt;head&gt;&lt;script dangerouslySetInnerHTML={{ __html: noFlashScript }} /&gt;&lt;/head&gt;
+      &lt;body&gt;{children}&lt;/body&gt;
+    &lt;/html&gt;
+  );
+}</pre>
+    </div>
+
+    <div class="step">
+      <div class="stepnum">STEP 3 — FONTS</div>
+      <h3>Swap the CSS @import for next/font</h3>
+      <p>The token file pulls the three families from Google with an <code>@import</code>. That blocks render and adds a third-party round trip. <code>next/font</code> self-hosts them and assigns the same variable names, so no component changes.</p>
+      <pre>// app/fonts.ts — self-hosted at build time, zero layout shift
+export const fontDisplay = Outfit({
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-display",            // the SAME variable the tokens read
+  subsets: ["latin"], display: "swap",
+});
+
+// …then comment out the @import line in tokens/fonts.css,
+// or the families download twice.</pre>
+    </div>
+
+    <div class="step">
+      <div class="stepnum">STEP 4 — CLIENT BOUNDARY</div>
+      <h3>The one that actually errors</h3>
+      <p>Every interactive component keeps hover, press, and selection state internally, so all of them are Client Components. A single barrel marks them, instead of adding the directive to 23 files.</p>
+      <pre>// lib/seakim.ts — ONE directive covers all 23 components
+"use client";
+export { Button } from "@/seakim/components/core/Button.jsx";
+export { Field }  from "@/seakim/components/forms/Field.jsx";
+// …
+
+// app/page.tsx — import from the barrel, never the component files
+import { Button, Field, Input } from "@/lib/seakim";
+
+&lt;Field label="Where to" hint="City or airport code" htmlFor="dest"&gt;
+  &lt;Input id="dest" iconLeft="magnifying-glass" placeholder="Lisbon, LIS" /&gt;
+&lt;/Field&gt;
+&lt;Button iconRight="arrow-right"&gt;Continue&lt;/Button&gt;</pre>
+    </div>
+
+    <div class="step">
+      <div class="stepnum">STEP 5 — RESPONSIVE</div>
+      <h3>Same three breakpoints, one SSR caveat</h3>
+      <pre>"use client";
+import { Viewport } from "@/lib/seakim";
+
+&lt;Viewport width={0}&gt;
+  {({ bp }) =&gt; &lt;TripsScreen bp={bp} /&gt;}
+&lt;/Viewport&gt;
+
+// The first SERVER render has no measured width, so Viewport reports lg
+// until ResizeObserver fires. Fine for desktop-first products; if a
+// mobile flash matters, pass an initial bp from a user-agent hint.</pre>
+    </div>
+
+    <div class="step">
+      <div class="stepnum">STEP 6 — THEME</div>
+      <h3>No flash, no hydration mismatch</h3>
+      <p>This is the only inline script in the whole system, and <code>suppressHydrationWarning</code> is required rather than optional — the attribute is <em>expected</em> to differ between server and client markup.</p>
+      <pre>// A returning visitor who chose light must not see a dark frame first.
+// The server cannot read localStorage, so this runs before paint:
+(function () {
+  try {
+    var stored = localStorage.getItem('sk-theme');
+    if (stored === 'light' || stored === 'dark') {
+      document.documentElement.setAttribute('data-theme', stored);
+    }
+  } catch (e) {}
+})();
+
+// Then in a client component:
+const { theme, toggleTheme } = useSkTheme();</pre>
+    </div>
+
+    <div class="note">
+      <strong>Pages Router:</strong> everything above applies except the client boundary —
+      there are no Server Components in <code>pages/</code>, so import the components
+      directly. Global CSS goes in <code>_app.tsx</code>, the no-flash script in
+      <code>_document.tsx</code>.
+      <br><br>
+      <strong>If your app has Tailwind:</strong> set <code>preflight: false</code> or load
+      <code>styles.css</code> after it, so Tailwind's reset does not undo the system's.
+    </div>
+  </section>
+
+  <section id="flutter">
+    <h2>How to use it · Flutter</h2>
+    <p>
+      Custom widgets on Flutter primitives, not themed Material — the system's square
+      corners, borders-not-shadows rule, and scale-press are the three things Material
+      resists hardest. One codebase covers mobile, desktop, and web.
+    </p>
+    <div class="step">
+      <div class="stepnum">STEP 1 — INSTALL</div>
+      <h3>Add the package and the font files</h3>
+      <pre># your app's pubspec.yaml
+dependencies:
+  seakim_flutter:
+    path: ../seakim/flutter      # or a git ref / private pub server
+
+# then drop nine .ttf files into flutter/assets/fonts/
+#   Outfit-{Regular,Medium,SemiBold,Bold}.ttf
+#   PlusJakartaSans-{Regular,Medium,SemiBold,Bold}.ttf
+#   IBMPlexMono-{Regular,Medium}.ttf
+# All three are open-licence Google Fonts. Not committed —
+# no licensed binaries were supplied.</pre>
+    </div>
+
+    <div class="step">
+      <div class="stepnum">STEP 2 — WRAP THE APP</div>
+      <h3>SkApp carries theme and accent</h3>
+      <p>The Dart equivalent of <code>data-theme</code> and <code>data-app</code>, and it nests the same way.</p>
+      <pre>import 'package:seakim_flutter/seakim_flutter.dart';
+
+void main() =&gt; runApp(
+      const SkApp(
+        brand: SkAppBrand.voyage,   // rotates the accent hue
+        mode: SkThemeMode.dark,     // dark is the default
+        child: TripsScreen(),
+      ),
+    );
+
+// Nesting retints a subtree, exactly like a nested data-app:
+SkTheme(
+  data: SkThemeData.of(SkAppBrand.bench, SkThemeMode.dark),
+  child: const BenchCard(),   // turf accent in here only
+)</pre>
+    </div>
+
+    <div class="step">
+      <div class="stepnum">STEP 3 — STYLING</div>
+      <h3>Read tokens from the context</h3>
+      <p>Reaching past <code>context.skColors</code> into <code>SkStone</code> or a raw ramp step is the Dart equivalent of hardcoding <code>--stone-900</code>: it breaks theme and app switching.</p>
+      <pre>final SkColors c = context.skColors;
+
+Container(
+  color: c.surfaceCard,                       // not SkStone.s900
+  padding: const EdgeInsets.all(SkSpace.s5),
+  decoration: BoxDecoration(
+    border: Border.all(
+      color: c.borderSubtle,
+      width: SkDepth.hairline,
+    ),
+    // no borderRadius, no boxShadow — it sits IN the layout
+  ),
+  child: Text(
+    'Lisbon',
+    style: SkText.subheading.copyWith(color: c.textPrimary),
+  ),
+)</pre>
+    </div>
+
+    <div class="step">
+      <div class="stepnum">STEP 4 — WIDGETS</div>
+      <h3>Same names, same props as React</h3>
+      <p>Every component exists on both platforms with matching props and states. <code>interactive</code> became <code>onPressed</code>; <code>Radio</code> is <code>SkRadioGroup</code>, since a lone radio is always a mistake.</p>
+      <pre>SkField(
+  label: 'Where to',
+  hint: 'City or airport code',
+  child: SkInput(
+    iconLeft: PhosphorIcons.magnifyingGlass,
+    placeholder: 'Lisbon, LIS',
+    onChanged: (String v) =&gt; setState(() =&gt; _query = v),
+  ),
+)
+
+SkButton(
+  label: 'Continue',
+  iconRight: PhosphorIcons.arrowRight,
+  onPressed: _continue,
+)
+
+// Overlays: bottom sheet at sm, centred panel from md up
+showSkSheet(context: context, builder: (_) =&gt; PlayerSheet(player: p));
+showSkToast(context, message: 'Trip saved', tone: SkToastTone.success);</pre>
+    </div>
+
+    <div class="step">
+      <div class="stepnum">STEP 5 — RESPONSIVE</div>
+      <h3>SkResponsive instead of Viewport</h3>
+      <p>In Flutter, container-measured breakpoints are the natural tool rather than a workaround — a screen in a split view reflows correctly, which a MediaQuery rule would get wrong.</p>
+      <pre>SkResponsive(
+  builder: (context, bp, width) =&gt; Column(
+    children: &lt;Widget&gt;[
+      if (bp.isWide) const _SideRail(),
+      _Roster(bp: bp),
+    ],
+  ),
+)
+
+// or pick a value per breakpoint
+final int columns = bp.pick(sm: 1, md: 2, lg: 4);
+
+// sm &lt; 640 · md 640–1023 · lg &gt;= 1024 — measured CONTAINER width,
+// same rule as the web kit, via LayoutBuilder instead of ResizeObserver.</pre>
+    </div>
+
+    <div class="step">
+      <div class="stepnum">STEP 6 — ICONS</div>
+      <h3>Phosphor, weight chosen by SkIcon</h3>
+      <pre>SkIcon(PhosphorIcons.mapPin)                            // regular, 20px
+SkIcon(PhosphorIcons.mapPin, weight: SkIconWeight.fill) // ACTIVE only
+SkIcon(PhosphorIcons.arrowRight, size: 14,
+       weight: SkIconWeight.bold)                       // small / on fills
+
+// SkGlyph is the type of an unweighted Phosphor glyph, so widgets take
+// PhosphorIcons.foo and choose the weight themselves — the rules live in
+// SkIcon, not in every call site.</pre>
+    </div>
+
+    <div class="step">
+      <div class="stepnum">KEEPING IN SYNC</div>
+      <h3>Colour is generated, never retyped</h3>
+      <p>Roughly 50 values per app. Hand-copying them is exactly where a multi-platform system quietly drifts apart.</p>
+      <pre># tokens/colors.css stays the single source of truth.
+# The ramps are oklch(L C H) with H rotating per app, and Dart cannot
+# evaluate oklch — so every step is baked to sRGB.
+
+dart run tool/gen_tokens.dart
+
+# Adding an app:
+#   1. add --hue-&lt;name&gt; to tokens/colors.css
+#   2. add the [data-app] binding to tokens/apps.css
+#   3. add it to _apps in the generator AND to the SkAppBrand enum
+#   4. re-run
+# Never hand-edit palette.g.dart.</pre>
+    </div>
+
+    <div class="note">
+      <strong>Not compiled yet.</strong> The Dart has been written and reviewed but never
+      run through <code>flutter analyze</code>. Expect a handful of first-build errors, most
+      likely in three places: the <code>phosphor_flutter</code> API surface (only
+      <code>sk_icon.dart</code> would change), <code>Color.withValues</code> which needs
+      Flutter 3.27+, and <code>EditableText</code> required parameters, which shift between
+      versions. Paste the analyzer output and I will clear them.
+      <br><br>
+      <strong>Screens are not ported.</strong> This is the component library and token
+      layer; the Voyage and Bench kits still exist only as React.
+    </div>
+  </section>
+
+  <section>
+    <h2>Platforms</h2>
+    <p>
+      The system ships for three targets off one set of decisions. Tokens are defined once
+      in CSS; the Dart layer is generated from them, so colour cannot drift between
+      platforms.
+    </p>
+    <div class="grid">
+      <a class="card" href="readme.md"><span class="t">React · reference</span><span class="d">The canonical implementation. 23 components, both UI kits, the specimen cards on this page.</span></a>
+      <a class="card" href="next/README.md"><span class="t">Next.js · adapter</span><span class="d">Client boundary, next/font, no-flash theme script, icon setup. Five gotchas, four of them silent.</span></a>
+      <a class="card" href="flutter/README.md"><span class="t">Flutter · port</span><span class="d">Custom widgets on Flutter primitives, generated token layer, same three breakpoints. Not yet compiled.</span></a>
+    </div>
+    <div class="note">
+      <strong>Parity is a rule, not an aspiration:</strong> a component exists on all three
+      targets with the same name, the same props, and the same states, or it does not go in.
+      Where a platform genuinely differs — Flutter's text field keeps a Material ancestor for
+      selection handles, Next needs a client boundary — the reason is written down in that
+      platform's readme rather than left as a surprise.
+    </div>
+  </section>
+
+  <section>
+    <h2>UI kits</h2>
+    <div class="grid">
+      <a class="card" href="ui_kits/voyage/index.html"><span class="t">Voyage</span><span class="d">Travel planning — responsive, 6 screens</span></a>
+      <a class="card" href="ui_kits/bench/index.html"><span class="t">Bench</span><span class="d">Fantasy sport — responsive, 4 screens</span></a>
+    </div>
+    <p>
+      Both kits carry a bar at the top: pin the viewport to 390, 768, or 1280 to watch one
+      build reflow, and flip the theme.
+    </p>
+  </section>
+
+  <section>
+    <h2>Components</h2>
+    <div class="grid">
+      <a class="card" href="components/core/core.card.html"><span class="t">Core</span><span class="d">Button, IconButton, Badge, Tag, Card, Avatar, Stat, Icon</span></a>
+      <a class="card" href="components/forms/forms.card.html"><span class="t">Forms</span><span class="d">Field, Input, Textarea, Select, Checkbox, Radio, Switch, SegmentedControl</span></a>
+      <a class="card" href="components/feedback/feedback.card.html"><span class="t">Feedback</span><span class="d">Dialog, Toast, Tooltip, EmptyState</span></a>
+      <a class="card" href="components/navigation/navigation.card.html"><span class="t">Navigation</span><span class="d">Tabs, SideNav, TabBar</span></a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Slides</h2>
+    <div class="grid">
+      <a class="card" href="slides/TitleSlide.html"><span class="t">Title</span><span class="d">Opens a deck</span></a>
+      <a class="card" href="slides/SectionSlide.html"><span class="t">Section divider</span><span class="d">Marks a new act</span></a>
+      <a class="card" href="slides/AgendaSlide.html"><span class="t">Agenda</span><span class="d">Numbered, current item in accent</span></a>
+      <a class="card" href="slides/StatSlide.html"><span class="t">Numbers</span><span class="d">Mono figures with sources</span></a>
+      <a class="card" href="slides/ComparisonSlide.html"><span class="t">Comparison</span><span class="d">Two columns, one recommended</span></a>
+      <a class="card" href="slides/QuoteSlide.html"><span class="t">Quote</span><span class="d">One voice, attributed</span></a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Foundations</h2>
+    <div class="grid">
+      <a class="card" href="guidelines/colors-stone.html"><span class="t">Stone ramp</span><span class="d">The warm neutral spine</span></a>
+      <a class="card" href="guidelines/colors-accents.html"><span class="t">App accent hues</span><span class="d">Same L and C, hue rotates</span></a>
+      <a class="card" href="guidelines/type-families.html"><span class="t">Type families</span><span class="d">Outfit · Plus Jakarta Sans · IBM Plex Mono</span></a>
+      <a class="card" href="guidelines/spacing-scale.html"><span class="t">Spacing</span><span class="d">4px grid, density 7/10</span></a>
+      <a class="card" href="guidelines/depth.html"><span class="t">Depth model</span><span class="d">Borders define, shadows lift</span></a>
+      <a class="card" href="guidelines/motion.html"><span class="t">Motion</span><span class="d">Enters overshoot, exits do not</span></a>
+      <a class="card" href="guidelines/radius.html"><span class="t">Corner radius</span><span class="d">Zero, with two exceptions</span></a>
+      <a class="card" href="guidelines/icons.html"><span class="t">Iconography</span><span class="d">Phosphor, four weights, one job each</span></a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Read next</h2>
+    <div class="grid">
+      <a class="card" href="readme.md"><span class="t">readme.md</span><span class="d">Content fundamentals, visual foundations, iconography, index</span></a>
+      <a class="card" href="guidelines/voice-and-tone.md"><span class="t">voice-and-tone.md</span><span class="d">The long-form copy guide, with per-app registers</span></a>
+    </div>
+  </section>
+</div>
+</body>
+</html>

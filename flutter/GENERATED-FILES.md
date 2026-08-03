@@ -11,7 +11,7 @@ its binaries, or anything a tool regenerates. Those live only in the git repo
 | `assets/icons/Phosphor-*.ttf` | ~2 MB | Icon font binaries; four files. |
 | `assets/fonts/*.ttf` | ~1 MB | Text font binaries; ten files. |
 | `assets/fonts/OFL-*.txt` | ~13 KB | Licence notices; they travel with the binaries above. |
-| `example/web/`, `example/.metadata`, `example/analysis_options.yaml` | — | `flutter create` scaffolding. |
+| `example/android/`, `example/ios/`, `example/web/`, `example/.metadata`, `example/analysis_options.yaml` | — | `flutter create` scaffolding; regenerate with the command below. |
 
 To get a working checkout from the design project alone you need the fonts and
 one command:
@@ -27,7 +27,7 @@ and `flutter test` fails on the asset bundle.
 To run the example app, regenerate its platform scaffolding:
 
 ```bash
-cd example && flutter create --platforms=web --project-name seakim_example .
+cd example && flutter create --platforms=web,android,ios --project-name seakim_example --org com.seakim .
 ```
 
 Everything hand-written **is** mirrored — the generator, the `SkGlyph` type it

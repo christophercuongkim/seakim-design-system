@@ -324,21 +324,29 @@
       "etag": "1785499045632965",
       "size": 14237
     },
+    "flutter/GENERATED-FILES.md": {
+      "etag": "1785776946087689",
+      "size": 1278
+    },
     "flutter/README.md": {
-      "etag": "1785500329575488",
-      "size": 6091
+      "etag": "1785777347671772",
+      "size": 7926
+    },
+    "flutter/assets/icons/LICENSE-phosphor.txt": {
+      "etag": "1785777019798883",
+      "size": 1076
     },
     "flutter/lib/seakim_flutter.dart": {
-      "etag": "1785500329575488",
-      "size": 1756
+      "etag": "1785777019798883",
+      "size": 1867
     },
     "flutter/lib/src/theme/sk_breakpoints.dart": {
       "etag": "1785499722531678",
       "size": 2344
     },
     "flutter/lib/src/theme/sk_theme.dart": {
-      "etag": "1785771211555101",
-      "size": 3243
+      "etag": "1785777188684874",
+      "size": 3821
     },
     "flutter/lib/src/tokens/palette.g.dart": {
       "etag": "1785499672820812",
@@ -351,6 +359,14 @@
     "flutter/lib/src/tokens/sk_depth.dart": {
       "etag": "1785499672820812",
       "size": 2982
+    },
+    "flutter/lib/src/tokens/sk_glyph.dart": {
+      "etag": "1785776946087689",
+      "size": 1875
+    },
+    "flutter/lib/src/tokens/sk_licenses.dart": {
+      "etag": "1785776946087689",
+      "size": 2527
     },
     "flutter/lib/src/tokens/sk_motion.dart": {
       "etag": "1785499672820812",
@@ -381,24 +397,24 @@
       "size": 4215
     },
     "flutter/lib/src/widgets/sk_checkbox.dart": {
-      "etag": "1785500119200712",
-      "size": 4494
+      "etag": "1785777129033557",
+      "size": 4461
     },
     "flutter/lib/src/widgets/sk_dialog.dart": {
-      "etag": "1785500269970702",
-      "size": 7775
+      "etag": "1785777188684874",
+      "size": 7748
     },
     "flutter/lib/src/widgets/sk_empty_state.dart": {
-      "etag": "1785500183002620",
-      "size": 3865
+      "etag": "1785777019798883",
+      "size": 3838
     },
     "flutter/lib/src/widgets/sk_field.dart": {
       "etag": "1785500119200712",
       "size": 1808
     },
     "flutter/lib/src/widgets/sk_icon.dart": {
-      "etag": "1785771211555101",
-      "size": 2602
+      "etag": "1785776946087689",
+      "size": 3003
     },
     "flutter/lib/src/widgets/sk_icon_button.dart": {
       "etag": "1785774669836963",
@@ -421,16 +437,16 @@
       "size": 3761
     },
     "flutter/lib/src/widgets/sk_select.dart": {
-      "etag": "1785500183002620",
-      "size": 7829
+      "etag": "1785777234464332",
+      "size": 7796
     },
     "flutter/lib/src/widgets/sk_side_nav.dart": {
       "etag": "1785500269970702",
       "size": 6937
     },
     "flutter/lib/src/widgets/sk_stat.dart": {
-      "etag": "1785499885142665",
-      "size": 3870
+      "etag": "1785777019798883",
+      "size": 3837
     },
     "flutter/lib/src/widgets/sk_switch.dart": {
       "etag": "1785500119200712",
@@ -453,16 +469,24 @@
       "size": 4668
     },
     "flutter/lib/src/widgets/sk_toast.dart": {
-      "etag": "1785500183002620",
-      "size": 5088
+      "etag": "1785777129033557",
+      "size": 5037
     },
     "flutter/lib/src/widgets/sk_tooltip.dart": {
       "etag": "1785500183002620",
       "size": 786
     },
     "flutter/pubspec.yaml": {
-      "etag": "1785499672820812",
-      "size": 1395
+      "etag": "1785777079369045",
+      "size": 2045
+    },
+    "flutter/test/smoke_test.dart": {
+      "etag": "1785777079369045",
+      "size": 2179
+    },
+    "flutter/tool/gen_icons.dart": {
+      "etag": "1785777272167541",
+      "size": 4295
     },
     "flutter/tool/gen_tokens.dart": {
       "etag": "1785499722531678",

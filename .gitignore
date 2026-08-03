@@ -10,3 +10,9 @@ flutter/.flutter-plugins-dependencies
 
 # direnv
 .direnv/
+
+# Example app build artifacts
+flutter/example/build/
+flutter/example/.dart_tool/
+flutter/example/pubspec.lock
+flutter/example/*.iml

@@ -16,10 +16,9 @@ dependencies:
     path: ../seakim/flutter   # or a git ref, or a private pub server
 ```
 
-Then drop the font files into `assets/fonts/`. All three families are on Google Fonts
-with open licences: **Outfit**, **Plus Jakarta Sans**, **IBM Plex Mono**. The filenames
-`pubspec.yaml` expects are listed there — nine `.ttf` files. They are not committed here
-because no licensed binaries were supplied.
+The fonts ship with the package — **Outfit**, **Plus Jakarta Sans**, **IBM Plex Mono**,
+all SIL OFL, in `assets/fonts/` alongside their licences. Nothing to download; the
+notices are registered for `showLicensePage()` automatically.
 
 ## Use
 

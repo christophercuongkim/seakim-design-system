@@ -93,10 +93,13 @@ class SkTag extends StatelessWidget {
                       pressScale: 1,
                       builder: (BuildContext context, SkInteraction rs) => Opacity(
                         opacity: rs.liveHover ? 1 : 0.6,
-                        child: Icon(
+                        child: Text(
                           _closeGlyph,
-                          size: 11,
-                          color: fg,
+                          style: SkText.label.copyWith(
+                            fontSize: 11,
+                            color: fg,
+                            height: 1,
+                          ),
                         ),
                       ),
                     ),
@@ -112,6 +115,10 @@ class SkTag extends StatelessWidget {
 
   /// A multiplication sign, not the letter x — the dismiss affordance is drawn
   /// from the text font so it aligns with the label at 11px.
-  static const IconData _closeGlyph =
-      IconData(0x00D7, fontFamily: SkFonts.sans);
+  ///
+  /// Deliberately a character in a [Text], not an [IconData]. Naming a text font
+  /// in an IconData puts that font in front of `--tree-shake-icons`, which would
+  /// happily subset Plus Jakarta Sans down to this one glyph and take every
+  /// other character in the app with it.
+  static const String _closeGlyph = '×';
 }

@@ -126,8 +126,10 @@ class SkMaterialTheme {
       canvasColor: c.surfacePage,
       dividerColor: c.borderSubtle,
       textTheme: text,
-      fontFamily: SkFonts.sans,
-      fontFamilyFallback: const <String>[SkFonts.sans],
+      // ThemeData.fontFamily takes no package argument, so the family has to be
+      // prefixed by hand or the bundled font never resolves for a consuming app
+      // — the same silent fallback the TextStyles carry `package:` to avoid.
+      fontFamily: 'packages/$skFontPackage/${SkFonts.sans}',
 
       // No ink ripple anywhere. The system presses by scaling instead, which
       // Material cannot express — but suppressing the ripple is most of the

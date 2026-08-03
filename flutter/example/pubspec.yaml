@@ -1,0 +1,25 @@
+name: seakim_example
+description: >-
+  Working starting point for an app built on the SeaKim design system. Shows both
+  adoption paths on one screen: stock Material widgets branded purely by
+  SkMaterialTheme, and SeaKim's own widgets mixed in beside them.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.19.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  seakim_flutter:
+    path: ../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true

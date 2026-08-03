@@ -1,30 +1,54 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:seakim_example/gallery.dart';
 import 'package:seakim_example/main.dart';
+import 'package:seakim_flutter/seakim_flutter.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('the example boots and renders both adoption paths',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const ExampleApp());
+    await tester.pumpAndSettle();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Stock Material, branded only by the theme.
+    expect(find.byType(Card), findsWidgets);
+    expect(find.text('Book'), findsOneWidget);
+    // SeaKim widgets on the same screen.
+    expect(find.byType(SkButton), findsWidgets);
+    expect(tester.takeException(), isNull);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  testWidgets('the coverage gallery renders every themed Material widget',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: SkMaterialTheme.dark(SkAppBrand.voyage),
+        builder: (BuildContext context, Widget? child) =>
+            SkThemeScope(brand: SkAppBrand.voyage, child: child!),
+        home: const GalleryScreen(),
+      ),
+    );
+    await tester.pumpAndSettle();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Scaffold chrome is always built.
+    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.byType(FloatingActionButton), findsOneWidget);
+
+    // The rest live in a lazy ListView, so scroll each into existence. This is
+    // the real assertion: every themed surface can actually be constructed
+    // under this theme without Material rejecting a mapping.
+    for (final Finder target in <Finder>[
+      find.byType(SegmentedButton<String>),
+      find.byType(Slider),
+      find.byType(DropdownMenu<String>),
+      find.byType(ExpansionTile),
+      find.byType(DataTable),
+      find.byType(LinearProgressIndicator),
+    ]) {
+      await tester.scrollUntilVisible(target, 300,
+          scrollable: find.byType(Scrollable).first);
+      expect(target, findsOneWidget);
+      expect(tester.takeException(), isNull);
+    }
   });
 }

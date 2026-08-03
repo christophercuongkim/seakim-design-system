@@ -325,8 +325,8 @@
       "size": 14237
     },
     "flutter/GENERATED-FILES.md": {
-      "etag": "1785786926873584",
-      "size": 1607
+      "etag": "1785798950952224",
+      "size": 1707
     },
     "flutter/README.md": {
       "etag": "1785787002950314",
@@ -336,13 +336,25 @@
       "etag": "1785777019798883",
       "size": 1076
     },
+    "flutter/example/README.md": {
+      "etag": "1785798834800832",
+      "size": 1694
+    },
+    "flutter/example/lib/gallery.dart": {
+      "etag": "1785798834800832",
+      "size": 8532
+    },
     "flutter/example/lib/main.dart": {
-      "etag": "1785787250500078",
-      "size": 7522
+      "etag": "1785798785042876",
+      "size": 7866
     },
     "flutter/example/pubspec.yaml": {
       "etag": "1785787250500078",
       "size": 540
+    },
+    "flutter/example/test/widget_test.dart": {
+      "etag": "1785798868447957",
+      "size": 1997
     },
     "flutter/lib/seakim_flutter.dart": {
       "etag": "1785786926873584",
@@ -353,8 +365,8 @@
       "size": 2344
     },
     "flutter/lib/src/theme/sk_material_theme.dart": {
-      "etag": "1785787065673822",
-      "size": 12484
+      "etag": "1785798785042876",
+      "size": 23677
     },
     "flutter/lib/src/theme/sk_theme.dart": {
       "etag": "1785787002950314",

@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+#
+# pre-push — mirror a GitHub push to the Claude Design project.
+#
+# When you `git push` to origin and the pushed commits touch any file that is
+# mirrored from Claude Design (i.e. present in .design-sync/manifest.json), this
+# hook runs the repo -> design push so the two stay in sync.
+#
+# It NEVER blocks the GitHub push: every path here ends in `exit 0`. If the
+# design push fails or is skipped, the git push still proceeds.
+#
+# Behaviour:
+#   - default            : if a terminal is attached, open an interactive design
+#                          push (you approve it); otherwise print a reminder.
+#   - DS_DESIGN_PUSH=auto : run the design push headless, under your normal Claude
+#                          permission settings (no permission bypass).
+#   - DS_SKIP_DESIGN_PUSH=1 (or DS_DESIGN_PUSH=off) : skip entirely.
+#
+# Installed via `git config core.hooksPath scripts/hooks` (see .design-sync/NOTES.md).
+
+# Deliberately no `set -e`: a stray non-zero must not abort the git push.
+set -u
+
+remote_name="${1:-}"
+
+# Only mirror when pushing to the GitHub remote.
+[ "$remote_name" = "origin" ] || exit 0
+
+case "${DS_DESIGN_PUSH:-}" in off) exit 0 ;; esac
+[ -n "${DS_SKIP_DESIGN_PUSH:-}" ] && exit 0
+
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
+MANIFEST="$REPO_ROOT/.design-sync/manifest.json"
+SYNC="$REPO_ROOT/scripts/ds-sync.sh"
+[ -f "$MANIFEST" ] && [ -x "$SYNC" ] || exit 0
+
+# Collect files changed across every non-delete ref being pushed (stdin lines:
+# <local ref> <local sha> <remote ref> <remote sha>).
+EMPTY_TREE="$(git hash-object -t tree /dev/null)"
+changed="$(mktemp)"
+trap 'rm -f "$changed"' EXIT
+while read -r _lref lsha _rref rsha; do
+  case "$lsha" in *[!0]*) : ;; *) continue ;; esac        # skip branch deletions (all-zero local sha)
+  case "$rsha" in
+    *[!0]*) base="$rsha" ;;                                # existing remote branch
+    *)      base="$EMPTY_TREE" ;;                          # new branch on remote
+  esac
+  git diff --name-only "$base" "$lsha" 2>/dev/null >>"$changed"
+done
+
+# Does any changed path belong to the mirrored (manifest) set?
+python3 - "$MANIFEST" "$changed" <<'PY'
+import json, sys
+manifest, changed = sys.argv[1], sys.argv[2]
+mirrored = {p for p in json.load(open(manifest)).get("files", {}) if p != ".thumbnail"}
+touched = {l.strip() for l in open(changed) if l.strip()}
+sys.exit(0 if (mirrored & touched) else 1)
+PY
+if [ $? -ne 0 ]; then
+  exit 0    # nothing mirrored changed — no design push needed
+fi
+
+echo "ds-sync: mirrored files changed; syncing to Claude Design..." >&2
+
+if [ "${DS_DESIGN_PUSH:-}" = "auto" ]; then
+  "$SYNC" push --auto || echo "ds-sync: design push failed (git push still proceeding)." >&2
+elif [ -e /dev/tty ] && [ -r /dev/tty ]; then
+  # Interactive: hand the session a real terminal (git has stdin busy with refs).
+  "$SYNC" push </dev/tty >/dev/tty 2>&1 || echo "ds-sync: design push did not complete (git push still proceeding)." >&2
+else
+  echo "ds-sync: no terminal for an interactive design push." >&2
+  echo "         run '$SYNC push' manually, or set DS_DESIGN_PUSH=auto for headless." >&2
+fi
+
+exit 0

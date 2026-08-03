@@ -56,6 +56,33 @@ Claude uses the `mcp__claude-design__*` tools (`list_files`, `read_file`,
 `finalize_plan`, `write_files`, `delete_files`). `.thumbnail` is a generated
 preview artifact and is not mirrored into the working tree.
 
+## Auto-sync on git push (pre-push hook)
+
+`scripts/hooks/pre-push` mirrors a GitHub push to Claude Design. On `git push`
+to `origin`, if the pushed commits touch any mirrored file (present in
+`manifest.json`), it runs the repo -> design push. Pushes that only touch
+tooling (`scripts/`, `.design-sync/`) are skipped.
+
+It **never blocks the GitHub push** — if the design side fails or is skipped,
+git still pushes.
+
+Modes:
+- default: interactive design push if a terminal is attached; otherwise a
+  reminder to run `scripts/ds-sync.sh push`.
+- `DS_DESIGN_PUSH=auto git push`: headless push, under your normal Claude
+  permission settings (no permission bypass — allowlist the Claude Design tools
+  in your Claude settings to make unattended pushes actually write).
+- `DS_SKIP_DESIGN_PUSH=1 git push` (or `DS_DESIGN_PUSH=off`): skip.
+
+**Enabling it (once per clone):** the hook lives in-repo but git doesn't wire it
+up automatically. Run:
+
+```sh
+git config core.hooksPath scripts/hooks
+```
+
+(Already set in this working copy.)
+
 ## Skipped from the working tree
 
 - `.thumbnail` — remote-generated preview image; tracked in the manifest, not

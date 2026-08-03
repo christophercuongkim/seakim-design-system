@@ -19,6 +19,8 @@
           packages = [
             pkgs.flutter
             pkgs.git
+            pkgs.coreutils   # base64, wc, sha256sum, cut, … (not on the bare login PATH)
+            pkgs.python3     # used by the design-sync tooling for encoding/manifest work
           ];
 
           shellHook = ''

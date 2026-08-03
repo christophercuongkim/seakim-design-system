@@ -32,12 +32,25 @@ Regenerate after any successful sync so it always reflects the true remote state
 
 ## How to run a sync
 
-Ask Claude in this repo, e.g.:
+Either ask Claude directly in this repo, or use the wrapper script
+`scripts/ds-sync.sh` (it just launches Claude with the right prompt — the sync
+runs through Claude Design's MCP tools, which only Claude can drive):
+
+```sh
+scripts/ds-sync.sh pull     # Claude Design -> repo (download changes)
+scripts/ds-sync.sh push     # repo -> Claude Design (upload local changes)
+scripts/ds-sync.sh status   # remote changes since last sync (read-only)
+```
+
+Equivalent plain-language asks:
 
 - "Pull the latest from Claude Design" — incremental pull using the manifest.
 - "Push my local changes to Claude Design" — diff working tree vs manifest,
   write changed files with `if_match`, report any conflicts first.
 - "What changed remotely since last sync?" — list + etag diff, no writes.
+
+If a tool call reports it is unauthorized, run `/design-login` in Claude and
+retry.
 
 Claude uses the `mcp__claude-design__*` tools (`list_files`, `read_file`,
 `finalize_plan`, `write_files`, `delete_files`). `.thumbnail` is a generated

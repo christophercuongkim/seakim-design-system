@@ -62,34 +62,53 @@ void main() {
     final Map<String, dynamic> w = (raw[name] as Map<String, dynamic>);
 
     // A handful of glyphs are absent from one weight's font. Fall back rather
-    // than drop the icon: a slightly heavier glyph beats a missing one, and a
-    // duotone fallback simply draws flat.
-    final String? regular = w['regular'] as String?;
-    final String? bold = w['bold'] as String?;
-    final String? fill = w['fill'] as String?;
-    final String? duotone = w['duotone'] as String?;
-    final String? base = regular ?? bold ?? fill ?? duotone;
+    // than drop the icon — but a code point only exists in the font it came
+    // from, so the fallback has to carry that weight's FAMILY too. Pairing a
+    // borrowed code point with the requested family renders tofu, and makes
+    // `--tree-shake-icons` abort the build outright ("Codepoint N not found in
+    // font"), which is how this was caught.
+    final Map<String, String?> byWeight = <String, String?>{
+      'SkIconFont.regular': w['regular'] as String?,
+      'SkIconFont.bold': w['bold'] as String?,
+      'SkIconFont.fill': w['fill'] as String?,
+      'SkIconFont.duotone': w['duotone'] as String?,
+    };
+
+    MapEntry<String, String>? base;
+    for (final MapEntry<String, String?> e in byWeight.entries) {
+      if (e.value != null) {
+        base = MapEntry<String, String>(e.key, e.value!);
+        break;
+      }
+    }
     if (base == null) {
       stderr.writeln('skipping $name — no code point in any weight');
       continue;
     }
-    final String rTone = regular ?? base;
-    final String bTone = bold ?? base;
-    final String fTone = fill ?? base;
-    final String dTone = duotone ?? base;
-    final String dSec = (w['duotoneSecondary'] as String?) ?? dTone;
+    if (byWeight.values.any((String? v) => v == null)) patched.add(name);
 
-    if (regular == null || bold == null || fill == null || duotone == null) {
-      patched.add(name);
+    /// The (code point, family) pair for one weight, or the nearest weight that
+    /// actually has the glyph.
+    String resolve(String family) {
+      final String? own = byWeight[family];
+      return own != null ? _icon(own, family) : _icon(base!.value, base.key);
     }
+
+    // The duotone backdrop is a second glyph in the duotone font; if it is
+    // absent, draw the foreground alone rather than a mismatched pair.
+    final String? dSec = w['duotoneSecondary'] as String?;
+    final String duotoneField = resolve('SkIconFont.duotone');
+    final String secondaryField = (dSec != null && byWeight['SkIconFont.duotone'] != null)
+        ? _icon(dSec, 'SkIconFont.duotone')
+        : duotoneField;
 
     b
       ..writeln('  static const SkGlyph $name = SkGlyph(')
-      ..writeln('    regular: ${_icon(rTone, 'SkIconFont.regular')},')
-      ..writeln('    bold: ${_icon(bTone, 'SkIconFont.bold')},')
-      ..writeln('    fill: ${_icon(fTone, 'SkIconFont.fill')},')
-      ..writeln('    duotone: ${_icon(dTone, 'SkIconFont.duotone')},')
-      ..writeln('    duotoneSecondary: ${_icon(dSec, 'SkIconFont.duotone')},')
+      ..writeln('    regular: ${resolve('SkIconFont.regular')},')
+      ..writeln('    bold: ${resolve('SkIconFont.bold')},')
+      ..writeln('    fill: ${resolve('SkIconFont.fill')},')
+      ..writeln('    duotone: $duotoneField,')
+      ..writeln('    duotoneSecondary: $secondaryField,')
       ..writeln('  );');
   }
 

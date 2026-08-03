@@ -72,8 +72,12 @@ extension SkThemeContext on BuildContext {
 ///
 /// Sets up the theme, a default text style and colour, and the directionality and
 /// media plumbing widgets expect — without pulling in MaterialApp's visual
-/// defaults. If you need Navigator routes, wrap [child] in a [WidgetsApp] or use
-/// [SkApp.router] as a starting point in your own app.
+/// defaults.
+///
+/// It is a theme scope, not an app shell: it provides no [Overlay], [Navigator],
+/// or [MediaQuery], so [SkToast], [SkDialog], and [SkSelect] need a [WidgetsApp]
+/// or [MaterialApp] above them. For an app that is otherwise Material, prefer
+/// [SkMaterialTheme] with [SkThemeScope] — see the README.
 class SkApp extends StatelessWidget {
   const SkApp({
     super.key,

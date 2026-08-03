@@ -131,9 +131,9 @@ class SkIcons {
     duotoneSecondary: IconData(0xe50a, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
   );
   static const SkGlyph alignCenterHorizontalSimple = SkGlyph(
-    regular: IconData(0xeb0f, fontFamily: SkIconFont.regular, fontPackage: skIconFontPackage),
-    bold: IconData(0xeb0f, fontFamily: SkIconFont.bold, fontPackage: skIconFontPackage),
-    fill: IconData(0xeb0f, fontFamily: SkIconFont.fill, fontPackage: skIconFontPackage),
+    regular: IconData(0xeb0f, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
+    bold: IconData(0xeb0f, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
+    fill: IconData(0xeb0f, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
     duotone: IconData(0xeb0f, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
     duotoneSecondary: IconData(0xeb0e, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
   );
@@ -145,7 +145,7 @@ class SkIcons {
     duotoneSecondary: IconData(0xe50c, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
   );
   static const SkGlyph alignCenterVerticalSimple = SkGlyph(
-    regular: IconData(0xeb10, fontFamily: SkIconFont.regular, fontPackage: skIconFontPackage),
+    regular: IconData(0xeb10, fontFamily: SkIconFont.bold, fontPackage: skIconFontPackage),
     bold: IconData(0xeb10, fontFamily: SkIconFont.bold, fontPackage: skIconFontPackage),
     fill: IconData(0xeb10, fontFamily: SkIconFont.fill, fontPackage: skIconFontPackage),
     duotone: IconData(0xeb11, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
@@ -936,7 +936,7 @@ class SkIcons {
     duotoneSecondary: IconData(0xe0a4, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
   );
   static const SkGlyph arrowsOutLineHorizontal = SkGlyph(
-    regular: IconData(0xe534, fontFamily: SkIconFont.regular, fontPackage: skIconFontPackage),
+    regular: IconData(0xe534, fontFamily: SkIconFont.bold, fontPackage: skIconFontPackage),
     bold: IconData(0xe534, fontFamily: SkIconFont.bold, fontPackage: skIconFontPackage),
     fill: IconData(0xe534, fontFamily: SkIconFont.fill, fontPackage: skIconFontPackage),
     duotone: IconData(0xe535, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
@@ -1181,7 +1181,7 @@ class SkIcons {
     duotoneSecondary: IconData(0xe0ba, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
   );
   static const SkGlyph batteryChargingVertical = SkGlyph(
-    regular: IconData(0xe0bc, fontFamily: SkIconFont.regular, fontPackage: skIconFontPackage),
+    regular: IconData(0xe0bc, fontFamily: SkIconFont.bold, fontPackage: skIconFontPackage),
     bold: IconData(0xe0bc, fontFamily: SkIconFont.bold, fontPackage: skIconFontPackage),
     fill: IconData(0xe0bc, fontFamily: SkIconFont.fill, fontPackage: skIconFontPackage),
     duotone: IconData(0xe0bd, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
@@ -2206,8 +2206,8 @@ class SkIcons {
     regular: IconData(0xe14a, fontFamily: SkIconFont.regular, fontPackage: skIconFontPackage),
     bold: IconData(0xe14a, fontFamily: SkIconFont.bold, fontPackage: skIconFontPackage),
     fill: IconData(0xe14a, fontFamily: SkIconFont.fill, fontPackage: skIconFontPackage),
-    duotone: IconData(0xe14a, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
-    duotoneSecondary: IconData(0xe14a, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
+    duotone: IconData(0xe14a, fontFamily: SkIconFont.regular, fontPackage: skIconFontPackage),
+    duotoneSecondary: IconData(0xe14a, fontFamily: SkIconFont.regular, fontPackage: skIconFontPackage),
   );
   static const SkGlyph cellSignalSlash = SkGlyph(
     regular: IconData(0xe14c, fontFamily: SkIconFont.regular, fontPackage: skIconFontPackage),
@@ -3561,7 +3561,7 @@ class SkIcons {
     duotoneSecondary: IconData(0xe200, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
   );
   static const SkGlyph dotsThreeCircleVertical = SkGlyph(
-    regular: IconData(0xe202, fontFamily: SkIconFont.regular, fontPackage: skIconFontPackage),
+    regular: IconData(0xe202, fontFamily: SkIconFont.bold, fontPackage: skIconFontPackage),
     bold: IconData(0xe202, fontFamily: SkIconFont.bold, fontPackage: skIconFontPackage),
     fill: IconData(0xe202, fontFamily: SkIconFont.fill, fontPackage: skIconFontPackage),
     duotone: IconData(0xe203, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
@@ -3575,7 +3575,7 @@ class SkIcons {
     duotoneSecondary: IconData(0xe204, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
   );
   static const SkGlyph dotsThreeOutlineVertical = SkGlyph(
-    regular: IconData(0xe206, fontFamily: SkIconFont.regular, fontPackage: skIconFontPackage),
+    regular: IconData(0xe206, fontFamily: SkIconFont.bold, fontPackage: skIconFontPackage),
     bold: IconData(0xe206, fontFamily: SkIconFont.bold, fontPackage: skIconFontPackage),
     fill: IconData(0xe206, fontFamily: SkIconFont.fill, fontPackage: skIconFontPackage),
     duotone: IconData(0xe207, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
@@ -5941,7 +5941,7 @@ class SkIcons {
     duotoneSecondary: IconData(0xe2ea, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
   );
   static const SkGlyph linkSimpleHorizontalBreak = SkGlyph(
-    regular: IconData(0xe2ec, fontFamily: SkIconFont.regular, fontPackage: skIconFontPackage),
+    regular: IconData(0xe2ec, fontFamily: SkIconFont.bold, fontPackage: skIconFontPackage),
     bold: IconData(0xe2ec, fontFamily: SkIconFont.bold, fontPackage: skIconFontPackage),
     fill: IconData(0xe2ec, fontFamily: SkIconFont.fill, fontPackage: skIconFontPackage),
     duotone: IconData(0xe2ed, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
@@ -6382,7 +6382,7 @@ class SkIcons {
     duotoneSecondary: IconData(0xeb70, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
   );
   static const SkGlyph microsoftPowerpointLogo = SkGlyph(
-    regular: IconData(0xeace, fontFamily: SkIconFont.regular, fontPackage: skIconFontPackage),
+    regular: IconData(0xeace, fontFamily: SkIconFont.bold, fontPackage: skIconFontPackage),
     bold: IconData(0xeace, fontFamily: SkIconFont.bold, fontPackage: skIconFontPackage),
     fill: IconData(0xeace, fontFamily: SkIconFont.fill, fontPackage: skIconFontPackage),
     duotone: IconData(0xeacf, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
@@ -10501,8 +10501,8 @@ class SkIcons {
     regular: IconData(0xe4f0, fontFamily: SkIconFont.regular, fontPackage: skIconFontPackage),
     bold: IconData(0xe4f0, fontFamily: SkIconFont.bold, fontPackage: skIconFontPackage),
     fill: IconData(0xe4f0, fontFamily: SkIconFont.fill, fontPackage: skIconFontPackage),
-    duotone: IconData(0xe4f0, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
-    duotoneSecondary: IconData(0xe4f0, fontFamily: SkIconFont.duotone, fontPackage: skIconFontPackage),
+    duotone: IconData(0xe4f0, fontFamily: SkIconFont.regular, fontPackage: skIconFontPackage),
+    duotoneSecondary: IconData(0xe4f0, fontFamily: SkIconFont.regular, fontPackage: skIconFontPackage),
   );
   static const SkGlyph wifiSlash = SkGlyph(
     regular: IconData(0xe4f2, fontFamily: SkIconFont.regular, fontPackage: skIconFontPackage),

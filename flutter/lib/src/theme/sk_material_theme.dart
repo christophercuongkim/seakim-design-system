@@ -274,6 +274,256 @@ class SkMaterialTheme {
         subtitleTextStyle: SkText.caption.copyWith(color: c.textTertiary),
         shape: square,
       ),
+
+      // ---------------------------------------------------------------------
+      // Navigation. Left unthemed, these are the most visible break in the
+      // system: Material draws a pill-shaped selection indicator and rounded
+      // corners, so an app reads as half-branded — square cards above a rounded
+      // nav bar. Every surface below is squared and given the accent.
+      // ---------------------------------------------------------------------
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: c.surfaceRaised,
+        surfaceTintColor: const Color(0x00000000),
+        indicatorColor: c.surfaceSelected,
+        indicatorShape: square,
+        elevation: 0,
+        height: SkChrome.tabBar,
+        labelTextStyle: WidgetStateProperty.resolveWith((Set<WidgetState> s) =>
+            SkText.caption.copyWith(
+              color: s.contains(WidgetState.selected)
+                  ? c.textAccent
+                  : c.textSecondary,
+            )),
+        iconTheme: WidgetStateProperty.resolveWith((Set<WidgetState> s) =>
+            IconThemeData(
+              size: 24,
+              color: s.contains(WidgetState.selected)
+                  ? c.textAccent
+                  : c.textSecondary,
+            )),
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: c.surfaceRaised,
+        selectedItemColor: c.textAccent,
+        unselectedItemColor: c.textSecondary,
+        selectedLabelStyle: SkText.caption,
+        unselectedLabelStyle: SkText.caption,
+        type: BottomNavigationBarType.fixed,
+        elevation: 0,
+      ),
+      navigationRailTheme: NavigationRailThemeData(
+        backgroundColor: c.surfaceRaised,
+        indicatorColor: c.surfaceSelected,
+        indicatorShape: square,
+        elevation: 0,
+        selectedIconTheme: IconThemeData(color: c.textAccent, size: 24),
+        unselectedIconTheme: IconThemeData(color: c.textSecondary, size: 24),
+        selectedLabelTextStyle: SkText.caption.copyWith(color: c.textAccent),
+        unselectedLabelTextStyle:
+            SkText.caption.copyWith(color: c.textSecondary),
+      ),
+      drawerTheme: DrawerThemeData(
+        backgroundColor: c.surfaceRaised,
+        surfaceTintColor: const Color(0x00000000),
+        elevation: 0,
+        shape: square,
+        endShape: square,
+        scrimColor: c.surfaceScrim,
+      ),
+      navigationDrawerTheme: NavigationDrawerThemeData(
+        backgroundColor: c.surfaceRaised,
+        surfaceTintColor: const Color(0x00000000),
+        indicatorColor: c.surfaceSelected,
+        indicatorShape: square,
+        elevation: 0,
+        labelTextStyle: WidgetStateProperty.resolveWith((Set<WidgetState> s) =>
+            SkText.bodySm.copyWith(
+              color: s.contains(WidgetState.selected)
+                  ? c.textAccent
+                  : c.textPrimary,
+            )),
+      ),
+      bottomAppBarTheme: BottomAppBarThemeData(
+        color: c.surfaceRaised,
+        elevation: 0,
+        surfaceTintColor: const Color(0x00000000),
+      ),
+
+      // ---------------------------------------------------------------------
+      // Actions and controls.
+      // ---------------------------------------------------------------------
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: c.fillAccent,
+        foregroundColor: c.onAccent,
+        elevation: 0,
+        focusElevation: 0,
+        hoverElevation: 0,
+        highlightElevation: 0,
+        shape: square,
+        extendedTextStyle: SkText.label.copyWith(color: c.onAccent),
+      ),
+      iconButtonTheme: IconButtonThemeData(
+        style: ButtonStyle(
+          shape: WidgetStatePropertyAll<OutlinedBorder>(square),
+          splashFactory: NoSplash.splashFactory,
+          foregroundColor: WidgetStateProperty.resolveWith((Set<WidgetState> s) =>
+              s.contains(WidgetState.disabled) ? c.textTertiary : c.textSecondary),
+          overlayColor: WidgetStateProperty.resolveWith((Set<WidgetState> s) =>
+              s.contains(WidgetState.hovered)
+                  ? c.surfaceHover
+                  : const Color(0x00000000)),
+        ),
+      ),
+      segmentedButtonTheme: SegmentedButtonThemeData(
+        style: ButtonStyle(
+          shape: WidgetStatePropertyAll<OutlinedBorder>(square),
+          splashFactory: NoSplash.splashFactory,
+          textStyle: WidgetStatePropertyAll<TextStyle>(SkText.label),
+          side: WidgetStatePropertyAll<BorderSide>(hairline),
+          backgroundColor: WidgetStateProperty.resolveWith((Set<WidgetState> s) =>
+              s.contains(WidgetState.selected) ? c.surfaceSelected : c.surfaceRaised),
+          foregroundColor: WidgetStateProperty.resolveWith((Set<WidgetState> s) =>
+              s.contains(WidgetState.selected) ? c.textAccent : c.textSecondary),
+        ),
+      ),
+      toggleButtonsTheme: ToggleButtonsThemeData(
+        borderRadius: BorderRadius.zero,
+        borderColor: c.borderDefault,
+        selectedBorderColor: c.borderAccent,
+        color: c.textSecondary,
+        selectedColor: c.textAccent,
+        fillColor: c.surfaceSelected,
+        hoverColor: c.surfaceHover,
+        borderWidth: SkDepth.hairline,
+        textStyle: SkText.label,
+      ),
+      sliderTheme: SliderThemeData(
+        activeTrackColor: c.fillAccent,
+        inactiveTrackColor: c.surfaceInset,
+        thumbColor: c.fillAccent,
+        overlayColor: c.surfaceHover,
+        valueIndicatorColor: c.surfaceOverlay,
+        valueIndicatorTextStyle: SkText.caption.copyWith(color: c.textPrimary),
+        trackHeight: 2,
+      ),
+
+      // ---------------------------------------------------------------------
+      // Menus, search, and pickers — all float, so they keep a border and our
+      // shadow rather than Material's elevation tint.
+      // ---------------------------------------------------------------------
+      menuTheme: MenuThemeData(
+        style: MenuStyle(
+          backgroundColor: WidgetStatePropertyAll<Color>(c.surfaceOverlay),
+          surfaceTintColor: const WidgetStatePropertyAll<Color>(Color(0x00000000)),
+          elevation: const WidgetStatePropertyAll<double>(0),
+          shape: WidgetStatePropertyAll<OutlinedBorder>(
+            RoundedRectangleBorder(borderRadius: BorderRadius.zero, side: hairline),
+          ),
+        ),
+      ),
+      menuButtonTheme: MenuButtonThemeData(
+        style: ButtonStyle(
+          shape: WidgetStatePropertyAll<OutlinedBorder>(square),
+          splashFactory: NoSplash.splashFactory,
+          textStyle: WidgetStatePropertyAll<TextStyle>(SkText.bodySm),
+          foregroundColor: WidgetStatePropertyAll<Color>(c.textPrimary),
+          overlayColor: WidgetStateProperty.resolveWith((Set<WidgetState> s) =>
+              s.contains(WidgetState.hovered)
+                  ? c.surfaceHover
+                  : const Color(0x00000000)),
+        ),
+      ),
+      dropdownMenuTheme: DropdownMenuThemeData(
+        textStyle: SkText.bodySm.copyWith(color: c.textPrimary),
+        menuStyle: MenuStyle(
+          backgroundColor: WidgetStatePropertyAll<Color>(c.surfaceOverlay),
+          surfaceTintColor: const WidgetStatePropertyAll<Color>(Color(0x00000000)),
+          elevation: const WidgetStatePropertyAll<double>(0),
+          shape: WidgetStatePropertyAll<OutlinedBorder>(
+            RoundedRectangleBorder(borderRadius: BorderRadius.zero, side: hairline),
+          ),
+        ),
+      ),
+      searchBarTheme: SearchBarThemeData(
+        backgroundColor: WidgetStatePropertyAll<Color>(c.surfaceRaised),
+        surfaceTintColor: const WidgetStatePropertyAll<Color>(Color(0x00000000)),
+        elevation: const WidgetStatePropertyAll<double>(0),
+        textStyle: WidgetStatePropertyAll<TextStyle>(
+            SkText.bodySm.copyWith(color: c.textPrimary)),
+        hintStyle: WidgetStatePropertyAll<TextStyle>(
+            SkText.bodySm.copyWith(color: c.textTertiary)),
+        shape: WidgetStatePropertyAll<OutlinedBorder>(
+          RoundedRectangleBorder(borderRadius: BorderRadius.zero, side: hairline),
+        ),
+      ),
+      searchViewTheme: SearchViewThemeData(
+        backgroundColor: c.surfaceOverlay,
+        surfaceTintColor: const Color(0x00000000),
+        elevation: 0,
+        side: hairline,
+        shape: square,
+        headerHintStyle: SkText.bodySm.copyWith(color: c.textTertiary),
+        headerTextStyle: SkText.bodySm.copyWith(color: c.textPrimary),
+      ),
+      datePickerTheme: DatePickerThemeData(
+        backgroundColor: c.surfaceOverlay,
+        surfaceTintColor: const Color(0x00000000),
+        elevation: 0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero, side: hairline),
+        headerBackgroundColor: c.surfaceRaised,
+        headerForegroundColor: c.textPrimary,
+        dayShape: WidgetStatePropertyAll<OutlinedBorder>(square),
+        todayBorder: BorderSide(color: c.borderAccent, width: SkDepth.hairline),
+      ),
+      timePickerTheme: TimePickerThemeData(
+        backgroundColor: c.surfaceOverlay,
+        elevation: 0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero, side: hairline),
+        dialBackgroundColor: c.surfaceInset,
+        dialHandColor: c.fillAccent,
+        hourMinuteShape: square,
+        dayPeriodShape: square,
+      ),
+
+      // ---------------------------------------------------------------------
+      // Everything else that ships its own default shape.
+      // ---------------------------------------------------------------------
+      expansionTileTheme: ExpansionTileThemeData(
+        backgroundColor: c.surfaceCard,
+        collapsedBackgroundColor: c.surfaceCard,
+        iconColor: c.textSecondary,
+        collapsedIconColor: c.textSecondary,
+        textColor: c.textPrimary,
+        collapsedTextColor: c.textPrimary,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero, side: hairline),
+        collapsedShape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.zero, side: hairline),
+      ),
+      dataTableTheme: DataTableThemeData(
+        headingTextStyle: SkText.eyebrow.copyWith(color: c.textTertiary),
+        dataTextStyle: SkText.bodySm.copyWith(color: c.textPrimary),
+        dividerThickness: SkDepth.hairline,
+        headingRowColor: WidgetStatePropertyAll<Color>(c.surfaceSunken),
+        dataRowColor: WidgetStateProperty.resolveWith((Set<WidgetState> s) =>
+            s.contains(WidgetState.hovered) ? c.surfaceHover : c.surfaceCard),
+      ),
+      bannerTheme: MaterialBannerThemeData(
+        backgroundColor: c.surfaceRaised,
+        surfaceTintColor: const Color(0x00000000),
+        elevation: 0,
+        contentTextStyle: SkText.bodySm.copyWith(color: c.textPrimary),
+      ),
+      badgeTheme: BadgeThemeData(
+        backgroundColor: c.fillDanger,
+        textColor: c.onDanger,
+        textStyle: SkText.caption,
+      ),
+      scrollbarTheme: ScrollbarThemeData(
+        radius: Radius.zero,
+        thickness: const WidgetStatePropertyAll<double>(6),
+        thumbColor: WidgetStateProperty.resolveWith((Set<WidgetState> s) =>
+            s.contains(WidgetState.hovered) ? c.borderStrong : c.borderDefault),
+      ),
     );
   }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:seakim_flutter/seakim_flutter.dart';
 
+import 'gallery.dart';
+
 /// A working starting point, and the proof that both adoption paths hold.
 ///
 /// The scaffold, app bar, card, text field and buttons below are **stock
@@ -66,6 +68,14 @@ class _Home extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Trips'),
         actions: <Widget>[
+          IconButton(
+            tooltip: 'Material coverage gallery',
+            icon: const SkIcon(SkIcons.squaresFour),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                  builder: (BuildContext _) => const GalleryScreen()),
+            ),
+          ),
           IconButton(
             tooltip: 'Toggle theme',
             icon: SkIcon(mode == ThemeMode.dark ? SkIcons.sun : SkIcons.moon),

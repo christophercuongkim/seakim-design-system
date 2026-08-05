@@ -52,10 +52,13 @@ passes 21 tests. Verified 2026-08-05 on Flutter 3.44 / Dart 3.12.
       example. The workflow regenerates the icon table first, since `sk_icons.g.dart` is
       not committed.
 
-- [ ] **Decide where the Flutter package lives long-term.** It is currently a folder in
-      this repo, which is right while both sides move together. Once Voyage and Bench ship
-      on different schedules you will want versioned dependencies — see
-      [0007](decisions/0007-token-source-format.md) for the shape.
+- [ ] **Decide where the packages live long-term.** Both bindings are folders in this
+      repo, which is right while everything moves together. Consumption by git ref now
+      works on both sides — Flutter via `git:` with `path: flutter`, and the web via
+      `npm i git+ssh://…#<ref>` against the root `package.json` — so an app can already
+      pin a version without a registry. What is still open is whether that stays true
+      once Voyage and Bench ship on different schedules, or whether the web side wants a
+      real registry. Tags are the missing half: pinning `#v2.1.0` needs the tag to exist.
 
 ---
 

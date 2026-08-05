@@ -11,6 +11,56 @@ system (as a workspace package, a git dependency, or vendored under `src/seakim`
 
 ---
 
+## 0. Install
+
+Point at the GitHub URL and pin a ref — the same shape the Flutter binding uses,
+with no registry and no publish step:
+
+```bash
+# pin a commit SHA — reproducible today
+npm i git+ssh://git@github.com/christophercuongkim/seakim-design-system.git#<sha>
+
+# or a tag, once the repo carries them
+npm i git+ssh://git@github.com/christophercuongkim/seakim-design-system.git#v2.1.0
+```
+
+> **The repo has no tags yet.** `VERSION` and `CHANGELOG.md` track the rules
+> version, but nothing in git marks it, so `#v2.1.0` will not resolve until
+> someone tags a release. Pin a SHA until then — and note that the current HEAD
+> is *ahead* of 2.1.0: [0013](../decisions/0013-alpha-variants-are-tokens.md)
+> changed a Tier 0 rule and three tokens were added, which by
+> [0011](../decisions/0011-versioning.md)'s own table is a major bump nobody has
+> declared. Worth settling before an app pins anything.
+
+```ts
+// next.config.mjs — the one line a consumer adds. The package ships source, so
+// its .jsx has to be compiled by the app.
+const nextConfig = { transpilePackages: ["@seakim/design-system"] };
+export default nextConfig;
+```
+
+```tsx
+import { Button, Field, Input } from "@seakim/design-system";
+import "@seakim/design-system/styles.css";   // root layout only — see 3
+```
+
+React is a peer dependency, so the app owns the version. The published surface is
+about 580 KB: `components/`, `tokens/`, `styles.css`, `index.js`, `spec/`, and
+`conformance.md`. The Flutter binding, the fonts, the slides, and the decision
+records stay in the repo and are not installed.
+
+`npm run conformance` and `npm run tokens:check` are exposed as scripts, so a
+consuming repo can run the Tier 0 checks against its own source — which is what
+[decision 0012](../decisions/0012-conformance-checks-ship-with-rules.md) asks of it.
+
+**Working from a copy instead?** If the system is vendored into `src/seakim/`
+rather than installed, import from `@/lib/seakim` and keep the aliases in
+`tsconfig.paths.json`. That path still works; it re-exports the same barrel.
+
+**A worked example lives in [`example/`](example/)** — a Server Component page
+consuming the installed package, with `npm run build` as the thing that keeps
+this document honest.
+
 ## 1. The client boundary — the one that errors
 
 Every interactive SeaKim component calls `useState` (hover, press, and selected state

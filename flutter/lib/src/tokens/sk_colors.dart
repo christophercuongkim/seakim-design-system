@@ -96,6 +96,12 @@ class SkColors {
   final Color borderFocus;
 
   final Color fillAccent;
+
+  /// Accent at the selection weight. Selected text tints its background rather
+  /// than replacing it, so the glyphs keep their own colour — which is why this
+  /// carries alpha instead of being a flat step. Derived here rather than in a
+  /// widget: per decision 0013, an alpha variant is a token.
+  Color get fillAccentSelection => fillAccent.withValues(alpha: 0.32);
   final Color fillAccentHover;
   final Color fillAccentActive;
   final Color onAccent;

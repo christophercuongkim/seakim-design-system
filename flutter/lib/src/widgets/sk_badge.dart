@@ -54,7 +54,7 @@ class SkBadge extends StatelessWidget {
         color: bg,
         borderRadius: pill ? BorderRadius.circular(SkRadius.pill) : null,
         border: variant == SkBadgeVariant.subtle
-            ? Border.all(color: fg.withValues(alpha: 0.22), width: SkDepth.hairline)
+            ? Border.all(color: c.borderSubtle, width: SkDepth.hairline)
             : null,
       ),
       child: Row(

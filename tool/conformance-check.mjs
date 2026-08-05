@@ -48,6 +48,7 @@ const PALETTE_FILES = [
   /tokens\/colors\.css$/,
   /tokens\/theme-light\.css$/,
   /tokens\/apps\.css$/,
+  /tokens\/depth\.css$/,
   /tokens\/generated\//,
   /palette\.g\.dart$/,
   /sk_colors\.dart$/,          // maps the palette onto semantic names
@@ -118,19 +119,27 @@ const RULES = [
     why: 'Semantic tokens only. A literal colour cannot follow the theme or the app accent.',
     skip: f => exempt(f, PALETTE_FILES),
     test(line) {
-      // hex, rgb(), hsl() — but allow fully transparent and pure-black scrims.
-      // A colour composed from a token — rgb(var(--shadow-rgb) / 0.5) — DOES
-      // follow the theme, which is the thing this rule protects; only the alpha
-      // is literal. Applying alpha to a tokenised colour is the supported way to
-      // do it in CSS, so those calls are stripped before the literal test.
-      const composed = /\b(?:rgba?|hsla?)\s*\(\s*var\([^)]*\)[^)]*\)/g;
-      const line2 = line.replace(composed, '');
-      const hex = line2.match(/#[0-9a-fA-F]{3,8}\b/g) || [];
-      const fn = line2.match(/\b(?:rgba?|hsla?)\s*\(/g) || [];
+      // hex, rgb(), hsl() — but allow fully transparent and pure-black scrims
+      const hex = line.match(/#[0-9a-fA-F]{3,8}\b/g) || [];
+      const fn = line.match(/\b(?:rgba?|hsla?)\s*\(/g) || [];
       const real = hex.filter(h => !/^#(0{3,4}|0{6,8})$/i.test(h));
       if (real.length) return `literal colour ${real[0]}`;
-      if (fn.length && !/\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0/.test(line2)) return `literal ${fn[0].trim()}`;
+      if (fn.length && !/\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0/.test(line)) return `literal ${fn[0].trim()}`;
       return null;
+    },
+  },
+  {
+    id: 'composed-alpha',
+    tier: 0,
+    why: 'An alpha variant is a token, not a per-component constant — see decision 0013.',
+    skip: f => exempt(f, PALETTE_FILES),
+    test(line) {
+      // Dart: c.fillAccent.withValues(alpha: 0.32) / .withOpacity(0.32)
+      const dart = /\.with(?:Opacity\s*\(|Values\s*\([^)]*alpha\s*:)/.test(line);
+      // CSS: rgb(var(--fill-accent) / 32%) and friends
+      const css = /\b(?:rgba?|hsla?)\s*\(\s*var\(/.test(line);
+      if (!dart && !css) return null;
+      return 'alpha composed onto a colour in component code — give it a token';
     },
   },
   {
@@ -177,7 +186,9 @@ const RULES = [
     why: 'Disabled is a token. Blanket opacity survives dark and collapses in light — see decision 0005.',
     skip: f => exempt(f, GEOMETRY_EXEMPT),
     test(line) {
-      if (!/disabled|\boff\b/i.test(line)) return null;
+      // `enabled ? 1 : 0.5` is the same violation stated the other way round, and
+      // read past this rule for months because it never says "disabled".
+      if (!/disabled|\benabled\b|\boff\b/i.test(line)) return null;
       const m = line.match(/opacity[^;,)]*?(0?\.[1-9]\d*)/);
       return m ? `opacity ${m[1]} on a disabled state — use --fill-disabled / --text-disabled` : null;
     },

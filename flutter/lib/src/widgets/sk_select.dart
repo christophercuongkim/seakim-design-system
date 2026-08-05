@@ -103,46 +103,51 @@ class _SkSelectState<T> extends State<SkSelect<T>> {
           pressScale: 1,
           semanticLabel: selected?.label ?? widget.placeholder,
           builder: (BuildContext context, SkInteraction s) {
-            final Color border = widget.invalid
-                ? c.textDanger
-                : _open
-                    ? c.borderFocus
-                    : s.liveHover
-                        ? c.borderStrong
-                        : c.borderDefault;
-            return AnimatedOpacity(
-              opacity: widget.enabled ? 1 : 0.5,
+            final Color border = !widget.enabled
+                ? c.borderDisabled
+                : widget.invalid
+                    ? c.textDanger
+                    : _open
+                        ? c.borderFocus
+                        : s.liveHover
+                            ? c.borderStrong
+                            : c.borderDefault;
+            // Disabled is a token, not an opacity pass — every colour in the
+            // subtree resolves to its disabled counterpart.
+            final Color contentMuted =
+                widget.enabled ? c.textTertiary : c.textDisabled;
+            return AnimatedContainer(
               duration: SkMotion.instant,
-              child: AnimatedContainer(
-                duration: SkMotion.instant,
-                curve: SkMotion.out,
-                height: widget.size,
-                padding: const EdgeInsets.symmetric(horizontal: SkSpace.s4),
-                decoration: BoxDecoration(
-                  color: widget.enabled ? c.surfaceRaised : c.surfaceInset,
-                  border: Border.all(
-                    color: border,
-                    width: _open ? SkDepth.emphasis : SkDepth.hairline,
-                  ),
+              curve: SkMotion.out,
+              height: widget.size,
+              padding: const EdgeInsets.symmetric(horizontal: SkSpace.s4),
+              decoration: BoxDecoration(
+                color: widget.enabled ? c.surfaceRaised : c.fillDisabled,
+                border: Border.all(
+                  color: border,
+                  width: _open ? SkDepth.emphasis : SkDepth.hairline,
                 ),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        selected?.label ?? widget.placeholder ?? '',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: SkText.bodySm.copyWith(
-                          fontSize: dense ? SkFontSize.xs : SkFontSize.sm,
-                          color: selected == null ? c.textTertiary : c.textPrimary,
-                        ),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      selected?.label ?? widget.placeholder ?? '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: SkText.bodySm.copyWith(
+                        fontSize: dense ? SkFontSize.xs : SkFontSize.sm,
+                        color: !widget.enabled
+                            ? c.textDisabled
+                            : selected == null
+                                ? c.textTertiary
+                                : c.textPrimary,
                       ),
                     ),
-                    const SizedBox(width: SkSpace.s4),
-                    SkIcon(SkIcons.caretDown,
-                        size: 14, color: c.textTertiary),
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: SkSpace.s4),
+                  SkIcon(SkIcons.caretDown, size: 14, color: contentMuted),
+                ],
               ),
             );
           },

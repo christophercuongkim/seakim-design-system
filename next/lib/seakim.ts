@@ -5,7 +5,7 @@
  *
  * Every interactive SeaKim component keeps hover, press, and selection state
  * internally, so all of them are Client Components. Rather than adding "use client"
- * to 23 files — which would couple the shared library to Next — this one directive
+ * to every component file — which would couple the shared library to Next — this one directive
  * marks everything re-exported below.
  *
  * Import from here, never from the component files directly:
@@ -32,6 +32,10 @@ export { Checkbox } from "@/seakim/components/forms/Checkbox.jsx";
 export { Radio } from "@/seakim/components/forms/Radio.jsx";
 export { Switch } from "@/seakim/components/forms/Switch.jsx";
 export { SegmentedControl } from "@/seakim/components/forms/SegmentedControl.jsx";
+export { Slider } from "@/seakim/components/forms/Slider.jsx";
+export { DatePicker } from "@/seakim/components/forms/DatePicker.jsx";
+
+export { Table } from "@/seakim/components/data/Table.jsx";
 
 export { Dialog } from "@/seakim/components/feedback/Dialog.jsx";
 export { Toast } from "@/seakim/components/feedback/Toast.jsx";

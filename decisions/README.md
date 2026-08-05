@@ -33,6 +33,7 @@ the value is in the trail, and a silently edited ADR is worse than none.
 | [0011](0011-versioning.md) | Versioning | Accepted |
 | [0012](0012-conformance-checks-ship-with-rules.md) | Conformance checks ship with the rules; consuming repos run them | Accepted |
 | [0013](0013-alpha-variants-are-tokens.md) | Alpha variants are tokens, not per-component constants | Accepted |
+| [0014](0014-text-selection-tier-1.md) | Text selection is Tier 1, and when a Tier 1 divergence needs an ADR | Accepted |
 
 ## Writing one
 

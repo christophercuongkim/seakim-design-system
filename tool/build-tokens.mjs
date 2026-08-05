@@ -149,7 +149,7 @@ function emitCss() {
   for (const [name, h] of Object.entries(hues)) {
     L.push(`  --hue-${name}: ${h};${hueNotes[name] ? '    /* ' + hueNotes[name] + ' */' : ''}`);
   }
-  L.push('  --hue-brand: var(--hue-clay);');
+  L.push('  --hue-brand: var(--hue-brick);');
   L.push('');
   L.push('  /* ---- Brand ramp, generated from --hue-brand ---- */');
   for (const { step, l, c } of rampSteps) {
@@ -328,7 +328,7 @@ function emitCssApps() {
   L.push('*/');
   L.push('');
   const aliases = {
-    clay: ['seakim', 'house'],
+    brick: ['seakim', 'house'],
     sea: ['voyage', 'travel'],
     turf: ['bench', 'fantasy'],
     plum: ['reserve', 'reserved'],

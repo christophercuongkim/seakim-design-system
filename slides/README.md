@@ -1,6 +1,6 @@
 # Slide template
 
-Internal-comms deck surface. 1280×720, `data-app="seakim"` (house clay accent),
+Internal-comms deck surface. 1280×720, `data-app="seakim"` (house brick accent),
 dark only — decks are projected.
 
 | File | Slide type | Use for |

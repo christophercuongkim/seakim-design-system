@@ -8,7 +8,7 @@
 // instead, so theme and app switching keep working.
 
 export const skHues = {
-  clay: 55,
+  brick: 8,
   sea: 245,
   turf: 145,
   plum: 320,
@@ -18,18 +18,18 @@ export type SkApp = keyof typeof skHues;
 
 /** sRGB approximations of each app ramp. The CSS uses full-gamut oklch(). */
 export const skBrandRamps = {
-  clay: {
-    '100': '#fadac6',
-    '200': '#f2be9c',
-    '300': '#f0ad7f',
-    '400': '#e28d4f',
-    '500': '#cb7229',
-    '600': '#b05a00',
-    '700': '#874300',
-    '800': '#602d00',
-    '900': '#3c1900',
-    '050': '#feeee4',
-    wash: '#2f1908',
+  brick: {
+    '100': '#fdd6db',
+    '200': '#f7b7c1',
+    '300': '#f6a3b1',
+    '400': '#e98095',
+    '500': '#d1647c',
+    '600': '#b64b65',
+    '700': '#8d364b',
+    '800': '#652333',
+    '900': '#3f121d',
+    '050': '#ffecef',
+    wash: '#31151b',
   },
   sea: {
     '100': '#c9e5fe',

@@ -107,14 +107,23 @@ dart run tool/gen_tokens.dart
 
 The generator uses chroma-reduction gamut mapping rather than clipping, because clipping
 shifts hue and would break the promise that every app's ramp differs only in H. A few
-steps therefore sit at slightly lower chroma than the CSS asks for — most visibly
-`clay.s600`, which cannot be reached in sRGB at that lightness.
+steps therefore sit at slightly lower chroma than the CSS asks for.
 
-**Adding an app:** add the hue to `tokens/colors.css` and `tokens/apps.css`, add it to
+**Adding an app:** add the hue to `tokens/src/color.tokens.json`, add its `[data-app]` alias
+list to `tool/build-tokens.mjs`, add the case to `SkAppBrand`, then run the build. Never
 `_apps` in the generator and to the `SkAppBrand` enum, re-run. Never hand-edit the
 `.g.dart`.
 
 ## Where this deliberately differs from the web
+
+Tier 1 adaptations, per [conformance.md](../conformance.md). Each names its reason —
+an undocumented adaptation is a Tier 0 violation in practice.
+
+- **Selected text is tinted, not inverted.** React inverts glyph colour on selection;
+  Flutter paints `fillAccentSelection` behind the run and leaves glyphs alone, because
+  restyling a selected range is not something `EditableText` does. The token is scoped
+  to selection over `textPrimary` for that reason —
+  see [decision 0014](../decisions/0014-text-selection-tier-1.md).
 
 - **Springy curves are tuned, not identical.** `SkMotion.spring` uses the same
   `cubic-bezier(0.34, 1.42, 0.50, 1)` control points, but Flutter composites

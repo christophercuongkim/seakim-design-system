@@ -4,8 +4,8 @@
   "hue": {
     "$type": "number",
     "$description": "One accent hue per app. The shared layer is achromatic, so this is the only thing that rotates between products.",
-    "clay": {
-      "$value": 55,
+    "brick": {
+      "$value": 8,
       "$description": "SeaKim house — decks, cross-product surfaces"
     },
     "sea": {

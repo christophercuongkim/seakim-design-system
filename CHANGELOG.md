@@ -17,6 +17,45 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [2.1.0] — 2026-08-05
+
+### Changed
+
+- **`--hue-brick` revalued 15 → 8**, blue-shifting the house accent toward crimson. Reads
+  crimson at steps 500–700 (`#d1647c`, `#b64b65`, `#8d364b`); the 400 step stays lighter
+  than true crimson — see the note below. Separation from the danger ramp improves from 10
+  degrees to 17.
+
+  **A gap in [0011](decisions/0011-versioning.md):** its bump table covers adding,
+  removing, and renaming a token, but not *revaluing* one. Treated as minor here — the token
+  and its name are unchanged, so nothing breaks, but every surface using it visibly shifts,
+  which is more than a patch. Worth folding into 0011's successor rather than leaving to
+  judgement each time.
+
+---
+
+## [2.0.0] — 2026-08-05
+
+### Changed — BREAKING
+
+- **The house accent is red, not orange.** `--hue-clay` (55) is renamed `--hue-brick` and
+  revalued to 15. Affects `data-app="seakim"` and `data-app="house"` only — decks and
+  cross-product surfaces. Voyage and Bench are untouched.
+
+  Major per [0011](decisions/0011-versioning.md): a token was renamed. The rule exists so a
+  contributed binding you cannot see is forced to look, and it applies to the author who
+  wrote it.
+
+  Hue 15 rather than a truer 25: the danger ramp sits at 25, and the house accent coexists
+  with status colours on the same screen. Ten degrees of separation is thin — see the note
+  below. Verified against both contrast gates: `400` on `--stone-950` is 7.30, `600` on
+  `--stone-50` is 4.73.
+
+  **Migration:** any binding referencing `SkBrandRamps.clay` or `--hue-clay` renames it.
+  Nothing else moves; the ramp shape and every semantic token are unchanged.
+
+---
+
 ## [1.0.0] — 2026-08-04
 
 First versioned release. Everything below already existed; this is the point at which it

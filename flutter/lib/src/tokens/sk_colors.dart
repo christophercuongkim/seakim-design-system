@@ -4,7 +4,7 @@ import 'palette.g.dart';
 
 /// Which app's accent is live. The Dart equivalent of data-app on the html element.
 enum SkAppBrand {
-  seakim(SkBrandRamps.clay),
+  seakim(SkBrandRamps.brick),
   voyage(SkBrandRamps.sea),
   bench(SkBrandRamps.turf),
   reserve(SkBrandRamps.plum);
@@ -97,10 +97,20 @@ class SkColors {
 
   final Color fillAccent;
 
-  /// Accent at the selection weight. Selected text tints its background rather
-  /// than replacing it, so the glyphs keep their own colour — which is why this
-  /// carries alpha instead of being a flat step. Derived here rather than in a
-  /// widget: per decision 0013, an alpha variant is a token.
+  /// The wash behind selected text inside a form control.
+  ///
+  /// Scoped by [decision 0014] to selection over [textPrimary], which is the only
+  /// foreground `SkInput` and `SkTextarea` render. Unlike React, this tint leaves
+  /// glyph colour untouched — a Tier 1 divergence, because restyling a selected
+  /// range is not something `EditableText` does.
+  ///
+  /// That makes legibility a property of the scope, not of the value: do NOT reach
+  /// for this over mixed content (a selectable table cell, syntax-coloured code, a
+  /// chart label). Those need a solid accent fill with an inverted foreground, or a
+  /// token of their own with its own contrast argument.
+  ///
+  /// Alpha lives here rather than in a widget: per decision 0013, an alpha variant
+  /// is a token.
   Color get fillAccentSelection => fillAccent.withValues(alpha: 0.32);
   final Color fillAccentHover;
   final Color fillAccentActive;

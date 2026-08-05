@@ -5,12 +5,12 @@
       "size": 1382
     },
     ".thumbnail": {
-      "etag": "1785851453512970",
-      "size": 44936
+      "etag": "1785955468143968",
+      "size": 62438
     },
     "CHANGELOG.md": {
-      "etag": "1785851145554685",
-      "size": 5045
+      "etag": "1785955464645718",
+      "size": 6720
     },
     "CONTRIBUTING-A-BINDING.md": {
       "etag": "1785851163071252",
@@ -25,7 +25,7 @@
       "size": 6817
     },
     "VERSION": {
-      "etag": "1785851145554685",
+      "etag": "1785955464645718",
       "size": 6
     },
     "components/core/Avatar.d.ts": {
@@ -444,9 +444,13 @@
       "etag": "1785950656629372",
       "size": 3536
     },
+    "decisions/0014-text-selection-tier-1.md": {
+      "etag": "1785954745891941",
+      "size": 5016
+    },
     "decisions/README.md": {
-      "etag": "1785950760668057",
-      "size": 2783
+      "etag": "1785954745891941",
+      "size": 2906
     },
     "ds-shim.js": {
       "etag": "1785841765692879",
@@ -457,8 +461,8 @@
       "size": 1707
     },
     "flutter/README.md": {
-      "etag": "1785850233919940",
-      "size": 9655
+      "etag": "1785955173308673",
+      "size": 10202
     },
     "flutter/assets/icons/LICENSE-phosphor.txt": {
       "etag": "1785777019798883",
@@ -501,12 +505,12 @@
       "size": 4006
     },
     "flutter/lib/src/tokens/palette.g.dart": {
-      "etag": "1785950965373573",
+      "etag": "1785955464645718",
       "size": 6450
     },
     "flutter/lib/src/tokens/sk_colors.dart": {
-      "etag": "1785950965373573",
-      "size": 8095
+      "etag": "1785955159770540",
+      "size": 8579
     },
     "flutter/lib/src/tokens/sk_depth.dart": {
       "etag": "1785499672820812",
@@ -761,7 +765,7 @@
       "size": 1553
     },
     "index.html": {
-      "etag": "1785851444494699",
+      "etag": "1785955464645718",
       "size": 35469
     },
     "next/README.md": {
@@ -853,16 +857,16 @@
       "size": 2350
     },
     "tokens/apps.css": {
-      "etag": "1785839047395805",
-      "size": 2494
+      "etag": "1785955464645718",
+      "size": 2484
     },
     "tokens/base.css": {
       "etag": "1785950760668057",
       "size": 1287
     },
     "tokens/colors.css": {
-      "etag": "1785950886943327",
-      "size": 4979
+      "etag": "1785955464645718",
+      "size": 4980
     },
     "tokens/depth.css": {
       "etag": "1785950811345125",
@@ -873,8 +877,8 @@
       "size": 766
     },
     "tokens/generated/colors.ts": {
-      "etag": "1785950811345125",
-      "size": 2590
+      "etag": "1785955464645718",
+      "size": 2591
     },
     "tokens/layout.css": {
       "etag": "1785497739647639",
@@ -897,7 +901,7 @@
       "size": 2417
     },
     "tokens/src/color.tokens.json": {
-      "etag": "1785847942708681",
+      "etag": "1785955464645718",
       "size": 9623
     },
     "tokens/theme-light.css": {
@@ -909,8 +913,8 @@
       "size": 2118
     },
     "tool/build-tokens.mjs": {
-      "etag": "1785952564557800",
-      "size": 21864
+      "etag": "1785955159770540",
+      "size": 21865
     },
     "tool/conformance-check.mjs": {
       "etag": "1785951414732345",

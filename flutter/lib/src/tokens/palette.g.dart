@@ -47,19 +47,19 @@ class SkBrandRamp {
 class SkBrandRamps {
   const SkBrandRamps._();
 
-  /// oklch(L C 55) — SeaKim house — decks, cross-product surfaces
-  static const SkBrandRamp clay = SkBrandRamp(
-    s100: Color(0xFFFADAC6),
-    s200: Color(0xFFF2BE9C),
-    s300: Color(0xFFF0AD7F),
-    s400: Color(0xFFE28D4F),
-    s500: Color(0xFFCB7229),
-    s600: Color(0xFFB05A00),
-    s700: Color(0xFF874300),
-    s800: Color(0xFF602D00),
-    s900: Color(0xFF3C1900),
-    s050: Color(0xFFFEEEE4),
-    wash: Color(0xFF2F1908),
+  /// oklch(L C 8) — SeaKim house — decks, cross-product surfaces
+  static const SkBrandRamp brick = SkBrandRamp(
+    s100: Color(0xFFFDD6DB),
+    s200: Color(0xFFF7B7C1),
+    s300: Color(0xFFF6A3B1),
+    s400: Color(0xFFE98095),
+    s500: Color(0xFFD1647C),
+    s600: Color(0xFFB64B65),
+    s700: Color(0xFF8D364B),
+    s800: Color(0xFF652333),
+    s900: Color(0xFF3F121D),
+    s050: Color(0xFFFFECEF),
+    wash: Color(0xFF31151B),
   );
 
   /// oklch(L C 245) — Voyage — travel planning and booking

@@ -1,6 +1,6 @@
 {
   "name": "@seakim/design-system",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "SeaKim design system — tokens, React components, and the rules both bindings answer to.",
   "private": true,
   "type": "module",
@@ -12,7 +12,10 @@
     "**/*.css"
   ],
   "exports": {
-    ".": "./index.js",
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
     "./styles.css": "./styles.css",
     "./tokens/*": "./tokens/*",
     "./components/*": "./components/*",
@@ -24,6 +27,7 @@
   },
   "files": [
     "index.js",
+    "index.d.ts",
     "styles.css",
     "components",
     "tokens",
@@ -36,5 +40,6 @@
     "tokens:check": "node tool/build-tokens.mjs --check",
     "conformance": "node tool/conformance-check.mjs",
     "version:check": "node tool/version-check.mjs"
-  }
+  },
+  "types": "./index.d.ts"
 }

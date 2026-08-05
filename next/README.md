@@ -17,7 +17,7 @@ Point at the GitHub URL and pin a ref — the same shape the Flutter binding use
 with no registry and no publish step:
 
 ```bash
-npm i git+ssh://git@github.com/christophercuongkim/seakim-design-system.git#v3.0.0
+npm i git+ssh://git@github.com/christophercuongkim/seakim-design-system.git#v3.0.1
 ```
 
 Always pin a tag. An unpinned git dependency resolves to whatever `main` holds at

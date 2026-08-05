@@ -58,7 +58,8 @@ passes 21 tests. Verified 2026-08-05 on Flutter 3.44 / Dart 3.12.
       `npm i git+ssh://…#<ref>` against the root `package.json` — so an app can already
       pin a version without a registry. What is still open is whether that stays true
       once Voyage and Bench ship on different schedules, or whether the web side wants a
-      real registry. Tags are the missing half: pinning `#v2.1.0` needs the tag to exist.
+      real registry. Tagging is done: `v3.0.0` is the first tagged release, and `node tool/version-check.mjs`
+      keeps `VERSION`, `package.json`, and the changelog from drifting apart.
 
 ---
 

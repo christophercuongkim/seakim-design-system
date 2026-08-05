@@ -17,20 +17,13 @@ Point at the GitHub URL and pin a ref — the same shape the Flutter binding use
 with no registry and no publish step:
 
 ```bash
-# pin a commit SHA — reproducible today
-npm i git+ssh://git@github.com/christophercuongkim/seakim-design-system.git#<sha>
-
-# or a tag, once the repo carries them
-npm i git+ssh://git@github.com/christophercuongkim/seakim-design-system.git#v2.1.0
+npm i git+ssh://git@github.com/christophercuongkim/seakim-design-system.git#v3.0.0
 ```
 
-> **The repo has no tags yet.** `VERSION` and `CHANGELOG.md` track the rules
-> version, but nothing in git marks it, so `#v2.1.0` will not resolve until
-> someone tags a release. Pin a SHA until then — and note that the current HEAD
-> is *ahead* of 2.1.0: [0013](../decisions/0013-alpha-variants-are-tokens.md)
-> changed a Tier 0 rule and three tokens were added, which by
-> [0011](../decisions/0011-versioning.md)'s own table is a major bump nobody has
-> declared. Worth settling before an app pins anything.
+Always pin a tag. An unpinned git dependency resolves to whatever `main` holds at
+install time, which is how two apps end up on different rules without either
+noticing. `VERSION`, `package.json`, and the newest `CHANGELOG.md` heading all
+carry the same number, and `npm run version:check` fails if they ever disagree.
 
 ```ts
 // next.config.mjs — the one line a consumer adds. The package ships source, so

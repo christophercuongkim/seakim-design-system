@@ -4,9 +4,9 @@ import type { Metadata } from "next";
 import "@/seakim/styles.css";
 
 // Phosphor webfont, the three weights the system uses.
-import "@phosphor-icons/web/regular";
-import "@phosphor-icons/web/bold";
-import "@phosphor-icons/web/fill";
+import "@phosphor-icons/web/regular/style.css";
+import "@phosphor-icons/web/bold/style.css";
+import "@phosphor-icons/web/fill/style.css";
 
 import { fontVariables } from "./fonts";
 

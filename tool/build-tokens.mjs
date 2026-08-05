@@ -235,7 +235,7 @@ function emitCss() {
   L.push('  --text-disabled:   var(--stone-600);');
   L.push(`  --border-disabled: ${raw.borderDisabledDark.$value};`);
   L.push('');
-  L.push('  /* Categorical series for charts. Equal L and C, hue only \u2014 so no series');
+  L.push('  /* Categorical series for charts. Equal L and C, hue only — so no series');
   L.push('     reads as louder than its neighbour. Assign in order; never reorder');
   L.push('     per chart. See guidelines/data-visualisation.md. */');
   for (const s of chartSeries) {

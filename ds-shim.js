@@ -34,10 +34,13 @@
     'components/forms/Radio.jsx',
     'components/forms/Switch.jsx',
     'components/forms/SegmentedControl.jsx',
+    'components/forms/Slider.jsx',
+    'components/forms/DatePicker.jsx',
     'components/feedback/Dialog.jsx',
     'components/feedback/Toast.jsx',
     'components/feedback/Tooltip.jsx',
     'components/feedback/EmptyState.jsx',
+    'components/data/Table.jsx',
     'components/navigation/Tabs.jsx',
     'components/navigation/SideNav.jsx',
     'components/navigation/TabBar.jsx'

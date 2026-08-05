@@ -5,12 +5,13 @@ function Dot({ on, hover, disabled }) {
     <span style={{
       width: 16, height: 16, flex: 'none', borderRadius: 'var(--radius-circle)',
       display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-      background: 'var(--surface-raised)',
-      border: `${on ? 2 : 1}px solid ${on ? 'var(--fill-accent)' : hover && !disabled ? 'var(--border-strong)' : 'var(--border-default)'}`,
+      background: disabled ? 'var(--fill-disabled)' : 'var(--surface-raised)',
+      border: `${on ? 2 : 1}px solid ${disabled ? 'var(--border-disabled)' : on ? 'var(--fill-accent)' : hover ? 'var(--border-strong)' : 'var(--border-default)'}`,
       transition: 'var(--transition-control)',
     }}>
       <span style={{
-        width: 7, height: 7, borderRadius: 'var(--radius-circle)', background: 'var(--fill-accent)',
+        width: 7, height: 7, borderRadius: 'var(--radius-circle)',
+        background: disabled ? 'var(--text-disabled)' : 'var(--fill-accent)',
         transform: on ? 'scale(1)' : 'scale(0)',
         transition: 'transform var(--dur-base) var(--ease-pop)',
       }} />
@@ -36,7 +37,7 @@ export function Radio({ name, options = [], value, defaultValue, onChange, direc
             onMouseLeave={() => setHoverKey(null)}
             style={{
               display: 'flex', gap: 'var(--space-4)', alignItems: opt.hint ? 'flex-start' : 'center',
-              cursor: off ? 'not-allowed' : 'pointer', opacity: off ? 0.4 : 1,
+              cursor: off ? 'not-allowed' : 'pointer', 
             }}
           >
             <input type="radio" name={name} checked={on} disabled={off}
@@ -46,8 +47,8 @@ export function Radio({ name, options = [], value, defaultValue, onChange, direc
               <Dot on={on} hover={hoverKey === opt.value} disabled={off} />
             </span>
             <span style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <span style={{ font: 'var(--type-body-sm)', color: 'var(--text-primary)' }}>{opt.label}</span>
-              {opt.hint && <span style={{ font: 'var(--type-caption)', color: 'var(--text-tertiary)' }}>{opt.hint}</span>}
+              <span style={{ font: 'var(--type-body-sm)', color: off ? 'var(--text-disabled)' : 'var(--text-primary)' }}>{opt.label}</span>
+              {opt.hint && <span style={{ font: 'var(--type-caption)', color: off ? 'var(--text-disabled)' : 'var(--text-tertiary)' }}>{opt.hint}</span>}
             </span>
           </label>
         );

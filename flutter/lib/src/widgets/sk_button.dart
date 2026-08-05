@@ -83,7 +83,7 @@ class SkButton extends StatelessWidget {
       focusNode: focusNode,
       semanticLabel: loading ? loadingLabel : label,
       builder: (BuildContext context, SkInteraction s) {
-        final (Color bg, Color fg, Color border) = _palette(c, s);
+        final (Color bg, Color fg, Color border) = off ? _disabledPalette(c) : _palette(c, s);
         // Bold weight inside solid fills, where regular strokes thin out.
         final SkIconWeight iconWeight =
             variant == SkButtonVariant.primary || variant == SkButtonVariant.danger
@@ -92,10 +92,7 @@ class SkButton extends StatelessWidget {
 
         return SkFocusRing(
           visible: s.focused,
-          child: AnimatedOpacity(
-            opacity: off ? 0.4 : 1,
-            duration: SkMotion.instant,
-            child: AnimatedContainer(
+          child: AnimatedContainer(
               duration: SkMotion.instant,
               curve: SkMotion.out,
               height: _height,
@@ -141,13 +138,21 @@ class SkButton extends StatelessWidget {
                               size: _iconSize, weight: iconWeight, color: fg),
                         ],
                       ],
-              ),
             ),
           ),
         );
       },
     );
   }
+
+  /// See [SkColors.fillDisabled] — disabled is its own palette, not a fade.
+  (Color, Color, Color) _disabledPalette(SkColors c) => (
+        variant == SkButtonVariant.ghost ? const Color(0x00000000) : c.fillDisabled,
+        c.textDisabled,
+        variant == SkButtonVariant.secondary
+            ? c.borderDisabled
+            : const Color(0x00000000),
+      );
 
   (Color, Color, Color) _palette(SkColors c, SkInteraction s) {
     switch (variant) {

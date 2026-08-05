@@ -15,11 +15,11 @@ export function Textarea({ rows = 4, invalid = false, disabled = false, style, .
       {...rest}
       style={{
         width: '100%', resize: 'vertical', padding: 'var(--space-4)',
-        background: disabled ? 'var(--surface-inset)' : 'var(--surface-raised)',
-        border: `1px solid ${border}`, borderRadius: 'var(--radius-none)',
+        background: disabled ? 'var(--fill-disabled)' : 'var(--surface-raised)',
+        border: `1px solid ${disabled ? 'var(--border-disabled)' : border}`, borderRadius: 'var(--radius-none)',
         boxShadow: focus ? 'var(--focus-ring-inset)' : 'none',
-        outline: 'none', font: 'var(--type-body-sm)', color: 'var(--text-primary)',
-        opacity: disabled ? 0.5 : 1,
+        outline: 'none', font: 'var(--type-body-sm)', color: disabled ? 'var(--text-disabled)' : 'var(--text-primary)',
+        
         transition: 'var(--transition-control), box-shadow var(--dur-instant) var(--ease-out)',
         ...style,
       }}

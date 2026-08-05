@@ -41,24 +41,27 @@ class SkTag extends StatelessWidget {
       disabled: disabled,
       semanticLabel: label,
       builder: (BuildContext context, SkInteraction s) {
-        final Color fg = selected ? c.textAccent : c.textSecondary;
+        final Color fg = disabled
+            ? c.textDisabled
+            : selected
+                ? c.textAccent
+                : c.textSecondary;
         final Color bg = selected
             ? c.surfaceSelected
             : s.liveHover
                 ? c.surfaceHover
                 : const Color(0x00000000);
-        final Color border = selected
-            ? c.borderAccent
-            : s.liveHover
-                ? c.borderStrong
-                : c.borderDefault;
+        final Color border = disabled
+            ? c.borderDisabled
+            : selected
+                ? c.borderAccent
+                : s.liveHover
+                    ? c.borderStrong
+                    : c.borderDefault;
 
         return SkFocusRing(
           visible: s.focused,
-          child: AnimatedOpacity(
-            opacity: disabled ? 0.4 : 1,
-            duration: SkMotion.instant,
-            child: AnimatedContainer(
+          child: AnimatedContainer(
               duration: SkMotion.instant,
               curve: SkMotion.out,
               height: SkControl.sm,
@@ -105,7 +108,6 @@ class SkTag extends StatelessWidget {
                     ),
                   ],
                 ],
-              ),
             ),
           ),
         );

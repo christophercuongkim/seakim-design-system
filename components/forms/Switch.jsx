@@ -16,13 +16,13 @@ export function Switch({ checked, defaultChecked = false, onChange, label, hint,
   return (
     <label style={{
       display: 'flex', alignItems: hint ? 'flex-start' : 'center', gap: 'var(--space-4)',
-      cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.4 : 1,
+      cursor: disabled ? 'not-allowed' : 'pointer', 
       justifyContent: label ? 'space-between' : 'flex-start', ...style,
     }} {...rest}>
       {(label || hint) && (
         <span style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
-          {label && <span style={{ font: 'var(--type-body-sm)', color: 'var(--text-primary)' }}>{label}</span>}
-          {hint && <span style={{ font: 'var(--type-caption)', color: 'var(--text-tertiary)' }}>{hint}</span>}
+          {label && <span style={{ font: 'var(--type-body-sm)', color: disabled ? 'var(--text-disabled)' : 'var(--text-primary)' }}>{label}</span>}
+          {hint && <span style={{ font: 'var(--type-caption)', color: disabled ? 'var(--text-disabled)' : 'var(--text-tertiary)' }}>{hint}</span>}
         </span>
       )}
       <input type="checkbox" role="switch" checked={on} onChange={toggle} disabled={disabled}
@@ -30,13 +30,13 @@ export function Switch({ checked, defaultChecked = false, onChange, label, hint,
       <span style={{
         width: s.w, height: s.h, flex: 'none', padding: pad, marginTop: hint ? 2 : 0,
         borderRadius: 'var(--radius-full)', display: 'inline-flex', alignItems: 'center',
-        background: on ? 'var(--fill-accent)' : 'var(--fill-neutral)',
-        border: `1px solid ${on ? 'var(--fill-accent)' : 'var(--border-default)'}`,
+        background: disabled ? 'var(--fill-disabled)' : on ? 'var(--fill-accent)' : 'var(--fill-neutral)',
+        border: `1px solid ${disabled ? 'var(--border-disabled)' : on ? 'var(--fill-accent)' : 'var(--border-default)'}`,
         boxSizing: 'content-box', transition: 'var(--transition-surface)',
       }}>
         <span style={{
           width: s.k, height: s.k, borderRadius: 'var(--radius-circle)',
-          background: on ? 'var(--on-accent)' : 'var(--stone-400)',
+          background: disabled ? 'var(--text-disabled)' : on ? 'var(--on-accent)' : 'var(--stone-400)',
           transform: `translateX(${on ? s.w - s.k : 0}px)`,
           transition: 'transform var(--dur-base) var(--ease-spring), background-color var(--dur-fast) var(--ease-out)',
         }} />

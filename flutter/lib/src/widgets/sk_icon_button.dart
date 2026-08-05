@@ -54,28 +54,33 @@ class SkIconButton extends StatelessWidget {
       disabled: disabled,
       semanticLabel: label,
       builder: (BuildContext context, SkInteraction s) {
-        final Color fg = active
-            ? c.textAccent
-            : s.liveHover
-                ? c.textPrimary
-                : c.textSecondary;
-        final Color bg = active
-            ? c.surfaceSelected
-            : s.livePress
-                ? c.surfaceActive
+        final Color fg = s.disabled
+            ? c.textDisabled
+            : active
+                ? c.textAccent
                 : s.liveHover
-                    ? c.surfaceHover
-                    : const Color(0x00000000);
+                    ? c.textPrimary
+                    : c.textSecondary;
+        final Color bg = s.disabled
+            ? const Color(0x00000000)
+            : active
+                ? c.surfaceSelected
+                : s.livePress
+                    ? c.surfaceActive
+                    : s.liveHover
+                        ? c.surfaceHover
+                        : const Color(0x00000000);
         final Color border = variant == SkIconButtonVariant.secondary
-            ? (s.liveHover ? c.borderStrong : c.borderDefault)
+            ? (s.disabled
+                ? c.borderDisabled
+                : s.liveHover
+                    ? c.borderStrong
+                    : c.borderDefault)
             : const Color(0x00000000);
 
         return SkFocusRing(
           visible: s.focused,
-          child: AnimatedOpacity(
-            opacity: s.disabled ? 0.4 : 1,
-            duration: SkMotion.instant,
-            child: AnimatedContainer(
+          child: AnimatedContainer(
               duration: SkMotion.instant,
               curve: SkMotion.out,
               width: size,
@@ -90,7 +95,6 @@ class SkIconButton extends StatelessWidget {
                 size: _iconSize,
                 weight: active ? SkIconWeight.fill : SkIconWeight.regular,
                 color: fg,
-              ),
             ),
           ),
         );

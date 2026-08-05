@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-app="seakim">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ADR sign-off — SeaKim</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+  body { padding: 0 0 220px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 40px 32px 0; }
+
+  /* ---- header ---- */
+  header { display: flex; flex-direction: column; gap: var(--space-5); padding-bottom: var(--space-8); }
+  .eyebrow { font: var(--type-eyebrow); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--text-tertiary); }
+  h1 { font-size: 38px; letter-spacing: var(--tracking-tighter); }
+  .lede { font: var(--type-body); color: var(--text-secondary); max-width: 62ch; }
+  .toprow { display: flex; align-items: flex-end; gap: var(--space-5); }
+
+  /* ---- progress ---- */
+  .prog { display: flex; align-items: center; gap: var(--space-4); }
+  .pips { display: flex; gap: 3px; }
+  .pips i { width: 22px; height: 4px; background: var(--fill-neutral); display: block; }
+  .pips i.done { background: var(--fill-accent); }
+  .pips i.disc { background: var(--text-warning); }
+  .pips i.no { background: var(--text-danger); }
+  .prognum { font: var(--type-data); color: var(--text-secondary); white-space: nowrap; }
+
+  /* ---- adr card ---- */
+  .adr {
+    border: 1px solid var(--border-subtle); background: var(--surface-card);
+    margin-bottom: var(--space-5);
+  }
+  .adr.decided-accept { border-left: 2px solid var(--fill-accent); }
+  .adr.decided-reject { border-left: 2px solid var(--text-danger); }
+  .adr.decided-discuss { border-left: 2px solid var(--text-warning); }
+
+  .head {
+    display: flex; align-items: flex-start; gap: var(--space-5);
+    padding: var(--space-5); cursor: pointer; user-select: none;
+    transition: background-color var(--dur-base) var(--ease-out);
+  }
+  .head:hover { background: var(--surface-hover); }
+  .num { font: var(--type-data); color: var(--text-tertiary); width: 38px; flex: none; padding-top: 2px; }
+  .headmain { flex: 1; min-width: 0; }
+  .adr h2 { font-size: 19px; letter-spacing: var(--tracking-tight); }
+  .oneline { font: var(--type-body-sm); color: var(--text-secondary); margin-top: var(--space-3); }
+  .chev { color: var(--text-tertiary); font-size: 16px; padding-top: 2px; transition: transform var(--dur-base) var(--ease-spring); }
+  .adr.open .chev { transform: rotate(90deg); }
+
+  .chip {
+    font: var(--type-eyebrow); text-transform: uppercase; letter-spacing: var(--tracking-caps);
+    padding: 3px 7px; white-space: nowrap; flex: none;
+    background: var(--fill-neutral); color: var(--text-secondary);
+    border: 1px solid var(--border-default);
+  }
+  .chip.accept { background: var(--surface-selected); color: var(--text-accent); border-color: var(--border-accent); }
+  .chip.reject { background: var(--fill-danger-subtle); color: var(--text-danger); border-color: var(--text-danger); }
+  .chip.discuss { background: var(--fill-warning-subtle); color: var(--text-warning); border-color: var(--text-warning); }
+
+  .body { display: none; padding: 0 var(--space-5) var(--space-5); }
+  .adr.open .body { display: block; }
+  .body h3 {
+    font: var(--type-eyebrow); text-transform: uppercase; letter-spacing: var(--tracking-caps);
+    color: var(--text-tertiary); margin: var(--space-7) 0 var(--space-4);
+  }
+  .body h3:first-child { margin-top: 0; }
+  .body p, .body li { font: var(--type-body-sm); color: var(--text-secondary); }
+  .body p { margin-bottom: var(--space-4); max-width: 70ch; }
+  .body strong { color: var(--text-primary); font-weight: var(--weight-semibold); }
+  .body ul { margin: 0 0 var(--space-4); padding-left: 20px; display: flex; flex-direction: column; gap: var(--space-3); }
+  .body table { border-collapse: collapse; width: 100%; margin-bottom: var(--space-5); }
+  .body th, .body td {
+    text-align: left; padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--border-subtle); font: var(--type-body-sm); vertical-align: top;
+  }
+  .body th { font: var(--type-eyebrow); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--text-tertiary); border-top: none; }
+  code { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); }
+  .rej li { color: var(--text-tertiary); }
+  .rej li strong { color: var(--text-secondary); }
+
+  .flag {
+    padding: var(--space-4) var(--space-5); margin-bottom: var(--space-5);
+    background: var(--fill-warning-subtle); border: 1px solid var(--border-subtle);
+    font: var(--type-body-sm); color: var(--text-primary);
+  }
+  .flag.info { background: var(--surface-inset); color: var(--text-secondary); }
+
+  /* ---- decision controls ---- */
+  .decide {
+    border-top: 1px solid var(--border-subtle); margin-top: var(--space-6);
+    padding-top: var(--space-5); display: flex; flex-direction: column; gap: var(--space-4);
+  }
+  .btns { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+  button.vote {
+    height: var(--control-h-md); padding: 0 var(--space-5); cursor: pointer;
+    display: inline-flex; align-items: center; gap: var(--space-3);
+    background: transparent; color: var(--text-secondary);
+    border: 1px solid var(--border-default); font: var(--type-label);
+    transition: var(--transition-control);
+  }
+  button.vote:hover { background: var(--surface-hover); border-color: var(--border-strong); color: var(--text-primary); }
+  button.vote:active { transform: scale(var(--press-scale)); }
+  button.vote.on[data-v="accept"] { background: var(--fill-accent); color: var(--on-accent); border-color: var(--fill-accent); }
+  button.vote.on[data-v="reject"] { background: var(--fill-danger); color: var(--on-danger); border-color: var(--fill-danger); }
+  button.vote.on[data-v="discuss"] { background: var(--fill-warning-subtle); color: var(--text-warning); border-color: var(--text-warning); }
+  textarea {
+    width: 100%; min-height: 60px; resize: vertical; padding: var(--space-4);
+    background: var(--surface-raised); border: 1px solid var(--border-default);
+    font: var(--type-body-sm); color: var(--text-primary); outline: none;
+  }
+  textarea:focus { border-color: var(--border-focus); border-width: 2px; padding: calc(var(--space-4) - 1px); }
+  textarea::placeholder { color: var(--text-tertiary); }
+
+  /* ---- footer summary ---- */
+  .summary {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 300;
+    background: var(--surface-card); border-top: 1px solid var(--border-default);
+    box-shadow: var(--shadow-raised);
+  }
+  .summary .inner {
+    max-width: 900px; margin: 0 auto; padding: var(--space-5) 32px;
+    display: flex; align-items: center; gap: var(--space-5); flex-wrap: wrap;
+  }
+  .summary .lbl { font: var(--type-eyebrow); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--text-tertiary); }
+  .tally { display: flex; gap: var(--space-6); }
+  .tally span { font: var(--type-data); font-size: var(--text-md); }
+  .tally b { color: var(--text-tertiary); font-weight: 400; font-size: var(--text-xs); margin-left: 4px; }
+  button.primary {
+    height: var(--control-h-md); padding: 0 var(--space-5); cursor: pointer;
+    background: var(--fill-accent); color: var(--on-accent); border: none;
+    font: var(--type-label); display: inline-flex; align-items: center; gap: var(--space-3);
+    transition: var(--transition-control);
+  }
+  button.primary:hover { background: var(--fill-accent-hover); }
+  button.primary:active { transform: scale(var(--press-scale)); }
+  button.ghost {
+    height: var(--control-h-md); padding: 0 var(--space-4); cursor: pointer;
+    background: transparent; color: var(--text-secondary); border: none; font: var(--type-label);
+  }
+  button.ghost:hover { color: var(--text-primary); background: var(--surface-hover); }
+
+  #digest {
+    display: none; max-width: 900px; margin: 0 auto; padding: 0 32px var(--space-5);
+  }
+  #digest.show { display: block; }
+  #digest pre {
+    margin: 0; padding: var(--space-5); max-height: 220px; overflow: auto;
+    background: var(--surface-inset); border: 1px solid var(--border-subtle);
+    font-family: var(--font-mono); font-size: 11.5px; line-height: 1.6;
+    color: var(--text-secondary); white-space: pre-wrap;
+  }
+
+  .sectitle { margin: var(--space-11) 0 var(--space-5); }
+  .sectitle h2 { font-size: 24px; letter-spacing: var(--tracking-tight); }
+  .sectitle p { font: var(--type-body-sm); color: var(--text-secondary); margin-top: var(--space-3); max-width: 66ch; }
+  a { color: var(--text-link); }
+  /* ---- visual demos ---- */
+  .viz { border: 1px solid var(--border-subtle); background: var(--surface-sunken); margin-bottom: var(--space-6); }
+  .viz-head {
+    display: flex; align-items: center; gap: var(--space-4);
+    padding: var(--space-3) var(--space-5); border-bottom: 1px solid var(--border-subtle);
+    font: var(--type-eyebrow); text-transform: uppercase; letter-spacing: var(--tracking-caps);
+    color: var(--text-tertiary);
+  }
+  .viz-body { padding: var(--space-6) var(--space-5); }
+  .vz { display: flex; gap: var(--space-7); flex-wrap: wrap; align-items: flex-start; }
+  .vz > figure { margin: 0; display: flex; flex-direction: column; gap: var(--space-4); }
+  .vz figcaption { font: var(--type-caption); color: var(--text-tertiary); max-width: 30ch; }
+  .vz figcaption.bad { color: var(--text-danger); }
+  .vz figcaption.good { color: var(--text-success); }
+  .stage {
+    position: relative; width: 232px; height: 150px; overflow: hidden;
+    background: var(--surface-page); border: 1px solid var(--border-default);
+  }
+  .stage .fake-line { height: 8px; background: var(--surface-raised); margin: 12px 14px; }
+  .stage .fake-line.s { width: 58%; }
+  .fab {
+    position: absolute; right: 14px; bottom: 14px; width: 48px; height: 48px;
+    border-radius: 50%; background: var(--fill-accent); color: var(--on-accent);
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+    box-shadow: 0 6px 16px rgba(0,0,0,.55), 0 2px 4px rgba(0,0,0,.4);
+  }
+  .fab.sq { border-radius: 0; }
+  .footbar {
+    position: absolute; left: 0; right: 0; bottom: 0; padding: 10px;
+    background: var(--surface-card); border-top: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-raised);
+  }
+  .footbar button {
+    width: 100%; height: 34px; border: none; cursor: pointer;
+    background: var(--fill-accent); color: var(--on-accent);
+    font: var(--type-label); display: inline-flex; align-items: center;
+    justify-content: center; gap: 6px;
+  }
+  .strike { position: relative; }
+  .strike::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to bottom right, transparent 48%, var(--text-danger) 48%, var(--text-danger) 52%, transparent 52%);
+    opacity: .55; pointer-events: none;
+  }
+
+  /* mini table */
+  .mt { width: 100%; border-collapse: collapse; background: var(--surface-card); }
+  .mt th {
+    font: var(--type-eyebrow); text-transform: uppercase; letter-spacing: var(--tracking-caps);
+    color: var(--text-tertiary); text-align: left; padding: 8px 12px; font-weight: 500;
+    border-bottom: 1px solid var(--border-subtle); border-top: none; white-space: nowrap;
+  }
+  .mt th.n, .mt td.n { text-align: right; }
+  .mt th.hov { color: var(--text-secondary); }
+  .mt th.act { color: var(--text-accent); }
+  .mt td {
+    padding: 8px 12px; border-top: 1px solid var(--border-subtle);
+    font: var(--type-body-sm); color: var(--text-secondary);
+  }
+  .mt td.n { font: var(--type-data); color: var(--text-primary); font-variant-numeric: tabular-nums; }
+  .mt td.id { color: var(--text-primary); }
+  .mt.cmp td { padding: 4px 12px; }
+  .ar { margin-left: 4px; font-size: 10px; }
+
+  /* sm row */
+  .srow {
+    display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+    border-top: 1px solid var(--border-subtle); min-height: 44px; width: 232px;
+    box-sizing: border-box; background: var(--surface-card);
+  }
+  .srow:first-child { border-top: none; }
+  .srow .m { flex: 1; min-width: 0; }
+  .srow .n1 { font: var(--type-label); font-size: var(--text-sm); color: var(--text-primary); }
+  .srow .n2 { font: var(--type-caption); color: var(--text-tertiary); margin-top: 1px; }
+  .srow .f { font: var(--type-data); font-size: var(--text-md); color: var(--text-primary); }
+  .clip { width: 232px; overflow: hidden; border: 1px solid var(--border-default); }
+  .clip .inner { width: 420px; }
+
+  /* calendar */
+  .cg { display: grid; grid-template-columns: repeat(7, 30px); gap: 1px; background: var(--border-subtle); padding: 1px; }
+  .cg span, .cg b {
+    height: 30px; display: flex; align-items: center; justify-content: center;
+    font: var(--type-data); font-size: var(--text-xs); font-weight: 400;
+    background: var(--surface-raised); color: var(--text-primary);
+  }
+  .cg .dw { height: 20px; background: var(--surface-overlay); font: var(--type-eyebrow); color: var(--text-tertiary); }
+  .cg .in { background: var(--surface-selected); color: var(--text-accent); }
+  .cg .ep { background: var(--fill-accent); color: var(--on-accent); font-weight: 600; }
+  .cg .td { box-shadow: inset 0 -2px 0 var(--border-accent); }
+  .cg .rd { border-radius: 50%; }
+  .cg .ep.rd, .cg .in.rd { border-radius: 50%; }
+
+  /* slider */
+  .srail { position: relative; width: 150px; height: 24px; display: flex; align-items: center; }
+  .srail .rl { position: absolute; left: 0; right: 0; height: 4px; background: var(--surface-inset); border: 1px solid var(--border-subtle); box-sizing: border-box; }
+  .srail .fl { position: absolute; height: 4px; background: var(--fill-accent); }
+  .srail .tb { position: absolute; width: 12px; height: 20px; margin-left: -6px; background: var(--fill-accent); border: 1px solid var(--border-strong); box-sizing: border-box; }
+  .srail .cr { position: absolute; width: 20px; height: 20px; margin-left: -10px; border-radius: 50%; background: var(--fill-accent); box-shadow: 0 2px 6px rgba(0,0,0,.5); }
+
+  /* theme peers */
+  .peer { width: 200px; padding: var(--space-5); }
+  .peer .cd { padding: var(--space-4); margin-top: var(--space-4); }
+  .peer .t1 { font: var(--type-label); }
+  .peer .t2 { font: var(--type-caption); margin-top: 3px; }
+  .peer.dk { background: #0f0e0d; }
+  .peer.dk .cd { background: #181614; border: 1px solid #2a2724; }
+  .peer.dk .t1 { color: #f5f3f0; } .peer.dk .t2 { color: #7c7873; }
+  .peer.lt { background: #faf9f7; }
+  .peer.lt .cd { background: #ffffff; border: 1px solid #e0deda; }
+  .peer.lt .t1 { color: #181614; } .peer.lt .t2 { color: #7c7873; }
+  .peer .lbl { font: var(--type-eyebrow); text-transform: uppercase; letter-spacing: var(--tracking-caps); }
+  .peer.dk .lbl { color: #7c7873; } .peer.lt .lbl { color: #7c7873; }
+
+  /* token flow */
+  .flow { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; font: var(--type-caption); }
+  .flow .bx {
+    padding: 8px 12px; border: 1px solid var(--border-default); background: var(--surface-card);
+    font-family: var(--font-mono); font-size: 11px; color: var(--text-primary); white-space: nowrap;
+  }
+  .flow .bx.src { border-color: var(--border-accent); background: var(--surface-selected); color: var(--text-accent); }
+  .flow .bx.gen { color: var(--text-tertiary); border-style: dashed; }
+  .flow .bx.dup { border-color: var(--text-danger); color: var(--text-danger); }
+  .flow i.ph { color: var(--text-tertiary); font-size: 14px; }
+  .flow .col { display: flex; flex-direction: column; gap: 4px; }
+
+  /* tiers */
+  .tier { display: flex; flex-direction: column; gap: var(--space-3); }
+  .tl { display: flex; align-items: center; gap: var(--space-4); font: var(--type-body-sm); }
+  .tl .tg {
+    font: var(--type-eyebrow); text-transform: uppercase; letter-spacing: var(--tracking-caps);
+    padding: 2px 6px; width: 74px; text-align: center; flex: none;
+  }
+  .tl .tg.t0 { background: var(--fill-danger-subtle); color: var(--text-danger); }
+  .tl .tg.t1 { background: var(--fill-warning-subtle); color: var(--text-warning); }
+  .tl .tg.t2 { background: var(--surface-selected); color: var(--text-accent); }
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="toprow">
+      <div style="flex:1">
+        <div class="eyebrow">SeaKim · design system</div>
+        <h1 style="margin-top:var(--space-3)">Decision record</h1>
+      </div>
+      <div class="prog">
+        <div class="pips" id="pips"></div>
+        <span class="prognum" id="prognum">0 / 8</span>
+      </div>
+    </div>
+    <p class="lede">
+      <strong>All eight were accepted on 2026-08-04</strong>, and the Flutter icon call went to
+      option A — bundle the font. Kept here as the reviewable record: click any row for the
+      full case, the alternatives that lost, and a live demo of what was being chosen between.
+      The controls still work if you want to revisit one.
+    </p>
+  </header>
+
+  <div id="list"></div>
+
+  <div class="sectitle">
+    <h2>Accepted already</h2>
+    <p>
+      Listed for context, not for sign-off. 0001 is in force because the folders it
+      describes now exist — push back on it and I will write its successor.
+    </p>
+  </div>
+  <div id="accepted"></div>
+</div>
+
+<div class="summary">
+  <div id="digest"><pre id="digesttext"></pre></div>
+  <div class="inner">
+    <span class="lbl">Tally</span>
+    <div class="tally">
+      <span id="t-accept">0<b>accepted</b></span>
+      <span id="t-reject">0<b>rejected</b></span>
+      <span id="t-discuss">0<b>discuss</b></span>
+      <span id="t-open" style="color:var(--text-tertiary)">8<b>undecided</b></span>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:var(--space-4);align-items:center">
+      <button class="ghost" onclick="resetAll()">Clear</button>
+      <button class="ghost" onclick="toggleDigest()"><i class="ph ph-eye"></i> Digest</button>
+      <button class="primary" onclick="copyDigest()"><i class="ph-bold ph-clipboard-text"></i> <span id="copylabel">Copy digest</span></button>
+    </div>
+  </div>
+</div>
+
+<script>
+const ITEMS = [
+  {
+    id: '0002', kind: 'adr', title: 'No floating action button',
+    oneline: 'Ban it outright. The primary action lives in a sticky footer at sm, or the top bar from md up.',
+    body: `
+      <h3>The case</h3>
+      <p>A FAB is structurally three things SeaKim rejects, at once:</p>
+      <ul>
+        <li><strong>A circle.</strong> Corners are 0px; round is reserved for shapes that are
+        conceptually round — avatars, status dots, switch tracks, count pills. A button is not one.</li>
+        <li><strong>A shadow on something that lives in the layout.</strong> Shadow promises
+        "floats above the page, dismissible". A FAB is permanent chrome in a popover's costume.</li>
+        <li><strong>An unlabelled primary action.</strong> Icon-only controls need a label and a
+        tooltip — and tooltips do not exist on touch, which is the only place a FAB lives.</li>
+      </ul>
+      <p>Squaring it does not rescue it. A 56px square with a shadow floating over content reads
+      as a dialog that lost its dialog.</p>
+      <p>And the primary action already has a documented home at every breakpoint, in use across
+      Voyage checkout, Voyage trip detail, and Bench lineup:</p>
+      <table>
+        <tr><th>Breakpoint</th><th>Home</th></tr>
+        <tr><td><code>sm</code></td><td>Sticky footer bar above the tab bar, <code>--shadow-raised</code> only</td></tr>
+        <tr><td><code>md</code>, <code>lg</code></td><td>Top-bar trailing slot, or the owning section's header row</td></tr>
+      </table>
+      <p>The sticky footer is already a sanctioned exception: <code>--shadow-raised</code> exists
+      for "bars that scroll over content". It is an edge-anchored bar, not a floating object, and
+      it can hold a labelled button.</p>
+      <h3>What it costs</h3>
+      <ul>
+        <li>A Material app cannot adopt SeaKim without touching its FAB. <code>SkMaterialTheme</code>
+        must <em>neutralise</em> it — zero radius, zero elevation — so a surviving FAB looks visibly
+        wrong in review rather than quietly almost-right.</li>
+        <li>Screens with one dominant mobile action lose some visual punch. A full-width footer
+        button is a larger target and it is labelled.</li>
+        <li>Speed-dial expansion has no equivalent. If ever needed, it is a bottom sheet of
+        labelled actions — already specified.</li>
+      </ul>
+      <h3>Rejected</h3>
+      <ul class="rej">
+        <li><strong>Squared FAB with rules.</strong> Loses two Tier 0 rules to buy a component we
+        do not need, on the one breakpoint that already has a better answer.</li>
+        <li><strong>Allow it in Bench only.</strong> Per-app component divergence is how one system
+        becomes two.</li>
+        <li><strong>Documented escape hatch.</strong> Becomes the default within two sprints.</li>
+      </ul>`
+  },
+  {
+    id: '0003', kind: 'adr', title: 'Tables: anatomy, sort, density, and the sm species swap',
+    oneline: 'Header cell is the sort control. Two densities. At sm rows change species to list rows — they do not scroll sideways.',
+    flag: 'Bench needs a table in three places today and Voyage needs one for fares. This is the last moment before three slightly different tables ship.',
+    body: `
+      <h3>Sort affordance</h3>
+      <p>The header cell <strong>is</strong> the control — no separate icon button, which would
+      either double the header height or halve the label space to make a target out of something
+      that already is one.</p>
+      <table>
+        <tr><th>State</th><th>Arrow</th><th>Label</th></tr>
+        <tr><td>Not sorted, not hovered</td><td>absent</td><td><code>--text-tertiary</code></td></tr>
+        <tr><td>Not sorted, hovered</td><td>tertiary, pointing where a click goes</td><td><code>--text-secondary</code></td></tr>
+        <tr><td>Active sort</td><td><code>--text-accent</code>, fill weight</td><td><code>--text-accent</code></td></tr>
+      </table>
+      <p>One sorted column at a time — multi-column sort needs a UI of its own and a header cannot
+      carry it legibly. The active arrow is the only accent-coloured thing in the header.</p>
+      <h3>Density</h3>
+      <p>Two, tied to existing control heights so a control fits in a row without the row growing.
+      No third: a 28px row cannot hold a 28px control with padding.</p>
+      <table>
+        <tr><th>Density</th><th>Row height</th><th>When</th></tr>
+        <tr><td><code>comfortable</code></td><td><code>--control-h-touch</code></td><td>Default. Any row with an avatar, badge, or control.</td></tr>
+        <tr><td><code>compact</code></td><td><code>--control-h-md</code></td><td>Numeric matrices, no in-row controls.</td></tr>
+      </table>
+      <h3>At sm, rows change species</h3>
+      <p>A record row becomes a stacked list row: identifying column as the primary line, two or
+      three supporting values as a secondary line, the most important figure trailing in mono.
+      This is what Bench's <code>RosterList</code> already does — the ADR makes it the rule.</p>
+      <p><strong>Horizontal scroll is rejected for record tables</strong> because it destroys both
+      things a table is for: the header and its sort affordance scroll out of view, and comparing
+      rows starts to require holding an invisible column in your head.</p>
+      <p><strong>One exception — a stat matrix.</strong> If every scrolling column shares a unit and
+      comparing columns <em>is</em> the task, it may scroll with the identifying column frozen.
+      Cards would destroy the grid that makes the numbers comparable. Shared unit is the test that
+      keeps the exception narrow.</p>
+      <h3>What it costs</h3>
+      <ul>
+        <li>Every table needs three hand-made decisions: column priority, the one figure that
+        survives to sm, and the secondary line. Cannot be automated — and it is the work that makes
+        the table usable on a phone.</li>
+        <li>Two layouts per table. Bench proves this is roughly 60 lines, not a rewrite.</li>
+      </ul>
+      <h3>Rejected</h3>
+      <ul class="rej">
+        <li><strong>Horizontal scroll everywhere.</strong> Simpler to build, unusable on the device
+        most people have.</li>
+        <li><strong>Zebra striping.</strong> Fights the hairline rule and needs a large step to be
+        visible in dark.</li>
+        <li><strong>Three densities.</strong> Breaks "a control fits in a row".</li>
+      </ul>`
+  },
+  {
+    id: '0004', kind: 'adr', title: 'Date and time selection — and no time picker',
+    oneline: 'Square cells with hairline gaps, today is an underline, ranges render as one continuous bar. No time picker at all.',
+    body: `
+      <h3>Where 0px wins</h3>
+      <p>Square cells with a 1px gap make a selected range render as <strong>one continuous
+      bar</strong>. Material has to invent a pill with flat inner edges to get there; SeaKim gets it
+      free. This is the rare case where the radius rule produces a <em>better</em> object than the
+      platform default rather than a constraint to work around.</p>
+      <h3>Today is an underline</h3>
+      <p>A fill means selected. A ring means focused. Both are taken — and a ring vanishes once the
+      date falls inside a range. A 2px bottom border is unambiguous and survives selection.</p>
+      <table>
+        <tr><th>Cell state</th><th>Treatment</th></tr>
+        <tr><td>Range endpoint</td><td><code>--fill-accent</code> fill, <code>--on-accent</code> text</td></tr>
+        <tr><td>Inside range</td><td><code>--surface-selected</code>, <code>--text-accent</code></td></tr>
+        <tr><td>Today</td><td>2px <code>--border-accent</code> bottom border only</td></tr>
+        <tr><td>Unavailable</td><td><code>opacity: 0.4</code>, not selectable. No strike-through.</td></tr>
+      </table>
+      <h3>The grid is an affordance over an input</h3>
+      <p>Every date field accepts typed <code>YYYY-MM-DD</code> in mono; the calendar opens from a
+      trailing icon button. A returning traveller who knows the date is faster typing it, and a
+      keyboard or screen-reader user gets a real text field instead of a grid to arrow through.</p>
+      <h3>No time picker — the part to argue with</h3>
+      <p><strong>There is no time picker.</strong> A time is a mono text input with a format hint,
+      optionally paired with a <code>Select</code> when the choices are genuinely enumerable — a
+      pickup slot, a kickoff window.</p>
+      <p>Reasoning: SeaKim already displays every time in mono (<code>6:40–9:15am</code>), so typing
+      one is consistent rather than a downgrade. Spinner wheels and clock dials are large, round,
+      platform-idiosyncratic objects that would each need a SeaKim answer — and neither app has a
+      case that needs one. Voyage times come from flight inventory; Bench times come from a
+      schedule. Revisit if a product ever needs free time entry as its primary interaction.</p>
+      <h3>Rejected</h3>
+      <ul class="rej">
+        <li><strong>Round cells.</strong> The only round non-conceptual shape in the system, and
+        range bars go notchy.</li>
+        <li><strong>Today as a ring or fill.</strong> Collides with focus and selected respectively.</li>
+        <li><strong>Native platform pickers.</strong> Three different looks, none of them SeaKim,
+        and the range-bar problem lands back in the middle of the brand.</li>
+      </ul>`
+  },
+  {
+    id: '0005', kind: 'adr', title: 'Light mode is first-class, and enforced',
+    oneline: 'First-class, dark stays default, OS preference ignored. Costs roughly double the visual review per component.',
+    flag: 'This is your largest open non-conformance either way. ~20 specimen cards and both UI kits have never been reviewed in light — including in the reference React binding.',
+    body: `
+      <h3>The structural argument, not the aesthetic one</h3>
+      <p>Light being second-class would mean the semantic token layer is only trustworthy in one
+      theme. That layer is what everything rests on — including per-app hue rotation. A binding
+      author who cannot trust <code>--surface-card</code> in both themes starts reaching for stone
+      steps directly, and at that point <em>app theming breaks too</em>. Light mode is the test
+      that keeps the abstraction honest.</p>
+      <h3>Three enforcement rules</h3>
+      <ul>
+        <li><strong>Every new card and screen is reviewed in both themes before it merges.</strong>
+        A component only ever seen in dark is not done. Checklist item, not good intention.</li>
+        <li><strong>Contrast verified at both ends.</strong> If a new semantic token only works in
+        one theme, it is not semantic — it is a dark value missing its light peer.</li>
+        <li><strong>Neither theme derived from the other.</strong> No filters, no inversion, no
+        programmatic lightness flip.</li>
+      </ul>
+      <table>
+        <tr><th>Concern</th><th>Dark</th><th>Light</th></tr>
+        <tr><td>Surface direction</td><td>Cards step up from the page</td><td>Cards step up <em>to white</em>, page is off-white</td></tr>
+        <tr><td>Shadows</td><td>Heavy, cool-black, carry the lift</td><td>Light, warm; the hairline does more work</td></tr>
+        <tr><td>Accent fill</td><td><code>brand-400</code></td><td><code>brand-500</code> — 400 on white fails contrast</td></tr>
+      </table>
+      <h3>OS preference is ignored — the weakest call here</h3>
+      <p>Dark is a <strong>brand</strong> decision, not an accessibility one. A first-time visitor
+      gets dark regardless of their system setting; a returning visitor gets their last choice.
+      <code>prefers-color-scheme</code> is ignored for the initial theme.</p>
+      <p>Defensible because SeaKim products are consumer apps with a deliberate look, not
+      documentation that should disappear into the OS. Flagged as arguable — if a real user says
+      otherwise, that outweighs the principle. <code>prefers-reduced-motion</code> is a different
+      matter and is always honoured.</p>
+      <h3>What it costs</h3>
+      <ul>
+        <li>Roughly doubles visual review time per component. There is no way to have first-class
+        light without paying this.</li>
+        <li>The repo is out of compliance the moment you accept: ~20 cards and 2 kits need a light
+        pass. Slides are exempt — projected, dark by design.</li>
+        <li>Closes off "just tint dark" forever, including for a SwiftUI binding that might get it
+        cheaply from the platform.</li>
+      </ul>
+      <h3>Rejected</h3>
+      <ul class="rej">
+        <li><strong>Best-effort.</strong> Honest about today, but licenses the semantic layer to be
+        half-trustworthy — and that layer carries per-app theming as well.</li>
+        <li><strong>Follow the OS.</strong> Reasonable, and it means most users never see the
+        intended look.</li>
+        <li><strong>Derive light from dark.</strong> Produces grey-card-on-grey-page — exactly what
+        makes most dark-first systems look wrong in light.</li>
+      </ul>`
+  },
+  {
+    id: '0006', kind: 'adr', title: 'Slider anatomy — a fader, not a dial',
+    oneline: '4px track, 12×20 vertical bar thumb, value always visible as text. No tooltip on the thumb.',
+    body: `
+      <h3>Why a bar</h3>
+      <p>The thumb is <strong>taller than the track and narrower than it is tall</strong> — 12 wide
+      by 20 tall. That is the whole idea: it reads as a mechanical fader position, stays legible at
+      12px with no shadow separating it from the track, and never gets mistaken for a dot, a
+      handle, or a checkbox.</p>
+      <p>A round thumb needs either a shadow or bulk to read against a 4px track, and the system
+      gives it neither.</p>
+      <table>
+        <tr><th>Part</th><th>Treatment</th></tr>
+        <tr><td>Track</td><td>4px, <code>--surface-inset</code>, 1px hairline, square ends</td></tr>
+        <tr><td>Filled span</td><td><code>--fill-accent</code>, no border</td></tr>
+        <tr><td>Thumb</td><td>12 × 20, <code>--fill-accent</code>, 1px <code>--border-strong</code></td></tr>
+        <tr><td>Hit area</td><td>Invisible, <code>--control-h-touch</code> tall</td></tr>
+        <tr><td>Ticks</td><td>Only when discrete and under 12 steps</td></tr>
+      </table>
+      <h3>The value is always text</h3>
+      <p>A slider without a readable number is a guess. One figure for a single slider, an en-dash
+      range for two, in the <code>Field</code> label row.</p>
+      <p><strong>No tooltip on the thumb.</strong> It would be an overlay following the finger,
+      hidden under it on touch, and it breaks "never animate a value the user is reading" at exactly
+      the moment the number matters most.</p>
+      <h3>Not a substitute for typing</h3>
+      <p>A slider is for coarse, exploratory adjustment. Where the exact number matters — a price
+      cap, a budget — pair it with a mono <code>Input</code> or use the input alone. Same reasoning
+      as the date field.</p>
+      <h3>Rejected</h3>
+      <ul class="rej">
+        <li><strong>Round thumb.</strong> Needs a shadow or bulk; both off-system.</li>
+        <li><strong>Square thumb, equal sides.</strong> Reads as a checkbox that escaped.</li>
+        <li><strong>Thumb grows on hover or press.</strong> Contradicts "nothing in the layout moves
+        on hover" and makes the press feel unrelated to every other control.</li>
+      </ul>`
+  },
+  {
+    id: '0007', kind: 'adr', title: 'DTCG JSON becomes the token source; CSS becomes an output',
+    oneline: 'Neutral source under tokens/src/, generating CSS, Dart, and TS. Sequenced colour-first. Shared oklch gamut mapping.',
+    flag: 'Amended after your pushback — the platform-agnostic argument is now the primary case, and the CSS-parsing burden on non-web bindings is the reason this is architectural rather than a bug fix.',
+    body: `
+      <h3>The primary argument: no binding should parse CSS</h3>
+      <p>CSS as source privileges the web. Every non-web binding either parses CSS — a parser for
+      <code>oklch()</code> inside nested <code>[data-app]</code> selectors, written correctly, three
+      times — or maintains a hand copy. Neither is acceptable as a standing requirement for joining
+      the system.</p>
+      <p>A neutral source means a SwiftUI author reads JSON, or better, runs one emitter and gets
+      Swift. The cost of adding a binding drops from "understand our CSS" to "write 200 lines of
+      emitter".</p>
+      <h3>The supporting symptom</h3>
+      <p><code>flutter/tool/gen_tokens.dart</code> does not parse the CSS — it carries its own
+      hardcoded copy of the eleven L/C pairs and four app hues. Those values exist twice, nothing
+      checks them, and Flutter has been depending on the second copy since the port landed.</p>
+      <p>This could be patched without changing the architecture (make the generator actually parse
+      the CSS), which is why it is <em>evidence</em> rather than the case. It shows what happens
+      under the current shape when a second platform arrives and CSS parsing is inconvenient: the
+      author copies instead.</p>
+      <h3>Shape</h3>
+      <table>
+        <tr><th>Path</th><th>Role</th></tr>
+        <tr><td><code>tokens/src/*.tokens.json</code></td><td>Source of truth, hand-edited, DTCG format</td></tr>
+        <tr><td><code>tokens/*.css</code></td><td><strong>Generated.</strong> Banner says so.</td></tr>
+        <tr><td><code>tool/build-tokens.mjs</code></td><td>One script, three emitters</td></tr>
+      </table>
+      <p><strong>Colour stays oklch in the source.</strong> CSS emits the <code>oklch()</code>
+      function and lets the browser resolve it; Dart and Swift get sRGB baked with chroma-reduction
+      gamut mapping. That is the part that makes the neutral source genuinely pay: the <em>ramp
+      maths</em> becomes shared code instead of a rule each binding reimplements — and clipping
+      instead of chroma reduction would shift hue and break the promise that every app's ramp
+      differs only in H.</p>
+      <h3>Sequenced, not big-bang</h3>
+      <table>
+        <tr><th>Phase</th><th>Scope</th><th>Why</th></tr>
+        <tr><td>1</td><td>Colour + app hues</td><td>Where duplication exists today, and where the shared maths lives</td></tr>
+        <tr><td>2</td><td>Dimension — space, control heights, chrome</td><td>Cheap, and the next thing a binding retypes</td></tr>
+        <tr><td>3</td><td>Typography, motion</td><td>Stable, rarely touched, lowest value</td></tr>
+      </table>
+      <p>Each phase deletes the hand-written CSS it replaces in the same commit. No file is a source
+      and an output at once.</p>
+      <h3>What it costs</h3>
+      <ul>
+        <li>A Node script becomes a dependency of changing a colour. Real cost — editing CSS
+        directly is currently one line with instant feedback.</li>
+        <li>One more indirection between intent and result. Worse for a designer poking at values,
+        better for three bindings agreeing.</li>
+        <li>DTCG is young and tool support is uneven. Only the <em>file format</em> is adopted — no
+        Style Dictionary, no pipeline — so the risk is a hand-written emitter, not a vendor.</li>
+      </ul>
+      <h3>Rejected</h3>
+      <ul class="rej">
+        <li><strong>Keep CSS as source, make the Dart generator parse it properly.</strong> Cheapest
+        honest option, and it fixes the duplication. Rejected because it makes CSS parsing a
+        standing entry requirement for every future binding.</li>
+        <li><strong>Keep CSS, add a test comparing the two copies.</strong> Papers over the shape
+        problem and only covers the binding you wrote the test for.</li>
+        <li><strong>Style Dictionary.</strong> More capable than needed, with its own naming
+        opinions.</li>
+        <li><strong>TypeScript as source.</strong> Fine for web bindings, absurd for SwiftUI to
+        consume.</li>
+      </ul>`
+  },
+  {
+    id: '0008', kind: 'adr', title: 'Conformance tiers',
+    oneline: 'Tier 0 non-negotiable, Tier 1 adaptable with the reason documented, and an inventory split mandatory / expected / on demand / forbidden.',
+    body: `
+      <h3>The distinction that matters</h3>
+      <p>Not which components you ship — <strong>which rules a platform may adapt.</strong> A rule
+      that may bend is a guideline; a rule that may not is the identity. Conflating them is how a
+      system dissolves, one reasonable exception at a time.</p>
+      <h3>Tier 0 — no platform exception, ever</h3>
+      <ul>
+        <li>0px corners, except conceptually round shapes. No 4px anywhere.</li>
+        <li>Borders define, shadows lift.</li>
+        <li>One accent hue live at a time; shared layer achromatic.</li>
+        <li>Semantic tokens only — no component reads a stone or ramp step.</li>
+        <li>Press is a 0.97 scale at 80ms, not a ripple.</li>
+        <li>Focus always visible: 2px accent ring, 2px gap.</li>
+        <li>44px minimum touch target.</li>
+        <li>Both themes work, neither derived from the other.</li>
+        <li>Reduced motion collapses durations to zero.</li>
+        <li>Sentence case, verbs on buttons, no emoji.</li>
+        <li>No gradients except the dialog scrim. No FAB.</li>
+      </ul>
+      <h3>Tier 1 — adapt, but document it</h3>
+      <p>Intent fixed, mechanism the platform's business: breakpoint measurement, text input
+      internals, icon delivery, overlay mechanism, exact felt overshoot, accessibility API, pointer
+      affordances.</p>
+      <p><strong>An undocumented adaptation is a Tier 0 violation in practice.</strong> The point of
+      this tier is the paper trail, not the latitude.</p>
+      <h3>Inventory</h3>
+      <table>
+        <tr><th>Tier</th><th>Count</th><th>Rule</th></tr>
+        <tr><td>Mandatory</td><td>14</td><td>Every screen in both kits needs them. Responsive bindings need both nav shells.</td></tr>
+        <tr><td>Expected</td><td>9</td><td>Ship unless the platform has no use case</td></tr>
+        <tr><td>On demand</td><td>3</td><td>Slider, DatePicker, Sheet — specced so they arrive consistent</td></tr>
+        <tr><td>Forbidden</td><td>1</td><td>FloatingActionButton</td></tr>
+      </table>
+      <p><strong>Names are fixed across bindings; prefixes and API shape are not.</strong>
+      <code>SkButton</code>, <code>Button</code>, <code>SKButton</code> all fine.
+      <code>PrimaryButton</code> is not — a reader should move between bindings without a
+      translation table.</p>
+      <h3>Rejected</h3>
+      <ul class="rej">
+        <li><strong>Everything mandatory.</strong> Blocks a narrow binding and makes partial
+        adoption non-conformant, which discourages adoption.</li>
+        <li><strong>Everything a guideline.</strong> Then nothing is the brand and it is a mood
+        board.</li>
+        <li><strong>Automated conformance suite.</strong> Right eventually. The rules that matter
+        most — one accent per screen, is this shadow justified — are judgement a test cannot make.</li>
+      </ul>`
+  },
+  {
+    id: 'ICONS', kind: 'call', title: 'Open call — unblock the Flutter build',
+    oneline: 'phosphor_flutter subclasses IconData, which Flutter sealed in 3.27+. The token layer needs Color.withValues, which requires 3.27+. No stock SDK satisfies both.',
+    flag: 'Not an ADR — an architectural call with a build blocked behind it. Flutter does not compile today on any single stock SDK.',
+    body: `
+      <h3>The deadlock</h3>
+      <p><code>phosphor_flutter</code> 2.1.0 — including git main — declares
+      <code>class PhosphorIconData extends IconData</code>. Flutter sealed <code>IconData</code>
+      as a final class in 3.27. Meanwhile the token layer uses <code>Color.withValues</code>, which
+      only exists from 3.27. Nothing builds.</p>
+      <h3>Option A — bundle the Phosphor icon font, drop the package <em>(recommended)</em></h3>
+      <p>Phosphor ships plain <code>.ttf</code> files per weight. Declare them in
+      <code>pubspec.yaml</code> alongside the three text families and use ordinary
+      <code>IconData(codepoint, fontFamily:)</code>. Nothing subclasses <code>IconData</code>, so
+      modern Flutter is fine and <code>withValues</code> stays.</p>
+      <ul>
+        <li>Needs a generated codepoint map — same pattern as <code>palette.g.dart</code>, from
+        Phosphor's published <code>selection.json</code>. New <code>tool/gen_icons.dart</code>.</li>
+        <li>4 more font assets on top of the 10 text ones.</li>
+        <li><code>SkGlyph</code> changes meaning: our own value type instead of a phosphor
+        function. Contained to <code>sk_icon.dart</code> plus icon field types on
+        <code>SkButton</code> and <code>SkIconButton</code> — about 4 files.</li>
+        <li><strong>Beyond unblocking:</strong> the system stops depending on one package's release
+        cadence, which matters more once three apps share it.</li>
+      </ul>
+      <h3>Option B — pin Flutter below 3.27</h3>
+      <p>Revert five <code>withValues(alpha: x)</code> calls to <code>withOpacity(x)</code>. Ten
+      minutes. Locks <em>every</em> SeaKim app to an old SDK to satisfy one icon library, and the
+      problem returns the moment anything else needs a modern API.</p>
+      <h3>Option C — wait for a compatible phosphor release</h3>
+      <p>No date. Flutter is unbuildable until then.</p>
+      <h3>Separately: fonts are not committed</h3>
+      <p><code>flutter/pubspec.yaml</code> declares 10 <code>.ttf</code> assets that are not in the
+      repo, for licensing reasons. Outfit, Plus Jakarta Sans, and IBM Plex Mono are all open-licence
+      Google Fonts — they need dropping into <code>flutter/assets/fonts/</code> by you; I cannot
+      fetch binaries. The web bindings fetch theirs at runtime, so only Flutter is blocked on this.</p>`,
+    votes: [['a', 'Option A — bundle the font'], ['b', 'Option B — pin Flutter'], ['c', 'Option C — wait']]
+  }
+];
+
+const VISUALS = {
+'0002': `
+  <div class="viz"><div class="viz-head"><i class="ph ph-eye"></i>What we are choosing between</div><div class="viz-body">
+  <div class="vz">
+    <figure>
+      <div class="stage strike">
+        <div class="fake-line"></div><div class="fake-line s"></div><div class="fake-line"></div>
+        <div class="fab"><i class="ph-bold ph-plus"></i></div>
+      </div>
+      <figcaption class="bad">Material FAB. A circle, with a shadow, sitting in the layout — three Tier 0 violations in one object.</figcaption>
+    </figure>
+    <figure>
+      <div class="stage strike">
+        <div class="fake-line"></div><div class="fake-line s"></div><div class="fake-line"></div>
+        <div class="fab sq"><i class="ph-bold ph-plus"></i></div>
+      </div>
+      <figcaption class="bad">Squared off. Fixes the radius and keeps the worse problem: a permanent 48px slab floating over content, unlabelled.</figcaption>
+    </figure>
+    <figure>
+      <div class="stage">
+        <div class="fake-line"></div><div class="fake-line s"></div><div class="fake-line"></div>
+        <div class="footbar"><button><i class="ph-bold ph-plus"></i>New trip</button></div>
+      </div>
+      <figcaption class="good">Sticky footer. Edge-anchored bar, labelled, a larger target — and <code>--shadow-raised</code> already sanctions it.</figcaption>
+    </figure>
+  </div>
+  </div></div>`,
+'0003': `
+  <div class="viz"><div class="viz-head"><i class="ph ph-eye"></i>Sort affordance · three states</div><div class="viz-body">
+  <table class="mt cmp"><thead><tr>
+    <th style="width:33%">Player</th>
+    <th class="hov" style="width:33%">Matchup<i class="ph-bold ph-arrow-up ar"></i></th>
+    <th class="act n" style="width:33%">Live<i class="ph-fill ph-arrow-down ar"></i></th>
+  </tr></thead><tbody><tr>
+    <td style="font:var(--type-caption);color:var(--text-tertiary)">idle — no arrow</td>
+    <td style="font:var(--type-caption);color:var(--text-tertiary)">hovered — tertiary arrow</td>
+    <td class="n" style="font:var(--type-caption);color:var(--text-tertiary);text-align:right">active — accent, fill weight</td>
+  </tr></tbody></table>
+  </div></div>
+
+  <div class="viz"><div class="viz-head"><i class="ph ph-eye"></i>Two densities</div><div class="viz-body">
+  <div class="vz">
+    <figure style="flex:1;min-width:260px">
+      <table class="mt"><thead><tr><th>Player</th><th class="n">Live</th></tr></thead><tbody>
+        <tr><td class="id" style="height:44px">Dana Okafor</td><td class="n">24.6</td></tr>
+        <tr><td class="id" style="height:44px">Theo Lindqvist</td><td class="n">11.2</td></tr>
+      </tbody></table>
+      <figcaption>comfortable · 44px · fits an avatar, badge, or control</figcaption>
+    </figure>
+    <figure style="flex:1;min-width:260px">
+      <table class="mt"><thead><tr><th>Team</th><th class="n">PF</th></tr></thead><tbody>
+        <tr><td class="id" style="height:34px;padding:4px 12px">Rim Rattlers</td><td class="n" style="padding:4px 12px">1,284.6</td></tr>
+        <tr><td class="id" style="height:34px;padding:4px 12px">Bench Warmers</td><td class="n" style="padding:4px 12px">1,261.2</td></tr>
+      </tbody></table>
+      <figcaption>compact · 34px · numeric matrices, no in-row controls</figcaption>
+    </figure>
+  </div>
+  </div></div>
+
+  <div class="viz"><div class="viz-head"><i class="ph ph-eye"></i>At sm — the actual decision</div><div class="viz-body">
+  <div class="vz">
+    <figure>
+      <div class="clip strike"><div class="inner">
+        <table class="mt"><thead><tr><th>Slot</th><th>Player</th><th>Matchup</th><th class="n">Live</th><th class="n">Proj</th></tr></thead>
+        <tbody><tr><td>PG</td><td class="id">Dana Okafor</td><td>ATL vs MIA</td><td class="n">24.6</td><td class="n">18.4</td></tr>
+        <tr><td>SG</td><td class="id">Theo Lindqvist</td><td>BOS @ NYK</td><td class="n">11.2</td><td class="n">14.8</td></tr></tbody></table>
+      </div></div>
+      <figcaption class="bad">Horizontal scroll. The header — and the sort control — leaves the screen, and comparing rows needs an invisible column held in your head.</figcaption>
+    </figure>
+    <figure>
+      <div style="border:1px solid var(--border-default)">
+        <div class="srow"><span style="width:26px;font:var(--type-eyebrow);color:var(--text-tertiary)">PG</span><span class="m"><span class="n1">Dana Okafor</span><span class="n2" style="display:block">PG · ATL · vs MIA</span></span><span class="f">24.6</span></div>
+        <div class="srow"><span style="width:26px;font:var(--type-eyebrow);color:var(--text-tertiary)">SG</span><span class="m"><span class="n1">Theo Lindqvist</span><span class="n2" style="display:block">SG · BOS · @ NYK</span></span><span class="f">11.2</span></div>
+      </div>
+      <figcaption class="good">Rows change species. Everything visible, 44px targets, one figure that matters — declared per table by hand.</figcaption>
+    </figure>
+  </div>
+  </div></div>`,
+'0004': `
+  <div class="viz"><div class="viz-head"><i class="ph ph-eye"></i>Range selection · square vs round</div><div class="viz-body">
+  <div class="vz">
+    <figure>
+      <div class="cg">
+        <span class="dw">MO</span><span class="dw">TU</span><span class="dw">WE</span><span class="dw">TH</span><span class="dw">FR</span><span class="dw">SA</span><span class="dw">SU</span>
+        <span style="opacity:.4">2</span><span style="opacity:.4">3</span><span class="td">4</span><span>5</span><span>6</span><span>7</span><span>8</span>
+        <span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span class="ep">14</span><span class="in">15</span>
+        <span class="in">16</span><span class="in">17</span><span class="in">18</span><span class="in">19</span><span class="in">20</span><span class="ep">21</span><span>22</span>
+      </div>
+      <figcaption class="good">Square cells, 1px gap. The range is <strong>one continuous bar</strong> — nothing to reconcile. 4 Mar is today: a 2px underline that survives being selected.</figcaption>
+    </figure>
+    <figure>
+      <div class="cg">
+        <span class="dw">MO</span><span class="dw">TU</span><span class="dw">WE</span><span class="dw">TH</span><span class="dw">FR</span><span class="dw">SA</span><span class="dw">SU</span>
+        <span style="opacity:.4">2</span><span style="opacity:.4">3</span><span class="rd" style="box-shadow:inset 0 0 0 2px var(--border-accent)">4</span><span>5</span><span>6</span><span>7</span><span>8</span>
+        <span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span class="ep rd">14</span><span class="in rd">15</span>
+        <span class="in rd">16</span><span class="in rd">17</span><span class="in rd">18</span><span class="in rd">19</span><span class="in rd">20</span><span class="ep rd">21</span><span>22</span>
+      </div>
+      <figcaption class="bad">Round cells. The range breaks into beads, and today's ring reads as focus — then disappears the moment it falls inside a selection.</figcaption>
+    </figure>
+  </div>
+  </div></div>`,
+'0006': `
+  <div class="viz"><div class="viz-head"><i class="ph ph-eye"></i>Thumb · bar vs circle, at real size</div><div class="viz-body">
+  <div class="vz">
+    <figure>
+      <div class="srail"><div class="rl"></div><div class="fl" style="left:0;width:45%"></div><div class="tb" style="left:45%"></div></div>
+      <figcaption class="good">12 × 20 bar. Legible against a 4px track with no shadow, and unmistakably a fader position.</figcaption>
+    </figure>
+    <figure>
+      <div class="srail"><div class="rl"></div><div class="fl" style="left:0;width:45%"></div><div class="cr" style="left:45%"></div></div>
+      <figcaption class="bad">Circle. Needs a shadow to separate from the track — and a shadow means "floats above the page".</figcaption>
+    </figure>
+    <figure>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;align-items:baseline;gap:10px"><span style="font:var(--type-label);color:var(--text-secondary);flex:1">Price range</span><span style="font:var(--type-data);color:var(--text-primary)">$380–$460</span></div>
+        <div class="srail" style="width:170px"><div class="rl"></div><div class="fl" style="left:26%;right:30%"></div><div class="tb" style="left:26%"></div><div class="tb" style="left:70%"></div></div>
+      </div>
+      <figcaption>The value is always text in the label row — legible throughout the drag, and never animated while being read.</figcaption>
+    </figure>
+  </div>
+  </div></div>`,
+'0005': `
+  <div class="viz"><div class="viz-head"><i class="ph ph-eye"></i>Why light cannot be derived</div><div class="viz-body">
+  <div class="vz">
+    <figure>
+      <div class="peer dk">
+        <div class="lbl">page #0f0e0d</div>
+        <div class="cd"><div class="t1">Hotel Baixa</div><div class="t2">card #181614 — steps UP from the page</div></div>
+      </div>
+      <figcaption>Dark: the card is <strong>lighter</strong> than the page.</figcaption>
+    </figure>
+    <figure>
+      <div class="peer lt">
+        <div class="lbl">page #faf9f7</div>
+        <div class="cd"><div class="t1">Hotel Baixa</div><div class="t2">card #ffffff — steps up to pure white</div></div>
+      </div>
+      <figcaption class="good">Light: the card is white on off-white. Same <em>direction</em>, different logic — and hand-tuned, not inverted.</figcaption>
+    </figure>
+    <figure>
+      <div class="peer" style="background:#e8e6e2">
+        <div class="lbl" style="color:#6b6864">page, inverted from dark</div>
+        <div class="cd" style="background:#dcd9d4;border:1px solid #c2beb8"><div class="t1" style="color:#2b2a27">Hotel Baixa</div><div class="t2" style="color:#6b6864">card, inverted — now DARKER than the page</div></div>
+      </div>
+      <figcaption class="bad">Derived by inversion: grey card on grey page. This is what makes most dark-first systems look wrong in light.</figcaption>
+    </figure>
+  </div>
+  </div></div>`,
+'0007': `
+  <div class="viz"><div class="viz-head"><i class="ph ph-eye"></i>Today — and what each new binding faces</div><div class="viz-body">
+  <div class="flow" style="margin-bottom:var(--space-5)">
+    <span class="bx src">tokens/*.css</span>
+    <i class="ph ph-arrow-right"></i>
+    <div class="col">
+      <span class="bx">React reads it natively</span>
+      <span class="bx dup">Flutter — hand-copied L/C pairs</span>
+      <span class="bx dup">SwiftUI — write a CSS parser?</span>
+    </div>
+  </div>
+  <div style="font:var(--type-caption);color:var(--text-tertiary);max-width:60ch">
+    Every non-web binding chooses: parse <code>oklch()</code> inside nested <code>[data-app]</code>
+    selectors, or copy the values. Flutter chose copy, and nothing has checked it since.
+  </div>
+  </div></div>
+
+  <div class="viz"><div class="viz-head"><i class="ph ph-eye"></i>Proposed — one source, three emitters</div><div class="viz-body">
+  <div class="flow">
+    <span class="bx src">tokens/src/*.tokens.json</span>
+    <i class="ph ph-arrow-right"></i>
+    <span class="bx">build-tokens.mjs<br><span style="color:var(--text-tertiary)">+ shared gamut mapping</span></span>
+    <i class="ph ph-arrow-right"></i>
+    <div class="col">
+      <span class="bx gen">tokens/*.css — generated</span>
+      <span class="bx gen">palette.g.dart — generated</span>
+      <span class="bx gen">tokens.ts — generated</span>
+      <span class="bx gen">SwiftUI — 200 lines of emitter</span>
+    </div>
+  </div>
+  <div style="font:var(--type-caption);color:var(--text-tertiary);max-width:60ch;margin-top:var(--space-5)">
+    The oklch chroma-reduction maths becomes <strong>shared code</strong> rather than a rule three
+    authors must independently get right. Clipping instead would shift hue and break the promise
+    that every app's ramp differs only in H.
+  </div>
+  </div></div>`,
+'0008': `
+  <div class="viz"><div class="viz-head"><i class="ph ph-eye"></i>The same rule, at three tiers</div><div class="viz-body">
+  <div class="tier">
+    <div class="tl"><span class="tg t0">Tier 0</span><span><strong>Press is a 0.97 scale at 80ms.</strong> No platform may substitute an ink ripple. Break it and the binding is not SeaKim.</span></div>
+    <div class="tl"><span class="tg t1">Tier 1</span><span><strong>Breakpoints are measured container width</strong> at 640/1024. <code>ResizeObserver</code>, <code>LayoutBuilder</code>, or <code>GeometryReader</code> — your choice, but say which in your readme.</span></div>
+    <div class="tl"><span class="tg t2">Tier 2</span><span><strong>Ship <code>Table</code> unless your platform has no use case.</strong> Expected, not mandatory — a watch app is exempt.</span></div>
+  </div>
+  <div style="font:var(--type-caption);color:var(--text-tertiary);max-width:62ch;margin-top:var(--space-6)">
+    An <em>undocumented</em> Tier 1 adaptation is a Tier 0 violation in practice. The point of that
+    tier is the paper trail, not the latitude.
+  </div>
+  </div></div>`,
+};
+
+const ACCEPTED = [{
+  id: '0001', title: 'Component opinions live in spec/, bindings hold only usage docs',
+  oneline: 'Both folders adopted, with three amendments: specs contain no code, .prompt.md files stay and shrink, specs written on demand.'
+}];
+
+const KEY = 'sk-adr-signoff-v1';
+let state = {};
+try { state = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { state = {}; }
+
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+}
+
+function render() {
+  document.getElementById('list').innerHTML = ITEMS.map(it => {
+    const s = state[it.id] || {};
+    const v = s.vote || '';
+    const votes = it.votes || [['accept', 'Accept'], ['reject', 'Reject'], ['discuss', 'Needs discussion']];
+    const chipClass = v === 'accept' ? 'accept' : v === 'reject' ? 'reject' : v ? 'discuss' : '';
+    const chipText = v ? (votes.find(x => x[0] === v) || [, v])[1] : (it.kind === 'call' ? 'Open call' : 'Proposed');
+    const decided = v ? (v === 'accept' ? 'decided-accept' : v === 'reject' ? 'decided-reject' : 'decided-discuss') : '';
+    return `
+      <div class="adr ${decided}" id="adr-${it.id}">
+        <div class="head" onclick="toggle('${it.id}')">
+          <span class="num">${it.id === 'ICONS' ? '—' : it.id}</span>
+          <div class="headmain">
+            <h2>${it.title}</h2>
+            <div class="oneline">${it.oneline}</div>
+          </div>
+          <span class="chip ${chipClass}">${chipText}</span>
+          <i class="ph ph-caret-right chev"></i>
+        </div>
+        <div class="body">
+          ${it.flag ? `<div class="flag${it.kind === 'call' ? '' : ' info'}">${it.flag}</div>` : ''}
+          ${VISUALS[it.id] || ''}
+          ${it.body}
+          <div class="decide">
+            <div class="btns">
+              ${votes.map(([val, label]) => `
+                <button class="vote ${v === val ? 'on' : ''}" data-v="${val === 'a' ? 'accept' : val === 'b' || val === 'c' ? 'discuss' : val}"
+                        onclick="vote('${it.id}','${val}')">
+                  ${v === val ? '<i class="ph-bold ph-check"></i>' : ''}${label}
+                </button>`).join('')}
+            </div>
+            <textarea placeholder="Notes, conditions, or what you'd change — included in the digest"
+                      oninput="note('${it.id}', this.value)">${(s.note || '').replace(/</g, '&lt;')}</textarea>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('accepted').innerHTML = ACCEPTED.map(it => `
+    <div class="adr">
+      <div class="head" style="cursor:default">
+        <span class="num">${it.id}</span>
+        <div class="headmain">
+          <h2>${it.title}</h2>
+          <div class="oneline">${it.oneline}</div>
+        </div>
+        <span class="chip accept">Accepted</span>
+      </div>
+    </div>`).join('');
+
+  tally();
+}
+
+function toggle(id) {
+  document.getElementById('adr-' + id).classList.toggle('open');
+}
+
+function vote(id, v) {
+  state[id] = state[id] || {};
+  state[id].vote = state[id].vote === v ? '' : v;
+  save();
+  const wasOpen = document.getElementById('adr-' + id).classList.contains('open');
+  render();
+  if (wasOpen) document.getElementById('adr-' + id).classList.add('open');
+}
+
+function note(id, val) {
+  state[id] = state[id] || {};
+  state[id].note = val;
+  save();
+}
+
+function tally() {
+  let a = 0, r = 0, d = 0;
+  ITEMS.forEach(it => {
+    const v = (state[it.id] || {}).vote;
+    if (!v) return;
+    if (v === 'accept' || v === 'a') a++;
+    else if (v === 'reject') r++;
+    else d++;
+  });
+  const total = ITEMS.length;
+  document.getElementById('t-accept').innerHTML = a + '<b>accepted</b>';
+  document.getElementById('t-reject').innerHTML = r + '<b>rejected</b>';
+  document.getElementById('t-discuss').innerHTML = d + '<b>discuss</b>';
+  document.getElementById('t-open').innerHTML = (total - a - r - d) + '<b>undecided</b>';
+  document.getElementById('prognum').textContent = (a + r + d) + ' / ' + total;
+  document.getElementById('pips').innerHTML = ITEMS.map(it => {
+    const v = (state[it.id] || {}).vote;
+    const c = !v ? '' : (v === 'accept' || v === 'a') ? 'done' : v === 'reject' ? 'no' : 'disc';
+    return '<i class="' + c + '"></i>';
+  }).join('');
+  if (document.getElementById('digest').classList.contains('show')) writeDigest();
+}
+
+function digestText() {
+  const lines = ['SeaKim — decision sign-off', ''];
+  ITEMS.forEach(it => {
+    const s = state[it.id] || {};
+    const v = s.vote;
+    const label = !v ? 'UNDECIDED'
+      : v === 'accept' ? 'ACCEPT'
+      : v === 'reject' ? 'REJECT'
+      : v === 'discuss' ? 'DISCUSS'
+      : v === 'a' ? 'OPTION A — bundle the icon font'
+      : v === 'b' ? 'OPTION B — pin Flutter below 3.27'
+      : v === 'c' ? 'OPTION C — wait for phosphor'
+      : v.toUpperCase();
+    lines.push((it.id === 'ICONS' ? 'Flutter icons' : it.id) + ' — ' + label + ' — ' + it.title);
+    if (s.note && s.note.trim()) lines.push('    note: ' + s.note.trim().replace(/\n/g, '\n          '));
+  });
+  return lines.join('\n');
+}
+
+function writeDigest() {
+  document.getElementById('digesttext').textContent = digestText();
+}
+
+function toggleDigest() {
+  const d = document.getElementById('digest');
+  d.classList.toggle('show');
+  if (d.classList.contains('show')) writeDigest();
+}
+
+function copyDigest() {
+  const t = digestText();
+  const done = () => {
+    const l = document.getElementById('copylabel');
+    l.textContent = 'Copied';
+    setTimeout(() => { l.textContent = 'Copy digest'; }, 1600);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(t).then(done, fallback);
+  } else { fallback(); }
+  function fallback() {
+    const ta = document.createElement('textarea');
+    ta.value = t;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+}
+
+function resetAll() {
+  state = {};
+  save();
+  render();
+}
+
+render();
+</script>
+</body>
+</html>

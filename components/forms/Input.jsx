@@ -22,11 +22,11 @@ export function Input({
       style={{
         display: 'flex', alignItems: 'center', gap: 'var(--space-3)',
         width: fullWidth ? '100%' : undefined, height: s.h, padding: `0 ${s.px}`,
-        background: disabled ? 'var(--surface-inset)' : 'var(--surface-raised)',
-        border: `1px solid ${border}`,
+        background: disabled ? 'var(--fill-disabled)' : 'var(--surface-raised)',
+        border: `1px solid ${disabled ? 'var(--border-disabled)' : border}`,
         boxShadow: focus ? 'var(--focus-ring-inset)' : 'none',
         borderRadius: 'var(--radius-none)',
-        opacity: disabled ? 0.5 : 1,
+        
         transition: 'var(--transition-control), box-shadow var(--dur-instant) var(--ease-out)',
         ...style,
       }}
@@ -40,7 +40,7 @@ export function Input({
         style={{
           flex: 1, minWidth: 0, border: 'none', outline: 'none', background: 'transparent',
           fontFamily: mono ? 'var(--font-mono)' : 'var(--font-sans)',
-          fontSize: s.fs, color: 'var(--text-primary)',
+          fontSize: s.fs, color: disabled ? 'var(--text-disabled)' : 'var(--text-primary)',
           letterSpacing: mono ? '0.02em' : 'var(--tracking-normal)',
         }}
       />

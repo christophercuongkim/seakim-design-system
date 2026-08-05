@@ -17,7 +17,7 @@ export function Checkbox({ checked, defaultChecked = false, indeterminate = fals
       onMouseLeave={() => setHover(false)}
       style={{
         display: 'flex', gap: 'var(--space-4)', alignItems: hint ? 'flex-start' : 'center',
-        cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.4 : 1, ...style,
+        cursor: disabled ? 'not-allowed' : 'pointer', ...style,
       }}
       {...rest}
     >
@@ -26,9 +26,10 @@ export function Checkbox({ checked, defaultChecked = false, indeterminate = fals
       <span style={{
         width: 16, height: 16, flex: 'none', marginTop: hint ? 2 : 0,
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-        background: marked ? 'var(--fill-accent)' : 'var(--surface-raised)',
-        border: `1px solid ${marked ? 'var(--fill-accent)' : hover && !disabled ? 'var(--border-strong)' : 'var(--border-default)'}`,
-        borderRadius: 'var(--radius-none)', color: 'var(--on-accent)',
+        background: disabled ? 'var(--fill-disabled)' : marked ? 'var(--fill-accent)' : 'var(--surface-raised)',
+        border: `1px solid ${disabled ? 'var(--border-disabled)' : marked ? 'var(--fill-accent)' : hover ? 'var(--border-strong)' : 'var(--border-default)'}`,
+        borderRadius: 'var(--radius-none)',
+        color: disabled ? 'var(--text-disabled)' : 'var(--on-accent)',
         transition: 'var(--transition-control)',
         transform: marked ? 'scale(1)' : 'scale(0.94)',
       }}>
@@ -36,8 +37,8 @@ export function Checkbox({ checked, defaultChecked = false, indeterminate = fals
       </span>
       {(label || hint) && (
         <span style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
-          {label && <span style={{ font: 'var(--type-body-sm)', color: 'var(--text-primary)' }}>{label}</span>}
-          {hint && <span style={{ font: 'var(--type-caption)', color: 'var(--text-tertiary)' }}>{hint}</span>}
+          {label && <span style={{ font: 'var(--type-body-sm)', color: disabled ? 'var(--text-disabled)' : 'var(--text-primary)' }}>{label}</span>}
+          {hint && <span style={{ font: 'var(--type-caption)', color: disabled ? 'var(--text-disabled)' : 'var(--text-tertiary)' }}>{hint}</span>}
         </span>
       )}
     </label>

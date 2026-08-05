@@ -19,10 +19,10 @@ export function Select({ options = [], size = 'md', invalid = false, disabled = 
       style={{
         position: 'relative', display: 'flex', alignItems: 'center',
         width: fullWidth ? '100%' : undefined, height: s.h,
-        background: disabled ? 'var(--surface-inset)' : 'var(--surface-raised)',
-        border: `1px solid ${border}`, borderRadius: 'var(--radius-none)',
+        background: disabled ? 'var(--fill-disabled)' : 'var(--surface-raised)',
+        border: `1px solid ${disabled ? 'var(--border-disabled)' : border}`, borderRadius: 'var(--radius-none)',
         boxShadow: focus ? 'var(--focus-ring-inset)' : 'none',
-        opacity: disabled ? 0.5 : 1, transition: 'var(--transition-control)', ...style,
+         transition: 'var(--transition-control)', ...style,
       }}
     >
       <select
@@ -34,7 +34,7 @@ export function Select({ options = [], size = 'md', invalid = false, disabled = 
           appearance: 'none', WebkitAppearance: 'none', width: '100%', height: '100%',
           border: 'none', outline: 'none', background: 'transparent',
           padding: '0 var(--space-8) 0 var(--space-4)',
-          fontFamily: 'var(--font-sans)', fontSize: s.fs, color: 'var(--text-primary)',
+          fontFamily: 'var(--font-sans)', fontSize: s.fs, color: disabled ? 'var(--text-disabled)' : 'var(--text-primary)',
           cursor: disabled ? 'not-allowed' : 'pointer',
         }}
       >

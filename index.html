@@ -60,7 +60,7 @@
 <body>
 <div class="wrap">
   <header>
-    <div class="eyebrow">Design system · v1</div>
+    <div class="eyebrow">SeaKim 1.0 · rules layer</div>
     <h1>SeaKim</h1>
     <p class="lede">
       One warm-neutral chassis shared by every SeaKim product, and exactly one accent hue
@@ -302,8 +302,8 @@ export const fontDisplay = Outfit({
     <div class="step">
       <div class="stepnum">STEP 4 — CLIENT BOUNDARY</div>
       <h3>The one that actually errors</h3>
-      <p>Every interactive component keeps hover, press, and selection state internally, so all of them are Client Components. A single barrel marks them, instead of adding the directive to 23 files.</p>
-      <pre>// lib/seakim.ts — ONE directive covers all 23 components
+      <p>Every interactive component keeps hover, press, and selection state internally, so all of them are Client Components. A single barrel marks them, instead of adding the directive to every component file.</p>
+      <pre>// lib/seakim.ts — ONE directive covers every component
 "use client";
 export { Button } from "@/seakim/components/core/Button.jsx";
 export { Field }  from "@/seakim/components/forms/Field.jsx";
@@ -520,31 +520,75 @@ dart run tool/gen_tokens.dart
   </section>
 
   <section>
-    <h2>Platforms</h2>
+    <h2>Decisions, specs, and conformance</h2>
     <p>
-      The system ships for three targets off one set of decisions. Tokens are defined once
-      in CSS; the Dart layer is generated from them, so colour cannot drift between
-      platforms.
+      Three separate documents, on purpose. Foundations live in the readme and the
+      specimen cards; <strong>decisions</strong> record why a contested call went the way it
+      did and are never edited, only superseded; <strong>specs</strong> describe what one
+      component is, with no code in them at all.
     </p>
     <div class="grid">
-      <a class="card" href="readme.md"><span class="t">React · reference</span><span class="d">The canonical implementation. 23 components, both UI kits, the specimen cards on this page.</span></a>
+      <a class="card" href="signoff.html"><span class="t">Sign-off record</span><span class="d">Every contested decision with a live demo of the alternative that lost.</span></a>
+      <a class="card" href="decisions/README.md"><span class="t">decisions/</span><span class="d">11 numbered ADRs. Append-only — correct one by writing its successor.</span></a>
+      <a class="card" href="spec/README.md"><span class="t">spec/</span><span class="d">Platform-neutral contracts. Written on demand, never in a batch.</span></a>
+      <a class="card" href="conformance.md"><span class="t">conformance.md</span><span class="d">Tier 0 non-negotiable, Tier 1 adaptable, and the component inventory.</span></a>
+      <a class="card" href="guidelines/proposed-components.html"><span class="t">Component anatomy</span><span class="d">Table, date range, slider — the drawings the specs were written from.</span></a>
+    </div>
+    <table>
+      <tr><th style="width:44px">#</th><th>Decision</th><th style="width:96px">Status</th></tr>
+      <tr><td><code>0001</code></td><td>Component opinions live in <code>spec/</code>; bindings hold only usage docs</td><td>Accepted</td></tr>
+      <tr><td><code>0002</code></td><td>No floating action button</td><td>Accepted</td></tr>
+      <tr><td><code>0003</code></td><td>Tables: anatomy, sort, density, and the <code>sm</code> species swap</td><td>Accepted</td></tr>
+      <tr><td><code>0004</code></td><td>Date and time selection — and no time picker</td><td>Accepted</td></tr>
+      <tr><td><code>0005</code></td><td>Light mode is first-class, and enforced</td><td>Accepted</td></tr>
+      <tr><td><code>0006</code></td><td>Slider anatomy — a fader, not a dial</td><td>Accepted</td></tr>
+      <tr><td><code>0007</code></td><td>DTCG JSON becomes the token source; CSS becomes an output</td><td>Accepted</td></tr>
+      <tr><td><code>0008</code></td><td>Conformance tiers</td><td>Accepted</td></tr>
+      <tr><td><code>0009</code></td><td>Bundle the Phosphor icon font; drop <code>phosphor_flutter</code></td><td>Accepted</td></tr>
+      <tr><td><code>0010</code></td><td>The system is the rules; bindings are contributed, not owned</td><td>Accepted</td></tr>
+      <tr><td><code>0011</code></td><td>One version for the rules, independent versions for bindings</td><td>Accepted</td></tr>
+    </table>
+    <div class="note">
+      <strong>All eleven are Accepted</strong> as of 4 August 2026. ADRs are append-only — correct
+      one by writing its successor, never by editing it to agree with a newer answer.
+      <br><br>
+      Accepted is not always built, and the gap is tracked rather than glossed. Everything
+      here is now implemented in React — the token pipeline, <code>Table</code>,
+      <code>Slider</code>, <code>DatePicker</code>, the disabled tokens — and mirrored in
+      Flutter, which cannot compile until two font artefacts land. Open items live in
+      <a href="conformance.md">conformance.md</a>; the ones needing a human are in
+      <a href="TODO-manual.md">TODO-manual.md</a>.
+    </div>
+  </section>
+
+  <section>
+    <h2>Platforms</h2>
+    <p>
+      <strong>The product here is the rules, not any one implementation.</strong> Decisions,
+      specs, tokens, and conformance tiers are platform-free; the bindings below are
+      reference implementations that prove the rules work. If a binding and a spec disagree,
+      the spec wins and the binding is the bug.
+    </p>
+    <div class="grid">
+      <a class="card" href="readme.md"><span class="t">React · reference</span><span class="d">The most complete binding. 26 components, both UI kits, the specimen cards on this page.</span></a>
       <a class="card" href="next/README.md"><span class="t">Next.js · adapter</span><span class="d">Client boundary, next/font, no-flash theme script, icon setup. Five gotchas, four of them silent.</span></a>
-      <a class="card" href="flutter/README.md"><span class="t">Flutter · port</span><span class="d">Custom widgets on Flutter primitives, generated token layer, same three breakpoints. Not yet compiled.</span></a>
+      <a class="card" href="CONTRIBUTING-A-BINDING.md"><span class="t">Your platform &rarr;</span><span class="d">SwiftUI, Compose, Vue — build it against the rules and contribute it back. Nobody is queued to write it for you.</span></a>
+      <a class="card" href="flutter/README.md"><span class="t">Flutter · reference</span><span class="d">Custom widgets on Flutter primitives, generated tokens, same three breakpoints. Blocked on two font artefacts.</span></a>
     </div>
     <div class="note">
-      <strong>Parity is a rule, not an aspiration:</strong> a component exists on all three
-      targets with the same name, the same props, and the same states, or it does not go in.
-      Where a platform genuinely differs — Flutter's text field keeps a Material ancestor for
-      selection handles, Next needs a client boundary — the reason is written down in that
-      platform's readme rather than left as a surprise.
+      <strong>A team that needs a new platform owns that binding.</strong> The cost is a
+      token emitter plus the widget layer — everything else is already written down and
+      platform-free. Where a binding genuinely has to differ (Flutter's text field keeps a
+      Material ancestor for selection handles; Next needs a client boundary) the reason goes
+      in that binding's readme. An undocumented adaptation is a Tier 0 violation in practice.
     </div>
   </section>
 
   <section>
     <h2>UI kits</h2>
     <div class="grid">
-      <a class="card" href="ui_kits/voyage/index.html"><span class="t">Voyage</span><span class="d">Travel planning — responsive, 6 screens</span></a>
-      <a class="card" href="ui_kits/bench/index.html"><span class="t">Bench</span><span class="d">Fantasy sport — responsive, 4 screens</span></a>
+      <a class="card" href="ui_kits/voyage/index.html"><span class="t">Voyage</span><span class="d">Travel planning — responsive, 6 screens, sea accent</span></a>
+      <a class="card" href="ui_kits/bench/index.html"><span class="t">Bench</span><span class="d">Fantasy sport — responsive, 4 screens, turf accent</span></a>
     </div>
     <p>
       Both kits carry a bar at the top: pin the viewport to 390, 768, or 1280 to watch one
@@ -557,6 +601,9 @@ dart run tool/gen_tokens.dart
     <div class="grid">
       <a class="card" href="components/core/core.card.html"><span class="t">Core</span><span class="d">Button, IconButton, Badge, Tag, Card, Avatar, Stat, Icon</span></a>
       <a class="card" href="components/forms/forms.card.html"><span class="t">Forms</span><span class="d">Field, Input, Textarea, Select, Checkbox, Radio, Switch, SegmentedControl</span></a>
+      <a class="card" href="guidelines/states.html"><span class="t">Interaction states</span><span class="d">Hover, press, focus, selected, disabled — the same seven everywhere</span></a>
+      <a class="card" href="components/forms/pickers.card.html"><span class="t">Slider &amp; DatePicker</span><span class="d">A fader not a dial; square calendar cells where ranges read as one bar</span></a>
+      <a class="card" href="components/data/data.card.html"><span class="t">Table</span><span class="d">Sortable, two densities, and the sm species swap</span></a>
       <a class="card" href="components/feedback/feedback.card.html"><span class="t">Feedback</span><span class="d">Dialog, Toast, Tooltip, EmptyState</span></a>
       <a class="card" href="components/navigation/navigation.card.html"><span class="t">Navigation</span><span class="d">Tabs, SideNav, TabBar</span></a>
     </div>
@@ -579,20 +626,37 @@ dart run tool/gen_tokens.dart
     <div class="grid">
       <a class="card" href="guidelines/colors-stone.html"><span class="t">Stone ramp</span><span class="d">The warm neutral spine</span></a>
       <a class="card" href="guidelines/colors-accents.html"><span class="t">App accent hues</span><span class="d">Same L and C, hue rotates</span></a>
+      <a class="card" href="guidelines/colors-semantic.html"><span class="t">Semantic layer</span><span class="d">The only colours a component may read</span></a>
+      <a class="card" href="guidelines/colors-surfaces-dark.html"><span class="t">Surfaces · dark</span><span class="d">Page, card, raised, overlay</span></a>
+      <a class="card" href="guidelines/colors-surfaces-light.html"><span class="t">Surfaces · light</span><span class="d">A peer of dark, not a filter of it</span></a>
+      <a class="card" href="guidelines/colors-text.html"><span class="t">Text colours</span><span class="d">Primary, secondary, tertiary, accent</span></a>
       <a class="card" href="guidelines/type-families.html"><span class="t">Type families</span><span class="d">Outfit · Plus Jakarta Sans · IBM Plex Mono</span></a>
-      <a class="card" href="guidelines/spacing-scale.html"><span class="t">Spacing</span><span class="d">4px grid, density 7/10</span></a>
+      <a class="card" href="guidelines/type-display.html"><span class="t">Display type</span><span class="d">7xl–2xl. Tracking tightens as size grows</span></a>
+      <a class="card" href="guidelines/type-ui.html"><span class="t">UI type</span><span class="d">xl–2xs. 13px is the floor for dense web</span></a>
+      <a class="card" href="guidelines/type-data.html"><span class="t">Data type</span><span class="d">Tabular mono — prices, times, codes, stat lines</span></a>
+      <a class="card" href="guidelines/spacing-scale.html"><span class="t">Spacing scale</span><span class="d">4px grid, density 7/10</span></a>
+      <a class="card" href="guidelines/spacing-controls.html"><span class="t">Control heights</span><span class="d">28 / 34 / 42, and the 44px touch floor</span></a>
+      <a class="card" href="guidelines/spacing-in-use.html"><span class="t">Spacing in use</span><span class="d">Compact controls, generous section gaps</span></a>
       <a class="card" href="guidelines/depth.html"><span class="t">Depth model</span><span class="d">Borders define, shadows lift</span></a>
       <a class="card" href="guidelines/motion.html"><span class="t">Motion</span><span class="d">Enters overshoot, exits do not</span></a>
       <a class="card" href="guidelines/radius.html"><span class="t">Corner radius</span><span class="d">Zero, with two exceptions</span></a>
       <a class="card" href="guidelines/icons.html"><span class="t">Iconography</span><span class="d">Phosphor, four weights, one job each</span></a>
+      <a class="card" href="guidelines/accessibility.md"><span class="t">Accessibility</span><span class="d">Contrast, focus, targets, naming — and the five-minute review</span></a>
+      <a class="card" href="guidelines/layout.md"><span class="t">Layout</span><span class="d">The shell, content ceilings, four composition patterns</span></a>
+      <a class="card" href="guidelines/data-visualisation.md"><span class="t">Data visualisation</span><span class="d">Chart anatomy, and why one series never needs a new colour</span></a>
+      <a class="card" href="guidelines/wordmark.html"><span class="t">Wordmark</span><span class="d">No logo was supplied and none was invented</span></a>
     </div>
   </section>
 
   <section>
     <h2>Read next</h2>
     <div class="grid">
+      <a class="card" href="CONTRIBUTING-A-BINDING.md"><span class="t">CONTRIBUTING-A-BINDING.md</span><span class="d">The route through the rules for a new platform, with a self-review checklist</span></a>
+      <a class="card" href="TODO-manual.md"><span class="t">TODO-manual.md</span><span class="d">Everything that needs a human: font binaries, assets, decisions, review passes</span></a>
       <a class="card" href="readme.md"><span class="t">readme.md</span><span class="d">Content fundamentals, visual foundations, iconography, index</span></a>
       <a class="card" href="guidelines/voice-and-tone.md"><span class="t">voice-and-tone.md</span><span class="d">The long-form copy guide, with per-app registers</span></a>
+      <a class="card" href="CHANGELOG.md"><span class="t">CHANGELOG.md</span><span class="d">What changed in the rules, and the known gaps at 1.0</span></a>
+      <a class="card" href="tokens/src/README.md"><span class="t">tokens/src/</span><span class="d">The token source and its build. Where to add a hue for app three.</span></a>
     </div>
   </section>
 </div>

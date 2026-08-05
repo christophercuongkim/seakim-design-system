@@ -1,5 +1,7 @@
 # SeaKim for Flutter
 
+**seakim_flutter 1.0.0 — conforms to SeaKim 1.0**
+
 Custom widgets built on Flutter primitives — not themed Material. The system's three
 loudest decisions (0px radius everywhere, shadows only on things that float, scale-press
 instead of ink ripple) are the three Material resists hardest, so the widget layer is

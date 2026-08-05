@@ -11,7 +11,7 @@ import {
   Slider,
   Stat,
   Tag,
-} from "@/lib/seakim";
+} from "@seakim/design-system";
 
 import { RosterTable } from "./roster-table";
 

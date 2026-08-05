@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 // Global CSS is only legal here, in the root layout.
-import "@/seakim/styles.css";
+import "@seakim/design-system/styles.css";
 
 // Phosphor webfont, the three weights the system uses.
 import "@phosphor-icons/web/regular";

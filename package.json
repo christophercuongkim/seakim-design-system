@@ -1,7 +1,7 @@
 {
   "name": "@seakim/design-system",
   "version": "3.0.0",
-  "description": "SeaKim design system \u2014 tokens, React components, and the rules both bindings answer to.",
+  "description": "SeaKim design system — tokens, React components, and the rules both bindings answer to.",
   "private": true,
   "type": "module",
   "repository": {

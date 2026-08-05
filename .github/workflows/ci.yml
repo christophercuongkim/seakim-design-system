@@ -1,0 +1,55 @@
+name: CI
+
+# The gates the design system defines for itself. Per TODO-manual.md, without
+# the token check someone hand-edits a generated file and it silently reverts on
+# the next build.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  rules:
+    name: Tokens and conformance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Fails if the generated CSS, Dart, or TS is stale relative to tokens/src/.
+      - name: Token outputs are current
+        run: node tool/build-tokens.mjs --check
+
+      # Tier 0 rules are law — see conformance.md.
+      - name: Conformance
+        run: node tool/conformance-check.mjs
+
+  flutter:
+    name: Flutter binding
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Generate the icon table
+        working-directory: flutter
+        run: dart run tool/gen_icons.dart
+
+      - name: Analyze
+        working-directory: flutter
+        run: flutter analyze
+
+      - name: Test
+        working-directory: flutter
+        run: flutter test
+
+      - name: Example analyzes and tests
+        working-directory: flutter/example
+        run: |
+          flutter pub get
+          flutter analyze
+          flutter test

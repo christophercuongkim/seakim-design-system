@@ -38,6 +38,7 @@ class SkSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     final SkColors c = context.skColors;
     final double pad = (_h - _knob) / 2;
+    final bool off = disabled || onChanged == null;
 
     final Widget track = AnimatedContainer(
       duration: SkMotion.base,
@@ -46,10 +47,18 @@ class SkSwitch extends StatelessWidget {
       height: _h,
       padding: EdgeInsets.all(pad),
       decoration: BoxDecoration(
-        color: value ? c.fillAccent : c.fillNeutral,
+        color: off
+            ? c.fillDisabled
+            : value
+                ? c.fillAccent
+                : c.fillNeutral,
         borderRadius: BorderRadius.circular(SkRadius.pill),
         border: Border.all(
-          color: value ? c.fillAccent : c.borderDefault,
+          color: off
+              ? c.borderDisabled
+              : value
+                  ? c.fillAccent
+                  : c.borderDefault,
           width: SkDepth.hairline,
         ),
       ),
@@ -64,7 +73,11 @@ class SkSwitch extends StatelessWidget {
               height: _knob,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: value ? c.onAccent : SkStone.s400,
+                color: off
+                    ? c.textDisabled
+                    : value
+                        ? c.onAccent
+                        : c.textSecondary,
               ),
             ),
           ),
@@ -82,10 +95,7 @@ class SkSwitch extends StatelessWidget {
         toggled: value,
         child: SkFocusRing(
           visible: s.focused,
-          child: AnimatedOpacity(
-            opacity: s.disabled ? 0.4 : 1,
-            duration: SkMotion.instant,
-            child: ConstrainedBox(
+          child: ConstrainedBox(
               constraints: const BoxConstraints(minHeight: SkControl.touch),
               child: Row(
                 crossAxisAlignment: hint != null
@@ -100,14 +110,18 @@ class SkSwitch extends StatelessWidget {
                         children: <Widget>[
                           if (label != null)
                             Text(label!,
-                                style:
-                                    SkText.bodySm.copyWith(color: c.textPrimary)),
+                                style: SkText.bodySm.copyWith(
+                                    color: s.disabled
+                                        ? c.textDisabled
+                                        : c.textPrimary)),
                           if (hint != null)
                             Padding(
                               padding: const EdgeInsets.only(top: 2),
                               child: Text(hint!,
-                                  style: SkText.caption
-                                      .copyWith(color: c.textTertiary)),
+                                  style: SkText.caption.copyWith(
+                                      color: s.disabled
+                                          ? c.textDisabled
+                                          : c.textTertiary)),
                             ),
                         ],
                       ),
@@ -121,7 +135,6 @@ class SkSwitch extends StatelessWidget {
                 ],
               ),
             ),
-          ),
         ),
       ),
     );

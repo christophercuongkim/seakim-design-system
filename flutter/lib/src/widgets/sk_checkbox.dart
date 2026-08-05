@@ -48,10 +48,7 @@ class SkCheckbox extends StatelessWidget {
         mixed: indeterminate,
         child: SkFocusRing(
           visible: s.focused,
-          child: AnimatedOpacity(
-            opacity: s.disabled ? 0.4 : 1,
-            duration: SkMotion.instant,
-            child: ConstrainedBox(
+          child: ConstrainedBox(
               constraints: const BoxConstraints(minHeight: SkControl.touch),
               child: Row(
                 crossAxisAlignment: hint != null
@@ -71,13 +68,19 @@ class SkCheckbox extends StatelessWidget {
                         height: 16,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: marked ? c.fillAccent : c.surfaceRaised,
+                          color: s.disabled
+                              ? c.fillDisabled
+                              : marked
+                                  ? c.fillAccent
+                                  : c.surfaceRaised,
                           border: Border.all(
-                            color: marked
-                                ? c.fillAccent
-                                : s.liveHover
-                                    ? c.borderStrong
-                                    : c.borderDefault,
+                            color: s.disabled
+                                ? c.borderDisabled
+                                : marked
+                                    ? c.fillAccent
+                                    : s.liveHover
+                                        ? c.borderStrong
+                                        : c.borderDefault,
                             width: SkDepth.hairline,
                           ),
                         ),
@@ -88,7 +91,7 @@ class SkCheckbox extends StatelessWidget {
                                     : SkIcons.check,
                                 size: 11,
                                 weight: SkIconWeight.bold,
-                                color: c.onAccent,
+                                color: s.disabled ? c.textDisabled : c.onAccent,
                               )
                             : null,
                       ),
@@ -103,14 +106,18 @@ class SkCheckbox extends StatelessWidget {
                         children: <Widget>[
                           if (label != null)
                             Text(label!,
-                                style:
-                                    SkText.bodySm.copyWith(color: c.textPrimary)),
+                                style: SkText.bodySm.copyWith(
+                                    color: s.disabled
+                                        ? c.textDisabled
+                                        : c.textPrimary)),
                           if (hint != null)
                             Padding(
                               padding: const EdgeInsets.only(top: 2),
                               child: Text(hint!,
-                                  style: SkText.caption
-                                      .copyWith(color: c.textTertiary)),
+                                  style: SkText.caption.copyWith(
+                                      color: s.disabled
+                                          ? c.textDisabled
+                                          : c.textTertiary)),
                             ),
                         ],
                       ),
@@ -119,7 +126,6 @@ class SkCheckbox extends StatelessWidget {
                 ],
               ),
             ),
-          ),
         ),
       ),
     );

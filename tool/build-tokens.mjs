@@ -219,6 +219,13 @@ function emitCss() {
   L.push('  --fill-danger: var(--danger-500);');
   L.push(`  --on-danger:   ${raw.onDangerDark.$value};`);
   L.push('');
+  L.push('  /* Foreground on a SOLID status fill. The status 500 steps are bright in');
+  L.push('     both themes, so these do not flip with the theme — same reason');
+  L.push('     --on-accent does not. */');
+  L.push('  --on-success:  var(--stone-950);');
+  L.push('  --on-warning:  var(--stone-950);');
+  L.push('  --on-info:     var(--stone-950);');
+  L.push('');
   L.push('  /* Disabled is a TOKEN, not an opacity.');
   L.push('     Blanket opacity survives dark — everything fades toward the near-black page');
   L.push('     and the fill/text relationship holds. In light it fades toward white and');
@@ -296,6 +303,9 @@ function emitCssLight() {
   }
   L.push('  --fill-danger:  var(--danger-500);');
   L.push('  --on-danger:    var(--stone-50);');
+  L.push('  --on-success:   var(--stone-950);');
+  L.push('  --on-warning:   var(--stone-950);');
+  L.push('  --on-info:      var(--stone-950);');
   L.push('');
   L.push('  --fill-disabled:   var(--stone-100);');
   L.push('  --text-disabled:   var(--stone-400);');

@@ -83,10 +83,7 @@ class SkRadioGroup<T> extends StatelessWidget {
         checked: on,
         child: SkFocusRing(
           visible: s.focused,
-          child: AnimatedOpacity(
-            opacity: off ? 0.4 : 1,
-            duration: SkMotion.instant,
-            child: ConstrainedBox(
+          child: ConstrainedBox(
               constraints: const BoxConstraints(minHeight: SkControl.touch),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -104,13 +101,15 @@ class SkRadioGroup<T> extends StatelessWidget {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: c.surfaceRaised,
+                        color: off ? c.fillDisabled : c.surfaceRaised,
                         border: Border.all(
-                          color: on
-                              ? c.fillAccent
-                              : s.liveHover
-                                  ? c.borderStrong
-                                  : c.borderDefault,
+                          color: off
+                              ? c.borderDisabled
+                              : on
+                                  ? c.fillAccent
+                                  : s.liveHover
+                                      ? c.borderStrong
+                                      : c.borderDefault,
                           width: on ? SkDepth.emphasis : SkDepth.hairline,
                         ),
                       ),
@@ -123,7 +122,7 @@ class SkRadioGroup<T> extends StatelessWidget {
                           height: 7,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: c.fillAccent,
+                            color: off ? c.textDisabled : c.fillAccent,
                           ),
                         ),
                       ),
@@ -136,13 +135,17 @@ class SkRadioGroup<T> extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Text(option.label,
-                            style: SkText.bodySm.copyWith(color: c.textPrimary)),
+                            style: SkText.bodySm.copyWith(
+                                color:
+                                    off ? c.textDisabled : c.textPrimary)),
                         if (option.hint != null)
                           Padding(
                             padding: const EdgeInsets.only(top: 2),
                             child: Text(option.hint!,
-                                style: SkText.caption
-                                    .copyWith(color: c.textTertiary)),
+                                style: SkText.caption.copyWith(
+                                    color: off
+                                        ? c.textDisabled
+                                        : c.textTertiary)),
                           ),
                       ],
                     ),
@@ -150,7 +153,6 @@ class SkRadioGroup<T> extends StatelessWidget {
                 ],
               ),
             ),
-          ),
         ),
       ),
     );

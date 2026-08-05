@@ -33,7 +33,7 @@ export function Avatar({ name = '', src, size = 'md', status, style, ...rest }) 
             position: 'absolute', right: -1, bottom: -1,
             width: Math.max(6, Math.round(px * 0.28)), height: Math.max(6, Math.round(px * 0.28)),
             borderRadius: 'var(--radius-circle)',
-            background: status === 'live' ? 'var(--text-success)' : status === 'out' ? 'var(--text-danger)' : 'var(--stone-500)',
+            background: status === 'live' ? 'var(--text-success)' : status === 'out' ? 'var(--text-danger)' : 'var(--text-tertiary)',
             boxShadow: '0 0 0 2px var(--surface-card)',
           }}
         />

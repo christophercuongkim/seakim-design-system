@@ -21,15 +21,7 @@
       {
         "name": "next"
       }
-    ],
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@/seakim/*": [
-        "./src/seakim/*"
-      ]
-    }
+    ]
   },
   "include": [
     "next-env.d.ts",

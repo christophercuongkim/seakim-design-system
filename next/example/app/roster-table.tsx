@@ -1,6 +1,6 @@
 "use client";
 
-import { Table } from "@/lib/seakim";
+import { Table } from "@seakim/design-system";
 
 /**
  * Why this file exists — and it is not boilerplate.

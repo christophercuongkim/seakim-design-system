@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
-// The design system is symlinked into src/seakim, mirroring next/README.md's
-// model of copying it into the app. Next follows the links, so no externalDir.
-const nextConfig = {};
+// The design system ships source rather than a build, so its .jsx has to be
+// compiled by the app. This is the only configuration a consumer adds.
+const nextConfig = {
+  transpilePackages: ["@seakim/design-system"],
+};
 export default nextConfig;

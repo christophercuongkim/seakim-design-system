@@ -16,3 +16,9 @@ flutter/example/build/
 flutter/example/.dart_tool/
 flutter/example/pubspec.lock
 flutter/example/*.iml
+
+# Next.js example build artifacts
+next/example/node_modules/
+next/example/.next/
+next/example/next-env.d.ts
+next/example/tsconfig.tsbuildinfo

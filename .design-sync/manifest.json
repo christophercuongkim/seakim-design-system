@@ -817,8 +817,8 @@
       "size": 2816
     },
     "slides/README.md": {
-      "etag": "1785495567139321",
-      "size": 1390
+      "etag": "1785956850785972",
+      "size": 1391
     },
     "slides/SectionSlide.html": {
       "etag": "1785495567139321",
@@ -901,7 +901,7 @@
       "size": 2417
     },
     "tokens/src/color.tokens.json": {
-      "etag": "1785955464645718",
+      "etag": "1785956850785972",
       "size": 9623
     },
     "tokens/theme-light.css": {
@@ -913,8 +913,8 @@
       "size": 2118
     },
     "tool/build-tokens.mjs": {
-      "etag": "1785955159770540",
-      "size": 21865
+      "etag": "1785957068681047",
+      "size": 21866
     },
     "tool/conformance-check.mjs": {
       "etag": "1785951414732345",

@@ -1,16 +1,16 @@
 {
   "files": {
     ".github/workflows/ci.yml": {
-      "etag": "1785950656629372",
-      "size": 1382
+      "etag": "1785960212335588",
+      "size": 1529
     },
     ".thumbnail": {
       "etag": "1785955468143968",
       "size": 62438
     },
     "CHANGELOG.md": {
-      "etag": "1785955464645718",
-      "size": 6720
+      "etag": "1785960304620653",
+      "size": 10448
     },
     "CONTRIBUTING-A-BINDING.md": {
       "etag": "1785851163071252",
@@ -21,11 +21,11 @@
       "size": 871
     },
     "TODO-manual.md": {
-      "etag": "1785957960139035",
-      "size": 7074
+      "etag": "1785960304620653",
+      "size": 7469
     },
     "VERSION": {
-      "etag": "1785955464645718",
+      "etag": "1785960212335588",
       "size": 6
     },
     "components/core/Avatar.d.ts": {
@@ -764,9 +764,13 @@
       "etag": "1785955464645718",
       "size": 35469
     },
+    "index.js": {
+      "etag": "1785960376809726",
+      "size": 2452
+    },
     "next/README.md": {
-      "etag": "1785850233919940",
-      "size": 5484
+      "etag": "1785960376809726",
+      "size": 7364
     },
     "next/app/fonts.ts": {
       "etag": "1785500021111420",
@@ -780,9 +784,41 @@
       "etag": "1785500021111420",
       "size": 2659
     },
+    "next/example/README.md": {
+      "etag": "1785960417027759",
+      "size": 1955
+    },
+    "next/example/app/fonts.ts": {
+      "etag": "1785960450838732",
+      "size": 1144
+    },
+    "next/example/app/layout.tsx": {
+      "etag": "1785960450838732",
+      "size": 1893
+    },
+    "next/example/app/page.tsx": {
+      "etag": "1785960481334662",
+      "size": 3062
+    },
+    "next/example/app/roster-table.tsx": {
+      "etag": "1785960450838732",
+      "size": 1688
+    },
+    "next/example/next.config.mjs": {
+      "etag": "1785960417027759",
+      "size": 289
+    },
+    "next/example/package.json": {
+      "etag": "1785960481334662",
+      "size": 533
+    },
+    "next/example/tsconfig.json": {
+      "etag": "1785960481334662",
+      "size": 607
+    },
     "next/lib/seakim.ts": {
-      "etag": "1785500021111420",
-      "size": 2220
+      "etag": "1785960212335588",
+      "size": 717
     },
     "next/lib/useSkTheme.ts": {
       "etag": "1785500021111420",
@@ -791,6 +827,10 @@
     "next/tsconfig.paths.json": {
       "etag": "1785500021111420",
       "size": 230
+    },
+    "package.json": {
+      "etag": "1785960830778710",
+      "size": 1001
     },
     "readme.md": {
       "etag": "1785851163071252",
@@ -911,6 +951,10 @@
     "tool/conformance-check.mjs": {
       "etag": "1785951414732345",
       "size": 11199
+    },
+    "tool/version-check.mjs": {
+      "etag": "1785960417027759",
+      "size": 1032
     },
     "ui_kits/bench/App.jsx": {
       "etag": "1785498041015926",

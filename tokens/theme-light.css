@@ -55,6 +55,9 @@
   --fill-info-subtle: oklch(0.96 0.03 240);
   --fill-danger:  var(--danger-500);
   --on-danger:    var(--stone-50);
+  --on-success:   var(--stone-950);
+  --on-warning:   var(--stone-950);
+  --on-info:      var(--stone-950);
 
   --fill-disabled:   var(--stone-100);
   --text-disabled:   var(--stone-400);

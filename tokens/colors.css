@@ -102,6 +102,13 @@
   --fill-danger: var(--danger-500);
   --on-danger:   #fdf6f4;
 
+  /* Foreground on a SOLID status fill. The status 500 steps are bright in
+     both themes, so these do not flip with the theme — same reason
+     --on-accent does not. */
+  --on-success:  var(--stone-950);
+  --on-warning:  var(--stone-950);
+  --on-info:     var(--stone-950);
+
   /* Disabled is a TOKEN, not an opacity.
      Blanket opacity survives dark — everything fades toward the near-black page
      and the fill/text relationship holds. In light it fades toward white and

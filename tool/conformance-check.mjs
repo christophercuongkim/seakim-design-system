@@ -118,12 +118,18 @@ const RULES = [
     why: 'Semantic tokens only. A literal colour cannot follow the theme or the app accent.',
     skip: f => exempt(f, PALETTE_FILES),
     test(line) {
-      // hex, rgb(), hsl() — but allow fully transparent and pure-black scrims
-      const hex = line.match(/#[0-9a-fA-F]{3,8}\b/g) || [];
-      const fn = line.match(/\b(?:rgba?|hsla?)\s*\(/g) || [];
+      // hex, rgb(), hsl() — but allow fully transparent and pure-black scrims.
+      // A colour composed from a token — rgb(var(--shadow-rgb) / 0.5) — DOES
+      // follow the theme, which is the thing this rule protects; only the alpha
+      // is literal. Applying alpha to a tokenised colour is the supported way to
+      // do it in CSS, so those calls are stripped before the literal test.
+      const composed = /\b(?:rgba?|hsla?)\s*\(\s*var\([^)]*\)[^)]*\)/g;
+      const line2 = line.replace(composed, '');
+      const hex = line2.match(/#[0-9a-fA-F]{3,8}\b/g) || [];
+      const fn = line2.match(/\b(?:rgba?|hsla?)\s*\(/g) || [];
       const real = hex.filter(h => !/^#(0{3,4}|0{6,8})$/i.test(h));
       if (real.length) return `literal colour ${real[0]}`;
-      if (fn.length && !/\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0/.test(line)) return `literal ${fn[0].trim()}`;
+      if (fn.length && !/\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0/.test(line2)) return `literal ${fn[0].trim()}`;
       return null;
     },
   },
@@ -145,7 +151,10 @@ const RULES = [
     test(line) {
       const css = line.match(/border-radius\s*:\s*([^;}]+)/);
       if (css) {
-        const v = css[1].trim();
+        // The declaration may sit inside a JS string ('border-radius:0',), so the
+        // capture can carry a trailing quote and comma. Strip them before testing,
+        // or a compliant `border-radius:0` reads as a violation.
+        const v = css[1].trim().replace(/['"`,\s]+$/, '');
         if (/var\(--radius-(?:none|full|circle)\)/.test(v)) return null;
         if (/^0(px|rem|%)?$/.test(v)) return null;
         if (/50%|999/.test(v)) return null;

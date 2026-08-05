@@ -11,12 +11,17 @@
   --border-emphasis: 2px;
 
   --shadow-none:    none;
-  --shadow-raised:  0 1px 2px rgba(0,0,0,0.50);
-  --shadow-popover: 0 8px 24px -4px rgba(0,0,0,0.65), 0 2px 6px rgba(0,0,0,0.50);
-  --shadow-dialog:  0 24px 64px -12px rgba(0,0,0,0.75), 0 4px 12px rgba(0,0,0,0.50);
-  --shadow-sheet:   0 -8px 32px rgba(0,0,0,0.55);
-  --shadow-toast:   0 12px 32px -8px rgba(0,0,0,0.60), 0 1px 2px rgba(0,0,0,0.45);
-  --shadow-drag:    0 16px 32px -8px rgba(0,0,0,0.70);
+
+  /* The shadow colour is a token so a theme can retune it in one place, and so
+     no component ships a literal. Dark casts pure black; light casts the warm
+     near-black, because a neutral grey shadow reads cold against stone. */
+  --shadow-rgb: 0 0 0;
+  --shadow-raised:  0 1px 2px rgb(var(--shadow-rgb) / 0.50);
+  --shadow-popover: 0 8px 24px -4px rgb(var(--shadow-rgb) / 0.65), 0 2px 6px rgb(var(--shadow-rgb) / 0.50);
+  --shadow-dialog:  0 24px 64px -12px rgb(var(--shadow-rgb) / 0.75), 0 4px 12px rgb(var(--shadow-rgb) / 0.50);
+  --shadow-sheet:   0 -8px 32px rgb(var(--shadow-rgb) / 0.55);
+  --shadow-toast:   0 12px 32px -8px rgb(var(--shadow-rgb) / 0.60), 0 1px 2px rgb(var(--shadow-rgb) / 0.45);
+  --shadow-drag:    0 16px 32px -8px rgb(var(--shadow-rgb) / 0.70);
 
   /* Focus is a 2px accent ring with a 2px canvas gap — never a colour swap,
      never a glow. */
@@ -27,10 +32,11 @@
   --blur-scrim: blur(2px);
 }
 [data-theme="light"] {
-  --shadow-raised:  0 1px 2px rgba(30,28,26,0.07);
-  --shadow-popover: 0 8px 24px -4px rgba(30,28,26,0.14), 0 2px 6px rgba(30,28,26,0.08);
-  --shadow-dialog:  0 24px 64px -12px rgba(30,28,26,0.22), 0 4px 12px rgba(30,28,26,0.10);
-  --shadow-sheet:   0 -8px 32px rgba(30,28,26,0.12);
-  --shadow-toast:   0 12px 32px -8px rgba(30,28,26,0.16), 0 1px 2px rgba(30,28,26,0.08);
-  --shadow-drag:    0 16px 32px -8px rgba(30,28,26,0.18);
+  --shadow-rgb: 30 28 26;
+  --shadow-raised:  0 1px 2px rgb(var(--shadow-rgb) / 0.07);
+  --shadow-popover: 0 8px 24px -4px rgb(var(--shadow-rgb) / 0.14), 0 2px 6px rgb(var(--shadow-rgb) / 0.08);
+  --shadow-dialog:  0 24px 64px -12px rgb(var(--shadow-rgb) / 0.22), 0 4px 12px rgb(var(--shadow-rgb) / 0.10);
+  --shadow-sheet:   0 -8px 32px rgb(var(--shadow-rgb) / 0.12);
+  --shadow-toast:   0 12px 32px -8px rgb(var(--shadow-rgb) / 0.16), 0 1px 2px rgb(var(--shadow-rgb) / 0.08);
+  --shadow-drag:    0 16px 32px -8px rgb(var(--shadow-rgb) / 0.18);
 }

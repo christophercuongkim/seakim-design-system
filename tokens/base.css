@@ -31,7 +31,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 :focus-visible { outline: none; box-shadow: var(--focus-ring); }
 
-::selection { background: var(--brand-400); color: var(--stone-950); }
+::selection { background: var(--fill-accent); color: var(--on-accent); }
 
 hr { border: none; border-top: 1px solid var(--border-subtle); margin: 0; }
 

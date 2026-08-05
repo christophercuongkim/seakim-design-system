@@ -3,40 +3,40 @@
 Everything in the system that cannot be done from inside this project. Three of these
 are blockers, the rest are decisions or one-time setup.
 
-Last updated 2026-08-04.
+Last updated 2026-08-05.
 
 ---
 
-## 1. Blocking — Flutter cannot compile without these
+## 1. ~~Blocking — Flutter cannot compile without these~~ — DONE
 
-The Flutter binding is written and reviewed but **unbuilt**. Two missing files, both
-consequences of [decision 0009](decisions/0009-bundle-phosphor-icon-font.md) moving icon
-delivery in-house.
+All five items are complete, and the Flutter binding compiles, analyses clean, and
+passes 21 tests. Verified 2026-08-05 on Flutter 3.44 / Dart 3.12.
 
-- [ ] **Drop in the Phosphor icon fonts.** Four files into `flutter/assets/icons/`:
-      `Phosphor-Regular.ttf`, `Phosphor-Bold.ttf`, `Phosphor-Fill.ttf`,
-      `Phosphor-Duotone.ttf`. MIT licensed, from the Phosphor release.
-      `pubspec.yaml` already declares them.
+- [x] **Phosphor icon fonts** — the four `.ttf` files are committed to
+      `flutter/assets/icons/`, MIT licence alongside them.
+- [x] **Code point table** — `flutter/tool/phosphor_codepoints.json`, all 1512
+      glyphs. Note the shape differs from the sketch in this file: it is
+      `{"<name>": {"regular": "0x…", "bold": …, "fill": …, "duotone": …,
+      "duotoneSecondary": …}}`, because Phosphor's duotone is a *glyph pair* and
+      ten glyphs are missing from at least one weight. A flat name→int map cannot
+      express either.
+- [x] **Generator run** — `dart run tool/gen_icons.dart` writes
+      `lib/src/tokens/sk_icons.g.dart`.
+- [x] **Text families** — all ten `.ttf` files are committed to
+      `flutter/assets/fonts/`, SIL OFL notices alongside, registered with
+      `LicenseRegistry` and covered by `test/licenses_test.dart`.
+- [x] **`flutter analyze`** — clean. The first-build errors you expected were
+      real and are fixed: a nullable `SkGlyph` parameter, two icon fields typed
+      as `PhosphorIconData`, two missing imports, and three missing imports in
+      the Table/DatePicker/Slider files. `SkApp` also never provided a
+      `Directionality`, which crashed any app that did not wrap itself in a
+      `WidgetsApp` — caught only by running a widget test.
 
-- [ ] **Extract the code point table.** Produce `flutter/tool/phosphor_codepoints.json`
-      from those fonts — a flat `{"caret-right": 57345, …}` map. `tool/gen_icons.dart`
-      reads it; the file is the checked-in artefact, same as `palette.g.dart`'s inputs.
-
-- [ ] **Run the generator.** `cd flutter && dart run tool/gen_icons.dart`, which writes
-      `lib/src/tokens/sk_icons.g.dart`. Seven widgets have unresolved imports until it
-      exists: `SkCheckbox`, `SkToast`, `SkDialog`, `SkSelect`, `SkStat`, `SkEmptyState`,
-      `SkTable`.
-
-- [ ] **Drop in the three text families.** Ten `.ttf` files into
-      `flutter/assets/fonts/` — Outfit (4 weights), Plus Jakarta Sans (4), IBM Plex Mono
-      (2). All SIL OFL 1.1, all on Google Fonts. Filenames are listed in `pubspec.yaml`.
-      The web bindings fetch theirs at runtime, so this blocks Flutter only.
-
-- [ ] **Then run `flutter analyze`** and paste me the output. I have written and reviewed
-      the Dart but never compiled it, so expect a handful of first-build errors.
-
-> Licence notices are already committed and wired to `showLicensePage()`, so attribution
-> is handled once the binaries land.
+> Why this section read as blocking for so long: the fonts, the code point
+> table, and `sk_icons.g.dart` are deliberately **not mirrored** into the Claude
+> Design project — they are binaries and generated artefacts. See
+> `flutter/GENERATED-FILES.md`. From inside the design project they look missing;
+> in git they have been present since 2026-08-03.
 
 ---
 
@@ -45,10 +45,11 @@ delivery in-house.
 - [ ] **Set the file type to "Design System"** in the Share menu, so your org can pull
       from this project.
 
-- [ ] **Wire the token check into CI**, whenever CI exists:
-      `node tool/build-tokens.mjs --check` — exits non-zero if the generated CSS, Dart, or
-      TS is stale relative to `tokens/src/`. Without it, someone will hand-edit a generated
-      file and it will silently revert on the next build.
+- [x] **Token check wired into CI.** `.github/workflows/ci.yml` runs
+      `node tool/build-tokens.mjs --check` and `node tool/conformance-check.mjs` on every
+      push and PR, plus `flutter analyze` and `flutter test` for both the package and the
+      example. The workflow regenerates the icon table first, since `sk_icons.g.dart` is
+      not committed.
 
 - [ ] **Decide where the Flutter package lives long-term.** It is currently a folder in
       this repo, which is right while both sides move together. Once Voyage and Bench ship
@@ -84,9 +85,13 @@ these — every gap is a labelled placeholder, so they drop in cleanly.
       I wrote all of it. You know your audience; I was guessing at register — particularly
       Bench's fast, opinionated tone versus Voyage's reassuring one.
 
-- [ ] **Sanity-check the light theme on a real screen.** I fixed the one Tier 0 failure I
-      found (disabled state was `opacity: 0.4`, which collapses toward white), but I
-      verified by screenshot, not by using the app for ten minutes.
+- [ ] **Sanity-check the light theme on a real screen.** Still outstanding, and now the
+      single highest-value review left. The Flutter side has *never* been rendered in
+      light by anyone. Run `cd flutter/example && flutter run -d chrome` and use the theme
+      toggle; the grid icon opens a gallery of every themed Material widget.
+      The `opacity: 0.4` disabled failure you flagged was still live in `SkCheckbox`,
+      `SkRadio`, and `SkSwitch` — the conformance checker caught all three and they now
+      use `--fill-disabled` / `--text-disabled` / `--border-disabled`.
 
 - [ ] **Confirm the OS-preference call.** [0005](decisions/0005-light-mode-is-first-class.md)
       ignores `prefers-color-scheme` for the initial theme on brand grounds. I flagged it

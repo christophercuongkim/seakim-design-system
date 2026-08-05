@@ -36,7 +36,7 @@ export function Switch({ checked, defaultChecked = false, onChange, label, hint,
       }}>
         <span style={{
           width: s.k, height: s.k, borderRadius: 'var(--radius-circle)',
-          background: disabled ? 'var(--text-disabled)' : on ? 'var(--on-accent)' : 'var(--stone-400)',
+          background: disabled ? 'var(--text-disabled)' : on ? 'var(--on-accent)' : 'var(--text-secondary)',
           transform: `translateX(${on ? s.w - s.k : 0}px)`,
           transition: 'transform var(--dur-base) var(--ease-spring), background-color var(--dur-fast) var(--ease-out)',
         }} />

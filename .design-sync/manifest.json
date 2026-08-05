@@ -9,8 +9,8 @@
       "size": 62438
     },
     "CHANGELOG.md": {
-      "etag": "1785960304620653",
-      "size": 10448
+      "etag": "1785962213108002",
+      "size": 11697
     },
     "CONTRIBUTING-A-BINDING.md": {
       "etag": "1785851163071252",
@@ -25,7 +25,7 @@
       "size": 7469
     },
     "VERSION": {
-      "etag": "1785960212335588",
+      "etag": "1785961960204365",
       "size": 6
     },
     "components/core/Avatar.d.ts": {
@@ -760,6 +760,10 @@
       "etag": "1785836521046927",
       "size": 1553
     },
+    "index.d.ts": {
+      "etag": "1785962003396037",
+      "size": 1867
+    },
     "index.html": {
       "etag": "1785955464645718",
       "size": 35469
@@ -769,7 +773,7 @@
       "size": 2452
     },
     "next/README.md": {
-      "etag": "1785960376809726",
+      "etag": "1785962213108002",
       "size": 7364
     },
     "next/app/fonts.ts": {
@@ -829,8 +833,8 @@
       "size": 230
     },
     "package.json": {
-      "etag": "1785960830778710",
-      "size": 1001
+      "etag": "1785961960204365",
+      "size": 1102
     },
     "readme.md": {
       "etag": "1785851163071252",
@@ -999,6 +1003,10 @@
     "ui_kits/bench/roster.js": {
       "etag": "1785497933410069",
       "size": 2530
+    },
+    "ui_kits/shared/Frames.d.ts": {
+      "etag": "1785962003396037",
+      "size": 980
     },
     "ui_kits/shared/Frames.jsx": {
       "etag": "1785497672636506",

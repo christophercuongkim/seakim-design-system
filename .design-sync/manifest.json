@@ -1,5 +1,9 @@
 {
   "files": {
+    ".github/workflows/ci.yml": {
+      "etag": "1785950656629372",
+      "size": 1382
+    },
     ".thumbnail": {
       "etag": "1785851453512970",
       "size": 44936
@@ -17,8 +21,8 @@
       "size": 871
     },
     "TODO-manual.md": {
-      "etag": "1785844708934888",
-      "size": 6217
+      "etag": "1785950718681495",
+      "size": 6817
     },
     "VERSION": {
       "etag": "1785851145554685",
@@ -29,8 +33,8 @@
       "size": 625
     },
     "components/core/Avatar.jsx": {
-      "etag": "1785493961940410",
-      "size": 1900
+      "etag": "1785950718681495",
+      "size": 1904
     },
     "components/core/Avatar.prompt.md": {
       "etag": "1785493961940410",
@@ -41,8 +45,8 @@
       "size": 674
     },
     "components/core/Badge.jsx": {
-      "etag": "1785484935150809",
-      "size": 1800
+      "etag": "1785950718681495",
+      "size": 1801
     },
     "components/core/Badge.prompt.md": {
       "etag": "1785484935150809",
@@ -305,8 +309,8 @@
       "size": 651
     },
     "components/forms/Switch.jsx": {
-      "etag": "1785842101730844",
-      "size": 2458
+      "etag": "1785950760668057",
+      "size": 2463
     },
     "components/forms/Switch.prompt.md": {
       "etag": "1785493961940410",
@@ -436,9 +440,13 @@
       "etag": "1785858422975083",
       "size": 4221
     },
+    "decisions/0013-alpha-variants-are-tokens.md": {
+      "etag": "1785950656629372",
+      "size": 3536
+    },
     "decisions/README.md": {
-      "etag": "1785851163071252",
-      "size": 2368
+      "etag": "1785950760668057",
+      "size": 2783
     },
     "ds-shim.js": {
       "etag": "1785841765692879",
@@ -493,12 +501,12 @@
       "size": 4006
     },
     "flutter/lib/src/tokens/palette.g.dart": {
-      "etag": "1785848007930678",
-      "size": 6434
+      "etag": "1785950965373573",
+      "size": 6450
     },
     "flutter/lib/src/tokens/sk_colors.dart": {
-      "etag": "1785839084455051",
-      "size": 7718
+      "etag": "1785950965373573",
+      "size": 8095
     },
     "flutter/lib/src/tokens/sk_depth.dart": {
       "etag": "1785499672820812",
@@ -529,8 +537,8 @@
       "size": 3414
     },
     "flutter/lib/src/widgets/sk_badge.dart": {
-      "etag": "1785499885142665",
-      "size": 3414
+      "etag": "1785951007228973",
+      "size": 3402
     },
     "flutter/lib/src/widgets/sk_button.dart": {
       "etag": "1785838447017571",
@@ -541,12 +549,12 @@
       "size": 4215
     },
     "flutter/lib/src/widgets/sk_checkbox.dart": {
-      "etag": "1785777129033557",
-      "size": 4461
+      "etag": "1785951007228973",
+      "size": 4854
     },
     "flutter/lib/src/widgets/sk_date_picker.dart": {
-      "etag": "1785841891395926",
-      "size": 15809
+      "etag": "1785951282074664",
+      "size": 15848
     },
     "flutter/lib/src/widgets/sk_dialog.dart": {
       "etag": "1785777188684874",
@@ -569,48 +577,48 @@
       "size": 5671
     },
     "flutter/lib/src/widgets/sk_input.dart": {
-      "etag": "1785774902137739",
-      "size": 7830
+      "etag": "1785951114485365",
+      "size": 7832
     },
     "flutter/lib/src/widgets/sk_pressable.dart": {
       "etag": "1785499795223681",
       "size": 4706
     },
     "flutter/lib/src/widgets/sk_radio.dart": {
-      "etag": "1785500119200712",
-      "size": 5418
+      "etag": "1785951056073153",
+      "size": 5635
     },
     "flutter/lib/src/widgets/sk_segmented_control.dart": {
       "etag": "1785500119200712",
       "size": 3761
     },
     "flutter/lib/src/widgets/sk_select.dart": {
-      "etag": "1785777234464332",
-      "size": 7796
+      "etag": "1785951156046151",
+      "size": 8062
     },
     "flutter/lib/src/widgets/sk_side_nav.dart": {
       "etag": "1785500269970702",
       "size": 6937
     },
     "flutter/lib/src/widgets/sk_slider.dart": {
-      "etag": "1785841824865374",
-      "size": 10998
+      "etag": "1785951211701852",
+      "size": 11038
     },
     "flutter/lib/src/widgets/sk_stat.dart": {
       "etag": "1785777019798883",
       "size": 3837
     },
     "flutter/lib/src/widgets/sk_switch.dart": {
-      "etag": "1785500119200712",
-      "size": 4182
+      "etag": "1785951056073153",
+      "size": 4609
     },
     "flutter/lib/src/widgets/sk_tab_bar.dart": {
       "etag": "1785500269970702",
       "size": 3569
     },
     "flutter/lib/src/widgets/sk_table.dart": {
-      "etag": "1785838615302689",
-      "size": 15010
+      "etag": "1785951349247468",
+      "size": 15090
     },
     "flutter/lib/src/widgets/sk_tabs.dart": {
       "etag": "1785500269970702",
@@ -621,8 +629,8 @@
       "size": 4088
     },
     "flutter/lib/src/widgets/sk_textarea.dart": {
-      "etag": "1785775271748149",
-      "size": 4668
+      "etag": "1785951114485365",
+      "size": 4747
     },
     "flutter/lib/src/widgets/sk_toast.dart": {
       "etag": "1785777129033557",
@@ -643,6 +651,10 @@
     "flutter/test/licenses_test.dart": {
       "etag": "1785787204634779",
       "size": 1860
+    },
+    "flutter/test/new_widgets_test.dart": {
+      "etag": "1785950656629372",
+      "size": 7564
     },
     "flutter/test/smoke_test.dart": {
       "etag": "1785777079369045",
@@ -681,8 +693,8 @@
       "size": 2322
     },
     "guidelines/data-visualisation.md": {
-      "etag": "1785847097098425",
-      "size": 6717
+      "etag": "1785950886943327",
+      "size": 6914
     },
     "guidelines/depth.html": {
       "etag": "1785836521046927",
@@ -845,24 +857,24 @@
       "size": 2494
     },
     "tokens/base.css": {
-      "etag": "1785493688786856",
-      "size": 1285
+      "etag": "1785950760668057",
+      "size": 1287
     },
     "tokens/colors.css": {
-      "etag": "1785847985517373",
-      "size": 4826
+      "etag": "1785950886943327",
+      "size": 4979
     },
     "tokens/depth.css": {
-      "etag": "1785493688786856",
-      "size": 1755
+      "etag": "1785950811345125",
+      "size": 2247
     },
     "tokens/fonts.css": {
       "etag": "1785485487952643",
       "size": 766
     },
     "tokens/generated/colors.ts": {
-      "etag": "1785839137550793",
-      "size": 2583
+      "etag": "1785950811345125",
+      "size": 2590
     },
     "tokens/layout.css": {
       "etag": "1785497739647639",
@@ -889,20 +901,20 @@
       "size": 9623
     },
     "tokens/theme-light.css": {
-      "etag": "1785839047395805",
-      "size": 2325
+      "etag": "1785950811345125",
+      "size": 2434
     },
     "tokens/typography.css": {
       "etag": "1785493688786856",
       "size": 2118
     },
     "tool/build-tokens.mjs": {
-      "etag": "1785838937423879",
-      "size": 19998
+      "etag": "1785952564557800",
+      "size": 21864
     },
     "tool/conformance-check.mjs": {
-      "etag": "1785858483110085",
-      "size": 10145
+      "etag": "1785951414732345",
+      "size": 11199
     },
     "ui_kits/bench/App.jsx": {
       "etag": "1785498041015926",

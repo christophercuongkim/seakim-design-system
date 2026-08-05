@@ -1,9 +1,10 @@
 # Your manual checklist
 
-Everything in the system that cannot be done from inside this project. Three of these
-are blockers, the rest are decisions or one-time setup.
+Everything in the system that cannot be done from inside this project. Nothing here
+blocks any longer — section 1 cleared on 2026-08-05 — so what remains is decisions,
+one-time setup, and assets only you can supply.
 
-Last updated 2026-08-05.
+Last updated 2026-08-05. Light theme verified; house accent is red by decision, not drift.
 
 ---
 
@@ -85,10 +86,11 @@ these — every gap is a labelled placeholder, so they drop in cleanly.
       I wrote all of it. You know your audience; I was guessing at register — particularly
       Bench's fast, opinionated tone versus Voyage's reassuring one.
 
-- [ ] **Sanity-check the light theme on a real screen.** Still outstanding, and now the
-      single highest-value review left. The Flutter side has *never* been rendered in
-      light by anyone. Run `cd flutter/example && flutter run -d chrome` and use the theme
-      toggle; the grid icon opens a gallery of every themed Material widget.
+- [x] **Light theme sanity-checked on a real screen** — Chris, 2026-08-05, verdict: good.
+      This was the outstanding promise behind [0005](decisions/0005-light-mode-is-first-class.md):
+      light is declared first-class, and until now nothing in the Flutter binding had
+      ever been rendered in it. Re-check after any change to the disabled or surface
+      tokens, since those are the two that collapse toward white rather than failing loudly.
       The `opacity: 0.4` disabled failure you flagged was still live in `SkCheckbox`,
       `SkRadio`, and `SkSwitch` — the conformance checker caught all three and they now
       use `--fill-disabled` / `--text-disabled` / `--border-disabled`.

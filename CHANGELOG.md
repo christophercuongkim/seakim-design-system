@@ -17,6 +17,74 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [3.0.0] — 2026-08-05
+
+### Changed — BREAKING
+
+- **Alpha variants are tokens.** [0013](decisions/0013-alpha-variants-are-tokens.md) — a
+  component may no longer compose alpha onto a colour; it reads a token that carries it.
+  Enforced by a new `composed-alpha` Tier 0 rule covering both shapes: Dart's
+  `.withValues(alpha:)` / `.withOpacity()` and CSS's `rgb(var(--…) / …)`.
+
+  Major per [0011](decisions/0011-versioning.md): a Tier 0 rule changed. The rule had
+  previously bound CSS and not Dart, purely because nothing looked at Dart — so this is
+  as much a correction as an addition.
+
+  **Migration:** replace an inline alpha with a token. `SkColors.fillAccentSelection`
+  covers the selection wash. The subtle badge border now reads `--border-subtle`, which
+  is what the React binding had always used — the two bindings had rendered that border
+  differently for as long as both existed.
+
+- **`disabled-opacity` widened to catch the inverse phrasing.** It only fired on lines
+  containing "disabled" or "off", so `opacity: enabled ? 1 : 0.5` read straight past it.
+  `SkInput`, `SkTextarea` and `SkSelect` had been violating it invisibly.
+
+### Added
+
+- `--on-success`, `--on-warning`, `--on-info` — foreground on a solid status fill. Like
+  `--on-accent`, they do not flip with the theme, because the status 500 steps are bright
+  in both. `Badge`'s solid tones had been reaching for raw ramp steps for want of them.
+- `--shadow-rgb` — the shadow cast as a token, so a theme retunes it in one place and no
+  component ships a literal.
+- `SkColors.fillAccentSelection`.
+- [0012](decisions/0012-conformance-checks-ship-with-rules.md) and
+  [0014](decisions/0014-text-selection-tier-1.md), neither previously released.
+- **The repo is an installable package.** Root `package.json` with an exports map, so a
+  web app consumes it by git ref exactly as a Flutter app already did. `index.js` is the
+  single client barrel; `next/lib/seakim.ts` re-exports it rather than keeping a second
+  list. Published surface is about 580 KB — the Flutter binding, fonts, and slides stay
+  in the repo.
+- Worked examples that build: `next/example` (Server Component page, `next build`) and
+  `flutter/example` (Material coverage gallery). CI runs the token check, conformance,
+  and both Flutter packages.
+
+### Fixed
+
+- **The token generator had lost its chart stage.** `tokens/src/` defined a chart group
+  the emitters never read, so regenerating silently deleted `--chart-1`–`6` and
+  `SkChartPalette`, and `--check` would have pressured the next person into making that
+  deletion permanent.
+- **`tokens/src/` disagreed with its own outputs about the house hue** — it still said
+  `clay: 55` while every generated file said `brick: 8`, and the generator still emitted
+  `var(--hue-clay)`. Regenerating would have reverted the accent from crimson to orange.
+  Neither release that changed it had updated the source.
+- `Table`, `DatePicker` and `Slider` were absent from the Next barrel, so a Next app
+  could not import them at all.
+- Three widgets in the Flutter binding could not compile (missing imports), and `SkApp`
+  never provided a `Directionality`, crashing any app that did not wrap itself in a
+  `WidgetsApp`.
+- `decisions/README.md` had drifted from the filesystem: the index stopped at 0009, that
+  link pointed at a filename that does not exist, and the count still said nine.
+
+### Note on the number
+
+The npm package version tracks the rules version rather than moving independently. That
+is a simplification, not something [0011](decisions/0011-versioning.md) requires — it
+says each binding versions itself. Revisit if the web binding ever needs to ship a fix
+without a rules change.
+
+---
+
 ## [2.1.0] — 2026-08-05
 
 ### Changed

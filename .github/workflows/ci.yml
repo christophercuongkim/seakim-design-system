@@ -26,6 +26,10 @@ jobs:
       - name: Conformance
         run: node tool/conformance-check.mjs
 
+      # VERSION, package.json, and the CHANGELOG must not drift apart.
+      - name: Version consistency
+        run: node tool/version-check.mjs
+
   flutter:
     name: Flutter binding
     runs-on: ubuntu-latest

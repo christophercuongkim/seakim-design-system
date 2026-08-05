@@ -17,6 +17,34 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [3.0.1] — 2026-08-05
+
+### Fixed
+
+- **The package was unusable from TypeScript.** A new app installing the tag and
+  importing under `strict` failed with `TS7016: Could not find a declaration file for
+  module '@seakim/design-system'`. Every component carried a `.d.ts`; the barrel that
+  re-exports them did not, and `package.json` declared no `types`. Adds `index.d.ts`,
+  wires `types` into the exports map, and writes the one declaration missing entirely —
+  `ui_kits/shared/Frames.d.ts`.
+
+  `next/example` had not caught it: it installs by `file:` path, which resolves types
+  differently from a git install. Only a throwaway app consuming the published tag
+  reproduced it.
+
+### Note on the number
+
+This is the case [3.0.0](#300--2026-08-05)'s closing note anticipated, and it arrived
+immediately: a web-binding packaging fix with no rules change. Released as a patch so the
+one number stays true everywhere, at the cost of implying a rules release that did not
+happen. If this recurs, decouple the package version from the rules version as
+[0011](decisions/0011-versioning.md) actually allows.
+
+`v3.0.0` was left pointing where it pointed. Re-tagging a published version would change
+what an app pinning it resolves to, silently.
+
+---
+
 ## [3.0.0] — 2026-08-05
 
 ### Changed — BREAKING

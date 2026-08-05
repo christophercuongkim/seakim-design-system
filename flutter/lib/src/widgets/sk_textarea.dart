@@ -70,70 +70,73 @@ class _SkTextareaState extends State<SkTextarea> {
   Widget build(BuildContext context) {
     final SkColors c = context.skColors;
 
-    final Color border = widget.invalid
-        ? c.textDanger
-        : _focused
-            ? c.borderFocus
-            : _hovered && widget.enabled
-                ? c.borderStrong
-                : c.borderDefault;
+    final Color border = !widget.enabled
+        ? c.borderDisabled
+        : widget.invalid
+            ? c.textDanger
+            : _focused
+                ? c.borderFocus
+                : _hovered && widget.enabled
+                    ? c.borderStrong
+                    : c.borderDefault;
 
-    final TextStyle style = SkText.bodySm.copyWith(color: c.textPrimary);
+    // Disabled is a token, not an opacity pass — every colour in the subtree
+    // resolves to its disabled counterpart.
+    final Color contentMuted = widget.enabled ? c.textTertiary : c.textDisabled;
+
+    final TextStyle style = SkText.bodySm
+        .copyWith(color: widget.enabled ? c.textPrimary : c.textDisabled);
 
     return MouseRegion(
       cursor: widget.enabled ? SystemMouseCursors.text : SystemMouseCursors.basic,
       onEnter: (_) => setState(() => _hovered = true),
       onExit: (_) => setState(() => _hovered = false),
-      child: AnimatedOpacity(
-        opacity: widget.enabled ? 1 : 0.5,
+      child: AnimatedContainer(
         duration: SkMotion.instant,
-        child: AnimatedContainer(
-          duration: SkMotion.instant,
-          curve: SkMotion.out,
-          padding: const EdgeInsets.all(SkSpace.s4),
-          decoration: BoxDecoration(
-            color: widget.enabled ? c.surfaceRaised : c.surfaceInset,
-            border: Border.all(
-              color: border,
-              width: _focused ? SkDepth.emphasis : SkDepth.hairline,
+        curve: SkMotion.out,
+        padding: const EdgeInsets.all(SkSpace.s4),
+        decoration: BoxDecoration(
+          color: widget.enabled ? c.surfaceRaised : c.fillDisabled,
+          border: Border.all(
+            color: border,
+            width: _focused ? SkDepth.emphasis : SkDepth.hairline,
+          ),
+        ),
+        child: Theme(
+          data: ThemeData(
+            textSelectionTheme: TextSelectionThemeData(
+              cursorColor: c.textAccent,
+              selectionColor: c.fillAccentSelection,
+              selectionHandleColor: c.fillAccent,
             ),
           ),
-          child: Theme(
-            data: ThemeData(
-              textSelectionTheme: TextSelectionThemeData(
-                cursorColor: c.textAccent,
-                selectionColor: c.fillAccent.withValues(alpha: 0.32),
-                selectionHandleColor: c.fillAccent,
-              ),
-            ),
-            child: Stack(
-              children: <Widget>[
-                if (widget.placeholder != null)
-                  ValueListenableBuilder<TextEditingValue>(
-                    valueListenable: _controller,
-                    builder: (BuildContext context, TextEditingValue v, _) =>
-                        v.text.isEmpty
-                            ? Text(widget.placeholder!,
-                                style: style.copyWith(color: c.textTertiary))
-                            : const SizedBox.shrink(),
-                  ),
-                EditableText(
-                  controller: _controller,
-                  focusNode: _focusNode,
-                  style: style,
-                  cursorColor: c.textAccent,
-                  backgroundCursorColor: c.borderSubtle,
-                  onChanged: widget.onChanged,
-                  readOnly: !widget.enabled,
-                  minLines: widget.minLines,
-                  maxLines: widget.maxLines,
-                  keyboardType: TextInputType.multiline,
-                  textInputAction: TextInputAction.newline,
-                  selectionColor: c.fillAccent.withValues(alpha: 0.32),
-                  cursorWidth: 1.5,
+          child: Stack(
+            children: <Widget>[
+              if (widget.placeholder != null)
+                ValueListenableBuilder<TextEditingValue>(
+                  valueListenable: _controller,
+                  builder: (BuildContext context, TextEditingValue v, _) =>
+                      v.text.isEmpty
+                          ? Text(widget.placeholder!,
+                              style: style.copyWith(color: contentMuted))
+                          : const SizedBox.shrink(),
                 ),
-              ],
-            ),
+              EditableText(
+                controller: _controller,
+                focusNode: _focusNode,
+                style: style,
+                cursorColor: c.textAccent,
+                backgroundCursorColor: c.borderSubtle,
+                onChanged: widget.onChanged,
+                readOnly: !widget.enabled,
+                minLines: widget.minLines,
+                maxLines: widget.maxLines,
+                keyboardType: TextInputType.multiline,
+                textInputAction: TextInputAction.newline,
+                selectionColor: c.fillAccentSelection,
+                cursorWidth: 1.5,
+              ),
+            ],
           ),
         ),
       ),

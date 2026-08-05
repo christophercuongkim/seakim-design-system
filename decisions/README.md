@@ -13,7 +13,7 @@ reasonably ask "why on earth is it like this?" or would otherwise re-litigate it
 | `Accepted` | In force. Bindings must comply. |
 | `Superseded by NNNN` | Kept for the record. Never deleted, never edited to agree with the new answer. |
 
-All nine are in force as of 2026-08-04. ADRs are **append-only**. Correct one by writing its successor, not by rewriting it —
+All thirteen are in force as of 2026-08-05. ADRs are **append-only**. Correct one by writing its successor, not by rewriting it —
 the value is in the trail, and a silently edited ADR is worse than none.
 
 ## Index
@@ -28,7 +28,11 @@ the value is in the trail, and a silently edited ADR is worse than none.
 | [0006](0006-slider.md) | Slider anatomy | Accepted |
 | [0007](0007-token-source-format.md) | DTCG JSON becomes the token source; CSS becomes an output | Accepted |
 | [0008](0008-conformance-tiers.md) | What a binding must do to call itself SeaKim | Accepted |
-| [0009](0009-bundle-phosphor-font.md) | Bundle the Phosphor icon font; drop `phosphor_flutter` | Accepted |
+| [0009](0009-bundle-phosphor-icon-font.md) | Bundle the Phosphor icon font; drop `phosphor_flutter` | Accepted |
+| [0010](0010-bindings-are-contributed-not-owned.md) | Bindings are contributed, not owned | Accepted |
+| [0011](0011-versioning.md) | Versioning | Accepted |
+| [0012](0012-conformance-checks-ship-with-rules.md) | Conformance checks ship with the rules; consuming repos run them | Accepted |
+| [0013](0013-alpha-variants-are-tokens.md) | Alpha variants are tokens, not per-component constants | Accepted |
 
 ## Writing one
 

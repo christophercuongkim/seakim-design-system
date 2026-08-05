@@ -11,18 +11,18 @@
 */
 
 [data-app="seakim"], [data-app="house"] {
-  --hue-brand: var(--hue-clay);
-  --brand-100: oklch(0.91 0.045 55);
-  --brand-200: oklch(0.84 0.075 55);
-  --brand-300: oklch(0.80 0.100 55);
-  --brand-400: oklch(0.72 0.130 55);
-  --brand-500: oklch(0.64 0.140 55);
-  --brand-600: oklch(0.56 0.140 55);
-  --brand-700: oklch(0.46 0.120 55);
-  --brand-800: oklch(0.36 0.095 55);
-  --brand-900: oklch(0.26 0.070 55);
-  --brand-050: oklch(0.96 0.022 55);
-  --brand-wash: oklch(0.24 0.045 55);
+  --hue-brand: var(--hue-brick);
+  --brand-100: oklch(0.91 0.045 8);
+  --brand-200: oklch(0.84 0.075 8);
+  --brand-300: oklch(0.80 0.100 8);
+  --brand-400: oklch(0.72 0.130 8);
+  --brand-500: oklch(0.64 0.140 8);
+  --brand-600: oklch(0.56 0.140 8);
+  --brand-700: oklch(0.46 0.120 8);
+  --brand-800: oklch(0.36 0.095 8);
+  --brand-900: oklch(0.26 0.070 8);
+  --brand-050: oklch(0.96 0.022 8);
+  --brand-wash: oklch(0.24 0.045 8);
 }
 
 [data-app="voyage"], [data-app="travel"] {

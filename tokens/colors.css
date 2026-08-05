@@ -7,11 +7,11 @@
 
 :root {
   /* ---- Accent hues. Same lightness and chroma ramp; only H moves. ---- */
-  --hue-clay: 55;    /* SeaKim house — decks, cross-product surfaces */
+  --hue-brick: 8;    /* SeaKim house — decks, cross-product surfaces */
   --hue-sea: 245;    /* Voyage — travel planning and booking */
   --hue-turf: 145;    /* Bench — fantasy sport */
   --hue-plum: 320;    /* Reserved for app three */
-  --hue-brand: var(--hue-clay);
+  --hue-brand: var(--hue-brick);
 
   /* ---- Brand ramp, generated from --hue-brand ---- */
   --brand-100: oklch(0.91 0.045 var(--hue-brand));

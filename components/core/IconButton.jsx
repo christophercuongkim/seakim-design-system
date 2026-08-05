@@ -15,10 +15,14 @@ export function IconButton({ icon, label, variant = 'ghost', size = 'md', active
       onMouseDown={() => setPress(true)} onMouseUp={() => setPress(false)}
       style={{
         width: s.box, height: s.box, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-        borderRadius: 'var(--radius-none)', cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.4 : 1,
-        border: bordered ? `1px solid ${hover ? 'var(--border-strong)' : 'var(--border-default)'}` : '1px solid transparent',
-        background: active ? 'var(--surface-selected)' : press ? 'var(--surface-active)' : hover ? 'var(--surface-hover)' : 'transparent',
-        color: active ? 'var(--text-accent)' : hover ? 'var(--text-primary)' : 'var(--text-secondary)',
+        borderRadius: 'var(--radius-none)', cursor: disabled ? 'not-allowed' : 'pointer',
+        border: bordered
+          ? `1px solid ${disabled ? 'var(--border-disabled)' : hover ? 'var(--border-strong)' : 'var(--border-default)'}`
+          : '1px solid transparent',
+        background: disabled ? 'transparent'
+          : active ? 'var(--surface-selected)' : press ? 'var(--surface-active)' : hover ? 'var(--surface-hover)' : 'transparent',
+        color: disabled ? 'var(--text-disabled)'
+          : active ? 'var(--text-accent)' : hover ? 'var(--text-primary)' : 'var(--text-secondary)',
         transition: 'var(--transition-control)', transform: press && !disabled ? 'scale(var(--press-scale))' : 'scale(1)',
         ...style,
       }}

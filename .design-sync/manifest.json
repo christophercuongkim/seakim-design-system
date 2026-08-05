@@ -1,12 +1,28 @@
 {
   "files": {
     ".thumbnail": {
-      "etag": "1785500333170274",
-      "size": 17382
+      "etag": "1785851453512970",
+      "size": 44936
+    },
+    "CHANGELOG.md": {
+      "etag": "1785851145554685",
+      "size": 5045
+    },
+    "CONTRIBUTING-A-BINDING.md": {
+      "etag": "1785851163071252",
+      "size": 5695
     },
     "SKILL.md": {
       "etag": "1785484605825213",
       "size": 871
+    },
+    "TODO-manual.md": {
+      "etag": "1785844708934888",
+      "size": 6217
+    },
+    "VERSION": {
+      "etag": "1785851145554685",
+      "size": 6
     },
     "components/core/Avatar.d.ts": {
       "etag": "1785493961940410",
@@ -37,8 +53,8 @@
       "size": 1084
     },
     "components/core/Button.jsx": {
-      "etag": "1785484935150809",
-      "size": 3122
+      "etag": "1785836609538686",
+      "size": 3488
     },
     "components/core/Button.prompt.md": {
       "etag": "1785484935150809",
@@ -73,8 +89,8 @@
       "size": 662
     },
     "components/core/IconButton.jsx": {
-      "etag": "1785484935150809",
-      "size": 1631
+      "etag": "1785836625955288",
+      "size": 1743
     },
     "components/core/IconButton.prompt.md": {
       "etag": "1785484935150809",
@@ -97,20 +113,40 @@
       "size": 631
     },
     "components/core/Tag.jsx": {
-      "etag": "1785484935150809",
-      "size": 1828
+      "etag": "1785836625955288",
+      "size": 1811
     },
     "components/core/Tag.prompt.md": {
       "etag": "1785484935150809",
       "size": 344
     },
     "components/core/core.card.html": {
-      "etag": "1785497023881186",
-      "size": 1619
+      "etag": "1785836521046927",
+      "size": 1665
     },
     "components/core/core.demo.jsx": {
       "etag": "1785494938480119",
       "size": 3666
+    },
+    "components/data/Table.d.ts": {
+      "etag": "1785836756694021",
+      "size": 2782
+    },
+    "components/data/Table.jsx": {
+      "etag": "1785836756694021",
+      "size": 9398
+    },
+    "components/data/Table.prompt.md": {
+      "etag": "1785836756694021",
+      "size": 1367
+    },
+    "components/data/data.card.html": {
+      "etag": "1785836798962694",
+      "size": 1692
+    },
+    "components/data/data.demo.jsx": {
+      "etag": "1785836798962694",
+      "size": 3746
     },
     "components/feedback/Dialog.d.ts": {
       "etag": "1785494064369100",
@@ -161,8 +197,8 @@
       "size": 272
     },
     "components/feedback/feedback.card.html": {
-      "etag": "1785497023881186",
-      "size": 1639
+      "etag": "1785836521046927",
+      "size": 1685
     },
     "components/feedback/feedback.demo.jsx": {
       "etag": "1785494938480119",
@@ -173,12 +209,24 @@
       "size": 692
     },
     "components/forms/Checkbox.jsx": {
-      "etag": "1785493961940410",
-      "size": 2147
+      "etag": "1785842003176272",
+      "size": 2295
     },
     "components/forms/Checkbox.prompt.md": {
       "etag": "1785493961940410",
       "size": 369
+    },
+    "components/forms/DatePicker.d.ts": {
+      "etag": "1785841765692879",
+      "size": 1630
+    },
+    "components/forms/DatePicker.jsx": {
+      "etag": "1785841723888584",
+      "size": 11179
+    },
+    "components/forms/DatePicker.prompt.md": {
+      "etag": "1785841765692879",
+      "size": 857
     },
     "components/forms/Field.d.ts": {
       "etag": "1785493961940410",
@@ -197,8 +245,8 @@
       "size": 826
     },
     "components/forms/Input.jsx": {
-      "etag": "1785493961940410",
-      "size": 2274
+      "etag": "1785842101730844",
+      "size": 2320
     },
     "components/forms/Input.prompt.md": {
       "etag": "1785493961940410",
@@ -209,8 +257,8 @@
       "size": 860
     },
     "components/forms/Radio.jsx": {
-      "etag": "1785493961940410",
-      "size": 2759
+      "etag": "1785842003176272",
+      "size": 2903
     },
     "components/forms/Radio.prompt.md": {
       "etag": "1785493961940410",
@@ -233,20 +281,32 @@
       "size": 660
     },
     "components/forms/Select.jsx": {
-      "etag": "1785493961940410",
-      "size": 2270
+      "etag": "1785842101730844",
+      "size": 2316
     },
     "components/forms/Select.prompt.md": {
       "etag": "1785493961940410",
       "size": 320
+    },
+    "components/forms/Slider.d.ts": {
+      "etag": "1785841545362812",
+      "size": 1311
+    },
+    "components/forms/Slider.jsx": {
+      "etag": "1785841545362812",
+      "size": 7459
+    },
+    "components/forms/Slider.prompt.md": {
+      "etag": "1785841545362812",
+      "size": 802
     },
     "components/forms/Switch.d.ts": {
       "etag": "1785493961940410",
       "size": 651
     },
     "components/forms/Switch.jsx": {
-      "etag": "1785493961940410",
-      "size": 2304
+      "etag": "1785842101730844",
+      "size": 2458
     },
     "components/forms/Switch.prompt.md": {
       "etag": "1785493961940410",
@@ -257,20 +317,28 @@
       "size": 356
     },
     "components/forms/Textarea.jsx": {
-      "etag": "1785493961940410",
-      "size": 1255
+      "etag": "1785842101730844",
+      "size": 1301
     },
     "components/forms/Textarea.prompt.md": {
       "etag": "1785493961940410",
       "size": 284
     },
     "components/forms/forms.card.html": {
-      "etag": "1785497023881186",
-      "size": 1624
+      "etag": "1785836521046927",
+      "size": 1670
     },
     "components/forms/forms.demo.jsx": {
       "etag": "1785495066145795",
       "size": 3055
+    },
+    "components/forms/pickers.card.html": {
+      "etag": "1785841765692879",
+      "size": 1656
+    },
+    "components/forms/pickers.demo.jsx": {
+      "etag": "1785841765692879",
+      "size": 2025
     },
     "components/navigation/SideNav.d.ts": {
       "etag": "1785494064369100",
@@ -309,28 +377,80 @@
       "size": 430
     },
     "components/navigation/navigation.card.html": {
-      "etag": "1785497023881186",
-      "size": 1637
+      "etag": "1785836521046927",
+      "size": 1683
     },
     "components/navigation/navigation.demo.jsx": {
       "etag": "1785495049102426",
       "size": 2993
     },
-    "ds-shim.js": {
-      "etag": "1785495131845814",
-      "size": 5350
+    "conformance.md": {
+      "etag": "1785851163071252",
+      "size": 13614
     },
-    "flutter-decisions.html": {
-      "etag": "1785499045632965",
-      "size": 14237
+    "decisions/0001-platform-neutral-spec-layer.md": {
+      "etag": "1785821527555657",
+      "size": 3917
+    },
+    "decisions/0002-no-floating-action-button.md": {
+      "etag": "1785835268678966",
+      "size": 3621
+    },
+    "decisions/0003-tables.md": {
+      "etag": "1785835268678966",
+      "size": 5085
+    },
+    "decisions/0004-date-and-time-selection.md": {
+      "etag": "1785835268678966",
+      "size": 4192
+    },
+    "decisions/0005-light-mode-is-first-class.md": {
+      "etag": "1785835268678966",
+      "size": 4651
+    },
+    "decisions/0006-slider.md": {
+      "etag": "1785835268678966",
+      "size": 3733
+    },
+    "decisions/0007-token-source-format.md": {
+      "etag": "1785835268678966",
+      "size": 5444
+    },
+    "decisions/0008-conformance-tiers.md": {
+      "etag": "1785835268678966",
+      "size": 5639
+    },
+    "decisions/0009-bundle-phosphor-icon-font.md": {
+      "etag": "1785846184323657",
+      "size": 4300
+    },
+    "decisions/0010-bindings-are-contributed-not-owned.md": {
+      "etag": "1785844043241644",
+      "size": 4456
+    },
+    "decisions/0011-versioning.md": {
+      "etag": "1785851099175237",
+      "size": 4709
+    },
+    "decisions/0012-conformance-checks-ship-with-rules.md": {
+      "etag": "1785858422975083",
+      "size": 4221
+    },
+    "decisions/README.md": {
+      "etag": "1785851163071252",
+      "size": 2368
+    },
+    "ds-shim.js": {
+      "etag": "1785841765692879",
+      "size": 5457
     },
     "flutter/GENERATED-FILES.md": {
       "etag": "1785798950952224",
       "size": 1707
     },
     "flutter/README.md": {
-      "etag": "1785787002950314",
-      "size": 9602
+      "etag": "1785850233919940",
+      "size": 9655
     },
     "flutter/assets/icons/LICENSE-phosphor.txt": {
       "etag": "1785777019798883",
@@ -357,28 +477,28 @@
       "size": 1997
     },
     "flutter/lib/seakim_flutter.dart": {
-      "etag": "1785786926873584",
-      "size": 1910
+      "etag": "1785841891395926",
+      "size": 2025
     },
     "flutter/lib/src/theme/sk_breakpoints.dart": {
       "etag": "1785499722531678",
       "size": 2344
     },
     "flutter/lib/src/theme/sk_material_theme.dart": {
-      "etag": "1785798785042876",
-      "size": 23677
+      "etag": "1785841964572360",
+      "size": 24362
     },
     "flutter/lib/src/theme/sk_theme.dart": {
       "etag": "1785787002950314",
       "size": 4006
     },
     "flutter/lib/src/tokens/palette.g.dart": {
-      "etag": "1785499672820812",
-      "size": 5013
+      "etag": "1785848007930678",
+      "size": 6434
     },
     "flutter/lib/src/tokens/sk_colors.dart": {
-      "etag": "1785499672820812",
-      "size": 6902
+      "etag": "1785839084455051",
+      "size": 7718
     },
     "flutter/lib/src/tokens/sk_depth.dart": {
       "etag": "1785499672820812",
@@ -413,8 +533,8 @@
       "size": 3414
     },
     "flutter/lib/src/widgets/sk_button.dart": {
-      "etag": "1785772042538672",
-      "size": 6341
+      "etag": "1785838447017571",
+      "size": 6611
     },
     "flutter/lib/src/widgets/sk_card.dart": {
       "etag": "1785499885142665",
@@ -423,6 +543,10 @@
     "flutter/lib/src/widgets/sk_checkbox.dart": {
       "etag": "1785777129033557",
       "size": 4461
+    },
+    "flutter/lib/src/widgets/sk_date_picker.dart": {
+      "etag": "1785841891395926",
+      "size": 15809
     },
     "flutter/lib/src/widgets/sk_dialog.dart": {
       "etag": "1785777188684874",
@@ -441,8 +565,8 @@
       "size": 3003
     },
     "flutter/lib/src/widgets/sk_icon_button.dart": {
-      "etag": "1785774669836963",
-      "size": 5546
+      "etag": "1785838479348082",
+      "size": 5671
     },
     "flutter/lib/src/widgets/sk_input.dart": {
       "etag": "1785774902137739",
@@ -468,6 +592,10 @@
       "etag": "1785500269970702",
       "size": 6937
     },
+    "flutter/lib/src/widgets/sk_slider.dart": {
+      "etag": "1785841824865374",
+      "size": 10998
+    },
     "flutter/lib/src/widgets/sk_stat.dart": {
       "etag": "1785777019798883",
       "size": 3837
@@ -480,13 +608,17 @@
       "etag": "1785500269970702",
       "size": 3569
     },
+    "flutter/lib/src/widgets/sk_table.dart": {
+      "etag": "1785838615302689",
+      "size": 15010
+    },
     "flutter/lib/src/widgets/sk_tabs.dart": {
       "etag": "1785500269970702",
       "size": 4421
     },
     "flutter/lib/src/widgets/sk_tag.dart": {
-      "etag": "1785787160158447",
-      "size": 4068
+      "etag": "1785838479348082",
+      "size": 4088
     },
     "flutter/lib/src/widgets/sk_textarea.dart": {
       "etag": "1785775271748149",
@@ -501,8 +633,8 @@
       "size": 786
     },
     "flutter/pubspec.yaml": {
-      "etag": "1785786926873584",
-      "size": 2344
+      "etag": "1785851163071252",
+      "size": 2529
     },
     "flutter/test/adoption_test.dart": {
       "etag": "1785787204634779",
@@ -520,97 +652,109 @@
       "etag": "1785787160158447",
       "size": 5139
     },
-    "flutter/tool/gen_tokens.dart": {
-      "etag": "1785499722531678",
-      "size": 3875
+    "guidelines/accessibility.md": {
+      "etag": "1785846966262390",
+      "size": 6951
     },
     "guidelines/colors-accents.html": {
-      "etag": "1785494854501809",
-      "size": 2920
+      "etag": "1785836521046927",
+      "size": 2963
     },
     "guidelines/colors-semantic.html": {
-      "etag": "1785484741512527",
-      "size": 2777
+      "etag": "1785836521046927",
+      "size": 2820
     },
     "guidelines/colors-stone.html": {
-      "etag": "1785484741512527",
-      "size": 1921
+      "etag": "1785836521046927",
+      "size": 1964
     },
     "guidelines/colors-surfaces-dark.html": {
-      "etag": "1785484741512527",
-      "size": 2299
+      "etag": "1785836521046927",
+      "size": 2342
     },
     "guidelines/colors-surfaces-light.html": {
-      "etag": "1785495630505092",
-      "size": 2318
+      "etag": "1785836521046927",
+      "size": 2361
     },
     "guidelines/colors-text.html": {
-      "etag": "1785484836442133",
-      "size": 2279
+      "etag": "1785836521046927",
+      "size": 2322
+    },
+    "guidelines/data-visualisation.md": {
+      "etag": "1785847097098425",
+      "size": 6717
     },
     "guidelines/depth.html": {
-      "etag": "1785484741512527",
-      "size": 1787
+      "etag": "1785836521046927",
+      "size": 1830
     },
     "guidelines/icons.html": {
-      "etag": "1785495630505092",
-      "size": 5254
+      "etag": "1785836521046927",
+      "size": 5297
+    },
+    "guidelines/layout.md": {
+      "etag": "1785847034028616",
+      "size": 7544
     },
     "guidelines/motion.html": {
-      "etag": "1785484741512527",
-      "size": 2731
+      "etag": "1785836521046927",
+      "size": 2774
+    },
+    "guidelines/proposed-components.html": {
+      "etag": "1785836521046927",
+      "size": 22759
     },
     "guidelines/radius.html": {
-      "etag": "1785484741512527",
-      "size": 2175
+      "etag": "1785836521046927",
+      "size": 2218
     },
     "guidelines/spacing-controls.html": {
-      "etag": "1785484741512527",
-      "size": 2185
+      "etag": "1785836521046927",
+      "size": 2228
     },
     "guidelines/spacing-in-use.html": {
-      "etag": "1785484741512527",
-      "size": 1536
+      "etag": "1785836521046927",
+      "size": 1579
     },
     "guidelines/spacing-scale.html": {
-      "etag": "1785484741512527",
-      "size": 3213
+      "etag": "1785836521046927",
+      "size": 3256
     },
     "guidelines/states.html": {
-      "etag": "1785484741512527",
-      "size": 2855
+      "etag": "1785836521046927",
+      "size": 2898
     },
     "guidelines/type-data.html": {
-      "etag": "1785484741512527",
-      "size": 1718
+      "etag": "1785836521046927",
+      "size": 1761
     },
     "guidelines/type-display.html": {
-      "etag": "1785495630505092",
-      "size": 2455
+      "etag": "1785836521046927",
+      "size": 2498
     },
     "guidelines/type-families.html": {
-      "etag": "1785495630505092",
-      "size": 1502
+      "etag": "1785836521046927",
+      "size": 1545
     },
     "guidelines/type-ui.html": {
-      "etag": "1785495630505092",
-      "size": 2058
+      "etag": "1785836521046927",
+      "size": 2101
     },
     "guidelines/voice-and-tone.md": {
       "etag": "1785495681510881",
       "size": 3577
     },
     "guidelines/wordmark.html": {
-      "etag": "1785495630505092",
-      "size": 1510
+      "etag": "1785836521046927",
+      "size": 1553
     },
     "index.html": {
-      "etag": "1785500534785005",
-      "size": 28095
+      "etag": "1785851444494699",
+      "size": 35469
     },
     "next/README.md": {
-      "etag": "1785500021111420",
-      "size": 5411
+      "etag": "1785850233919940",
+      "size": 5484
     },
     "next/app/fonts.ts": {
       "etag": "1785500021111420",
@@ -637,8 +781,12 @@
       "size": 230
     },
     "readme.md": {
-      "etag": "1785500345426554",
-      "size": 15911
+      "etag": "1785851163071252",
+      "size": 19196
+    },
+    "signoff.html": {
+      "etag": "1785835674574663",
+      "size": 63390
     },
     "slides/AgendaSlide.html": {
       "etag": "1785495567139321",
@@ -668,21 +816,41 @@
       "etag": "1785495567139321",
       "size": 2571
     },
+    "spec/DatePicker.md": {
+      "etag": "1785822319245861",
+      "size": 4306
+    },
+    "spec/README.md": {
+      "etag": "1785842725248064",
+      "size": 2411
+    },
+    "spec/Slider.md": {
+      "etag": "1785822319245861",
+      "size": 3626
+    },
+    "spec/Table.md": {
+      "etag": "1785822132947584",
+      "size": 5182
+    },
     "styles.css": {
       "etag": "1785493688786856",
       "size": 387
     },
+    "theme-toggle.js": {
+      "etag": "1785836502043099",
+      "size": 2350
+    },
     "tokens/apps.css": {
-      "etag": "1785495049102426",
-      "size": 2730
+      "etag": "1785839047395805",
+      "size": 2494
     },
     "tokens/base.css": {
       "etag": "1785493688786856",
       "size": 1285
     },
     "tokens/colors.css": {
-      "etag": "1785494854501809",
-      "size": 3778
+      "etag": "1785847985517373",
+      "size": 4826
     },
     "tokens/depth.css": {
       "etag": "1785493688786856",
@@ -691,6 +859,10 @@
     "tokens/fonts.css": {
       "etag": "1785485487952643",
       "size": 766
+    },
+    "tokens/generated/colors.ts": {
+      "etag": "1785839137550793",
+      "size": 2583
     },
     "tokens/layout.css": {
       "etag": "1785497739647639",
@@ -708,13 +880,29 @@
       "etag": "1785493688786856",
       "size": 827
     },
+    "tokens/src/README.md": {
+      "etag": "1785839137550793",
+      "size": 2417
+    },
+    "tokens/src/color.tokens.json": {
+      "etag": "1785847942708681",
+      "size": 9623
+    },
     "tokens/theme-light.css": {
-      "etag": "1785493698029023",
-      "size": 1836
+      "etag": "1785839047395805",
+      "size": 2325
     },
     "tokens/typography.css": {
       "etag": "1785493688786856",
       "size": 2118
+    },
+    "tool/build-tokens.mjs": {
+      "etag": "1785838937423879",
+      "size": 19998
+    },
+    "tool/conformance-check.mjs": {
+      "etag": "1785858483110085",
+      "size": 10145
     },
     "ui_kits/bench/App.jsx": {
       "etag": "1785498041015926",
@@ -725,8 +913,8 @@
       "size": 4922
     },
     "ui_kits/bench/LeagueScreen.jsx": {
-      "etag": "1785498041015926",
-      "size": 3760
+      "etag": "1785842630898049",
+      "size": 3386
     },
     "ui_kits/bench/LineupScreen.jsx": {
       "etag": "1785498041015926",
@@ -745,12 +933,12 @@
       "size": 2680
     },
     "ui_kits/bench/README.md": {
-      "etag": "1785498626481777",
-      "size": 2036
+      "etag": "1785842725248064",
+      "size": 2139
     },
     "ui_kits/bench/RosterList.jsx": {
-      "etag": "1785497933410069",
-      "size": 6589
+      "etag": "1785842156149702",
+      "size": 4931
     },
     "ui_kits/bench/index.html": {
       "etag": "1785498041015926",

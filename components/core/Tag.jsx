@@ -11,7 +11,7 @@ export function Tag({ children, icon, selected = false, onRemove, onClick, disab
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 'var(--space-3)',
         height: 'var(--control-h-sm)', padding: `0 ${onRemove ? 'var(--space-2)' : 'var(--space-4)'} 0 var(--space-4)`,
-        borderRadius: 'var(--radius-xs)', cursor: clickable ? 'pointer' : 'default', opacity: disabled ? 0.4 : 1,
+        borderRadius: 'var(--radius-xs)', cursor: clickable ? 'pointer' : 'default', opacity: 1,
         background: selected ? 'var(--surface-selected)' : hover && clickable ? 'var(--surface-hover)' : 'transparent',
         border: `1px solid ${selected ? 'var(--border-accent)' : hover && clickable ? 'var(--border-strong)' : 'var(--border-default)'}`,
         color: selected ? 'var(--text-accent)' : 'var(--text-primary)',

@@ -7,7 +7,16 @@ const SIZES = {
   lg: { h: 'var(--control-h-lg)', px: 'var(--space-6)', fs: 'var(--text-md)', icon: 20, gap: 'var(--space-3)' },
 };
 
-function palette(variant, hover, active) {
+function palette(variant, hover, active, off) {
+  // Disabled is its own palette rather than an opacity pass over the enabled one.
+  // See tokens/colors.css and decision 0005.
+  if (off) {
+    return {
+      background: variant === 'ghost' ? 'transparent' : 'var(--fill-disabled)',
+      color: 'var(--text-disabled)',
+      border: `1px solid ${variant === 'secondary' ? 'var(--border-disabled)' : 'transparent'}`,
+    };
+  }
   switch (variant) {
     case 'secondary':
       return { background: active ? 'var(--surface-active)' : hover ? 'var(--surface-hover)' : 'transparent',
@@ -49,9 +58,9 @@ export function Button({
         height: s.h, padding: `0 ${s.px}`, borderRadius: 'var(--radius-none)',
         fontFamily: 'var(--font-sans)', fontSize: s.fs, fontWeight: 'var(--weight-semibold)',
         letterSpacing: '0.005em', whiteSpace: 'nowrap', cursor: off ? 'not-allowed' : 'pointer',
-        opacity: off ? 0.4 : 1, transition: 'var(--transition-control)',
+        transition: 'var(--transition-control)',
         transform: active && !off ? 'scale(var(--press-scale))' : 'scale(1)',
-        ...palette(variant, hover && !off, active && !off), ...style,
+        ...palette(variant, hover && !off, active && !off, off), ...style,
       }}
       {...rest}
     >

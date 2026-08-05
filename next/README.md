@@ -1,5 +1,7 @@
 # SeaKim in Next.js
 
+**Adapter over the React reference binding — conforms to SeaKim 1.0**
+
 The React components are plain function components with no framework coupling, so
 they work in Next as-is — but five things need handling, and four of them will bite
 you silently rather than error. This folder holds the adapter files.

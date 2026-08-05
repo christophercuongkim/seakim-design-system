@@ -1,22 +1,61 @@
 import React from 'react';
 import { Avatar } from '../../components/core/Avatar.jsx';
 import { Badge } from '../../components/core/Badge.jsx';
+import { Table } from '../../components/data/Table.jsx';
 import { SegmentedControl } from '../../components/forms/SegmentedControl.jsx';
 import { SectionLabel, pagePad } from './BenchShell.jsx';
 import { STANDINGS } from './roster.js';
 
-const TH = {
-  font: 'var(--type-eyebrow)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-caps)',
-  color: 'var(--text-tertiary)', padding: 'var(--space-4) var(--space-5)', textAlign: 'left',
-  borderBottom: '1px solid var(--border-subtle)', whiteSpace: 'nowrap',
-};
-const TD = { padding: 'var(--space-4) var(--space-5)', borderBottom: '1px solid var(--border-subtle)', font: 'var(--type-body-sm)' };
-const NUM = { ...TD, fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', textAlign: 'right' };
+/* Standings, expressed as a column definition over the shared Table.
 
-/** sm drops the two widest columns rather than shrinking the type. */
+   This was the last hand-rolled table in the kits — the pattern decision 0003 was
+   written to replace. What stays here is the part that is genuinely Bench's: which
+   columns drop first, and that the user's own row is the one accent in the table. */
+
+const MY_TEAM = 'Bench Warmers';
+
+function TeamCell(row) {
+  const mine = row.team === MY_TEAM;
+  return (
+    <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', minWidth: 0 }}>
+      <Avatar name={row.team} size="sm" />
+      <span style={{
+        font: 'var(--type-label)', fontSize: 'var(--text-sm)',
+        color: mine ? 'var(--text-accent)' : 'var(--text-primary)',
+        whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+      }}>{row.team}</span>
+      {mine && <Badge tone="accent">You</Badge>}
+    </span>
+  );
+}
+
 export function LeagueScreen({ bp }) {
   const isSm = bp === 'sm';
-  const isLg = bp === 'lg';
+
+  const rows = STANDINGS.map(([rank, team, record, pointsFor, differential]) => ({
+    rank, team, record, pointsFor, differential,
+  }));
+
+  const columns = [
+    {
+      key: 'rank', label: '#', width: 40, sortable: false,
+      render: r => <span style={{ font: 'var(--type-data)', color: 'var(--text-tertiary)' }}>{r.rank}</span>,
+    },
+    { key: 'team', label: 'Team', identifying: true, render: TeamCell },
+    { key: 'record', label: 'Record', numeric: true, survives: true, secondary: r => r.record },
+    // Points for and differential are the two widest columns and the least urgent:
+    // they drop at md rather than the type shrinking.
+    { key: 'pointsFor', label: 'Points for', numeric: true, priority: 3 },
+    {
+      key: 'differential', label: 'Differential', numeric: true, priority: 3,
+      render: r => (
+        <span style={{ color: r.differential.startsWith('-') ? 'var(--text-danger)' : 'var(--text-success)' }}>
+          {r.differential}
+        </span>
+      ),
+    },
+  ];
+
   return (
     <div style={{ padding: pagePad(bp), display: 'flex', flexDirection: 'column', gap: isSm ? 0 : 'var(--space-6)' }}>
       <div style={{
@@ -27,47 +66,22 @@ export function LeagueScreen({ bp }) {
       }}>
         <SectionLabel meta={isSm ? undefined : 'East · 6 teams · week 14'}>Standings</SectionLabel>
         <div style={{ marginLeft: isSm ? 0 : 'auto' }}>
-          <SegmentedControl size="sm" fullWidth={isSm} options={isSm ? ['Standings', 'Trades'] : ['Standings', 'Transactions', 'Draft board']} />
+          <SegmentedControl
+            size="sm"
+            fullWidth={isSm}
+            options={isSm ? ['Standings', 'Trades'] : ['Standings', 'Transactions', 'Draft board']}
+          />
         </div>
       </div>
 
-      <div style={{ border: isSm ? 'none' : '1px solid var(--border-subtle)', overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', background: 'var(--surface-card)' }}>
-          <thead>
-            <tr>
-              <th style={{ ...TH, width: 40 }}>#</th>
-              <th style={TH}>Team</th>
-              <th style={{ ...TH, textAlign: 'right' }}>Record</th>
-              {!isSm && <th style={{ ...TH, textAlign: 'right' }}>Points for</th>}
-              {isLg && <th style={{ ...TH, textAlign: 'right' }}>Differential</th>}
-            </tr>
-          </thead>
-          <tbody>
-            {STANDINGS.map(([rank, team, rec, pf, diff]) => {
-              const mine = team === 'Bench Warmers';
-              return (
-                <tr key={team} style={{ background: mine ? 'var(--surface-selected)' : 'transparent' }}>
-                  <td style={{ ...TD, fontFamily: 'var(--font-mono)', color: 'var(--text-tertiary)' }}>{rank}</td>
-                  <td style={TD}>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
-                      <Avatar name={team} size="sm" />
-                      <span style={{
-                        font: 'var(--type-label)', fontSize: 'var(--text-sm)',
-                        color: mine ? 'var(--text-accent)' : 'var(--text-primary)',
-                        whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-                      }}>{team}</span>
-                      {mine && <Badge tone="accent">You</Badge>}
-                    </span>
-                  </td>
-                  <td style={NUM}>{rec}</td>
-                  {!isSm && <td style={NUM}>{pf}</td>}
-                  {isLg && <td style={{ ...NUM, color: diff.startsWith('-') ? 'var(--text-danger)' : 'var(--text-success)' }}>{diff}</td>}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      <Table
+        columns={columns}
+        rows={rows}
+        bp={bp}
+        rowKey={r => r.team}
+        selectedKey={MY_TEAM}
+        caption="League standings, East division, week 14"
+      />
     </div>
   );
 }

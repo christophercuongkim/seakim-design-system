@@ -1,25 +1,78 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Avatar } from '../../components/core/Avatar.jsx';
 import { Badge } from '../../components/core/Badge.jsx';
 import { Icon } from '../../components/core/Icon.jsx';
 import { IconButton } from '../../components/core/IconButton.jsx';
 import { Tooltip } from '../../components/feedback/Tooltip.jsx';
+import { Table } from '../../components/data/Table.jsx';
 
-/* The same roster data renders two ways. This is the core responsive move in
-   Bench: at sm a player is a tappable row with a chevron; from md up it is a
-   table row with hover-revealed actions and extra columns. */
+/* Bench's roster, expressed as a column definition over the shared Table.
+   This used to be a hand-rolled table plus a hand-rolled list row — the pattern
+   that decision 0003 was written to replace. The species swap at sm now comes
+   from Table itself, so there is one implementation instead of two.
 
-const TH = {
-  font: 'var(--type-eyebrow)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-caps)',
-  color: 'var(--text-tertiary)', padding: 'var(--space-4) var(--space-5)', textAlign: 'left',
-  borderBottom: '1px solid var(--border-subtle)', whiteSpace: 'nowrap',
-};
-const TD = {
-  padding: 'var(--space-4) var(--space-5)', borderBottom: '1px solid var(--border-subtle)',
-  font: 'var(--type-body-sm)', verticalAlign: 'middle',
-};
-const NUM = { ...TD, fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', textAlign: 'right' };
+   What stays here is the part that is genuinely Bench's: which columns matter,
+   which figure survives to sm, and how a player is drawn. */
 
+function PlayerCell(p) {
+  return (
+    <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+      <Avatar name={p.name} size="sm" status={p.status} />
+      <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name}</span>
+      {p.flag && (
+        <Badge tone={p.flag === 'OUT' ? 'danger' : p.flag === 'Q' ? 'warning' : 'neutral'}>{p.flag}</Badge>
+      )}
+    </span>
+  );
+}
+
+/**
+ * @param bp        measured breakpoint — Table decides list vs table from it
+ * @param liveLabel header for the points column
+ */
+export function RosterList({ bp, rows, onOpen, actions, liveLabel = 'Live', showOwned = true, dense = false }) {
+  const columns = [
+    { key: 'slot', label: 'Slot', width: 48, sortable: false, cell: p => p.slot },
+    { key: 'name', label: 'Player', identifying: true, render: PlayerCell },
+    {
+      key: 'matchup', label: 'Matchup', priority: 3, secondary: true,
+      render: p => `${p.pos} · ${p.team} · ${p.matchup}`,
+    },
+    {
+      key: 'points', label: liveLabel, numeric: true, survives: true,
+      subLabel: p => `proj ${p.proj}`,
+    },
+    { key: 'proj', label: 'Proj', numeric: true, priority: 3 },
+    ...(showOwned ? [{ key: 'own', label: 'Owned', numeric: true, priority: 3 }] : []),
+  ];
+
+  return (
+    <Table
+      columns={columns}
+      rows={rows}
+      bp={bp}
+      density={dense ? 'compact' : 'comfortable'}
+      rowKey={p => p.name + p.slot}
+      onSelectRow={onOpen}
+      caption="Roster"
+      actions={actions ? (p => actions(p)) : (p => (
+        <>
+          <Tooltip label="Swap player" side="left">
+            <IconButton icon="arrows-left-right" label={`Swap ${p.name}`} size="sm" />
+          </Tooltip>
+          <Tooltip label="Drop" side="left">
+            <IconButton icon="trash" label={`Drop ${p.name}`} size="sm" />
+          </Tooltip>
+        </>
+      ))}
+    />
+  );
+}
+
+/**
+ * A single tappable player row, for lists that are not tables — the free-agent
+ * search results and anywhere a roster row appears outside a column layout.
+ */
 export function PlayerRow({ p, onPress, trailing, dense = false }) {
   return (
     <button
@@ -55,87 +108,5 @@ export function PlayerRow({ p, onPress, trailing, dense = false }) {
       )}
       <Icon name="caret-right" size={14} style={{ color: 'var(--text-tertiary)', flex: 'none' }} />
     </button>
-  );
-}
-
-function TableRow({ p, onOpen, actions, showOwned }) {
-  const [hover, setHover] = useState(false);
-  return (
-    <tr
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      style={{ background: hover ? 'var(--surface-hover)' : 'transparent', transition: 'var(--transition-surface)' }}
-    >
-      <td style={{ ...TD, font: 'var(--type-eyebrow)', color: 'var(--text-tertiary)', letterSpacing: 'var(--tracking-wide)' }}>{p.slot}</td>
-      <td style={TD}>
-        <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
-          <Avatar name={p.name} size="sm" status={p.status} />
-          <button
-            type="button"
-            onClick={() => onOpen(p)}
-            style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', font: 'var(--type-label)', fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}
-          >{p.name}</button>
-          {p.flag && <Badge tone={p.flag === 'OUT' ? 'danger' : 'warning'}>{p.flag}</Badge>}
-        </span>
-      </td>
-      <td style={{ ...TD, color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>{p.pos} · {p.team} · {p.matchup}</td>
-      <td style={{ ...NUM, fontSize: 'var(--text-md)' }}>{p.points}</td>
-      <td style={{ ...NUM, color: 'var(--text-secondary)' }}>{p.proj}</td>
-      {showOwned && <td style={{ ...NUM, color: 'var(--text-tertiary)' }}>{p.own}</td>}
-      <td style={{ ...TD, textAlign: 'right', width: 96 }}>
-        {actions ? actions(p) : (
-          <span style={{ display: 'inline-flex', gap: 'var(--space-3)', opacity: hover ? 1 : 0, transition: 'opacity var(--dur-fast) var(--ease-out)' }}>
-            <Tooltip label="Swap player" side="left"><IconButton icon="arrows-left-right" label="Swap player" size="sm" /></Tooltip>
-            <Tooltip label="Drop" side="left"><IconButton icon="trash" label="Drop player" size="sm" /></Tooltip>
-          </span>
-        )}
-      </td>
-    </tr>
-  );
-}
-
-/**
- * @param bp        measured breakpoint — decides list vs table
- * @param rows      roster rows
- * @param liveLabel header for the points column
- */
-export function RosterList({ bp, rows, onOpen, actions, liveLabel = 'Live', showOwned = true, dense = false }) {
-  if (bp === 'sm') {
-    return (
-      <div>
-        {rows.map(p => (
-          <PlayerRow
-            key={p.name + p.slot}
-            p={p}
-            dense={dense}
-            onPress={() => onOpen(p)}
-            trailing={actions ? actions(p) : undefined}
-          />
-        ))}
-      </div>
-    );
-  }
-  const owned = showOwned && bp === 'lg';
-  return (
-    <div style={{ border: '1px solid var(--border-subtle)', overflowX: 'auto' }}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', background: 'var(--surface-card)' }}>
-        <thead>
-          <tr>
-            <th style={{ ...TH, width: 48 }}>Slot</th>
-            <th style={TH}>Player</th>
-            <th style={TH}>Matchup</th>
-            <th style={{ ...TH, textAlign: 'right' }}>{liveLabel}</th>
-            <th style={{ ...TH, textAlign: 'right' }}>Proj</th>
-            {owned && <th style={{ ...TH, textAlign: 'right' }}>Owned</th>}
-            <th style={{ ...TH, width: 96 }}></th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map(p => (
-            <TableRow key={p.name + p.slot} p={p} onOpen={onOpen} actions={actions} showOwned={owned} />
-          ))}
-        </tbody>
-      </table>
-    </div>
   );
 }

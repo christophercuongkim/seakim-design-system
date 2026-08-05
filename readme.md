@@ -1,7 +1,22 @@
 # SeaKim Design System
 
+**SeaKim 1.0** · see [`CHANGELOG.md`](CHANGELOG.md) and
+[decision 0011](decisions/0011-versioning.md)
+
 A multi-product design system for the SeaKim family of apps. One warm-neutral
 chassis shared by every product; exactly **one accent hue live at a time**.
+
+**The product of this repo is the rules, not any one implementation.** The decisions,
+specs, tokens, and conformance tiers are platform-free by design; React and Flutter are
+*reference bindings* that prove the rules are implementable and give a new author
+something to read. If a binding and a spec disagree, the spec wins and the binding is the
+bug.
+
+A team that needs SeaKim on a platform nobody has built yet — SwiftUI, Kotlin Compose,
+anything — **owns that binding and builds it**, against
+[`conformance.md`](conformance.md), then contributes it back so the next team inherits
+it. See [`CONTRIBUTING-A-BINDING.md`](CONTRIBUTING-A-BINDING.md) and
+[decision 0010](decisions/0010-bindings-are-contributed-not-owned.md).
 
 ## Context
 
@@ -225,7 +240,7 @@ Springy, but disciplined.
 | Press | `scale(var(--press-scale))` = 0.97 at 80ms. Every clickable thing. |
 | Focus | `--focus-ring`: 2px accent ring with a 2px canvas gap. Visible-only, never suppressed. |
 | Selected | 2px accent border, or `--surface-selected` fill plus `--text-accent`. |
-| Disabled | `opacity: 0.4`, `cursor: not-allowed`. No greyed-out repaint. |
+| Disabled | `--fill-disabled` / `--text-disabled` / `--border-disabled`, `cursor: not-allowed`. **Not an opacity pass** — blanket opacity survives dark and collapses in light, where everything fades toward white. |
 | Loading | The label is replaced in place by a mono progress word; the control keeps its width. No spinners. |
 
 Hover is a lightness shift, not a lift — nothing in the layout moves on hover,
@@ -273,15 +288,37 @@ Rules:
 
 ---
 
+## How the documentation is layered
+
+Three kinds of document, deliberately separated. See
+[`decisions/0001`](decisions/0001-platform-neutral-spec-layer.md) for the reasoning.
+
+| Layer | Answers | Edited? |
+| --- | --- | --- |
+| **This readme + `guidelines/`** | What the system looks like, at the foundation level | Yes, freely |
+| **`decisions/`** | *Why* a contested call went the way it did | Never — append a successor instead |
+| **`spec/`** | What one component *is*, platform-free | Yes, as the component evolves |
+| **`components/*.prompt.md`, `flutter/`, `next/`** | How to *call* it in one binding | Yes, per binding |
+
+A spec never contains code, and a binding usage doc never contains cross-platform
+opinion. When those two mix, the opinion ends up living in three places and drifting in
+two of them.
+
+**Conformance** is defined in [`conformance.md`](conformance.md): Tier 0 rules that no
+platform may adapt, Tier 1 rules whose mechanism is the platform's business, and the
+component inventory split into mandatory, expected, on demand, and forbidden.
+
 ## Index
 
 | Path | What's there |
 | --- | --- |
 | `styles.css` | Global entry point. `@import` lines only — consumers link this one file. |
+| `tokens/src/*.tokens.json` | **Source of truth.** Hand-edited. Colour lives here in oklch. |
+| `tool/build-tokens.mjs` | Emits the CSS, Dart, and TS from `tokens/src/`. `--check` fails on stale output. |
 | `tokens/fonts.css` | The three families + the Google Fonts import. |
-| `tokens/colors.css` | Hues, brand ramp, stone ramp, status ramps, dark semantic layer. |
-| `tokens/theme-light.css` | The light peer, under `[data-theme="light"]`. |
-| `tokens/apps.css` | `[data-app]` → `--hue-brand` bindings. |
+| `tokens/colors.css` | **Generated.** Hues, brand ramp, stone ramp, status ramps, dark semantic layer. |
+| `tokens/theme-light.css` | **Generated.** The light peer, under `[data-theme="light"]`. |
+| `tokens/apps.css` | **Generated.** `[data-app]` → `--hue-brand` bindings. |
 | `tokens/typography.css` | Size scale, leading, tracking, weights, composed `--type-*` roles. |
 | `tokens/spacing.css` | 4px scale, control heights, standard insets. |
 | `tokens/radius.css` | Radius scale (and why it's mostly zero). |
@@ -289,17 +326,29 @@ Rules:
 | `tokens/layout.css` | Containers, fixed chrome dimensions, z-index scale. |
 | `tokens/motion.css` | Durations, easings, composed transitions, press scale. |
 | `tokens/base.css` | Reset and element defaults. |
+| `decisions/` | Numbered ADRs for contested or reversible calls. Append-only. |
+| `spec/` | Platform-neutral component contracts. No code — see decision 0001. |
+| `conformance.md` | What a binding must implement to call itself SeaKim. |
+| `guidelines/accessibility.md` | Contrast, focus, targets, naming, structure, and the review pass. |
+| `guidelines/layout.md` | The shell, page padding, content ceilings, and the four composition patterns. |
+| `guidelines/data-visualisation.md` | Chart anatomy and the series-colour rules. |
 | `guidelines/voice-and-tone.md` | The long-form copy guide. |
 | `ds-shim.js` | Dev-only loader so cards and kits render before the bundle is compiled. Not part of the shipped system. |
 | `guidelines/*.html` | Foundation specimen cards (Design System tab). |
 | `components/core/` | Icon, Button, IconButton, Card, Badge, Tag, Avatar, Stat |
-| `components/forms/` | Field, Input, Textarea, Select, Checkbox, Radio, Switch, SegmentedControl |
+| `components/forms/` | Field, Input, Textarea, Select, Checkbox, Radio, Switch, SegmentedControl, Slider, DatePicker |
+| `components/data/` | Table |
 | `components/feedback/` | Dialog, Toast, Tooltip, EmptyState |
 | `components/navigation/` | Tabs, SideNav, TabBar |
 | `ui_kits/shared/` | Responsive plumbing both kits use: measured-container breakpoints, `Viewport`, status bar, screen header, kit bar |
 | `ui_kits/voyage/` | Voyage — travel planning, one responsive build, 6 screens |
 | `ui_kits/bench/` | Bench — fantasy sport, one responsive build, 4 screens |
 | `slides/` | Deck slide types: title, section, agenda, numbers, comparison, quote |
+| `VERSION` | The rules-layer version. One number, quoted by every binding. |
+| `CHANGELOG.md` | What changed in the rules, and what to do about it. |
+| `VERSION` | The rules version. One number for the platform-free layer. |
+| `CHANGELOG.md` | What changed and when. ADRs say why; this says what. |
+| `CONTRIBUTING-A-BINDING.md` | How to build SeaKim on a new platform. Start here for SwiftUI, Compose, Vue. |
 | `next/` | Next.js adapter: client barrel, next/font wiring, no-flash theme script |
 | `flutter/` | Flutter port: generated token layer, 24 custom widgets, breakpoint plumbing |
 | `SKILL.md` | Agent-skill entry point for use outside this project |

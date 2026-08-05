@@ -1,0 +1,525 @@
+#!/usr/bin/env node
+/**
+ * SeaKim token build — phase 1: colour.
+ *
+ *     node tool/build-tokens.mjs          # write outputs
+ *     node tool/build-tokens.mjs --check   # fail if outputs are stale (for CI)
+ *
+ * Per decisions/0007. `tokens/src/color.tokens.json` is the source of truth; this
+ * script emits the CSS, Dart, and TS. Outputs are committed so a binding author
+ * can read them without a toolchain and so diffs stay reviewable.
+ *
+ * The reason this exists is not tidiness. Colour is defined in oklch with the hue
+ * rotating per app, and only CSS can evaluate oklch() — so every other platform
+ * needs the values baked to sRGB. Doing that per binding means either a CSS parser
+ * or a hand copy, and the hand copy is what Flutter had: eleven L/C pairs and four
+ * hues, duplicated, unchecked, silently drifting.
+ *
+ * The gamut mapping below is the part that most needed centralising. Clipping
+ * out-of-range linear RGB shifts hue, which would break the promise that every
+ * app's ramp differs only in H. Reducing chroma until the colour fits preserves
+ * hue and lightness instead. Three bindings independently getting that right was
+ * never going to happen.
+ */
+
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const CHECK = process.argv.includes('--check');
+
+const SRC = resolve(ROOT, 'tokens/src/color.tokens.json');
+const src = JSON.parse(readFileSync(SRC, 'utf8'));
+
+/* ---------------------------------------------------------------- colour maths */
+
+const oklchToLinear = (L, C, hDeg) => {
+  const h = (hDeg * Math.PI) / 180;
+  const a = C * Math.cos(h);
+  const b = C * Math.sin(h);
+  const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
+  const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
+  const s_ = L - 0.0894841775 * a - 1.2914855480 * b;
+  const l = l_ ** 3, m = m_ ** 3, s = s_ ** 3;
+  return [
+     4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+    -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s,
+  ];
+};
+
+const gamma = v => (v <= 0.0031308 ? 12.92 * v : 1.055 * v ** (1 / 2.4) - 0.055);
+const inGamut = rgb => rgb.every(v => v >= -0.0005 && v <= 1.0005);
+
+/** oklch → 8-bit sRGB, gamut-mapped by chroma reduction rather than clipping. */
+function oklchToRgb(L, C, h) {
+  let rgb = oklchToLinear(L, C, h);
+  if (!inGamut(rgb)) {
+    let lo = 0, hi = C;
+    for (let i = 0; i < 30; i++) {
+      const mid = (lo + hi) / 2;
+      const attempt = oklchToLinear(L, mid, h);
+      if (inGamut(attempt)) { lo = mid; rgb = attempt; } else { hi = mid; }
+    }
+  }
+  return rgb.map(v => Math.round(Math.min(1, Math.max(0, gamma(v))) * 255));
+}
+
+const hex = (L, C, h) =>
+  '#' + oklchToRgb(L, C, h).map(v => v.toString(16).padStart(2, '0')).join('');
+
+const argb = (L, C, h) =>
+  '0xFF' + oklchToRgb(L, C, h).map(v => v.toString(16).padStart(2, '0').toUpperCase()).join('');
+
+const hexToArgb = (h, alpha = 1) => {
+  const s = h.replace('#', '');
+  const full = s.length === 3 ? s.split('').map(c => c + c).join('') : s;
+  const a = Math.round(alpha * 255).toString(16).padStart(2, '0');
+  return ('0x' + a + full).toUpperCase().replace('0X', '0x');
+};
+
+/* -------------------------------------------------------------------- reading */
+
+const hues = Object.fromEntries(
+  Object.entries(src.hue)
+    .filter(([k]) => !k.startsWith('$'))
+    .map(([k, v]) => [k, v.$value]),
+);
+
+const hueNotes = Object.fromEntries(
+  Object.entries(src.hue)
+    .filter(([k]) => !k.startsWith('$'))
+    .map(([k, v]) => [k, v.$description || '']),
+);
+
+const rampSteps = Object.entries(src.brandRamp)
+  .filter(([k]) => !k.startsWith('$'))
+  .map(([step, v]) => ({ step, l: v.l.$value, c: v.c.$value }));
+
+const stone = Object.fromEntries(
+  Object.entries(src.stone)
+    .filter(([k]) => !k.startsWith('$'))
+    .map(([k, v]) => [k, v.$value]),
+);
+
+const raw = Object.fromEntries(
+  Object.entries(src.raw)
+    .filter(([k]) => !k.startsWith('$'))
+    .map(([k, v]) => [k, v]),
+);
+
+/** Flatten the status tree into `{ name: {l,c,h} }`. */
+function statusEntries() {
+  const out = {};
+  const walk = (node, path) => {
+    for (const [k, v] of Object.entries(node)) {
+      if (k.startsWith('$')) continue;
+      if (v.l && v.c && v.h) out[[...path, k].join('.')] = { l: v.l.$value, c: v.c.$value, h: v.h.$value };
+      else if (typeof v === 'object') walk(v, [...path, k]);
+    }
+  };
+  walk(src.status, []);
+  return out;
+}
+/** Chart series, flattened and ordered numerically. */
+const chartSeries = Object.entries(src.chart ?? {})
+  .filter(([k]) => !k.startsWith('$'))
+  .sort((a, b) => Number(a[0]) - Number(b[0]))
+  .map(([n, v]) => ({ n, l: v.l.$value, c: v.c.$value, h: v.h.$value }));
+
+const status = statusEntries();
+const st = key => status[key];
+
+const BANNER = name => `/* GENERATED by tool/build-tokens.mjs — DO NOT EDIT.
+   Source: tokens/src/color.tokens.json
+   Regenerate: node tool/build-tokens.mjs
+   Why generated: see decisions/0007-token-source-format.md
+   ${name} */`;
+
+/* ------------------------------------------------------------------- CSS emit */
+
+function emitCss() {
+  const L = [];
+  L.push(BANNER('CSS keeps oklch() and lets the browser resolve it, so the web gets the'));
+  L.push('/* full-gamut colour rather than the sRGB approximation the other bindings use. */');
+  L.push('');
+  L.push(':root {');
+  L.push('  /* ---- Accent hues. Same lightness and chroma ramp; only H moves. ---- */');
+  for (const [name, h] of Object.entries(hues)) {
+    L.push(`  --hue-${name}: ${h};${hueNotes[name] ? '    /* ' + hueNotes[name] + ' */' : ''}`);
+  }
+  L.push('  --hue-brand: var(--hue-clay);');
+  L.push('');
+  L.push('  /* ---- Brand ramp, generated from --hue-brand ---- */');
+  for (const { step, l, c } of rampSteps) {
+    const name = step === 'wash' ? '--brand-wash' : `--brand-${step}`;
+    L.push(`  ${name}: oklch(${l.toFixed(2)} ${c.toFixed(3)} var(--hue-brand));`);
+  }
+  L.push('');
+  L.push('  /* ---- Stone: the warm neutral spine. Never per-app. ---- */');
+  for (const [k, v] of Object.entries(stone)) L.push(`  --stone-${k}: ${v};`);
+  L.push('');
+  L.push('  /* ---- Status ramps. 400 = dark-theme tuning, 500 = light-theme tuning. ---- */');
+  for (const tone of ['success', 'warning', 'danger', 'info']) {
+    for (const step of ['400', '500']) {
+      const v = st(`${tone}.${step}`);
+      L.push(`  --${tone}-${step}: oklch(${v.l.toFixed(2)} ${v.c.toFixed(3)} ${v.h});`);
+    }
+  }
+  L.push('}');
+  L.push('');
+  L.push('/* ---- Semantic layer: DARK (default) ---- */');
+  L.push(':root, [data-theme="dark"] {');
+  L.push('  color-scheme: dark;');
+  L.push('');
+  L.push('  --bg-base:          var(--stone-950);');
+  L.push('  --surface-page:     var(--stone-950);');
+  L.push(`  --surface-sunken:   ${raw.surfaceSunkenDark.$value};`);
+  L.push('  --surface-card:     var(--stone-900);');
+  L.push('  --surface-raised:   var(--stone-850);');
+  L.push('  --surface-overlay:  var(--stone-800);');
+  L.push(`  --surface-inset:    ${raw.surfaceSunkenDark.$value};`);
+  L.push('  --surface-hover:    var(--stone-800);');
+  L.push('  --surface-active:   var(--stone-700);');
+  L.push('  --surface-selected: var(--brand-wash);');
+  L.push(`  --surface-scrim:    color-mix(in oklab, ${raw.scrimDark.$value} ${raw.scrimDark.alpha * 100}%, transparent);`);
+  L.push('');
+  L.push(`  --text-primary:    ${raw.textPrimaryDark.$value};`);
+  L.push('  --text-secondary:  var(--stone-400);');
+  L.push('  --text-tertiary:   var(--stone-500);');
+  L.push('  --text-inverse:    var(--stone-950);');
+  L.push('  --text-accent:     var(--brand-300);');
+  L.push('  --text-link:       var(--brand-300);');
+  L.push('  --text-link-hover: var(--brand-200);');
+  L.push('');
+  L.push(`  --border-subtle:  ${raw.borderSubtleDark.$value};`);
+  L.push(`  --border-default: ${raw.borderDefaultDark.$value};`);
+  L.push(`  --border-strong:  ${raw.borderStrongDark.$value};`);
+  L.push('  --border-accent:  var(--brand-400);');
+  L.push('  --border-focus:   var(--brand-400);');
+  L.push('');
+  L.push('  --fill-accent:        var(--brand-400);');
+  L.push('  --fill-accent-hover:  var(--brand-300);');
+  L.push('  --fill-accent-active: var(--brand-500);');
+  L.push('  --on-accent:          var(--stone-950);');
+  L.push('');
+  L.push('  --fill-neutral:        var(--stone-800);');
+  L.push('  --fill-neutral-hover:  var(--stone-700);');
+  L.push('  --fill-neutral-active: var(--stone-600);');
+  L.push('');
+  L.push('  --text-success: var(--success-400);');
+  L.push('  --text-warning: var(--warning-400);');
+  L.push('  --text-danger:  var(--danger-400);');
+  L.push('  --text-info:    var(--info-400);');
+  for (const tone of ['success', 'warning', 'danger', 'info']) {
+    const v = st(`subtleDark.${tone}`);
+    L.push(`  --fill-${tone}-subtle: oklch(${v.l.toFixed(2)} ${v.c.toFixed(3)} ${v.h});`);
+  }
+  L.push('  --fill-danger: var(--danger-500);');
+  L.push(`  --on-danger:   ${raw.onDangerDark.$value};`);
+  L.push('');
+  L.push('  /* Disabled is a TOKEN, not an opacity.');
+  L.push('     Blanket opacity survives dark — everything fades toward the near-black page');
+  L.push('     and the fill/text relationship holds. In light it fades toward white and');
+  L.push('     collapses, so a disabled accent button becomes pale-on-pale. Per decision');
+  L.push('     0005, a value that only works in one theme is not semantic. */');
+  L.push('  --fill-disabled:   var(--stone-800);');
+  L.push('  --text-disabled:   var(--stone-600);');
+  L.push(`  --border-disabled: ${raw.borderDisabledDark.$value};`);
+  L.push('');
+  L.push('  /* Categorical series for charts. Equal L and C, hue only \u2014 so no series');
+  L.push('     reads as louder than its neighbour. Assign in order; never reorder');
+  L.push('     per chart. See guidelines/data-visualisation.md. */');
+  for (const s of chartSeries) {
+    L.push(`  --chart-${s.n}: oklch(${s.l.toFixed(2)} ${s.c.toFixed(3)} ${s.h});`);
+  }
+  L.push('');
+  L.push('  --accent: var(--fill-accent);');
+  L.push('}');
+  L.push('');
+  return L.join('\n');
+}
+
+function emitCssLight() {
+  const L = [];
+  L.push(BANNER('Light is a PEER of dark, not a filter of it — the card is pure white on an'));
+  L.push('/* off-white page, so cards read lighter than the page, the inverse of dark\'s */');
+  L.push('/* logic. Never derive one theme from the other. */');
+  L.push('');
+  L.push('[data-theme="light"] {');
+  L.push('  color-scheme: light;');
+  L.push('');
+  L.push('  --bg-base:          var(--stone-50);');
+  L.push('  --surface-page:     var(--stone-50);');
+  L.push('  --surface-sunken:   var(--stone-100);');
+  L.push('  --surface-card:     var(--stone-0);');
+  L.push('  --surface-raised:   var(--stone-0);');
+  L.push('  --surface-overlay:  var(--stone-0);');
+  L.push('  --surface-inset:    var(--stone-100);');
+  L.push('  --surface-hover:    var(--stone-100);');
+  L.push('  --surface-active:   var(--stone-200);');
+  L.push('  --surface-selected: var(--brand-050);');
+  L.push(`  --surface-scrim:    color-mix(in oklab, ${raw.scrimLight.$value} ${raw.scrimLight.alpha * 100}%, transparent);`);
+  L.push('');
+  L.push('  --text-primary:    var(--stone-900);');
+  L.push('  --text-secondary:  var(--stone-600);');
+  L.push('  --text-tertiary:   var(--stone-500);');
+  L.push('  --text-inverse:    var(--stone-50);');
+  L.push('  --text-accent:     var(--brand-600);');
+  L.push('  --text-link:       var(--brand-600);');
+  L.push('  --text-link-hover: var(--brand-700);');
+  L.push('');
+  L.push('  --border-subtle:  var(--stone-200);');
+  L.push('  --border-default: var(--stone-300);');
+  L.push('  --border-strong:  var(--stone-400);');
+  L.push('  --border-accent:  var(--brand-500);');
+  L.push('  --border-focus:   var(--brand-600);');
+  L.push('');
+  L.push('  /* 400 fails contrast on white, so light steps one further down the ramp. */');
+  L.push('  --fill-accent:        var(--brand-500);');
+  L.push('  --fill-accent-hover:  var(--brand-600);');
+  L.push('  --fill-accent-active: var(--brand-700);');
+  L.push('  --on-accent:          var(--stone-950);');
+  L.push('');
+  L.push('  --fill-neutral:        var(--stone-100);');
+  L.push('  --fill-neutral-hover:  var(--stone-200);');
+  L.push('  --fill-neutral-active: var(--stone-300);');
+  L.push('');
+  for (const tone of ['success', 'warning', 'danger', 'info']) {
+    const v = st(`textLight.${tone}`);
+    L.push(`  --text-${tone}: oklch(${v.l.toFixed(2)} ${v.c.toFixed(2)} ${v.h});`);
+  }
+  for (const tone of ['success', 'warning', 'danger', 'info']) {
+    const v = st(`subtleLight.${tone}`);
+    L.push(`  --fill-${tone}-subtle: oklch(${v.l.toFixed(2)} ${v.c.toFixed(2)} ${v.h});`);
+  }
+  L.push('  --fill-danger:  var(--danger-500);');
+  L.push('  --on-danger:    var(--stone-50);');
+  L.push('');
+  L.push('  --fill-disabled:   var(--stone-100);');
+  L.push('  --text-disabled:   var(--stone-400);');
+  L.push('  --border-disabled: var(--stone-200);');
+  L.push('');
+  L.push('  --accent: var(--fill-accent);');
+  L.push('}');
+  L.push('');
+  return L.join('\n');
+}
+
+function emitCssApps() {
+  const L = [];
+  L.push(BANNER('Per-app accent binding.'));
+  L.push('/*');
+  L.push('   Custom properties are substituted where they are DECLARED, so the whole ramp is');
+  L.push('   re-declared per app rather than deriving from a single --hue-brand at :root.');
+  L.push('   That is what makes a nested [data-app] subtree retheme correctly — e.g. a Bench');
+  L.push('   card embedded in a Voyage page.');
+  L.push('*/');
+  L.push('');
+  const aliases = {
+    clay: ['seakim', 'house'],
+    sea: ['voyage', 'travel'],
+    turf: ['bench', 'fantasy'],
+    plum: ['reserve', 'reserved'],
+  };
+  for (const [name, h] of Object.entries(hues)) {
+    const sel = (aliases[name] || [name]).map(a => `[data-app="${a}"]`).join(', ');
+    L.push(`${sel} {`);
+    L.push(`  --hue-brand: var(--hue-${name});`);
+    for (const { step, l, c } of rampSteps) {
+      const prop = step === 'wash' ? '--brand-wash' : `--brand-${step}`;
+      L.push(`  ${prop}: oklch(${l.toFixed(2)} ${c.toFixed(3)} ${h});`);
+    }
+    L.push('}');
+    L.push('');
+  }
+  return L.join('\n');
+}
+
+/* ------------------------------------------------------------------ Dart emit */
+
+function emitDart() {
+  const L = [];
+  L.push('// GENERATED by tool/build-tokens.mjs — DO NOT EDIT BY HAND.');
+  L.push('//');
+  L.push('// Source: tokens/src/color.tokens.json');
+  L.push('// Regenerate: node tool/build-tokens.mjs   (from the repo root)');
+  L.push('//');
+  L.push('// Dart cannot evaluate oklch, so every step is baked to sRGB here. Conversion');
+  L.push('// uses chroma-reduction gamut mapping rather than clipping: clipping shifts hue,');
+  L.push('// which would break the promise that every app\'s ramp differs only in H. A few');
+  L.push('// steps therefore sit at slightly lower chroma than the source asks for.');
+  L.push('//');
+  L.push('// See decisions/0007-token-source-format.md.');
+  L.push('');
+  L.push("import 'dart:ui' show Color;");
+  L.push('');
+  L.push("/// One app's accent ramp. Mirrors --brand-050 … --brand-900 plus --brand-wash.");
+  L.push('class SkBrandRamp {');
+  L.push('  const SkBrandRamp({');
+  for (const { step } of rampSteps) L.push(`    required this.${step === 'wash' ? 'wash' : 's' + step},`);
+  L.push('  });');
+  L.push('');
+  for (const { step } of rampSteps) L.push(`  final Color ${step === 'wash' ? 'wash' : 's' + step};`);
+  L.push('}');
+  L.push('');
+  L.push('/// The accent ramp for each app. Adding an app means adding a hue to');
+  L.push('/// tokens/src/color.tokens.json and re-running the build — never hand-typing');
+  L.push('/// colours.');
+  L.push('class SkBrandRamps {');
+  L.push('  const SkBrandRamps._();');
+  for (const [name, h] of Object.entries(hues)) {
+    L.push('');
+    L.push(`  /// oklch(L C ${h})${hueNotes[name] ? ' — ' + hueNotes[name] : ''}`);
+    L.push(`  static const SkBrandRamp ${name} = SkBrandRamp(`);
+    for (const { step, l, c } of rampSteps) {
+      L.push(`    ${step === 'wash' ? 'wash' : 's' + step}: Color(${argb(l, c, h)}),`);
+    }
+    L.push('  );');
+  }
+  L.push('}');
+  L.push('');
+  L.push('/// The warm achromatic spine. Never per-app.');
+  L.push('class SkStone {');
+  L.push('  const SkStone._();');
+  L.push('');
+  for (const [k, v] of Object.entries(stone)) {
+    L.push(`  static const Color s${k} = Color(${hexToArgb(v)});`);
+  }
+  L.push('}');
+  L.push('');
+  L.push('/// Status ramps. The 400 step is tuned for dark surfaces, 500 for light.');
+  L.push('class SkStatusPalette {');
+  L.push('  const SkStatusPalette._();');
+  L.push('');
+  for (const tone of ['success', 'warning', 'danger', 'info']) {
+    for (const step of ['400', '500']) {
+      const v = st(`${tone}.${step}`);
+      L.push(`  static const Color ${tone}${step} = Color(${argb(v.l, v.c, v.h)});`);
+    }
+  }
+  L.push('');
+  for (const tone of ['success', 'warning', 'danger', 'info']) {
+    const v = st(`subtleDark.${tone}`);
+    L.push(`  static const Color ${tone}SubtleDark = Color(${argb(v.l, v.c, v.h)});`);
+  }
+  L.push('');
+  for (const tone of ['success', 'warning', 'danger', 'info']) {
+    const v = st(`textLight.${tone}`);
+    L.push(`  static const Color ${tone}TextLight = Color(${argb(v.l, v.c, v.h)});`);
+  }
+  L.push('');
+  for (const tone of ['success', 'warning', 'danger', 'info']) {
+    const v = st(`subtleLight.${tone}`);
+    L.push(`  static const Color ${tone}SubtleLight = Color(${argb(v.l, v.c, v.h)});`);
+  }
+  L.push('}');
+  L.push('');
+  L.push('/// Values tuned by eye rather than derived — theme-specific near-blacks,');
+  L.push('/// borders, and scrims.');
+  L.push('class SkRawColors {');
+  L.push('  const SkRawColors._();');
+  L.push('');
+  for (const [k, v] of Object.entries(raw)) {
+    L.push(`  static const Color ${k} = Color(${hexToArgb(v.$value, v.alpha ?? 1)});`);
+  }
+  L.push('}');
+  L.push('');
+  L.push('/// Categorical series for charts. Equal lightness and chroma, hue only, so');
+  L.push('/// no series reads as louder than its neighbour.');
+  L.push('class SkChartPalette {');
+  L.push('  const SkChartPalette._();');
+  L.push('');
+  for (const s of chartSeries) {
+    L.push(`  static const Color series${s.n} = Color(${argb(s.l, s.c, s.h)});`);
+  }
+  L.push('');
+  L.push('  /// Assign in this order. A series keeps its colour across every view it');
+  L.push('  /// appears in, so never reorder per chart.');
+  L.push('  static const List<Color> ordered = <Color>[');
+  L.push(`    ${chartSeries.map(s => `series${s.n}`).join(', ')},`);
+  L.push('  ];');
+  L.push('}');
+  L.push('');
+  return L.join('\n');
+}
+
+/* -------------------------------------------------------------------- TS emit */
+
+function emitTs() {
+  const L = [];
+  L.push('// GENERATED by tool/build-tokens.mjs — DO NOT EDIT BY HAND.');
+  L.push('//');
+  L.push('// Source: tokens/src/color.tokens.json');
+  L.push('// Regenerate: node tool/build-tokens.mjs');
+  L.push('//');
+  L.push('// For tooling that needs colour values as data — a theme preview, a chart');
+  L.push('// library, a canvas export. Components should read the CSS custom properties');
+  L.push('// instead, so theme and app switching keep working.');
+  L.push('');
+  L.push('export const skHues = {');
+  for (const [name, h] of Object.entries(hues)) L.push(`  ${name}: ${h},`);
+  L.push('} as const;');
+  L.push('');
+  L.push('export type SkApp = keyof typeof skHues;');
+  L.push('');
+  L.push('/** sRGB approximations of each app ramp. The CSS uses full-gamut oklch(). */');
+  L.push('export const skBrandRamps = {');
+  for (const [name, h] of Object.entries(hues)) {
+    L.push(`  ${name}: {`);
+    for (const { step, l, c } of rampSteps) {
+      L.push(`    ${step === 'wash' ? 'wash' : "'" + step + "'"}: '${hex(l, c, h)}',`);
+    }
+    L.push('  },');
+  }
+  L.push('} as const;');
+  L.push('');
+  L.push('export const skStone = {');
+  for (const [k, v] of Object.entries(stone)) L.push(`  '${k}': '${v}',`);
+  L.push('} as const;');
+  L.push('');
+  L.push('export const skStatus = {');
+  for (const [key, v] of Object.entries(status)) {
+    L.push(`  '${key}': '${hex(v.l, v.c, v.h)}',`);
+  }
+  L.push('} as const;');
+  L.push('');
+  return L.join('\n');
+}
+
+/* ---------------------------------------------------------------------- write */
+
+const outputs = [
+  ['tokens/colors.css', emitCss()],
+  ['tokens/theme-light.css', emitCssLight()],
+  ['tokens/apps.css', emitCssApps()],
+  ['flutter/lib/src/tokens/palette.g.dart', emitDart()],
+  ['tokens/generated/colors.ts', emitTs()],
+];
+
+let stale = 0;
+for (const [rel, content] of outputs) {
+  const path = resolve(ROOT, rel);
+  const existing = existsSync(path) ? readFileSync(path, 'utf8') : null;
+  if (existing === content) {
+    if (!CHECK) console.log(`  unchanged  ${rel}`);
+    continue;
+  }
+  if (CHECK) {
+    console.error(`  STALE      ${rel}`);
+    stale++;
+    continue;
+  }
+  mkdirSync(dirname(path), { recursive: true });
+  writeFileSync(path, content, 'utf8');
+  console.log(`  wrote      ${rel}`);
+}
+
+if (CHECK) {
+  if (stale) {
+    console.error(`\n${stale} output(s) stale. Run: node tool/build-tokens.mjs`);
+    process.exit(1);
+  }
+  console.log('token outputs up to date');
+}

@@ -63,6 +63,9 @@ class SkColors {
     required this.fillInfoSubtle,
     required this.fillDanger,
     required this.onDanger,
+    required this.fillDisabled,
+    required this.textDisabled,
+    required this.borderDisabled,
   });
 
   final Brightness brightness;
@@ -112,32 +115,42 @@ class SkColors {
   final Color fillDanger;
   final Color onDanger;
 
+  /// Disabled is a TOKEN, not an opacity pass.
+  ///
+  /// Blanket opacity survives dark — everything fades toward the near-black page
+  /// and the fill/text relationship holds. In light it fades toward white and
+  /// collapses, so a disabled accent button becomes pale-on-pale. Per decision
+  /// 0005, a value that only works in one theme is not semantic.
+  final Color fillDisabled;
+  final Color textDisabled;
+  final Color borderDisabled;
+
   bool get isDark => brightness == Brightness.dark;
 
   /// Mirrors the dark block in tokens/colors.css. Dark is the default theme.
   factory SkColors.dark(SkBrandRamp brand) => SkColors(
         brightness: Brightness.dark,
         surfacePage: SkStone.s950,
-        surfaceSunken: const Color(0xFF0A0908),
+        surfaceSunken: SkRawColors.surfaceSunkenDark,
         surfaceCard: SkStone.s900,
         surfaceRaised: SkStone.s850,
         surfaceOverlay: SkStone.s800,
-        surfaceInset: const Color(0xFF0A0908),
+        surfaceInset: SkRawColors.surfaceSunkenDark,
         surfaceHover: SkStone.s800,
         surfaceActive: SkStone.s700,
         surfaceSelected: brand.wash,
         // warm black at 68%
-        surfaceScrim: const Color(0xAD000000),
-        textPrimary: const Color(0xFFF5F3F0),
+        surfaceScrim: SkRawColors.scrimDark,
+        textPrimary: SkRawColors.textPrimaryDark,
         textSecondary: SkStone.s400,
         textTertiary: SkStone.s500,
         textInverse: SkStone.s950,
         textAccent: brand.s300,
         textLink: brand.s300,
         textLinkHover: brand.s200,
-        borderSubtle: const Color(0xFF2A2724),
-        borderDefault: const Color(0xFF383431),
-        borderStrong: const Color(0xFF4C4844),
+        borderSubtle: SkRawColors.borderSubtleDark,
+        borderDefault: SkRawColors.borderDefaultDark,
+        borderStrong: SkRawColors.borderStrongDark,
         borderAccent: brand.s400,
         borderFocus: brand.s400,
         fillAccent: brand.s400,
@@ -156,7 +169,10 @@ class SkColors {
         fillDangerSubtle: SkStatusPalette.dangerSubtleDark,
         fillInfoSubtle: SkStatusPalette.infoSubtleDark,
         fillDanger: SkStatusPalette.danger500,
-        onDanger: const Color(0xFFFDF6F4),
+        onDanger: SkRawColors.onDangerDark,
+        fillDisabled: SkStone.s800,
+        textDisabled: SkStone.s600,
+        borderDisabled: SkRawColors.borderDisabledDark,
       );
 
   /// Mirrors tokens/theme-light.css. A peer of dark, not a filter of it — the card
@@ -173,7 +189,7 @@ class SkColors {
         surfaceActive: SkStone.s200,
         surfaceSelected: brand.s050,
         // stone-800 at 40%
-        surfaceScrim: const Color(0x662B2A27),
+        surfaceScrim: SkRawColors.scrimLight,
         textPrimary: SkStone.s900,
         textSecondary: SkStone.s600,
         textTertiary: SkStone.s500,
@@ -203,5 +219,8 @@ class SkColors {
         fillInfoSubtle: SkStatusPalette.infoSubtleLight,
         fillDanger: SkStatusPalette.danger500,
         onDanger: SkStone.s50,
+        fillDisabled: SkStone.s100,
+        textDisabled: SkStone.s400,
+        borderDisabled: SkStone.s200,
       );
 }

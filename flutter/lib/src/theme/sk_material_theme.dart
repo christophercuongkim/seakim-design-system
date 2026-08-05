@@ -352,22 +352,32 @@ class SkMaterialTheme {
       // ---------------------------------------------------------------------
       // Actions and controls.
       // ---------------------------------------------------------------------
+      // Decision 0002 bans the floating action button outright: it is a circle, it
+      // carries a shadow while living in the layout, and it is an unlabelled primary
+      // action on the one surface where tooltips do not exist. The primary action
+      // belongs in a sticky footer bar at sm, or the top bar from md up.
+      //
+      // So this theme does not restyle the FAB — it NEUTRALISES it. Square, flat,
+      // and painted in the disabled palette, so a FAB that survives migration is
+      // visibly wrong in review instead of quietly almost-right. Migration: move the
+      // action to a bottom bar or to `AppBar.actions`.
       floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: c.fillAccent,
-        foregroundColor: c.onAccent,
+        backgroundColor: c.fillDisabled,
+        foregroundColor: c.textDisabled,
         elevation: 0,
         focusElevation: 0,
         hoverElevation: 0,
         highlightElevation: 0,
+        disabledElevation: 0,
         shape: square,
-        extendedTextStyle: SkText.label.copyWith(color: c.onAccent),
+        extendedTextStyle: SkText.label.copyWith(color: c.textDisabled),
       ),
       iconButtonTheme: IconButtonThemeData(
         style: ButtonStyle(
           shape: WidgetStatePropertyAll<OutlinedBorder>(square),
           splashFactory: NoSplash.splashFactory,
           foregroundColor: WidgetStateProperty.resolveWith((Set<WidgetState> s) =>
-              s.contains(WidgetState.disabled) ? c.textTertiary : c.textSecondary),
+              s.contains(WidgetState.disabled) ? c.textDisabled : c.textSecondary),
           overlayColor: WidgetStateProperty.resolveWith((Set<WidgetState> s) =>
               s.contains(WidgetState.hovered)
                   ? c.surfaceHover

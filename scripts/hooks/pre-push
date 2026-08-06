@@ -6,8 +6,18 @@
 # mirrored from Claude Design (i.e. present in .design-sync/manifest.json), this
 # hook runs the repo -> design push so the two stay in sync.
 #
-# It NEVER blocks the GitHub push: every path here ends in `exit 0`. If the
-# design push fails or is skipped, the git push still proceeds.
+# TWO STAGES, and only one of them can block:
+#
+#   1. Rule gates (BLOCKING, main only). GitHub cannot protect a private repo on
+#      this plan — the branch-protection and ruleset APIs both answer "Upgrade to
+#      GitHub Pro" — so the checks CI would have gated a merge on run here first
+#      instead. A failure aborts the push.
+#   2. Design-project mirror (NEVER blocks). Unchanged: if it fails or is skipped,
+#      the git push still proceeds.
+#
+# This is a weaker guarantee than server-side protection and it is worth being
+# honest about: `--no-verify` skips it, and it only runs on the machine that has
+# hooksPath configured. It catches mistakes, not determination.
 #
 # Behaviour:
 #   - default            : if a terminal is attached, open an interactive design
@@ -26,10 +36,54 @@ remote_name="${1:-}"
 # Only mirror when pushing to the GitHub remote.
 [ "$remote_name" = "origin" ] || exit 0
 
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
+
+# git feeds the ref list on stdin, and it can only be read once — so capture it
+# here and feed both stages from the copy. Reading it in stage 1 and leaving stage
+# 2 with an empty stdin is a silent failure: the mirror simply never fires.
+REFS="$(cat)"
+
+# ---------------------------------------------------------------- stage 1: gates
+# Only for main, and only when it is actually being pushed. Fast checks only —
+# the Flutter suites take minutes and CI owns them.
+if [ -z "${SKIP_GATES:-}" ] && command -v node >/dev/null 2>&1; then
+  pushing_main=0
+  while read -r lref lsha _rref _rsha; do
+    case "$lsha" in *[!0]*) : ;; *) continue ;; esac   # branch deletion
+    [ "$lref" = "refs/heads/main" ] && pushing_main=1
+  done <<EOF
+$REFS
+EOF
+  if [ "$pushing_main" = "1" ]; then
+    failed=""
+    for check in version-check build-tokens conformance-check; do
+      case "$check" in
+        build-tokens) cmd="node tool/build-tokens.mjs --check" ;;
+        *)            cmd="node tool/$check.mjs" ;;
+      esac
+      if ! ( cd "$REPO_ROOT" && $cmd >/dev/null 2>&1 ); then
+        failed="$failed $check"
+      fi
+    done
+    if [ -n "$failed" ]; then
+      echo "pre-push: BLOCKED — these gates fail on main:$failed" >&2
+      echo "          run them to see why:" >&2
+      echo "            node tool/version-check.mjs" >&2
+      echo "            node tool/build-tokens.mjs --check" >&2
+      echo "            node tool/conformance-check.mjs" >&2
+      echo "          override once with:  SKIP_GATES=1 git push" >&2
+      exit 1
+    fi
+  fi
+fi
+
+# ------------------------------------------------------- stage 2: design mirror
+# These opt-outs skip the MIRROR only. They deliberately sit below the gates —
+# having DS_SKIP_DESIGN_PUSH also disable the rule checks made every push this
+# session skip them silently.
 case "${DS_DESIGN_PUSH:-}" in off) exit 0 ;; esac
 [ -n "${DS_SKIP_DESIGN_PUSH:-}" ] && exit 0
 
-REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
 MANIFEST="$REPO_ROOT/.design-sync/manifest.json"
 SYNC="$REPO_ROOT/scripts/ds-sync.sh"
 [ -f "$MANIFEST" ] && [ -x "$SYNC" ] || exit 0
@@ -46,7 +100,9 @@ while read -r _lref lsha _rref rsha; do
     *)      base="$EMPTY_TREE" ;;                          # new branch on remote
   esac
   git diff --name-only "$base" "$lsha" 2>/dev/null >>"$changed"
-done
+done <<EOF
+$REFS
+EOF
 
 # Does any changed path belong to the mirrored (manifest) set?
 python3 - "$MANIFEST" "$changed" <<'PY'

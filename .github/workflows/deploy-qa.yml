@@ -25,6 +25,10 @@ on:
       - "index.d.ts"
       - "styles.css"
       - "index.html"
+      - "ds-shim.js"
+      # Flutter now renders on QA too, so its changes must trigger a deploy —
+      # and they are the slow ones, since the image rebuilds the web bundle.
+      - "flutter/**"
   workflow_dispatch:
     inputs:
       branch:

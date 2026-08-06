@@ -1,120 +1,143 @@
-import {
-  Avatar,
-  Badge,
-  Button,
-  Card,
-  DatePicker,
-  EmptyState,
-  Field,
-  Icon,
-  Input,
-  Slider,
-  Stat,
-  Tag,
-} from "@seakim/design-system";
-
-import { RosterTable } from "./roster-table";
+import { Badge, Card, Icon } from "@seakim/design-system";
 
 /**
- * Deliberately a Server Component.
+ * The front door.
  *
- * That is the whole point of the exercise: `next/lib/seakim.ts` carries the only
- * `"use client"` in the system, so a page like this one should be able to import
- * stateful components without becoming a Client Component itself. If that
- * boundary were wrong, this file would not build.
+ * One design system, four bindings, each one actually running — not screenshots.
+ * The point is comparison: the same components, rendered by different platforms,
+ * side by side. A divergence like Flutter tinting a badge border while React drew
+ * a neutral one went unnoticed for as long as both existed, because nobody could
+ * see them together.
  *
- * Nothing here passes an event handler, for the same reason — a Server Component
- * cannot. Interactivity is the app's job; this proves the wiring.
+ * Everything except /next is served statically from public/ — see the Dockerfile.
  */
 
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section style={{ marginBottom: "var(--space-9)" }}>
-      <p
-        style={{
-          font: "var(--text-eyebrow)",
-          color: "var(--text-tertiary)",
-          textTransform: "uppercase",
-          marginBottom: "var(--space-4)",
-        }}
-      >
-        {title}
-      </p>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)" }}>
-        {children}
-      </div>
-    </section>
-  );
+interface Target {
+  href: string;
+  name: string;
+  icon: string;
+  what: string;
+  how: string;
+  live: boolean;
 }
+
+const targets: Target[] = [
+  {
+    href: "/next",
+    name: "Next.js",
+    icon: "browsers",
+    what: "The package, installed and server-rendered",
+    how: "App Router, React 19, components imported from @seakim/design-system with the barrel's single client boundary. This page is part of it.",
+    live: true,
+  },
+  {
+    href: "/flutter",
+    name: "Flutter",
+    icon: "device-mobile",
+    what: "Compiled to web, the real widget layer",
+    how: "The SkMaterialTheme gallery and the Sk* widgets, built with `flutter build web`. Same Dart that ships to mobile, so a difference here is a real difference.",
+    live: true,
+  },
+  {
+    href: "/preview/index.html",
+    name: "Plain HTML",
+    icon: "file-html",
+    what: "Tokens and CSS with no framework at all",
+    how: "styles.css and its token imports, nothing else. The floor: if it looks right here, the tokens are right.",
+    live: true,
+  },
+  {
+    href: "/preview/ui_kits/voyage/index.html",
+    name: "React",
+    icon: "atom",
+    what: "The reference binding, in the browser",
+    how: "The Voyage kit running on React 18 via ds-shim.js. No build step — this is the binding the others are checked against.",
+    live: true,
+  },
+];
 
 export default function Page() {
   return (
     <main
       style={{
-        maxWidth: 880,
+        maxWidth: 860,
         margin: "0 auto",
         padding: "var(--space-9) var(--space-6)",
       }}
     >
-      <h1 style={{ font: "var(--text-title)", marginBottom: "var(--space-8)" }}>
-        SeaKim in Next.js
+      <p
+        style={{
+          font: "var(--text-eyebrow)",
+          color: "var(--text-tertiary)",
+          textTransform: "uppercase",
+          marginBottom: "var(--space-3)",
+        }}
+      >
+        SeaKim · QA
+      </p>
+      <h1 style={{ font: "var(--text-title)", marginBottom: "var(--space-4)" }}>
+        One system, four bindings
       </h1>
+      <p
+        style={{
+          font: "var(--text-body)",
+          color: "var(--text-secondary)",
+          maxWidth: 620,
+          marginBottom: "var(--space-9)",
+        }}
+      >
+        Each of these is running, not pictured. Open two and compare the same
+        component — that is the only way a divergence between bindings shows up
+        before someone ships it.
+      </p>
 
-      <Section title="Actions">
-        <Button variant="primary">Book trip</Button>
-        <Button variant="secondary">Hold</Button>
-        <Button variant="ghost">Cancel</Button>
-        <Button variant="danger">Delete trip</Button>
-        <Button variant="primary" iconLeft="map-pin">
-          Add leg
-        </Button>
-      </Section>
-
-      <Section title="Status">
-        <Badge tone="success">Confirmed</Badge>
-        <Badge tone="warning" variant="solid">
-          Hold expires
-        </Badge>
-        <Badge tone="danger">Cancelled</Badge>
-        <Tag>Direct</Tag>
-        <Avatar name="Okafor" />
-        <Icon name="airplane-takeoff" />
-      </Section>
-
-      <Section title="Data">
-        <Card style={{ padding: "var(--space-5)" }}>
-          <Stat label="Fare" value="412" unit="USD" delta="-18" />
-        </Card>
-      </Section>
-
-      <div style={{ marginBottom: "var(--space-9)" }}>
-        <RosterTable />
+      <div style={{ display: "grid", gap: "var(--space-5)" }}>
+        {targets.map((t) => (
+          <a key={t.href} href={t.href} style={{ textDecoration: "none" }}>
+            <Card interactive style={{ padding: "var(--space-6)" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "var(--space-4)",
+                  marginBottom: "var(--space-3)",
+                }}
+              >
+                <Icon name={t.icon} size={24} />
+                <span style={{ font: "var(--text-heading)", color: "var(--text-primary)" }}>
+                  {t.name}
+                </span>
+                <Badge tone={t.live ? "success" : "neutral"}>
+                  {t.live ? "Live" : "Not built"}
+                </Badge>
+              </div>
+              <p
+                style={{
+                  font: "var(--text-body-sm)",
+                  color: "var(--text-primary)",
+                  marginBottom: "var(--space-2)",
+                }}
+              >
+                {t.what}
+              </p>
+              <p style={{ font: "var(--text-caption)", color: "var(--text-tertiary)" }}>
+                {t.how}
+              </p>
+            </Card>
+          </a>
+        ))}
       </div>
 
-      <Section title="Forms">
-        <div style={{ minWidth: 260 }}>
-          <Field label="Destination" hint="City or airport">
-            <Input placeholder="Where to?" />
-          </Field>
-        </div>
-        <div style={{ minWidth: 260 }}>
-          <Slider value={40} label="Budget" />
-        </div>
-        <div style={{ minWidth: 260 }}>
-          <DatePicker label="Depart" />
-        </div>
-      </Section>
-
-      <EmptyState
-        title="No saved trips yet"
-        description="Trips you save appear here, across every device."
-      />
+      <p
+        style={{
+          font: "var(--text-caption)",
+          color: "var(--text-tertiary)",
+          marginTop: "var(--space-9)",
+        }}
+      >
+        Deployed from the <code>qa</code> branch. Whichever PR deployed last is what
+        you are looking at — QA is a single shared slot.
+      </p>
     </main>
   );
 }

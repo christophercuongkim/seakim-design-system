@@ -22,7 +22,14 @@ WORKDIR /repo
 COPY flutter ./flutter
 WORKDIR /repo/flutter/example
 # sk_icons.g.dart and the fonts are committed, so there is no generate step here.
-RUN flutter pub get && flutter build web --release --base-href /flutter/
+#
+# --pwa-strategy=none drops the service worker. The default (offline-first) races
+# SW install against the entrypoint load and intermittently never paints — a blank
+# page, engine booted, no flutter-view in the DOM. It reproduced 1 run in 3 against
+# clean browser profiles. A service worker is the wrong trade for QA anyway: it
+# caches a deploy so aggressively that the next one is invisible, which defeats the
+# only thing this site is for.
+RUN flutter pub get && flutter build web --release --base-href /flutter/ --pwa-strategy=none
 
 # ------------------------------------------------------------------ Next → build
 FROM node:22-slim AS build

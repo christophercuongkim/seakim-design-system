@@ -137,3 +137,52 @@ version that went backwards.
 **Rule.** Take its decisions seriously and its code as a draft. Run the gates before
 believing any of it. Do not round-trip code through it; the round trip adds a corruption
 surface without adding confidence.
+
+## 11. A deploy branch only CI writes goes stale the moment CI fails
+
+`qa` is force-pushed by the `deploy-qa` workflow and by nothing else. The workflow failed
+twice on missing Tailscale secrets, so `qa` kept pointing at the commit before
+`ENV HOSTNAME=0.0.0.0` — the fix that stops Next binding the container's own IP instead of
+all interfaces. Deploying from `qa` in that state builds cleanly and serves nothing, which
+presents as a port misconfiguration and sends you into the proxy settings.
+
+The branch looked current because it existed and had a recent commit. Nothing about it
+announces that it is one commit behind the thing you are trying to test.
+
+**Rule.** Before deploying from a CI-written branch, diff it against the commit you
+believe you are deploying: `git log --oneline <branch>..HEAD`, empty or it is not what you
+think. When CI is down, that branch is stale by definition rather than by exception.
+
+## 12. An intermittent blank page is a cache layer, not a slow one
+
+The Flutter binding served a blank page — engine booted, `flt-semantics-placeholder` and
+the announcement host both injected, no `flutter-view`, no paint. It reproduced 1 run in 3
+against clean browser profiles, failing DOM byte-identical every time (2555b against
+4304b). Because it was intermittent it read as a slow load, and the first three
+explanations attempted — payload size, the user's VPN, the user's browser cache — were all
+wrong. `flutter build web` defaults to `--pwa-strategy=offline-first`, which registers a
+service worker whose install races the entrypoint load.
+
+Two things made this expensive. The symptom is shared by every plausible network cause, so
+each guess costs a full round trip. And a service worker survives the deploy that removes
+it: shipping a build that no longer registers one does not unregister the one a browser
+already holds.
+
+**Rule.** Intermittent means measure the rate, not the instance — run the load N times
+against clean profiles and count. A stable failure *rate* points at a race; a stable
+failure points at config. For any QA surface build with `--pwa-strategy=none`: a service
+worker caches a deploy hard enough to hide the next one, which defeats the only thing a QA
+site is for.
+
+## 13. Headless Chrome denies WebGL, and a Flutter app then boots without painting
+
+The first headless render of the Flutter binding produced no `flutter-view` and a 2555b
+DOM — identical to the real service-worker failure above. It was an artifact: headless
+Chrome refuses WebGL by default, CanvasKit cannot initialise, and the engine bootstraps
+and stops. Two unrelated causes, one indistinguishable symptom, and the artifact was
+briefly mistaken for the bug.
+
+**Rule.** `--enable-unsafe-swiftshader` before any headless check of a canvas-rendering
+app, or the run proves nothing. And when a headless result matches the bug being hunted,
+reproduce it once in a real browser before believing it — a testing artifact that mimics
+the defect will confirm whatever you already suspect.

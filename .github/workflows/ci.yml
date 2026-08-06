@@ -7,6 +7,10 @@ on:
   push:
     branches: [main]
   pull_request:
+  # During the 2026-08-06 Actions incident a pull_request event never queued a run,
+  # and there was no way to ask for one — rerunning replays the old commit, so the
+  # only route was pushing another. Dispatch makes a re-run possible without one.
+  workflow_dispatch:
 
 jobs:
   rules:

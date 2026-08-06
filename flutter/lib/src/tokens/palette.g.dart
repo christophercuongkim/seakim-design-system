@@ -190,3 +190,51 @@ class SkChartPalette {
     series1, series2, series3, series4, series5, series6,
   ];
 }
+
+/// Sequential ramp for magnitude — heatmaps, rank grids, choropleths.
+///
+/// Per-theme rather than one ramp inverted: each direction is validated on its
+/// own surface, per decision 0015.
+class SkChartSeq {
+  const SkChartSeq({
+    required this.s1,
+    required this.s2,
+    required this.s3,
+    required this.s4,
+    required this.inkFlip,
+  });
+
+  final Color s1;
+  final Color s2;
+  final Color s3;
+  final Color s4;
+
+  /// Step at which label ink flips to the inverse text colour.
+  final int inkFlip;
+
+  /// Step by 1-based index. Values outside 1–4 clamp to the ends.
+  Color step(int i) => switch (i.clamp(1, 4)) {
+        1 => s1,
+        2 => s2,
+        3 => s3,
+        _ => s4,
+      };
+
+  /// Ascends into darkness.
+  static const SkChartSeq light = SkChartSeq(
+    s1: Color(0xFFDDE8FF),
+    s2: Color(0xFFA8C4FF),
+    s3: Color(0xFF6F95EB),
+    s4: Color(0xFF3D63BE),
+    inkFlip: 4,
+  );
+
+  /// Ascends into lightness.
+  static const SkChartSeq dark = SkChartSeq(
+    s1: Color(0xFF26365C),
+    s2: Color(0xFF3C5898),
+    s3: Color(0xFF567CD3),
+    s4: Color(0xFF82A8FD),
+    inkFlip: 3,
+  );
+}

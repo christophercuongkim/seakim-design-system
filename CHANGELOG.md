@@ -17,6 +17,46 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [3.1.0] — 2026-08-05
+
+### Added
+
+- **Sequential chart ramp** — `--chart-seq-1..4` plus `--chart-seq-ink-flip`, per
+  [0015](decisions/0015-sequential-chart-ramp.md). Fixed hue 265, product-independent, with
+  separately validated light and dark steps. Fills the magnitude gap the categorical ramp
+  cannot cover: heatmaps, rank grids, choropleths.
+
+  Four steps rather than the five originally proposed. At five, adjacent contrast compresses
+  to roughly 1.3:1 — below what a cell boundary carries without a border. **Cell borders are
+  required either way**, since `--chart-seq-1` sits 1.23:1 from a white card.
+
+- **Achromatic trajectory set** for more than six series over time, per
+  [0016](decisions/0016-many-series-trajectories.md). A fourth sanctioned >6 treatment,
+  scoped to change-over-time, where "other" would erase the entities and small multiples
+  would break the crossings that carry the meaning.
+
+  Range stated rather than left to judgement: **8–15 trajectories.** Above 15, grey strokes
+  stop resolving as separate paths and end-labels collide. An adjacent sequential grid is
+  mandatory — it is the only path for touch and screen readers, so it is the view that has to
+  be right.
+
+### Fixed
+
+- Regenerated `flutter/lib/src/tokens/palette.g.dart` and `tokens/generated/colors.ts`,
+  which were missing. `sk_colors.dart` imports the former, so the Flutter binding had a
+  broken import. Both are outputs of `tool/build-tokens.mjs` and were rebuilt from
+  `tokens/src/color.tokens.json` — which is the point of
+  [0007](decisions/0007-token-source-format.md): a lost output is a rebuild, not a loss.
+
+### Note on the number
+
+Written as 2.2.0 and filed below 3.0.1, which was a branch from the 2.1.0 lineage — 3.0.0
+and 3.0.1 already existed above it. Renumbered to 3.1.0 and moved to the top: this adds
+tokens and changes no Tier 0 rule, so it is a minor bump on the current version rather
+than a second history.
+
+---
+
 ## [3.0.1] — 2026-08-05
 
 ### Fixed

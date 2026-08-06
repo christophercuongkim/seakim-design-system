@@ -155,3 +155,55 @@ so is the code.
 
 When it is built: the tokens belong in `tokens/src/color.tokens.json` under a `chart` key,
 so they generate to every binding like everything else.
+
+## Magnitude
+
+Per [decision 0015](../decisions/0015-sequential-chart-ramp.md). Heatmaps, rank grids,
+choropleths — anything where the question is *more or less*, not *which one*.
+
+Use `--chart-seq-1` through `--chart-seq-4`. **Never the categorical ramp**: six discrete
+hues cannot express order. **Never the app accent ramp**: a sequential ramp is read as a
+scale, so it has to mean the same thing in every product — someone who learns "darker means
+higher" in Bench should carry that to Voyage.
+
+- **Four steps, fixed hue 265.** Clear of every app accent and every status hue, so a
+  magnitude cell is never mistaken for an accent or a state.
+- **Each theme has its own steps.** Light ascends into darkness, dark ascends into
+  lightness. Validated separately, never flipped.
+- **Cell borders are required.** `--chart-seq-1` sits 1.23:1 from a white card, so the
+  hairline grid is what separates a floor-value cell from an empty one. A sequential grid
+  without borders is off-spec.
+- **Label ink flips at `--chart-seq-ink-flip`** — step 4 in light, step 3 in dark. Below it
+  `--text-primary`, at or above it `--text-inverse`. Every stop verified above 4.5:1.
+
+The only sanctioned alternative is **accent-at-opacity** — `--fill-accent` at a varying
+alpha — and only for a one-off tint deliberately tied to its own screen. Not for anything a
+reader will compare across products.
+
+## More than six series over time
+
+Per [decision 0016](../decisions/0016-many-series-trajectories.md). The six-colour ceiling
+still holds for identity-by-category, but a bump chart or rank spaghetti is a different job:
+the *trajectories* are the subject, so "other" erases the entities and small multiples break
+the crossings that carry the meaning.
+
+| Count | Treatment |
+| --- | --- |
+| 1–6 | Categorical colour |
+| 7 | Group the tail, or small multiples |
+| **8–15** | **Achromatic trajectory set** |
+| 16+ | Small multiples, or the sequential grid alone |
+
+The achromatic trajectory set:
+
+- **No per-series colour.** Every line `--text-tertiary`. The ceiling is honoured because
+  nothing is coloured — identity comes from labels, not hue.
+- **One accent at a time**, on pointer hover *or keyboard focus*: the hovered line goes
+  `--fill-accent`, the rest dim. Pointer-only is non-conformant.
+- **Direct end-labels always rendered**, so identity survives with no interaction.
+- **An adjacent sequential grid is mandatory** — the same entity×period data as a magnitude
+  grid per 0015. This is the only path for touch and screen readers, so it is the view that
+  has to be right.
+
+15 is a legibility ceiling, not a data one: above it grey strokes stop resolving as separate
+paths and end-labels collide. Show the grid and let the reader pick.

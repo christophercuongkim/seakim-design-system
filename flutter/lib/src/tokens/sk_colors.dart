@@ -143,6 +143,11 @@ class SkColors {
 
   bool get isDark => brightness == Brightness.dark;
 
+  /// The sequential ramp for this theme — magnitude charts only. See [SkChartSeq]
+  /// and decision 0015. Never use an app accent ramp for magnitude: a sequential
+  /// ramp is read as a scale, so it must mean the same thing in every product.
+  SkChartSeq get chartSeq => isDark ? SkChartSeq.dark : SkChartSeq.light;
+
   /// Mirrors the dark block in tokens/colors.css. Dark is the default theme.
   factory SkColors.dark(SkBrandRamp brand) => SkColors(
         brightness: Brightness.dark,

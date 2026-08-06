@@ -448,9 +448,17 @@
       "etag": "1785954745891941",
       "size": 5016
     },
+    "decisions/0015-sequential-chart-ramp.md": {
+      "etag": "1785974746994289",
+      "size": 3094
+    },
+    "decisions/0016-many-series-trajectories.md": {
+      "etag": "1785974746994289",
+      "size": 2675
+    },
     "decisions/README.md": {
-      "etag": "1785954745891941",
-      "size": 2906
+      "etag": "1785974746994289",
+      "size": 3168
     },
     "ds-shim.js": {
       "etag": "1785841765692879",

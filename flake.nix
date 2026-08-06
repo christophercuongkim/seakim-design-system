@@ -21,14 +21,21 @@
             pkgs.git
             pkgs.coreutils   # base64, wc, sha256sum, cut, … (not on the bare login PATH)
             pkgs.python3     # used by the design-sync tooling for encoding/manifest work
+
+            # The JS side: tool/*.mjs (token build, conformance, version check) and
+            # the Next example. Declared rather than inherited from the host — the
+            # shell picked node up from the login PATH, so the flake only looked
+            # reproducible on a machine that already had it.
+            pkgs.nodejs_22
           ];
 
           shellHook = ''
             echo "=============================================="
-            echo " SeaKim Design System — Flutter dev shell"
+            echo " SeaKim Design System — dev shell"
             echo "----------------------------------------------"
             echo -n " flutter: "; flutter --version 2>/dev/null | head -n1
             echo -n " dart:    "; dart --version 2>&1 | head -n1
+            echo -n " node:    "; node --version
             echo "=============================================="
           '';
         };

@@ -9,23 +9,23 @@
       "size": 44735
     },
     "CHANGELOG.md": {
-      "etag": "1785982008241237",
-      "size": 13339
+      "etag": "1785997345541823",
+      "size": 13654
     },
     "CONTRIBUTING-A-BINDING.md": {
       "etag": "1785851163071252",
       "size": 5695
     },
     "SKILL.md": {
-      "etag": "1785484605825213",
-      "size": 871
+      "etag": "1785997127574816",
+      "size": 2273
     },
     "TODO-manual.md": {
       "etag": "1785960304620653",
       "size": 7469
     },
     "VERSION": {
-      "etag": "1785982008241237",
+      "etag": "1785997127574816",
       "size": 6
     },
     "components/core/Avatar.d.ts": {
@@ -465,8 +465,8 @@
       "size": 5457
     },
     "flutter/GENERATED-FILES.md": {
-      "etag": "1785957505957383",
-      "size": 3252
+      "etag": "1785997345541823",
+      "size": 3117
     },
     "flutter/README.md": {
       "etag": "1785955173308673",
@@ -513,8 +513,8 @@
       "size": 4006
     },
     "flutter/lib/src/tokens/palette.g.dart": {
-      "etag": "1785980131709988",
-      "size": 7197
+      "etag": "1785997503353047",
+      "size": 7571
     },
     "flutter/lib/src/tokens/sk_colors.dart": {
       "etag": "1785982008241237",
@@ -845,7 +845,7 @@
       "size": 230
     },
     "package.json": {
-      "etag": "1785961960204365",
+      "etag": "1785997127574816",
       "size": 1102
     },
     "readme.md": {
@@ -929,8 +929,8 @@
       "size": 766
     },
     "tokens/generated/colors.ts": {
-      "etag": "1785980131709988",
-      "size": 3142
+      "etag": "1785997503353047",
+      "size": 2883
     },
     "tokens/layout.css": {
       "etag": "1785497739647639",
@@ -953,20 +953,20 @@
       "size": 2417
     },
     "tokens/src/color.tokens.json": {
-      "etag": "1785978991559053",
-      "size": 11099
+      "etag": "1785997631754370",
+      "size": 11328
     },
     "tokens/theme-light.css": {
-      "etag": "1785980058206979",
-      "size": 2786
+      "etag": "1785997345541823",
+      "size": 2818
     },
     "tokens/typography.css": {
       "etag": "1785493688786856",
       "size": 2118
     },
     "tool/build-tokens.mjs": {
-      "etag": "1785980019111733",
-      "size": 22881
+      "etag": "1785998485692337",
+      "size": 25646
     },
     "tool/conformance-check.mjs": {
       "etag": "1785951414732345",

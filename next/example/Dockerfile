@@ -56,6 +56,11 @@ FROM node:22-slim AS run
 WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
+# Next's standalone server binds `process.env.HOSTNAME || '0.0.0.0'`, and Docker
+# sets HOSTNAME to the container id — so without this it binds the container IP
+# rather than all interfaces. Port mapping still works; a proxy on the host
+# network does not. Pinned here so no deployment has to remember it.
+ENV HOSTNAME=0.0.0.0
 
 # Next's standalone output keeps the source tree's shape, and outputFileTracingRoot
 # is the repo root — so the server lands at next/example/server.js, not server.js.

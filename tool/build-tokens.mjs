@@ -504,7 +504,7 @@ function emitDart() {
     L.push('  /// Step at which label ink flips to the inverse text colour.');
     L.push('  final int inkFlip;');
     L.push('');
-    L.push('  /// Step by 1-based index. Values outside 1\u20134 clamp to the ends.');
+    L.push('  /// Step by 1-based index. Values outside 1–4 clamp to the ends.');
     L.push('  Color step(int i) => switch (i.clamp(1, 4)) {');
     L.push('        1 => s1,');
     L.push('        2 => s2,');

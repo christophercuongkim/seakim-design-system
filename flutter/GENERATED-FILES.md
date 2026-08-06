@@ -7,7 +7,6 @@ its binaries, or anything a tool regenerates. Those live only in the git repo
 | Missing from the design project | Size | Why |
 | --- | --- | --- |
 | `lib/src/tokens/sk_icons.g.dart` | ~790 KB | Generated. Reproduce it, never edit it. |
-| `lib/src/tokens/palette.g.dart` | ~6 KB | Generated from `tokens/src/`. See the note below. |
 | `tool/phosphor_codepoints.json` | ~186 KB | Extracted input to the generator. |
 | `assets/icons/Phosphor-*.ttf` | ~2 MB | Icon font binaries; four files. |
 | `assets/fonts/*.ttf` | ~1 MB | Text font binaries; ten files. |
@@ -31,30 +30,32 @@ To run the example app, regenerate its platform scaffolding:
 cd example && flutter create --platforms=web,android,ios --project-name seakim_example --org com.seakim .
 ```
 
-## Why the generated token outputs are split
+## Why the generated token outputs ARE mirrored
 
-`tool/build-tokens.mjs` emits five files from `tokens/src/color.tokens.json`. Two of them
-are **not** mirrored into the design project and two more sit outside this folder:
+They were removed once, on the theory that a file absent from the project cannot be
+hand-edited there. That backfired, and the reasoning is worth keeping.
 
-| Output | Mirrored? | Why |
-| --- | --- | --- |
-| `tokens/colors.css`, `tokens/theme-light.css`, `tokens/apps.css` | **Yes** | `styles.css` `@import`s them, so every rendered preview in the design tool needs them present. |
-| `flutter/lib/src/tokens/palette.g.dart` | No | Dart. Nothing in the design project consumes it. |
-| `tokens/generated/colors.ts` | No | TypeScript. Same. |
+The design agent cannot run `node`. When it needs a token change to be real, editing the
+output is the only move available to it — so removing the outputs did not remove the
+temptation, it manufactured one: the files read as *missing*, and the next session
+regenerated both by hand, reintroducing precisely the drift the removal was meant to
+prevent. A missing file is a visible prompt; a note in a document is not.
 
-The split exists because hand-editing a generated file has already caused two silent
-regressions — a lost chart-token stage, and the house accent reverting from crimson to
-orange because `tokens/src/` still said `clay: 55` while every output said `brick: 8`.
-Both files carried a `DO NOT EDIT` header at the time. The header did not help.
+So all five outputs are mirrored, and the rule lives where the agent actually reads its
+instructions — the `## Generated files` section of [`SKILL.md`](../SKILL.md), which is the
+project's brief rather than a document it may or may not open.
 
-Removing an output from the mirror removes the temptation structurally. The three CSS
-files cannot be removed without breaking rendering, so for those the rule stands and CI is
-the backstop: `node tool/build-tokens.mjs --check` exits non-zero when any output is stale
-against the source.
+| Output | Source |
+| --- | --- |
+| `tokens/colors.css`, `tokens/theme-light.css`, `tokens/apps.css` | `tokens/src/color.tokens.json` |
+| `tokens/generated/colors.ts` | same |
+| `flutter/lib/src/tokens/palette.g.dart` | same |
 
-**To change a colour:** edit `tokens/src/color.tokens.json`, then have someone run
-`node tool/build-tokens.mjs` on the repo side. Editing `colors.css` directly will be
-reverted by the next regeneration, silently.
+`node tool/build-tokens.mjs --check` exits non-zero when any of them is stale against the
+source, and CI runs it — so drift is caught, just after the fact rather than prevented.
+
+`lib/src/tokens/sk_icons.g.dart` stays out: at ~790 KB it is past the read cap and nothing
+in the project would consume it anyway.
 
 Everything hand-written **is** mirrored — the generator, the `SkGlyph` type it
 targets, `SkMaterialTheme`, every widget, the tests, and `example/lib/main.dart`

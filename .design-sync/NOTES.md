@@ -63,8 +63,21 @@ to `origin`, if the pushed commits touch any mirrored file (present in
 `manifest.json`), it runs the repo -> design push. Pushes that only touch
 tooling (`scripts/`, `.design-sync/`) are skipped.
 
-It **never blocks the GitHub push** — if the design side fails or is skipped,
-git still pushes.
+**Two stages, one of which now blocks.** GitHub cannot protect a private repo on
+this plan — both the branch-protection and ruleset APIs answer *"Upgrade to GitHub
+Pro or make this repository public"* — so the checks that would have gated a merge
+run locally instead:
+
+- **Stage 1, gates (BLOCKING, `main` only):** `version-check`,
+  `build-tokens --check`, `conformance-check`. A failure aborts the push. Feature
+  branches are not gated; CI covers them on the way to a PR. Override once with
+  `SKIP_GATES=1 git push`.
+- **Stage 2, design mirror (never blocks):** unchanged — if it fails or is
+  skipped, the git push still proceeds.
+
+Weaker than server-side protection, and worth being honest about: `--no-verify`
+skips it, and it only runs where `core.hooksPath` is configured. It catches
+mistakes, not determination. Real enforcement needs GitHub Pro.
 
 Modes:
 - default: interactive design push if a terminal is attached; otherwise a

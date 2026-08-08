@@ -18,6 +18,22 @@ from another series, and that usually means several colours at once.
 The resolution is to treat a series count as a design decision rather than a data
 property.
 
+## Three jobs, three marks
+
+Before the series rules, the shape of the whole vocabulary. A chart answers one of three
+questions, and each has its own mark and its own relationship to colour:
+
+| The question | Mark | Colour |
+| --- | --- | --- |
+| Which one? (identity) | Series line / bar | Accent + grey, or `--chart-1..6` |
+| More or less? (magnitude) | Heatmap cell | `--chart-seq-1..4` |
+| How sure? (interval) | `Range` | Achromatic — position carries it |
+
+**Magnitude is the only job that encodes by hue.** Identity uses hue to *distinguish*;
+interval uses none at all. That line is what keeps the three coherent — reach for a
+sequential ramp only when the answer is more-vs-less, never to tell series apart or to
+show a spread. Each mark is detailed below; `Range` is the third job, not an appendix.
+
 ## One or two series: no new colour
 
 This covers almost everything either app needs.
@@ -219,15 +235,29 @@ The `Range` glyph is the mark.
 | --- | --- |
 | Track | Full domain width, `--surface-inset`, 1px `--border-subtle`. Square ends. |
 | Band (`low`→`high`) | `--text-tertiary`. No border, square ends. |
-| Marker (`mid`) | ~2px, `--text-primary`. Square. |
+| Marker (`mid`) | `--border-emphasis`, `--text-primary`. Square. |
 | Promoted band | `--fill-accent`, one instance at a time. |
 
 - **Achromatic, because it repeats.** A column of intervals is the shared layer, so it is
   grey — the same resolution as the many-series case above. Promote **one** row to
-  `--fill-accent` on selection or hover, never the whole column.
+  `--fill-accent` on hover or focus, never the whole column and never a *selected* row (its
+  accent is already spent on the row's leading border).
 - **Colour never encodes the value.** Floor/expected/ceiling read by position. Magnitude by
   colour is `--chart-seq`'s job; a `Range` does not borrow it.
 - **One shared domain, or the bars lie.** Every row takes the same `[min, max]`; a band's
   width is read as spread, so two scales misrepresent it like a truncated bar axis.
 - **Text equivalent, as ever.** An `aria-label`, and the exact numbers in adjacent cells —
   never the bar alone. It stays legible in greyscale because position carries it.
+
+`Range` and the many-series trajectory set are both grey-with-accent-promotion. Different
+shapes, so not confusable — but a screen showing both must promote in only **one** of them
+at a time, or "one accent live" breaks *across* marks instead of within one.
+
+> **Known smell — a mark-grey token, not yet minted.** Three marks now reach for
+> `--text-tertiary` to mean "the repeated, unpromoted layer" (comparison series, 0016
+> trajectories, the `Range` band) and `--text-primary` for mark ink. These are *text*
+> tokens carrying graphical meaning — the same drift [0013](../decisions/0013-alpha-variants-are-tokens.md)
+> named, one level up. If dataviz ever needs to retune mark greys without moving body text,
+> it can't. Not worth minting `--mark-quiet` / `--mark-ink` for three uses; name them when a
+> fourth mark arrives or someone actually needs the retune. Recorded here so the next person
+> doesn't rediscover it.

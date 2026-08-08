@@ -23,12 +23,22 @@ single exact number with no range — that is a `Stat`.
 | Part | Treatment |
 | --- | --- |
 | Track | Full domain width, `--surface-inset`, 1px `--border-subtle`. `--radius-none` — ends square. |
-| Band | From `low` to `high`. `--text-tertiary`. No border, square ends. |
-| Marker | At `mid`. ~2px wide, `--text-primary`, spans just past the track. Square. |
+| Band | From `low` to `high`. `--text-tertiary`. No border, square ends. Carries a `min-width` of `--border-emphasis` so a near-zero-spread interval still reads as a tight band, not a smudge. |
+| Marker | At `mid`. `--border-emphasis` wide, `--text-primary`, spans just past the track. Square. |
 | Promoted band | `--fill-accent` — **one instance at a time**, never a whole column (see States). |
 
-Colour never encodes the value: floor/expected/ceiling read by **position**, not hue. If
-two `Range` rows are accent-coloured at once, one of them is wrong.
+Values are tokens, not literals: marker and band-floor are `--border-emphasis`, corners are
+`--radius-none`. Track heights are the one exception (`sm` 5px, `md` 7px) — no depth token
+carries a track height, so they are stated as a ratio to keep coherent: the marker spans
+`~top:-1 / bottom:-1` past the track, so the glyph's bounding box is the track height **plus
+2px**. State that against the two densities — a `comfortable` 44px / `compact` 34px row
+(per [0003](../decisions/0003-tables.md)) has ample vertical budget for either track, but
+the marker overshoot means the glyph is not flush to the track box.
+
+Colour never encodes the value: floor/expected/ceiling read by **position**, not hue. Two
+guards, and the second is the one that gets missed: no two `Range`s in a column are accent
+at once, **and** a `Range` in a selected row stays grey — the row's own `--border-accent`
+leading edge (0003) already owns that row's one accent.
 
 ## The domain is shared, or the bars lie
 
@@ -42,16 +52,25 @@ domain is off-spec.
 | State | Treatment |
 | --- | --- |
 | Default | Achromatic — grey band, ink marker. The whole column reads as calm structure. |
-| Promoted | The selected or hovered row's band goes `--fill-accent`. Exactly one at a time. |
+| Promoted | The **hovered or focused** row's band goes `--fill-accent`. Exactly one at a time. |
+| In a selected row | **Stays grey.** Selection's accent is already spent on the row's leading border; the band does not also promote. |
 
 There is no hover growth and no shadow — a `Range` is an output glyph, not a control.
 
 ## Responsive
 
-The glyph fills its container width at every breakpoint, so it narrows with its column and
-needs no restack. At `sm` it survives as long as the marker still resolves against the
-band; below roughly a 40px-wide cell, drop the bar and keep the numbers — a bar too small
-to read is worse than the floor/ceiling figures it summarises.
+The glyph fills its container width, so within a table at `lg`/`md` it simply narrows with
+its column. The case that matters is the restack: per [0003](../decisions/0003-tables.md) a
+record table at `sm` **changes species** — there are no cells, only a primary line, a
+secondary line, and one surviving figure. "Narrows with its column" describes a model
+SeaKim does not use, so the real question is what happens to a `Range` when its row
+restacks.
+
+Default: **drop the glyph at `sm`, keep the floor/ceiling figures.** A 44px-tall list row
+has no vertical budget for a track plus marker overshoot, and this matches
+`data-visualisation.md`'s existing rule — below roughly 240px, replace the chart with the
+table it summarises. A binding that wants to keep it may attach the glyph to the surviving
+figure on the primary line, but the numbers, not the bar, are what must survive.
 
 ## Accessibility
 

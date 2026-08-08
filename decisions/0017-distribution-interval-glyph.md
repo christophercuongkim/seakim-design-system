@@ -2,7 +2,7 @@
 
 - **Status** Proposed
 - **Date** 2026-08-08
-- **Affects** React binding (`components/core/Range.*`); `guidelines/data-visualisation.md`; `spec/Range.md`
+- **Affects** both bindings (`components/data/Range.*`, `flutter/lib/src/widgets/sk_range.dart`); `conformance.md` Tier 2; `guidelines/data-visualisation.md`; `spec/Range.md`
 
 ## Context
 
@@ -26,8 +26,15 @@ a heatmap cell (magnitude).
 
 ## Decision
 
-Add a **`Range`** core glyph: a horizontal track spanning a shared domain, an achromatic
+Add a **`Range`** data glyph (it lives with `Table` in `components/data/`, not among the
+core interface primitives): a horizontal track spanning a shared domain, an achromatic
 **band** from `low` to `high`, and a **marker** at `mid`.
+
+The marker is deliberately the least salient element and carries the most important value —
+`mid` is the start/sit call, yet it is a 2px tick while the uncertainty is the big shape.
+That works because `--text-primary` on `--text-tertiary` clears 3:1 in both themes, so
+contrast carries what size does not. It is a chosen trade, written down here because the
+next person will be tempted to thicken the marker and flatten the distinction — don't.
 
 ### Achromatic, because it repeats
 
@@ -36,9 +43,16 @@ with a 1px `--border-subtle` hairline. **No accent by default** — a `Range` is
 sit in a column, and the shared layer is achromatic exactly so a grid of them reads as
 calm structure rather than a wall of accent. This is the same resolution as 0016: the
 repeated layer is grey, and a *single* instance is promoted to `--fill-accent` (the
-`accent` prop) when it is the selected or hovered row. Colour never encodes the value — a
-`Range` carries floor/expected/ceiling by **position**, not hue; magnitude-by-colour is
+`accent` prop) **on hover or focus only**. Colour never encodes the value — a `Range`
+carries floor/expected/ceiling by **position**, not hue; magnitude-by-colour is
 `--chart-seq`'s job, not this one.
+
+Promotion is hover/focus, **never a selected row**. Per [0003](0003-tables.md) a selected
+row already spends accent on a `--surface-selected` fill and a 2px `--border-accent`
+leading edge; promoting its band too would put two accents on one row — a Tier 0 scarcity
+violation on the most common table interaction. The guard is against the row chrome, not
+just against other `Range`s: "one promoted band per column" is necessary but not
+sufficient.
 
 ### One shared domain, or it lies
 
@@ -60,11 +74,34 @@ colour-alone rule.
 - Another mark type in the dataviz vocabulary to keep coherent with series and heatmap.
 - The marker floors at ~2px; below that it stops resolving against the band, so `Range`
   has a minimum useful height (`sm` = 5px track) and is not a sparkline substitute.
+- **The band floor is the worse failure, and it is inverted.** A tight distribution —
+  `[11, 12, 13]` on a 0–30 domain — is the *most* decision-relevant row (the safe start)
+  and draws the *smallest* mark, while a boom-or-bust player gets a big attention-grabbing
+  band. The glyph degrades exactly where the signal is strongest and draws the eye to
+  volatility over safety. Mitigation: the band carries a `min-width` (`--border-emphasis`)
+  so a near-zero-spread interval still reads as a tight band rather than a smudge under the
+  marker; below that it degrades to a point-estimate mark, not an ambiguous one.
 - Because it is deliberately achromatic, a `Range` can never carry magnitude by colour;
   a screen that needs both an interval *and* a magnitude encoding uses `--chart-seq`
   alongside it, not inside it.
-- The Flutter binding is owed — React leads per [0010](0010-bindings-are-contributed-not-owned.md);
-  `spec/Range.md` is the contract it implements against.
+- **Shared-domain is the highest-risk unenforceable rule in the system.** It is the
+  axis-honesty rule in different clothes, it will be violated silently, and nothing
+  catches it — knowing whether two `Range`s are "a comparison" is exactly the judgement
+  [0012](0012-conformance-checks-ship-with-rules.md) refuses to automate. Same for "one
+  promoted instance". Both live in review, not in a check.
+- No non-pointer fallback is owed, unlike [0016](0016-many-series-trajectories.md): there
+  hover was the only path to identity, so touch needed an answer. Here the band is legible
+  unpromoted and the exact figures sit in adjacent cells, so a phone-first Flutter binding
+  owes nothing for the missing hover.
+
+## Versioning and enforcement
+
+- **Version: MINOR** per [0011](0011-versioning.md). Adds a component, a spec, and a Tier 2
+  inventory entry; changes no Tier 0 rule; removes or renames no token.
+- **New Tier 0 check: none, deliberately.** Neither rule that matters here — "siblings
+  share a domain" and "exactly one promoted instance" — is machine-checkable, because both
+  require knowing what a *comparison* is. Stated out loud so the absence is a decision, not
+  an oversight (see the shared-domain consequence above).
 
 ## Rejected alternatives
 

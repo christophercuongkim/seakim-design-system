@@ -7,7 +7,7 @@ import * as React from 'react';
  * value shown with its range. Achromatic by design so a grid of them stays calm;
  * promote a single instance with `accent`. See decision 0017.
  *
- * @startingPoint section="Core" subtitle="Floor / mid / ceiling on a shared scale" viewport="700x160"
+ * @startingPoint section="Data" subtitle="Floor / mid / ceiling on a shared scale" viewport="700x160"
  */
 export interface RangeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'style'> {
   /** Interval floor — the left edge of the band. */
@@ -19,7 +19,9 @@ export interface RangeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, '
   /** [min, max] scale shared across sibling Ranges so they compare. Defaults to [0, high] (self-scaled). */
   domain?: [number, number];
   size?: 'sm' | 'md';
-  /** Promote this one instance to the accent hue — one at a time, never a whole column. */
+  /** Promote this one instance to the accent hue — on hover/focus only, one at a
+   *  time, never a whole column and never a *selected* row (its accent is already
+   *  spent on the row's leading border). */
   accent?: boolean;
   /** Accessible label; defaults to "{low} to {high}, {mid}". */
   label?: string;

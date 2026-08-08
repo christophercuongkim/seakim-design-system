@@ -207,3 +207,27 @@ The achromatic trajectory set:
 
 15 is a legibility ceiling, not a data one: above it grey strokes stop resolving as separate
 paths and end-labels collide. Show the grid and let the reader pick.
+
+## Range and interval
+
+Per [decision 0017](../decisions/0017-distribution-interval-glyph.md). A single value shown
+with its uncertainty — a floor, an expected value, a ceiling — for many rows on one shared
+scale. Identity is *which*, magnitude is *more or less*; this is *a value and its spread*.
+The `Range` glyph is the mark.
+
+| Part | Treatment |
+| --- | --- |
+| Track | Full domain width, `--surface-inset`, 1px `--border-subtle`. Square ends. |
+| Band (`low`→`high`) | `--text-tertiary`. No border, square ends. |
+| Marker (`mid`) | ~2px, `--text-primary`. Square. |
+| Promoted band | `--fill-accent`, one instance at a time. |
+
+- **Achromatic, because it repeats.** A column of intervals is the shared layer, so it is
+  grey — the same resolution as the many-series case above. Promote **one** row to
+  `--fill-accent` on selection or hover, never the whole column.
+- **Colour never encodes the value.** Floor/expected/ceiling read by position. Magnitude by
+  colour is `--chart-seq`'s job; a `Range` does not borrow it.
+- **One shared domain, or the bars lie.** Every row takes the same `[min, max]`; a band's
+  width is read as spread, so two scales misrepresent it like a truncated bar axis.
+- **Text equivalent, as ever.** An `aria-label`, and the exact numbers in adjacent cells —
+  never the bar alone. It stays legible in greyscale because position carries it.

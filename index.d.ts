@@ -17,6 +17,7 @@ export { Tag } from "./components/core/Tag";
 export { Card } from "./components/core/Card";
 export { Avatar } from "./components/core/Avatar";
 export { Stat } from "./components/core/Stat";
+export { Range } from "./components/core/Range";
 export { Field } from "./components/forms/Field";
 export { Input } from "./components/forms/Input";
 export { Textarea } from "./components/forms/Textarea";

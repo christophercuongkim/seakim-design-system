@@ -186,3 +186,24 @@ briefly mistaken for the bug.
 app, or the run proves nothing. And when a headless result matches the bug being hunted,
 reproduce it once in a real browser before believing it — a testing artifact that mimics
 the defect will confirm whatever you already suspect.
+
+## 14. The preview cards have a source registry, and no gate renders them
+
+A new `Range` component was added, specced, reviewed, built in both bindings, and passed
+all four gates — while its demo card rendered a **blank page**. `ds-shim.js` keeps an
+explicit `FILES` list of component sources it fetches; a component missing from it cannot
+be resolved, so the whole card fails to mount. Range was never added, so its demo had
+silently rendered nothing since it first shipped. Moving it `core → data` didn't cause
+this and didn't reveal it either — only loading the page did.
+
+The gates are blind here by construction: `version-check`, `build-tokens --check`, and
+`conformance-check` read source and tokens, and `flutter analyze/test` never touches the
+web preview. Every one was green over a blank card. This is lesson 3 one level out — a
+clean checker says nothing about what actually paints — but with a specific mechanism: a
+second registry (`ds-shim.js` `FILES`) that must be edited in lockstep with adding a
+component, and that nothing enforces.
+
+**Rule.** Adding a component to a demo card means adding its path to `ds-shim.js` `FILES`
+in the same change. And before claiming a demo shows anything, render the card — serve the
+repo, load the `.card.html`, and confirm the component is in the DOM. A card that 404s a
+source mounts blank, not with an error.

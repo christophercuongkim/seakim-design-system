@@ -92,6 +92,10 @@
       "etag": "1785978499216008",
       "size": 4232
     },
+    "decisions/0017-distribution-interval-glyph.md": {
+      "etag": "1786158113335593",
+      "size": 7014
+    },
     "decisions/README.md": {
       "etag": "1785982008241237",
       "size": 3168
@@ -203,6 +207,10 @@
     "spec/README.md": {
       "etag": "1785842725248064",
       "size": 2411
+    },
+    "spec/Range.md": {
+      "etag": "1786158113335593",
+      "size": 4603
     },
     "spec/Slider.md": {
       "etag": "1785822319245861",

@@ -17,6 +17,18 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [3.2.0] — 2026-08-08
+
+### Added
+
+- **`Range`** — a distribution/interval glyph, per
+  [0017](decisions/0017-distribution-interval-glyph.md). An achromatic band from `low` to
+  `high` with a marker at `mid`, on a shared `domain` so a column of them compares on one
+  scale. Fills the gap between identity (which series) and magnitude (more vs less): *a
+  value and its spread*. Achromatic because it repeats down rows — one instance promotes to
+  `--fill-accent`. React binding + `spec/Range.md`; Flutter owed. First consumer:
+  fantasy-hub's projection floor/expected/ceiling.
+
 ## [3.1.0] — 2026-08-05
 
 ### Added

@@ -27,6 +27,7 @@ export { Tag } from "./components/core/Tag.jsx";
 export { Card } from "./components/core/Card.jsx";
 export { Avatar } from "./components/core/Avatar.jsx";
 export { Stat } from "./components/core/Stat.jsx";
+export { Range } from "./components/core/Range.jsx";
 export { Field } from "./components/forms/Field.jsx";
 export { Input } from "./components/forms/Input.jsx";
 export { Textarea } from "./components/forms/Textarea.jsx";

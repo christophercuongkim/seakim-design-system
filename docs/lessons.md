@@ -207,3 +207,24 @@ component, and that nothing enforces.
 in the same change. And before claiming a demo shows anything, render the card — serve the
 repo, load the `.card.html`, and confirm the component is in the DOM. A card that 404s a
 source mounts blank, not with an error.
+
+## 15. A component is not delivered until it runs in the two demo apps
+
+`Range` was built in both bindings, exported from the barrel, tested, and — after lesson
+14 — rendered in the preview card. It still did not appear in the **Next.js app** (`/next`)
+or the **Flutter gallery** (`/flutter`), because each demo app hand-picks which components
+it shows, and neither picked Range. "Built and exported" reads as done; "a consumer can see
+it running" is the actual bar, and the gap between them is invisible until someone asks
+"does it show in Next or Flutter?"
+
+Next.js and Flutter are the two bindings real products consume — fantasy-hub on Next/React,
+triptogether on Flutter. Those two demo apps are the closest proxy for a shipping consumer,
+so a component absent from them is untested in exactly the place that matters, no matter how
+green the gates are.
+
+**Rule.** Adding or changing a component is not complete until it is placed in **both**
+primary demo apps — the Next example (`next/example/app`) and the Flutter gallery
+(`flutter/example/lib/gallery.dart`) — and each is rendered to confirm it draws (`npm run
+build` + load `/next`; `flutter build web` + open the gallery). The preview card is a third
+surface, not a substitute. Treat the two apps as the definition of done, because they are
+what a consumer actually runs.

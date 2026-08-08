@@ -162,6 +162,16 @@ class _GalleryScreenState extends State<GalleryScreen> {
           const SizedBox(height: SkSpace.s4),
           const LinearProgressIndicator(value: 0.6),
 
+          const SizedBox(height: SkSpace.s6),
+          Text('Range — floor / expected / ceiling on one shared domain (0017)',
+              style: t.labelSmall),
+          const SizedBox(height: SkSpace.s3),
+          _rangeRow(t, 'Chase', 12.1, 18.4, 24.0),
+          // Njoku's tight band is the safe start; Robinson's wide one is boom-or-bust —
+          // same projected figure, different risk. One row promoted to show the state.
+          _rangeRow(t, 'Robinson', 5.2, 12.6, 22.8, accent: true),
+          _rangeRow(t, 'Njoku', 15.6, 17.1, 18.9),
+
           _section('Overlays', t),
           Wrap(spacing: SkSpace.s3, runSpacing: SkSpace.s3, children: <Widget>[
             FilledButton(
@@ -221,5 +231,30 @@ class _GalleryScreenState extends State<GalleryScreen> {
   Widget _section(String label, TextTheme t) => Padding(
         padding: const EdgeInsets.only(top: SkSpace.s8, bottom: SkSpace.s4),
         child: Text(label.toUpperCase(), style: t.labelSmall),
+      );
+
+  Widget _rangeRow(TextTheme t, String name, double low, double mid, double high,
+          {bool accent = false}) =>
+      Padding(
+        padding: const EdgeInsets.only(bottom: SkSpace.s3),
+        child: Row(
+          children: <Widget>[
+            SizedBox(width: 72, child: Text(name, style: t.bodySmall)),
+            Expanded(
+              child: SkRange(
+                low: low,
+                mid: mid,
+                high: high,
+                domain: const (0, 30),
+                accent: accent,
+                label: '$name: floor $low, projected $mid, ceiling $high',
+              ),
+            ),
+            SizedBox(
+              width: 44,
+              child: Text('$mid', textAlign: TextAlign.right, style: t.bodySmall),
+            ),
+          ],
+        ),
       );
 }

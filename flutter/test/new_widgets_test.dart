@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:seakim_flutter/seakim_flutter.dart';
 
-/// Coverage for the three widgets added from the design decisions — Table
-/// (0003), DatePicker (0004), and Slider (0006). They were written and reviewed
-/// but never run, so these assert the behaviour the ADRs actually promise, not
-/// just that the widgets construct.
+/// Coverage for the widgets added from the design decisions — Table (0003),
+/// DatePicker (0004), Slider (0006), and Range (0017). They were written and
+/// reviewed but never run, so these assert the behaviour the ADRs actually
+/// promise, not just that the widgets construct.
 
 Widget host(Widget child) => MaterialApp(
       theme: SkMaterialTheme.dark(SkAppBrand.voyage),
@@ -228,6 +228,59 @@ void main() {
       )));
       await t.pumpAndSettle();
       expect(find.text('Stay'), findsOneWidget);
+      expect(t.takeException(), isNull);
+    });
+  });
+
+  // SkRange (0017) — an achromatic interval glyph. The rules it must keep are the
+  // text equivalent and that a near-zero-spread interval still renders a band.
+  group('SkRange', () {
+    testWidgets('carries a default text equivalent', (WidgetTester t) async {
+      await t.pumpWidget(host(const SizedBox(
+        width: 200,
+        child: SkRange(low: 5, mid: 12, high: 20, domain: (0, 30)),
+      )));
+      await t.pumpAndSettle();
+      expect(find.bySemanticsLabel('5.0 to 20.0, 12.0'), findsOneWidget);
+      expect(t.takeException(), isNull);
+    });
+
+    testWidgets('a custom label overrides the default', (WidgetTester t) async {
+      await t.pumpWidget(host(const SizedBox(
+        width: 200,
+        child: SkRange(
+            low: 5, mid: 12, high: 20, domain: (0, 30), label: 'Chase floor 5'),
+      )));
+      await t.pumpAndSettle();
+      expect(find.bySemanticsLabel('Chase floor 5'), findsOneWidget);
+    });
+
+    testWidgets('a tight distribution still renders a band', (WidgetTester t) async {
+      // low ~= high on a wide domain: the band would collapse below the marker
+      // without the min-width floor. It must still construct and paint.
+      await t.pumpWidget(host(const SizedBox(
+        width: 200,
+        child: SkRange(low: 11, mid: 12, high: 13, domain: (0, 30)),
+      )));
+      await t.pumpAndSettle();
+      expect(find.byType(SkRange), findsOneWidget);
+      expect(t.takeException(), isNull);
+    });
+
+    testWidgets('a column shares one domain without error', (WidgetTester t) async {
+      await t.pumpWidget(host(const SizedBox(
+        width: 240,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            SkRange(low: 12, mid: 18, high: 24, domain: (0, 30)),
+            SkRange(low: 5, mid: 12, high: 22, domain: (0, 30), accent: true),
+            SkRange(low: 2, mid: 6, high: 14, domain: (0, 30)),
+          ],
+        ),
+      )));
+      await t.pumpAndSettle();
+      expect(find.byType(SkRange), findsNWidgets(3));
       expect(t.takeException(), isNull);
     });
   });

@@ -47,6 +47,7 @@ export 'src/widgets/sk_icon_button.dart';
 export 'src/widgets/sk_input.dart';
 export 'src/widgets/sk_pressable.dart';
 export 'src/widgets/sk_radio.dart';
+export 'src/widgets/sk_range.dart';
 export 'src/widgets/sk_segmented_control.dart';
 export 'src/widgets/sk_select.dart';
 export 'src/widgets/sk_side_nav.dart';

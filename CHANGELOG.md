@@ -26,8 +26,10 @@ ADRs say *why*. This says *what* and *when*.
   `high` with a marker at `mid`, on a shared `domain` so a column of them compares on one
   scale. Fills the gap between identity (which series) and magnitude (more vs less): *a
   value and its spread*. Achromatic because it repeats down rows — one instance promotes to
-  `--fill-accent`. React binding + `spec/Range.md`; Flutter owed. First consumer:
-  fantasy-hub's projection floor/expected/ceiling.
+  `--fill-accent` on hover/focus (never a selected row). **Both bindings**:
+  `components/data/Range.jsx` and `flutter/lib/src/widgets/sk_range.dart`, against
+  `spec/Range.md`; added to the Tier 2 on-demand inventory. First consumer: fantasy-hub's
+  projection floor/expected/ceiling.
 
 ## [3.1.0] — 2026-08-05
 

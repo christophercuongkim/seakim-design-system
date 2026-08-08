@@ -5,7 +5,6 @@ import { Badge } from './Badge.jsx';
 import { Tag } from './Tag.jsx';
 import { Avatar } from './Avatar.jsx';
 import { Stat } from './Stat.jsx';
-import { Range } from './Range.jsx';
 
 export function Demo() {
   return (
@@ -78,15 +77,6 @@ export function Demo() {
             <Stat label="Projected" value="18.4" unit="pts" delta="+2.1" />
             <Stat label="Rank" value="4" delta="-2" size="sm" />
           </div>
-        </div>
-      </div>
-
-      <div className="col" style={{ gap: 'var(--space-4)' }}>
-        <div className="lbl">Range · shared domain, one promoted</div>
-        <div className="col" style={{ gap: 'var(--space-3)', maxWidth: 260 }}>
-          <Range low={12.1} mid={18.4} high={24.0} domain={[0, 30]} label="Chase: floor 12.1, projected 18.4, ceiling 24.0" />
-          <Range low={5.2} mid={12.6} high={22.8} domain={[0, 30]} accent label="Robinson: floor 5.2, projected 12.6, ceiling 22.8" />
-          <Range low={2.0} mid={6.1} high={14.5} domain={[0, 30]} label="Njoku: floor 2.0, projected 6.1, ceiling 14.5" />
         </div>
       </div>
     </div>

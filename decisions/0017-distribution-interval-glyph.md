@@ -1,6 +1,6 @@
 # 0017 — A distribution/interval glyph
 
-- **Status** Accepted
+- **Status** Proposed
 - **Date** 2026-08-08
 - **Affects** React binding (`components/core/Range.*`); `guidelines/data-visualisation.md`; `spec/Range.md`
 

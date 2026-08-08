@@ -5,9 +5,30 @@ This repo mirrors the Claude Design project **"Design system foundations"**
 https://claude.ai/design/p/d4854e4e-47cd-4ae1-a94c-b85f3db05760).
 
 Files were pulled **design → repo**. The project is a regular Claude Design
-project (not a registered "design system" type), so the design agent inside it
-already builds apps with these components. This repo adds git history, review,
-and the Flutter / Next ports.
+project (not a registered "design system" type). This repo adds git history,
+review, and the Flutter / Next ports.
+
+## Scope: consultant surface only (as of 2026-08-08)
+
+The project was narrowed from a full 266-file mirror to the **67 files a design
+consultant reasons over**: `decisions/`, `spec/`, `guidelines/`, `tokens/`, and
+the top-level docs (`conformance.md`, `readme.md`, `CHANGELOG.md`, `VERSION`,
+`SKILL.md`, `TODO-manual.md`, `CONTRIBUTING-A-BINDING.md`). All 199 code files —
+every binding (`components/`, `flutter/`, `next/`, `ui_kits/`), the build tools
+(`tool/`), `slides/`, and the loose runtime files — were deleted from Design.
+
+Why: the design side cannot run code, and every past corruption came from it
+touching code it could not verify (see `docs/lessons.md` 10). Design is now a
+decisions/specs/tokens consultant, not a code mirror.
+
+The delete only holds because the manifest was pruned to the same 67 in the same
+motion — the push scopes strictly from the manifest (`ds-sync.sh` step 2), so a
+future edit to a repo binding cannot re-mirror it. Do **not** re-add code paths
+to the manifest without meaning to re-establish a code mirror.
+
+If Design ever needs to *build UI* with the real components again, that is the
+design-sync **skill** (a compiled component bundle), not this plain mirror —
+a different setup, not a manifest edit.
 
 ## Sync model: HYBRID
 

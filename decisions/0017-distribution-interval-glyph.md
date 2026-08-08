@@ -1,6 +1,6 @@
 # 0017 — A distribution/interval glyph
 
-- **Status** Proposed
+- **Status** Accepted
 - **Date** 2026-08-08
 - **Affects** both bindings (`components/data/Range.*`, `flutter/lib/src/widgets/sk_range.dart`); `conformance.md` Tier 2; `guidelines/data-visualisation.md`; `spec/Range.md`
 

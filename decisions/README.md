@@ -36,7 +36,7 @@ the value is in the trail, and a silently edited ADR is worse than none.
 | [0014](0014-text-selection-tier-1.md) | Text selection is Tier 1, and when a Tier 1 divergence needs an ADR | Accepted |
 | [0015](0015-sequential-chart-ramp.md) | A sequential (magnitude) chart ramp | Accepted |
 | [0016](0016-many-series-trajectories.md) | Many-series trajectories: the >6 change-over-time case | Accepted |
-| [0017](0017-distribution-interval-glyph.md) | A distribution/interval glyph (`Range`) | Accepted |
+| [0017](0017-distribution-interval-glyph.md) | A distribution/interval glyph (`Range`) | Proposed |
 
 ## Writing one
 

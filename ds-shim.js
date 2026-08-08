@@ -41,6 +41,7 @@
     'components/feedback/Tooltip.jsx',
     'components/feedback/EmptyState.jsx',
     'components/data/Table.jsx',
+    'components/data/Range.jsx',
     'components/navigation/Tabs.jsx',
     'components/navigation/SideNav.jsx',
     'components/navigation/TabBar.jsx'

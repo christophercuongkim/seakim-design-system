@@ -245,11 +245,11 @@ that survives migration is visibly wrong in review rather than quietly almost-ri
 React's `PlayerSheet` does the same by hand. That works, so this is not urgent; promote it
 when a second product needs a sheet that is not a dialog.
 
-**9. `Range` is built in both bindings, pending [0017](decisions/0017-distribution-interval-glyph.md).**
+**9. ~~`Range` is built in both bindings, pending 0017.~~ Done, [0017](decisions/0017-distribution-interval-glyph.md) accepted.**
 The interval/distribution glyph — `components/data/Range.jsx` and
 `flutter/lib/src/widgets/sk_range.dart`, against `spec/Range.md`. Its two load-bearing
 rules (siblings share a domain; exactly one promoted instance) are deliberately not
-machine-checkable and live in review. Accept 0017 before treating this as settled.
+machine-checkable and live in review, not lint.
 
 ---
 

@@ -48,14 +48,42 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
 
-      # The render gate serves the root gallery and loads each card in headless
-      # Chrome, asserting it mounted (not blank) with its markers in the DOM —
+      # The render gate loads each surface in headless Chrome and asserts it drew —
       # the class of bug the text gates never see (lessons 14, 15; decision 0020).
       - name: Install Chrome
         uses: browser-actions/setup-chrome@v1
 
+      # Build and serve /next (server-rendered, real DOM) on :3000. Mirrors the QA
+      # Dockerfile's build.
+      - name: Build and serve /next
+        working-directory: next/example
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build
+          npm start &
+          npx --yes wait-on http://localhost:3000/next --timeout 120000
+
+      # Build /flutter web and serve it under /flutter/ (static) on :8080. Same
+      # build flags the Dockerfile deploys with, so the gate renders what ships.
+      - name: Build and serve /flutter
+        working-directory: flutter/example
+        run: |
+          flutter pub get
+          flutter build web --release --base-href /flutter/ --pwa-strategy=none
+          mkdir -p "$RUNNER_TEMP/srv/flutter"
+          cp -r build/web/* "$RUNNER_TEMP/srv/flutter/"
+          ( cd "$RUNNER_TEMP/srv" && python3 -m http.server 8080 & )
+          npx --yes wait-on http://localhost:8080/flutter/ --timeout 120000
+
+      # Root gallery cards + /next markers + /flutter boot, all in one Chrome pass.
       - name: Preview render gate
+        env:
+          NEXT_URL: http://localhost:3000/next
+          FLUTTER_URL: http://localhost:8080/flutter/
         run: node tool/preview-check.mjs --render
 
   flutter:

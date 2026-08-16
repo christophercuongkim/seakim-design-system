@@ -1,7 +1,7 @@
 {
-  "_comment": "Preview coverage, per decision 0020. The component SET is derived from index.js — this file only records per-component surface coverage and the render markers per card. A web component with no entry here FAILS preview-check (you added a component and did not say where it shows). Coverage declared 'pending: <reason>' is PRINTED, not failed — visible debt, same shape as 0019's binding audit. `compositional: true` marks a primitive that appears only inside other components' demos (no standalone example expected).",
+  "_comment": "WEB preview coverage, per decision 0020. Flutter coverage is NOT here — it lives in flutter/example/test/preview_coverage_test.dart, which asserts (with compiler-checked widget types) that skShowcase covers every barrel widget and each builds. This file owns the web surfaces, where there is no compiler in the loop. The web component SET is derived from index.js; a component with no entry here FAILS preview-check. `compositional: true` marks a primitive that appears only inside other components' demos. `next.markers` are asserted against the server-rendered /next DOM in CI.",
 
-  "_pending_scope": "Landed now: web registry membership (static) + root-gallery card render (lesson 14). Deferred to a tracked follow-up: per-component /next and /flutter render assertions, and Flutter widget coverage — the Flutter example is Material-adoption today, so SkTable, SkSlider and ~20 others appear in no demo app (lesson 15's residue). See the PR body.",
+  "_scope": "Web: registry membership (static) + root-gallery card render + /next marker render (CI). Flutter: full widget coverage gated by the Dart coverage test (compiler-checked), plus a /flutter boot render in CI (the app mounts, nothing throws). Card has no standalone web demo yet — a small, declared web-only gap.",
 
   "components": {
     "Icon":             { "compositional": true },
@@ -22,8 +22,8 @@
     "SegmentedControl": { "surfaces": { "card": "yes" } },
     "Slider":           { "surfaces": { "card": "yes" } },
     "DatePicker":       { "surfaces": { "card": "yes" } },
-    "Table":            { "surfaces": { "card": "yes", "flutter": "pending: SkTable not yet in the Flutter example gallery" } },
-    "Range":            { "surfaces": { "card": "yes", "next": "yes", "flutter": "yes" } },
+    "Table":            { "surfaces": { "card": "yes", "next": "yes" } },
+    "Range":            { "surfaces": { "card": "yes", "next": "yes" } },
     "Dialog":           { "surfaces": { "card": "yes" } },
     "Toast":            { "surfaces": { "card": "yes" } },
     "Tooltip":          { "surfaces": { "card": "yes" } },
@@ -40,5 +40,9 @@
     "components/feedback/feedback.card.html":  { "markers": ["Open dialog"] },
     "components/data/data.card.html":          { "markers": ["projected", "Range ·"] },
     "components/navigation/navigation.card.html": { "markers": ["SideNav"] }
+  },
+
+  "next": {
+    "markers": ["Range", "aria-label", "Okafor"]
   }
 }

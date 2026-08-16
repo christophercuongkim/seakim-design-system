@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:seakim_flutter/seakim_flutter.dart';
 
 import 'gallery.dart';
+import 'sk_gallery.dart';
 
 /// A working starting point, and the proof that both adoption paths hold.
 ///
@@ -68,6 +69,14 @@ class _Home extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Trips'),
         actions: <Widget>[
+          IconButton(
+            tooltip: 'SeaKim widget gallery',
+            icon: const SkIcon(SkIcons.shapes),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                  builder: (BuildContext _) => const SkWidgetGallery()),
+            ),
+          ),
           IconButton(
             tooltip: 'Material coverage gallery',
             icon: const SkIcon(SkIcons.squaresFour),

@@ -30,10 +30,19 @@ ADRs say *why*. This says *what* and *when*.
   measurement.
 - **Preview surfaces are gated**, per
   [0020](decisions/0020-preview-surfaces-are-gated.md). The root gallery, `/next`, and
-  `/flutter` are deliverables, proved by a two-layer `tool/preview-check.mjs`: a fast static
-  pre-filter (every export appears in the registry and its demo — runs pre-commit) and a render
-  gate (headless Chrome asserts each component is present in the DOM and nothing errored — runs
-  in CI). Turns lessons 14 and 15 into a failure instead of a thing to remember. Added to
+  `/flutter` are deliverables, no longer checked by a human remembering to look. Three parts:
+  - **Web static** (`tool/preview-check.mjs`, pre-commit): every `index.js` export is in the
+    ds-shim `FILES` registry and its demo — catches lesson 14's registry gap.
+  - **Flutter coverage** (`flutter/example/test/preview_coverage_test.dart`, under `flutter
+    test`): a **compiler-checked** test asserts a canonical `skShowcase` covers every barrel
+    widget and each builds. Replaces a brittle filename→classname grep (`sk_radio.dart` exports
+    `SkRadioGroup`, not `SkRadio`) with real widget types. The Flutter example gains a
+    `SkWidgetGallery` demonstrating all 28 widgets, rendered from that same list.
+  - **Render** (`--render`, CI): headless Chrome asserts each root-gallery card mounted (not
+    blank) with its markers in the DOM, that `/next` renders its markers, and that `/flutter`
+    boots (a Flutter view is in the DOM) — nothing throws on any.
+
+  Turns lessons 14 and 15 into a failure instead of a thing to remember. Added to
   `conformance.md` as a **repo gate, not a binding obligation**.
 
 ### Note

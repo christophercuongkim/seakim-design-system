@@ -33,6 +33,14 @@ const webComponents = [...indexSrc.matchAll(
 const shimSrc = readFileSync(`${ROOT}/ds-shim.js`, 'utf8');
 const filesRegistry = [...shimSrc.matchAll(/'(components\/[^']+\.jsx)'/g)].map(m => m[1]);
 
+// FLUTTER COVERAGE LIVES IN DART, not here. Deriving a class name from a filename
+// and grepping the example source is brittle — sk_radio.dart exports SkRadioGroup,
+// not SkRadio, and a grep cannot tell a real reference from a comment. Instead
+// `flutter/example/test/preview_coverage_test.dart` asserts, with real widget
+// TYPES the compiler checks, that `skShowcase` covers every barrel widget and each
+// one builds. That test runs under `flutter test` in CI. This file owns the web
+// surfaces, where there is no compiler in the loop.
+
 const fail = [];
 const warn = [];
 const pending = [];
@@ -81,6 +89,21 @@ function chromeBin() {
   return null;
 }
 
+// Load a URL in headless Chrome and return its rendered DOM plus any uncaught JS
+// errors Chrome logged. Console-error capture is best-effort (Chrome's stderr),
+// not CDP — enough to catch an uncaught throw during load.
+function loadPage(chrome, url) {
+  const out = spawnSync(chrome, [
+    '--headless=new', '--no-sandbox', '--disable-gpu',
+    '--enable-unsafe-swiftshader', '--virtual-time-budget=8000',
+    '--enable-logging=stderr', '--log-level=2',
+    '--dump-dom', url,
+  ], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  const errors = (out.stderr || '').split('\n')
+    .filter(l => /Uncaught|Unhandled promise rejection/.test(l));
+  return { dom: out.stdout || '', errors };
+}
+
 function runRender() {
   const chrome = chromeBin();
   if (!chrome) {
@@ -94,31 +117,45 @@ function runRender() {
   try {
     execSync('sleep 1');
     for (const [card, spec] of Object.entries(manifest.cards)) {
-      const url = `http://127.0.0.1:8731/${card}`;
-      const out = spawnSync(chrome, [
-        '--headless=new', '--no-sandbox', '--disable-gpu',
-        '--enable-unsafe-swiftshader', '--virtual-time-budget=8000',
-        '--dump-dom', url,
-      ], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
-      const dom = out.stdout || '';
-
+      const { dom, errors } = loadPage(chrome, `http://127.0.0.1:8731/${card}`);
       if (/Loading components…/.test(dom) || dom.length < 500) {
         fail.push(`render ${card}: mounted blank (still shows the Loading placeholder)`);
         continue;
       }
       for (const marker of spec.markers || []) {
-        if (!dom.includes(marker)) {
-          fail.push(`render ${card}: marker not in DOM — "${marker}"`);
-        }
+        if (!dom.includes(marker)) fail.push(`render ${card}: marker not in DOM — "${marker}"`);
       }
+      for (const e of errors) fail.push(`render ${card}: uncaught error — ${e.trim().slice(0, 120)}`);
     }
   } finally {
     if (pid) spawnSync('kill', [pid]);
   }
 
-  // /next and /flutter render only when their built output is served — wired in
-  // CI where the Dockerfile builds both. Named here so their absence is visible.
-  console.log('  render: /next and /flutter are covered in CI (built surfaces); skipped locally');
+  // /next — server-rendered, so its DOM carries real markers. CI builds and serves
+  // the Next example, then passes its URL here. Skipped (announced) when unset.
+  if (process.env.NEXT_URL) {
+    const { dom, errors } = loadPage(chrome, process.env.NEXT_URL);
+    for (const marker of manifest.next?.markers || []) {
+      if (!dom.includes(marker)) fail.push(`render /next: marker not in DOM — "${marker}"`);
+    }
+    for (const e of errors) fail.push(`render /next: uncaught error — ${e.trim().slice(0, 120)}`);
+  } else {
+    console.log('  render: NEXT_URL unset — /next render skipped (CI provides it)');
+  }
+
+  // /flutter — CanvasKit paints to a canvas, so per-widget text is not in the DOM
+  // without the semantics tree. The reliable, valuable assertion is that the app
+  // BOOTED: a Flutter view is in the DOM and nothing threw. That catches the blank-
+  // screen class (the service-worker race, lessons 12–13), which is Flutter's real
+  // failure mode. Per-widget Flutter coverage is the static gate's job, above.
+  if (process.env.FLUTTER_URL) {
+    const { dom, errors } = loadPage(chrome, process.env.FLUTTER_URL);
+    const booted = /flt-scene-host|flutter-view|flt-glass-pane|<canvas/.test(dom);
+    if (!booted) fail.push('render /flutter: no Flutter view in the DOM — the app did not boot (blank screen)');
+    for (const e of errors) fail.push(`render /flutter: uncaught error — ${e.trim().slice(0, 120)}`);
+  } else {
+    console.log('  render: FLUTTER_URL unset — /flutter render skipped (CI provides it)');
+  }
 }
 
 // --------------------------------------------------------------------- main

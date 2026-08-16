@@ -44,16 +44,26 @@ Three, all already built and served by the QA `Dockerfile`:
 These are the closest proxy for a shipping consumer — fantasy-hub on Next/React, triptogether
 on Flutter — so a component absent from them is untested where it matters.
 
-### The check, in two layers
+### The check, in three parts — web-static, Flutter-in-Dart, and render
 
-**A fast static pre-filter, on every push.** Before rendering anything, assert each public
-component appears where a *list* can see it: every `index.js` export is in `ds-shim.js`'s
-`FILES` registry and its category `*.demo.jsx`, and every Dart barrel export is in the Flutter
-gallery. This is a millisecond, needs no browser, and catches lesson 15's shape — absence from
-a list. It is also the graceful fallback when CI's browser infrastructure is down: the cheap
-half still runs and still catches the commonest case.
+**A fast static pre-filter for the web (every push).** `tool/preview-check.mjs` asserts each
+`index.js` export is in `ds-shim.js`'s `FILES` registry and its category `*.demo.jsx`. A
+millisecond, no browser; catches lesson 14's registry gap. It is also the graceful fallback
+when CI's browser infrastructure is down.
 
-**A render gate, on component and demo diffs.** `tool/preview-check.mjs` serves the built
+**Flutter coverage lives in a Dart test, not this script.** The first draft derived a class
+name from each barrel filename and grepped the example source for it — and that is exactly the
+brittleness the rest of this ADR warns against: `sk_radio.dart` exports `SkRadioGroup`, not
+`SkRadio`, and a grep cannot tell a real reference from the same word in a comment. So Flutter
+coverage is a **compiler-checked** test instead: `flutter/example/test/preview_coverage_test.dart`
+reads a canonical `skShowcase` list — one entry per widget file, each referencing the real
+widget **type** — asserts it covers every barrel widget (a count against the barrel's stable
+`export 'src/widgets/…'` lines) and that each entry builds without throwing. A renamed or
+removed widget breaks compilation, not a string match. The gallery renders from the same
+`skShowcase`, so the demo cannot drift from what the test verifies. This runs under
+`flutter test` in CI.
+
+**A render gate.** `tool/preview-check.mjs --render` serves the built
 surfaces, loads them in headless Chrome (`--enable-unsafe-swiftshader` for the Flutter
 CanvasKit surface, per lesson 13), and reads the result. Two assertions the static layer
 cannot make:
@@ -70,12 +80,12 @@ cannot make:
 
 ### The component set is derived, not restated
 
-The check **enumerates components from the existing source of truth** — `index.js` exports for
-web, the Dart barrel for Flutter — and consults a small manifest only for each component's
-*surface list* and *marker*. So the manifest cannot be *missing* an entry (the derived set
-would flag it), only wrong about one — which halves the drift surface that sank `ds-shim.js`'s
-`FILES` in the first place. Fixing a registry-drift bug by adding a registry only works if the
-new list cannot silently omit.
+Each side **enumerates from the existing source of truth** — `index.js` exports for web, the
+barrel's widget-file lines for Flutter (counted, in the Dart test) — and consults a small list
+only for each component's *surface* and *marker*. So neither list can be *missing* an entry
+(the derived set flags it), only wrong about one — which halves the drift surface that sank
+`ds-shim.js`'s `FILES` in the first place. Fixing a registry-drift bug by adding a registry
+only works if the new list cannot silently omit.
 
 The marker is **the component's accessible name by default** — an `aria-label` or accessible
 name that `guidelines/accessibility.md` already requires and the a11y rules already assert, so

@@ -1,0 +1,44 @@
+{
+  "_comment": "Preview coverage, per decision 0020. The component SET is derived from index.js — this file only records per-component surface coverage and the render markers per card. A web component with no entry here FAILS preview-check (you added a component and did not say where it shows). Coverage declared 'pending: <reason>' is PRINTED, not failed — visible debt, same shape as 0019's binding audit. `compositional: true` marks a primitive that appears only inside other components' demos (no standalone example expected).",
+
+  "_pending_scope": "Landed now: web registry membership (static) + root-gallery card render (lesson 14). Deferred to a tracked follow-up: per-component /next and /flutter render assertions, and Flutter widget coverage — the Flutter example is Material-adoption today, so SkTable, SkSlider and ~20 others appear in no demo app (lesson 15's residue). See the PR body.",
+
+  "components": {
+    "Icon":             { "compositional": true },
+    "Button":           { "surfaces": { "card": "yes" } },
+    "IconButton":       { "surfaces": { "card": "yes" } },
+    "Badge":            { "surfaces": { "card": "yes" } },
+    "Tag":              { "surfaces": { "card": "yes" } },
+    "Card":             { "compositional": true, "surfaces": { "card": "pending: no standalone Card demo; used as a layout wrapper in others" } },
+    "Avatar":           { "surfaces": { "card": "yes" } },
+    "Stat":             { "surfaces": { "card": "yes" } },
+    "Field":            { "surfaces": { "card": "yes" } },
+    "Input":            { "surfaces": { "card": "yes" } },
+    "Textarea":         { "surfaces": { "card": "yes" } },
+    "Select":           { "surfaces": { "card": "yes" } },
+    "Checkbox":         { "surfaces": { "card": "yes" } },
+    "Radio":            { "surfaces": { "card": "yes" } },
+    "Switch":           { "surfaces": { "card": "yes" } },
+    "SegmentedControl": { "surfaces": { "card": "yes" } },
+    "Slider":           { "surfaces": { "card": "yes" } },
+    "DatePicker":       { "surfaces": { "card": "yes" } },
+    "Table":            { "surfaces": { "card": "yes", "flutter": "pending: SkTable not yet in the Flutter example gallery" } },
+    "Range":            { "surfaces": { "card": "yes", "next": "yes", "flutter": "yes" } },
+    "Dialog":           { "surfaces": { "card": "yes" } },
+    "Toast":            { "surfaces": { "card": "yes" } },
+    "Tooltip":          { "surfaces": { "card": "yes" } },
+    "EmptyState":       { "surfaces": { "card": "yes" } },
+    "Tabs":             { "surfaces": { "card": "yes" } },
+    "SideNav":          { "surfaces": { "card": "yes" } },
+    "TabBar":           { "surfaces": { "card": "yes" } }
+  },
+
+  "cards": {
+    "components/core/core.card.html":         { "markers": ["Book trip"] },
+    "components/forms/forms.card.html":        { "markers": ["SegmentedControl"] },
+    "components/forms/pickers.card.html":      { "markers": ["Slider"] },
+    "components/feedback/feedback.card.html":  { "markers": ["Open dialog"] },
+    "components/data/data.card.html":          { "markers": ["projected", "Range ·"] },
+    "components/navigation/navigation.card.html": { "markers": ["SideNav"] }
+  }
+}

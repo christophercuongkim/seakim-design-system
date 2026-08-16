@@ -100,6 +100,14 @@
       "etag": "1786887555710733",
       "size": 9200
     },
+    "decisions/0019-versioning-second-pass.md": {
+      "etag": "1786904788899591",
+      "size": 9832
+    },
+    "decisions/0020-preview-surfaces-are-gated.md": {
+      "etag": "1786904788899591",
+      "size": 8710
+    },
     "decisions/README.md": {
       "etag": "1785982008241237",
       "size": 3168

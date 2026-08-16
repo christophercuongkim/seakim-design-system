@@ -30,9 +30,33 @@ jobs:
       - name: Conformance
         run: node tool/conformance-check.mjs
 
-      # VERSION, package.json, and the CHANGELOG must not drift apart.
+      # VERSION, package.json, and the CHANGELOG must not drift apart; and each
+      # binding's seakim_rules must be honest (decision 0019).
       - name: Version consistency
         run: node tool/version-check.mjs
+
+      # Static preview pre-filter — every component in the ds-shim registry and
+      # declared in the preview manifest (decision 0020). Fast, no browser.
+      - name: Preview coverage (static)
+        run: node tool/preview-check.mjs
+
+  preview:
+    name: Preview render
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # The render gate serves the root gallery and loads each card in headless
+      # Chrome, asserting it mounted (not blank) with its markers in the DOM —
+      # the class of bug the text gates never see (lessons 14, 15; decision 0020).
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Preview render gate
+        run: node tool/preview-check.mjs --render
 
   flutter:
     name: Flutter binding

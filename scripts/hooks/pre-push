@@ -56,9 +56,10 @@ $REFS
 EOF
   if [ "$pushing_main" = "1" ]; then
     failed=""
-    for check in version-check build-tokens conformance-check; do
+    for check in version-check build-tokens conformance-check preview-check; do
       case "$check" in
         build-tokens) cmd="node tool/build-tokens.mjs --check" ;;
+        preview-check) cmd="node tool/preview-check.mjs" ;;   # static; render gate is CI
         *)            cmd="node tool/$check.mjs" ;;
       esac
       if ! ( cd "$REPO_ROOT" && $cmd >/dev/null 2>&1 ); then
@@ -71,6 +72,7 @@ EOF
       echo "            node tool/version-check.mjs" >&2
       echo "            node tool/build-tokens.mjs --check" >&2
       echo "            node tool/conformance-check.mjs" >&2
+      echo "            node tool/preview-check.mjs" >&2
       echo "          override once with:  SKIP_GATES=1 git push" >&2
       exit 1
     fi

@@ -5,7 +5,13 @@ import 'package:flutter/widgets.dart';
 /// Anything in the layout gets a 1px hairline and no shadow. Shadow is reserved
 /// for things that OVERLAY other content — menus, popovers, sheets, dialogs,
 /// toasts, drag ghosts — so elevation carries meaning instead of decoration.
-/// [raised] is the one exception: bars that scroll over content.
+/// A raised bar is the one in-layout exception: a bar that scrolls over content
+/// earns a shadow (per 0002). Per [0018] that shadow casts toward the content it
+/// floats over — away from the edge the bar is anchored to — so the accessor is
+/// role-named, never a single direction: [raisedTopBar] casts down onto content
+/// below it, [raisedFooter] casts up onto content above it. There is no
+/// axis-defaulted `raised`; a caller states its role, so a footer wearing the
+/// top-bar orientation cannot compile.
 class SkDepth {
   const SkDepth._();
 
@@ -14,12 +20,25 @@ class SkDepth {
 
   static const List<BoxShadow> none = <BoxShadow>[];
 
-  static List<BoxShadow> raised(Brightness b) => b == Brightness.dark
+  /// A bar anchored at the TOP of the content it covers (header, app bar).
+  /// Casts downward, onto the content below.
+  static List<BoxShadow> raisedTopBar(Brightness b) => b == Brightness.dark
       ? const [
           BoxShadow(color: Color(0x80000000), blurRadius: 2, offset: Offset(0, 1)),
         ]
       : const [
           BoxShadow(color: Color(0x121E1C1A), blurRadius: 2, offset: Offset(0, 1)),
+        ];
+
+  /// A bar anchored at the BOTTOM of the content it covers (sticky footer, per
+  /// 0002's `sm` primary-action bar). Casts upward, onto the content above —
+  /// only the sign of the vertical offset differs from [raisedTopBar].
+  static List<BoxShadow> raisedFooter(Brightness b) => b == Brightness.dark
+      ? const [
+          BoxShadow(color: Color(0x80000000), blurRadius: 2, offset: Offset(0, -1)),
+        ]
+      : const [
+          BoxShadow(color: Color(0x121E1C1A), blurRadius: 2, offset: Offset(0, -1)),
         ];
 
   static List<BoxShadow> popover(Brightness b) => b == Brightness.dark

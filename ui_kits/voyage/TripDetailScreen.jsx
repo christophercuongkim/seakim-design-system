@@ -208,7 +208,7 @@ export function TripDetailScreen({ bp, trip, onCheckout, onBack }) {
         <div style={{
           position: 'sticky', bottom: 0, flex: 'none', display: 'flex', gap: 'var(--space-4)',
           padding: 'var(--space-5)', borderTop: '1px solid var(--border-subtle)',
-          background: 'var(--surface-card)', boxShadow: 'var(--shadow-raised)',
+          background: 'var(--surface-card)', boxShadow: 'var(--shadow-raised-footer)',
         }}>
           <IconButton icon="share-network" label="Share trip" variant="secondary" />
           <Button fullWidth iconLeft="credit-card" onClick={onCheckout}>Pay balance · $412</Button>

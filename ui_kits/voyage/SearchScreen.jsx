@@ -178,7 +178,7 @@ export function SearchScreen({ bp, onContinue }) {
         <div style={{
           marginTop: 'auto', display: 'flex', alignItems: 'center', gap: 'var(--space-4)',
           padding: 'var(--space-5)', borderTop: '1px solid var(--border-subtle)',
-          background: 'var(--surface-card)', boxShadow: 'var(--shadow-raised)',
+          background: 'var(--surface-card)', boxShadow: 'var(--shadow-raised-footer)',
           position: 'sticky', bottom: 0, flexWrap: 'wrap',
         }}>
           <div style={{ minWidth: 0 }}>

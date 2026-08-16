@@ -5,18 +5,25 @@ name: deploy-qa
 # Same shape as fantasy-hub's, minus the database — there is no DB here, so the
 # prepare job is only the pointer move.
 #
-# Two triggers:
+# Three triggers:
 #   - pull_request (opened/synchronize/reopened) auto-deploys the PR's branch,
-#     filtered to paths that can change what renders.
-#   - workflow_dispatch is the manual override — deploy main, or a branch with no
-#     open PR, or force a redeploy.
+#     so a reviewer sees the change on QA before it merges.
+#   - push to main auto-deploys the merged result, so QA tracks main once a PR
+#     lands — no manual `qa` fast-forward.
+#   - workflow_dispatch is the manual override — deploy a branch with no open PR,
+#     or force a redeploy.
+#
+# Both event triggers share ONE path filter (the anchor below): only a change to
+# something that renders redeploys. A docs/tooling/ADR-only change (a new gate, a
+# decision) does not — QA would look byte-identical, so a multi-minute image
+# rebuild would buy nothing. That is why a tooling PR shows no deploy check.
 #
 # QA is a SINGLE shared slot: one `qa` pointer, one app. With two PRs open, the
 # last deployed is what is live. Deliberate — see docs/12-qa-environment.md.
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    paths:
+    paths: &render_paths
       - "tokens/**"
       - "components/**"
       - "ui_kits/**"
@@ -29,6 +36,9 @@ on:
       # Flutter now renders on QA too, so its changes must trigger a deploy —
       # and they are the slow ones, since the image rebuilds the web bundle.
       - "flutter/**"
+  push:
+    branches: [main]
+    paths: *render_paths
   workflow_dispatch:
     inputs:
       branch:
@@ -50,8 +60,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
-          # workflow_dispatch → inputs.branch; pull_request → the PR's head branch.
-          ref: ${{ inputs.branch || github.head_ref }}
+          # workflow_dispatch → inputs.branch; pull_request → the PR's head branch;
+          # push → github.ref_name (main). head_ref is empty on a push event, so the
+          # ref_name fallback is what makes the push trigger deploy main, not empty.
+          ref: ${{ inputs.branch || github.head_ref || github.ref_name }}
           fetch-depth: 0 # full history so the force-push to `qa` isn't shallow
 
       - uses: actions/setup-node@v4

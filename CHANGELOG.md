@@ -17,6 +17,37 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [3.3.0] — 2026-08-16
+
+### Added
+
+- **Raised shadow direction**, per
+  [0018](decisions/0018-raised-shadow-direction.md). A raised bar's shadow casts *toward
+  the content it floats over* — away from the edge it is anchored to. A top bar casts down;
+  a sticky footer (0002's `sm` primary-action bar) casts up. Before this, `raised` was a
+  single downward value, so the footer shadow 0002 promised fell off the bottom of the
+  viewport and did nothing.
+  - **Tokens**: `--shadow-raised-topbar` (down) and `--shadow-raised-footer` (up) added to
+    `tokens/depth.css`. `--shadow-raised` is kept as a back-compat alias of the top-bar
+    orientation — no token removed or renamed, so this is a **minor** rules bump.
+  - **Flutter binding**: `SkDepth` is now exported, with `raisedTopBar` / `raisedFooter`
+    replacing the internal, uncalled `raised`. The accessor is role-named and required —
+    there is no direction-defaulted `raised`, so a footer wearing the top-bar orientation
+    cannot compile. Additive to the public API (the removed method was never exported).
+  - Fixes three voyage footers (`SearchScreen`, `TripDetailScreen`, `CheckoutScreen`) that
+    were casting a downward shadow off-viewport; they now use `--shadow-raised-footer`.
+
+### Binding versions
+
+- **Flutter `seakim_flutter` → 1.1.0, `seakim_rules: "3.3"`.** Catch-up: the binding had
+  stayed at `1.0.0` / `"1.0"` since it was imported, through the `SkRange` addition at
+  3.2.0 — the declared conformance had gone stale invisibly, exactly the lag 0011 exists to
+  make visible. It passes machine-checkable conformance at 3.3, so it now says so. The
+  additions since 1.0.0 (`SkRange`, exported `SkDepth` with role-named raised accessors)
+  are all additive, hence the minor bump.
+
+---
+
 ## [3.2.0] — 2026-08-08
 
 ### Added

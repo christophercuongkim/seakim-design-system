@@ -228,3 +228,27 @@ primary demo apps — the Next example (`next/example/app`) and the Flutter gall
 build` + load `/next`; `flutter build web` + open the gallery). The preview card is a third
 surface, not a substitute. Treat the two apps as the definition of done, because they are
 what a consumer actually runs.
+
+## 16. A binding's declared version drifts silently unless you bump it in the same change
+
+0018 exported `SkDepth` and added the role-named raised accessors to the Flutter binding.
+While wiring the version, the binding turned out to be sitting at `version: 1.0.0` /
+`seakim_rules: "1.0"` — unchanged since import, *through* the entire `SkRange` addition at
+rules 3.2.0. The binding had gained a whole widget and still claimed to conform to rules
+1.0. Nothing caught it: no gate reads `pubspec.yaml`, `version-check.mjs` only reconciles
+the rules number across VERSION/package.json/CHANGELOG, and the binding compiled and tested
+green the whole time. The one field whose entire job is to make lag *visible* (0011) had
+gone stale invisibly — the exact failure 0011 was written to prevent.
+
+The trap: the rules version and the binding version live in different files and only one is
+gated. Bumping VERSION/package.json for a rules change feels like "the version is done," and
+the binding's own semver + `seakim_rules` sit unbumped in `pubspec.yaml` where no check
+looks. "Rules bumped" reads as done; "the binding that gained the API also declared it" is
+the actual bar.
+
+**Rule.** When a change adds or alters a binding's public API for a rules change, bump that
+binding's own version **and** `seakim_rules` in the same commit — never only the rules
+number. If a rules release changed a binding, its `pubspec.yaml` / `package.json` moved too,
+or the release is half-recorded. And only raise `seakim_rules` to a version the binding has
+actually been checked against (it passes machine-checkable conformance at that rules
+version); 0011 forbids claiming one it has not.

@@ -284,4 +284,28 @@ void main() {
       expect(t.takeException(), isNull);
     });
   });
+
+  // ---- SkDepth.raised direction — 0018 -----------------------------------
+  // A raised bar's shadow casts toward the content it floats over. A top bar
+  // casts down (+dy); a footer casts up (-dy). Same blur and colour; only the
+  // sign of the offset flips. There is no direction-defaulted `raised` — the
+  // caller states its role, which is the whole point of 0018.
+  group('SkDepth raised direction (0018)', () {
+    for (final Brightness b in Brightness.values) {
+      test('top bar casts down, footer casts up — $b', () {
+        final BoxShadow top = SkDepth.raisedTopBar(b).single;
+        final BoxShadow footer = SkDepth.raisedFooter(b).single;
+
+        // The distinguishing fact: opposite vertical direction.
+        expect(top.offset.dy, greaterThan(0), reason: 'top bar falls onto content below');
+        expect(footer.offset.dy, lessThan(0), reason: 'footer lifts onto content above');
+
+        // Everything else is identical — only the sign flips.
+        expect(footer.offset.dy, -top.offset.dy);
+        expect(footer.offset.dx, top.offset.dx);
+        expect(footer.blurRadius, top.blurRadius);
+        expect(footer.color, top.color);
+      });
+    }
+  });
 }

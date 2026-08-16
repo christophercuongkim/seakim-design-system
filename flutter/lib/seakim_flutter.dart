@@ -25,6 +25,7 @@
 ///     )
 library seakim_flutter;
 
+export 'src/tokens/sk_depth.dart';
 export 'src/tokens/sk_glyph.dart';
 export 'src/tokens/sk_icons.g.dart';
 export 'src/tokens/sk_licenses.dart';

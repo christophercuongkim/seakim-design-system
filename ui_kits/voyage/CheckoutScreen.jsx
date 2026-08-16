@@ -119,7 +119,7 @@ export function CheckoutScreen({ bp, onDone }) {
           position: 'sticky', bottom: 0, flex: 'none', display: 'flex', alignItems: 'center',
           gap: 'var(--space-4)', padding: 'var(--space-5)',
           borderTop: '1px solid var(--border-subtle)', background: 'var(--surface-card)',
-          boxShadow: 'var(--shadow-raised)',
+          boxShadow: 'var(--shadow-raised-footer)',
         }}>
           <div>
             <div style={{ font: 'var(--type-caption)', color: 'var(--text-tertiary)' }}>Total</div>

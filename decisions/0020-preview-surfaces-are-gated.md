@@ -28,8 +28,8 @@ one class of bug no gate covers.
 
 ## Decision
 
-**The preview surfaces are deliverables, not demos, and a two-layer check proves a component
-appears on them.**
+**The preview surfaces are deliverables, not demos, and a layered check — web-static,
+Flutter-in-Dart, and a browser render — proves a component appears on them.**
 
 ### The canonical surfaces
 

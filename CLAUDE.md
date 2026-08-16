@@ -15,17 +15,20 @@ actually gone wrong here, and most of it is not guessable from the code.
 | Flutter binding | `flutter/` | `flutter/lib/src/` |
 | Next adapter | `next/` | thin; re-exports `index.js` |
 
-## Gates — all four must pass
+## Gates — all five must pass
 
 ```bash
-node tool/version-check.mjs        # VERSION == package.json == newest CHANGELOG heading
+node tool/version-check.mjs        # VERSION == package.json == CHANGELOG; bindings honest (0019)
 node tool/build-tokens.mjs --check # generated outputs match their source
 node tool/conformance-check.mjs    # Tier 0 rules, see conformance.md
+node tool/preview-check.mjs        # every component registered + demoed (static, 0020)
+node tool/preview-check.mjs --render  # cards mount, no blank/error (needs Chrome; CI runs this)
 cd flutter && flutter analyze && flutter test
 ```
 
-CI runs them; `scripts/hooks/pre-push` runs the fast three before any push to `main`.
-Enable with `git config core.hooksPath scripts/hooks` — a fresh clone has no hook.
+CI runs them all; the render gate needs a browser. `scripts/hooks/pre-commit` runs the fast
+static preview check on every commit; `scripts/hooks/pre-push` runs the fast four before any
+push to `main`. Enable with `git config core.hooksPath scripts/hooks` — a fresh clone has no hook.
 
 ## Rules that bite
 

@@ -1,0 +1,48 @@
+{
+  "_comment": "WEB preview coverage, per decision 0020. Flutter coverage is NOT here — it lives in flutter/example/test/preview_coverage_test.dart, which asserts (with compiler-checked widget types) that skShowcase covers every barrel widget and each builds. This file owns the web surfaces, where there is no compiler in the loop. The web component SET is derived from index.js; a component with no entry here FAILS preview-check. `compositional: true` marks a primitive that appears only inside other components' demos. `next.markers` are asserted against the server-rendered /next DOM in CI.",
+
+  "_scope": "Web: registry membership (static) + root-gallery card render + /next marker render (CI). Flutter: full widget coverage gated by the Dart coverage test (compiler-checked), plus a /flutter boot render in CI (the app mounts, nothing throws). Card has no standalone web demo yet — a small, declared web-only gap.",
+
+  "components": {
+    "Icon":             { "compositional": true },
+    "Button":           { "surfaces": { "card": "yes" } },
+    "IconButton":       { "surfaces": { "card": "yes" } },
+    "Badge":            { "surfaces": { "card": "yes" } },
+    "Tag":              { "surfaces": { "card": "yes" } },
+    "Card":             { "compositional": true, "surfaces": { "card": "pending: no standalone Card demo; used as a layout wrapper in others" } },
+    "Avatar":           { "surfaces": { "card": "yes" } },
+    "Stat":             { "surfaces": { "card": "yes" } },
+    "Field":            { "surfaces": { "card": "yes" } },
+    "Input":            { "surfaces": { "card": "yes" } },
+    "Textarea":         { "surfaces": { "card": "yes" } },
+    "Select":           { "surfaces": { "card": "yes" } },
+    "Checkbox":         { "surfaces": { "card": "yes" } },
+    "Radio":            { "surfaces": { "card": "yes" } },
+    "Switch":           { "surfaces": { "card": "yes" } },
+    "SegmentedControl": { "surfaces": { "card": "yes" } },
+    "Slider":           { "surfaces": { "card": "yes" } },
+    "DatePicker":       { "surfaces": { "card": "yes" } },
+    "Table":            { "surfaces": { "card": "yes", "next": "yes" } },
+    "Range":            { "surfaces": { "card": "yes", "next": "yes" } },
+    "Dialog":           { "surfaces": { "card": "yes" } },
+    "Toast":            { "surfaces": { "card": "yes" } },
+    "Tooltip":          { "surfaces": { "card": "yes" } },
+    "EmptyState":       { "surfaces": { "card": "yes" } },
+    "Tabs":             { "surfaces": { "card": "yes" } },
+    "SideNav":          { "surfaces": { "card": "yes" } },
+    "TabBar":           { "surfaces": { "card": "yes" } }
+  },
+
+  "cards": {
+    "components/core/core.card.html":         { "markers": ["Book trip"] },
+    "components/forms/forms.card.html":        { "markers": ["SegmentedControl"] },
+    "components/forms/pickers.card.html":      { "markers": ["Slider"] },
+    "components/feedback/feedback.card.html":  { "markers": ["Open dialog"] },
+    "components/data/data.card.html":          { "markers": ["projected", "Range ·"] },
+    "components/navigation/navigation.card.html": { "markers": ["SideNav"] }
+  },
+
+  "next": {
+    "markers": ["Range", "aria-label", "Okafor"]
+  }
+}

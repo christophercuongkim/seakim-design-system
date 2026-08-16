@@ -17,6 +17,41 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [3.4.0] — 2026-08-16
+
+### Added
+
+- **Versioning, second pass**, per
+  [0019](decisions/0019-versioning-second-pass.md). Closes two holes 0011's bump table left:
+  a token **revalue within the rules is now Minor** (a revalue that fails a documented contrast
+  gate is Major); and `tool/version-check.mjs` gains a **binding audit** that prints each
+  binding's `seakim_rules` against the rules version and fails only when it is *ahead* or a full
+  *Major step behind* — legitimate lag stays green. Records that `seakim_rules` is a claim, not a
+  measurement.
+- **Preview surfaces are gated**, per
+  [0020](decisions/0020-preview-surfaces-are-gated.md). The root gallery, `/next`, and
+  `/flutter` are deliverables, no longer checked by a human remembering to look. Three parts:
+  - **Web static** (`tool/preview-check.mjs`, pre-commit): every `index.js` export is in the
+    ds-shim `FILES` registry and its demo — catches lesson 14's registry gap.
+  - **Flutter coverage** (`flutter/example/test/preview_coverage_test.dart`, under `flutter
+    test`): a **compiler-checked** test asserts a canonical `skShowcase` covers every barrel
+    widget and each builds. Replaces a brittle filename→classname grep (`sk_radio.dart` exports
+    `SkRadioGroup`, not `SkRadio`) with real widget types. The Flutter example gains a
+    `SkWidgetGallery` demonstrating all 28 widgets, rendered from that same list.
+  - **Render** (`--render`, CI): headless Chrome asserts each root-gallery card mounted (not
+    blank) with its markers in the DOM, that `/next` renders its markers, and that `/flutter`
+    boots (a Flutter view is in the DOM) — nothing throws on any.
+
+  Turns lessons 14 and 15 into a failure instead of a thing to remember. Added to
+  `conformance.md` as a **repo gate, not a binding obligation**.
+
+### Note
+
+- `conformance.md` gains a standing line: a check asserts an outcome; the rule that produced it
+  usually stays judgement (0012, 0017, 0018, 0019, 0020 are all this shape).
+
+---
+
 ## [3.3.0] — 2026-08-16
 
 ### Added

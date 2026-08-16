@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+#
+# pre-commit — the instant, false-positive-free gates (decision 0020).
+#
+# Only checks that are fast AND cannot cry wolf belong here — a noisy pre-commit
+# hook gets `--no-verify`'d into irrelevance. Today that is the preview static
+# pre-filter: every component in index.js must be in the ds-shim FILES registry
+# and declared in the preview manifest, so a component added without its registry
+# entry (lesson 14) fails at the moment it is committed, not in review.
+#
+# Deliberately NOT here: the render gate (slow, needs a browser — pre-push/CI) and
+# any "did you bump the version?" heuristic (intent, not mechanical — see 0019).
+#
+# Hooks are per-developer ergonomics; CI is the real gate. `--no-verify` skips this.
+# Installed via `git config core.hooksPath scripts/hooks`.
+
+set -u
+
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
+command -v node >/dev/null 2>&1 || exit 0
+
+if ! ( cd "$REPO_ROOT" && node tool/preview-check.mjs >/dev/null 2>&1 ); then
+  echo "pre-commit: BLOCKED — preview static check fails." >&2
+  echo "            a component is missing from the ds-shim FILES registry or the" >&2
+  echo "            preview manifest. Run it to see which:" >&2
+  echo "              node tool/preview-check.mjs" >&2
+  echo "            override once with:  git commit --no-verify" >&2
+  exit 1
+fi
+
+exit 0

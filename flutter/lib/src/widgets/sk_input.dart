@@ -13,7 +13,7 @@ enum SkInputSize { sm, md, lg }
 /// an [SkField] so it has a label.
 ///
 /// This is the one widget that keeps a Material ancestor underneath: [EditableText]
-/// alone gives no selection handles, no context menu, no autofill, and no
+/// alone gives no selection handles, no context menu, and no
 /// platform-correct keyboard behaviour. Those are invisible until they are missing,
 /// and rebuilding them faithfully is not worth it — so the chrome is ours and the
 /// text machinery is Flutter's.
@@ -37,6 +37,7 @@ class SkInput extends StatefulWidget {
     this.focusNode,
     this.autofocus = false,
     this.textInputAction,
+    this.autofillHints,
   });
 
   final TextEditingController? controller;
@@ -65,6 +66,10 @@ class SkInput extends StatefulWidget {
   final FocusNode? focusNode;
   final bool autofocus;
   final TextInputAction? textInputAction;
+
+  /// Platform autofill hints, e.g. `[AutofillHints.email]`. Off when null. Wrap a
+  /// form in an [AutofillGroup] for grouped save (username + password).
+  final Iterable<String>? autofillHints;
 
   @override
   State<SkInput> createState() => _SkInputState();
@@ -207,6 +212,7 @@ class _SkInputState extends State<SkInput> {
                       textInputAction: widget.textInputAction,
                       inputFormatters: widget.inputFormatters,
                       autofocus: widget.autofocus,
+                      autofillHints: widget.autofillHints,
                       maxLines: 1,
                       selectionColor: c.fillAccentSelection,
                       cursorWidth: 1.5,

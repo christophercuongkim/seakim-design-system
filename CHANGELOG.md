@@ -17,6 +17,37 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [3.5.0] — 2026-08-17
+
+### Added
+
+- **Loading states: a skeleton and a labeled fallback, never a bare spinner**, per
+  [0021](decisions/0021-loading-states.md). SeaKim stated the loading *rule* ("never a bare
+  spinner", "there are no spinners in this system") but shipped no loading *component*, so
+  adopters fell back to a bare `CircularProgressIndicator`. Two sanctioned treatments now close
+  the gap — a **skeleton** for when you know what is arriving, and a **labeled loading state**
+  for when you know only that something is. Additive: nothing removed or renamed, so this is a
+  **minor** rules bump per [0011] and [0019].
+  - **Tokens** (land in both bindings together): a per-theme `--surface-shimmer` highlight
+    (dark lightens, light darkens over `--surface-sunken`), plus a shimmer loop `--dur-shimmer`
+    (1400ms) and `--ease-shimmer` (linear) — the existing 80–320ms one-shot curves can't drive a
+    loop. The shimmer pulses colour rather than sweeping a gradient, so it stays inside the
+    no-gradients rule; reduced motion collapses it to a static block, not a frozen mid-pulse.
+  - **React binding**: `Skeleton` (a pulsing placeholder, `aria-hidden`) and `LoadingState` (the
+    centred `EmptyState` frame without the dashed border, a static linear bar, `role="status"` +
+    `aria-busy`).
+  - **Flutter binding** (`1.1.0` → `1.2.0`, `seakim_rules` `3.3` → `3.5`): `SkSkeleton` and
+    `SkLoadingState`, mirroring the web semantics; the skeleton respects
+    `MediaQuery.disableAnimations`, the labeled state carries `Semantics(liveRegion: true)`.
+  - **Conformance** (a binding obligation, unlike 0020's repo gate): a Tier 0
+    `indefinite-rotation` rule flags a spinner used as a loading affordance across *both*
+    bindings — `CircularProgressIndicator` / `RotationTransition` in Dart, an infinite rotate
+    animation in CSS — outside the two sanctioned treatments' own source.
+  - **Guidelines**: `voice-and-tone.md`'s "Empty, loading, error" and `accessibility.md`'s live
+    regions now point at the treatments, so the rule is no longer orphaned from the component.
+
+---
+
 ## [3.4.0] — 2026-08-16
 
 ### Added

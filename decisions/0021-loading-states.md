@@ -1,6 +1,6 @@
 # 0021 — SeaKim shows loading with skeletons and a labeled fallback, never a bare spinner
 
-- **Status** Proposed
+- **Status** Accepted
 - **Date** 2026-08-17
 - **Affects** every binding; adds a skeleton primitive and a labeled loading
   treatment; new shimmer motion tokens (loop duration, loop easing, a per-theme

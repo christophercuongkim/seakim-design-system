@@ -162,6 +162,8 @@ class SkRawColors {
   const SkRawColors._();
 
   static const Color surfaceSunkenDark = Color(0xFF0A0908);
+  static const Color surfaceShimmerDark = Color(0xFF1E1B18);
+  static const Color surfaceShimmerLight = Color(0xFFE3E1DD);
   static const Color textPrimaryDark = Color(0xFFF5F3F0);
   static const Color borderSubtleDark = Color(0xFF2A2724);
   static const Color borderDefaultDark = Color(0xFF383431);

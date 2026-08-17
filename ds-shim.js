@@ -40,6 +40,8 @@
     'components/feedback/Toast.jsx',
     'components/feedback/Tooltip.jsx',
     'components/feedback/EmptyState.jsx',
+    'components/feedback/Skeleton.jsx',
+    'components/feedback/LoadingState.jsx',
     'components/data/Table.jsx',
     'components/data/Range.jsx',
     'components/navigation/Tabs.jsx',

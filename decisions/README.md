@@ -37,6 +37,10 @@ the value is in the trail, and a silently edited ADR is worse than none.
 | [0015](0015-sequential-chart-ramp.md) | A sequential (magnitude) chart ramp | Accepted |
 | [0016](0016-many-series-trajectories.md) | Many-series trajectories: the >6 change-over-time case | Accepted |
 | [0017](0017-distribution-interval-glyph.md) | A distribution/interval glyph (`Range`) | Accepted |
+| [0018](0018-raised-shadow-direction.md) | Raised shadow casts away from the anchored edge | Accepted |
+| [0019](0019-versioning-second-pass.md) | Versioning, second pass: token revalues and honest binding versions | Accepted |
+| [0020](0020-preview-surfaces-are-gated.md) | Preview surfaces are deliverables, and a render gate proves it | Accepted |
+| [0021](0021-loading-states.md) | Loading is a skeleton or a labeled fallback, never a bare spinner | Proposed |
 
 ## Writing one
 

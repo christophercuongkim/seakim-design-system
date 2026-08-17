@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Toast } from './Toast.jsx';
 import { Tooltip } from './Tooltip.jsx';
 import { EmptyState } from './EmptyState.jsx';
+import { Skeleton } from './Skeleton.jsx';
+import { LoadingState } from './LoadingState.jsx';
 import { Dialog } from './Dialog.jsx';
 import { Button } from '../core/Button.jsx';
 import { IconButton } from '../core/IconButton.jsx';
@@ -29,6 +31,17 @@ export function Demo() {
           title="No trips yet"
           description="Start with a destination and dates. Hotels and cars can come later."
           action={<Button iconLeft="plus">New trip</Button>}
+        />
+        <div className="lbl" style={{ marginTop: 'var(--space-4)' }}>Skeleton · LoadingState</div>
+        <div className="col" style={{ gap: 'var(--space-2)' }}>
+          <Skeleton width="60%" height="var(--space-5)" />
+          <Skeleton />
+          <Skeleton width="80%" />
+        </div>
+        <LoadingState
+          title="Checking 40 airlines…"
+          description="Holding your dates while we compare fares."
+          compact
         />
       </div>
       <Dialog

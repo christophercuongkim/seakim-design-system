@@ -548,6 +548,14 @@
       "$value": "#0a0908",
       "$description": "Below the page in dark. Deliberately not stone-950."
     },
+    "surfaceShimmerDark": {
+      "$value": "#1e1b18",
+      "$description": "The lightening highlight a skeleton pulses to over surface-sunken in dark (0021). Tuned by eye — dark's sunken sits below the page, so the sweep lifts warm, not white."
+    },
+    "surfaceShimmerLight": {
+      "$value": "#e3e1dd",
+      "$description": "The darkening highlight a skeleton pulses to over surface-sunken in light (0021). Light's sunken sits above white, so the sweep drops toward stone, not black."
+    },
     "textPrimaryDark": {
       "$value": "#f5f3f0",
       "$description": "Warm off-white. Not stone-50, which is too cool against the warm blacks."

@@ -63,6 +63,7 @@
   --surface-raised:   var(--stone-850);
   --surface-overlay:  var(--stone-800);
   --surface-inset:    #0a0908;
+  --surface-shimmer:  #1e1b18;
   --surface-hover:    var(--stone-800);
   --surface-active:   var(--stone-700);
   --surface-selected: var(--brand-wash);

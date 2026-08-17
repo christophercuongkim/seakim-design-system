@@ -192,6 +192,7 @@ function emitCss() {
   L.push('  --surface-raised:   var(--stone-850);');
   L.push('  --surface-overlay:  var(--stone-800);');
   L.push(`  --surface-inset:    ${raw.surfaceSunkenDark.$value};`);
+  L.push(`  --surface-shimmer:  ${raw.surfaceShimmerDark.$value};`);
   L.push('  --surface-hover:    var(--stone-800);');
   L.push('  --surface-active:   var(--stone-700);');
   L.push('  --surface-selected: var(--brand-wash);');
@@ -286,6 +287,7 @@ function emitCssLight() {
   L.push('  --surface-raised:   var(--stone-0);');
   L.push('  --surface-overlay:  var(--stone-0);');
   L.push('  --surface-inset:    var(--stone-100);');
+  L.push(`  --surface-shimmer:  ${raw.surfaceShimmerLight.$value};`);
   L.push('  --surface-hover:    var(--stone-100);');
   L.push('  --surface-active:   var(--stone-200);');
   L.push('  --surface-selected: var(--brand-050);');

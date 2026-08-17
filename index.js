@@ -43,6 +43,8 @@ export { Dialog } from "./components/feedback/Dialog.jsx";
 export { Toast } from "./components/feedback/Toast.jsx";
 export { Tooltip } from "./components/feedback/Tooltip.jsx";
 export { EmptyState } from "./components/feedback/EmptyState.jsx";
+export { Skeleton } from "./components/feedback/Skeleton.jsx";
+export { LoadingState } from "./components/feedback/LoadingState.jsx";
 export { Tabs } from "./components/navigation/Tabs.jsx";
 export { SideNav } from "./components/navigation/SideNav.jsx";
 export { TabBar } from "./components/navigation/TabBar.jsx";

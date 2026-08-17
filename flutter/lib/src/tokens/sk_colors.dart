@@ -30,6 +30,7 @@ class SkColors {
     required this.surfaceRaised,
     required this.surfaceOverlay,
     required this.surfaceInset,
+    required this.surfaceShimmer,
     required this.surfaceHover,
     required this.surfaceActive,
     required this.surfaceSelected,
@@ -76,6 +77,10 @@ class SkColors {
   final Color surfaceRaised;
   final Color surfaceOverlay;
   final Color surfaceInset;
+
+  /// The lightening (dark) / darkening (light) highlight a skeleton pulses to
+  /// over [surfaceSunken]. Per-theme by value, not by inversion — see 0021.
+  final Color surfaceShimmer;
   final Color surfaceHover;
   final Color surfaceActive;
   final Color surfaceSelected;
@@ -157,6 +162,7 @@ class SkColors {
         surfaceRaised: SkStone.s850,
         surfaceOverlay: SkStone.s800,
         surfaceInset: SkRawColors.surfaceSunkenDark,
+        surfaceShimmer: SkRawColors.surfaceShimmerDark,
         surfaceHover: SkStone.s800,
         surfaceActive: SkStone.s700,
         surfaceSelected: brand.wash,
@@ -206,6 +212,7 @@ class SkColors {
         surfaceRaised: SkStone.s0,
         surfaceOverlay: SkStone.s0,
         surfaceInset: SkStone.s100,
+        surfaceShimmer: SkRawColors.surfaceShimmerLight,
         surfaceHover: SkStone.s100,
         surfaceActive: SkStone.s200,
         surfaceSelected: brand.s050,

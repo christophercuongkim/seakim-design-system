@@ -25,6 +25,14 @@ class SkMotion {
   /// CSS: cubic-bezier(0.20, 1.60, 0.40, 1)
   static const Curve pop = Cubic(0.20, 1.60, 0.40, 1);
 
+  /// Skeleton shimmer loop (0021). A continuous pulse, not a one-shot: slow and
+  /// symmetric, so it reads as breathing rather than a transition. The overshoot
+  /// curves above are meaningless on a loop, so the shimmer eases linearly.
+  /// Reduced motion is handled by [SkSkeleton] (a static block), not by zeroing
+  /// this — a zeroed loop freezes mid-sweep. CSS: --dur-shimmer / --ease-shimmer.
+  static const Duration shimmer = Duration(milliseconds: 1400);
+  static const Curve shimmerEase = Curves.linear;
+
   /// Press feedback is scale, not colour alone. Every tappable thing uses it.
   static const double pressScale = 0.97;
   static const double pressScaleLarge = 0.985;

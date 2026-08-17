@@ -287,6 +287,10 @@
     "tokens/typography.css": {
       "etag": "1785493688786856",
       "size": 2118
+    },
+    "decisions/0021-loading-states.md": {
+      "etag": "1786990913309768",
+      "size": 11194
     }
   },
   "projectId": "d4854e4e-47cd-4ae1-a94c-b85f3db05760",

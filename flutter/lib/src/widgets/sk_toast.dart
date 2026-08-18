@@ -66,11 +66,12 @@ class SkToast extends StatelessWidget {
             boxShadow: SkDepth.toast(c.brightness),
           ),
           child: Row(
-            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               SkIcon(glyph, size: 16, weight: SkIconWeight.fill, color: tint),
               const SizedBox(width: SkSpace.s4),
-              Flexible(
+              // Expanded so the action/dismiss anchor to the trailing edge
+              // instead of floating mid-panel when the message is short.
+              Expanded(
                 child: Text(
                   message,
                   style: SkText.bodySm.copyWith(color: c.textPrimary),

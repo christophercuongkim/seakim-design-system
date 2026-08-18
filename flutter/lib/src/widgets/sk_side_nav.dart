@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../theme/sk_theme.dart';
 import 'sk_icon.dart';
 import 'sk_pressable.dart';
+import 'sk_tooltip.dart';
 
 @immutable
 class SkNavItem<T> {
@@ -188,10 +189,17 @@ class _NavRow<T> extends StatelessWidget {
             ),
           ),
           child: collapsed
-              ? SkIcon(item.icon,
-                  size: 18,
-                  weight: active ? SkIconWeight.fill : SkIconWeight.regular,
-                  color: fg)
+              // Collapsed to an icon rail: the label is hidden, so a hover/focus
+              // tooltip (to the right of the rail) restores it for pointer users.
+              // Screen readers already have it via SkPressable's semanticLabel.
+              ? SkTooltip(
+                  label: item.label,
+                  side: AxisDirection.right,
+                  child: SkIcon(item.icon,
+                      size: 18,
+                      weight: active ? SkIconWeight.fill : SkIconWeight.regular,
+                      color: fg),
+                )
               : Row(
                   children: <Widget>[
                     SkIcon(item.icon,

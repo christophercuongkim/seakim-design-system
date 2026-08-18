@@ -33,12 +33,12 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('SHEET BODY'), findsOneWidget);
-    // The content sits inside the panel wrapper (maxWidth 480), not bare.
+    // The content sits inside the panel wrapper (maxWidth 460), not bare.
     expect(
       find.ancestor(
         of: find.text('SHEET BODY'),
         matching: find.byWidgetPredicate(
-          (Widget w) => w is ConstrainedBox && w.constraints.maxWidth == 480,
+          (Widget w) => w is ConstrainedBox && w.constraints.maxWidth == 460,
         ),
       ),
       findsOneWidget,
@@ -58,7 +58,7 @@ void main() {
     expect(find.text('SHEET BODY'), findsOneWidget);
     expect(
       find.byWidgetPredicate(
-        (Widget w) => w is ConstrainedBox && w.constraints.maxWidth == 480,
+        (Widget w) => w is ConstrainedBox && w.constraints.maxWidth == 460,
       ),
       findsNothing,
     );

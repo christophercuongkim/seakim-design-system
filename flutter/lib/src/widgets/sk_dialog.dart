@@ -4,8 +4,9 @@ import '../theme/sk_theme.dart';
 import '../tokens/sk_icons.g.dart';
 import 'sk_icon_button.dart';
 
-/// Width of the desktop species of [showSkSheet]'s panel.
-const double _kSheetPanelMaxWidth = 480;
+/// Width of the desktop species of [showSkSheet]'s panel. Mirrors the web kit's
+/// `PlayerSheet` desktop panel (460), which is a touch wider than the 440 dialog.
+const double _kSheetPanelMaxWidth = 460;
 
 /// The solid panel shared by [SkDialog] and the desktop species of [showSkSheet]:
 /// an overlay surface with a hairline on every edge and the dialog shadow.

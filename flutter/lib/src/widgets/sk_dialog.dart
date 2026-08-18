@@ -187,7 +187,25 @@ Future<T?> showSkSheet<T>({
   final bool narrow = MediaQuery.sizeOf(context).width < 640;
 
   if (!narrow) {
-    return showSkDialog<T>(context: context, builder: builder, dismissible: dismissible);
+    // showSkDialog only centres the builder — it adds no surface. Give sheet
+    // content the same solid panel the mobile sheet has, so it does not float
+    // see-through over the scrim.
+    return showSkDialog<T>(
+      context: context,
+      dismissible: dismissible,
+      builder: (BuildContext context) => ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 480),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: theme.colors.surfaceOverlay,
+            border: Border.all(
+                color: theme.colors.borderDefault, width: SkDepth.hairline),
+            boxShadow: SkDepth.dialog(theme.brightness),
+          ),
+          child: builder(context),
+        ),
+      ),
+    );
   }
 
   return Navigator.of(context, rootNavigator: true).push<T>(

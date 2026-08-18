@@ -4,6 +4,22 @@ import '../theme/sk_theme.dart';
 import '../tokens/sk_icons.g.dart';
 import 'sk_icon_button.dart';
 
+/// Width of the desktop species of [showSkSheet]'s panel. Mirrors the web kit's
+/// `PlayerSheet` desktop panel (460), which is a touch wider than the 440 dialog.
+const double _kSheetPanelMaxWidth = 460;
+
+/// The solid panel shared by [SkDialog] and the desktop species of [showSkSheet]:
+/// an overlay surface with a hairline on every edge and the dialog shadow.
+///
+/// The bottom-sheet species of [showSkSheet] is deliberately NOT this — anchored
+/// to the screen edge, it carries a top-only hairline and [SkDepth.sheet] (which
+/// casts upward), not this all-round dialog treatment.
+BoxDecoration _skPanelDecoration(SkColors colors) => BoxDecoration(
+      color: colors.surfaceOverlay,
+      border: Border.all(color: colors.borderDefault, width: SkDepth.hairline),
+      boxShadow: SkDepth.dialog(colors.brightness),
+    );
+
 /// A modal that interrupts.
 ///
 /// Reserve it for decisions that must be made now — destructive confirmations,
@@ -46,11 +62,7 @@ class SkDialog extends StatelessWidget {
         maxWidth: MediaQuery.sizeOf(context).width - SkSpace.s7 * 2,
         maxHeight: MediaQuery.sizeOf(context).height * 0.9,
       ),
-      decoration: BoxDecoration(
-        color: c.surfaceOverlay,
-        border: Border.all(color: c.borderDefault, width: SkDepth.hairline),
-        boxShadow: SkDepth.dialog(c.brightness),
-      ),
+      decoration: _skPanelDecoration(c),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -187,7 +199,20 @@ Future<T?> showSkSheet<T>({
   final bool narrow = MediaQuery.sizeOf(context).width < 640;
 
   if (!narrow) {
-    return showSkDialog<T>(context: context, builder: builder, dismissible: dismissible);
+    // showSkDialog only centres the builder — it adds no surface. Give sheet
+    // content the same solid panel SkDialog uses, so it does not float
+    // see-through over the scrim.
+    return showSkDialog<T>(
+      context: context,
+      dismissible: dismissible,
+      builder: (BuildContext context) => ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: _kSheetPanelMaxWidth),
+        child: DecoratedBox(
+          decoration: _skPanelDecoration(theme.colors),
+          child: builder(context),
+        ),
+      ),
+    );
   }
 
   return Navigator.of(context, rootNavigator: true).push<T>(

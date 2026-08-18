@@ -93,7 +93,11 @@ the reason there is no value tooltip on the slider thumb.
   list and announces as one rather than pretending to still be a table.
 - **Landmarks** on the shell: navigation, main, and a labelled banner. Both kits do this.
 - **Live regions** for anything that appears without user action. `Toast` is a status
-  region; a form error is announced when it appears.
+  region; a form error is announced when it appears. A **loading state** announces itself
+  **busy** and then announces **completion** when content replaces it — `role="status"` +
+  `aria-busy` on the web, `Semantics(liveRegion: true)` in Flutter (per
+  [0021](../decisions/0021-loading-states.md)). A **skeleton** is decorative and stays
+  `aria-hidden` — the region around it owns the announcement, not each block.
 
 ## Forms
 

@@ -73,6 +73,19 @@ const GEOMETRY_EXEMPT = [
   /tool\//,
 ];
 
+/**
+ * The two sanctioned loading treatments own their motion, so the rotation rule
+ * does not apply to their own source — the same kind of admission as the palette
+ * exemptions above. The checker itself names the banned symbols, so exempt it too.
+ */
+const LOADING_TREATMENT_FILES = [
+  /components\/feedback\/Skeleton\./,
+  /components\/feedback\/LoadingState\./,
+  /flutter\/lib\/src\/widgets\/sk_skeleton\.dart$/,
+  /flutter\/lib\/src\/widgets\/sk_loading_state\.dart$/,
+  /tool\/conformance-check\.mjs$/,
+];
+
 const exempt = (file, list) => list.some(re => re.test(file.replace(/\\/g, '/')));
 
 function walk(dir, out = []) {
@@ -232,6 +245,23 @@ const RULES = [
       if (!/touch|tap|row|item|button/i.test(line)) return null;
       const m = line.match(/4[0-3]px/);
       return `${m[0]} on what looks like a touch target — floor is 44px`;
+    },
+  },
+  {
+    id: 'indefinite-rotation',
+    tier: 0,
+    why: 'No indefinite rotation as a loading affordance — SeaKim has no spinner (0021). Use a skeleton (known shape) or the labeled loading state (unknown outcome).',
+    skip: f => exempt(f, LOADING_TREATMENT_FILES),
+    test(line) {
+      // Flutter: the banned Material spinner, and the hand-rolled rotation that
+      // is the same bug without the word "spinner" in it.
+      if (/\bCircularProgressIndicator\b/.test(line)) return 'CircularProgressIndicator — a bare spinner (0021)';
+      if (/\bRotationTransition\b/.test(line)) return 'RotationTransition as a loader — an indefinite rotation (0021)';
+      // CSS/React: an infinite animation that rotates (or a spun round element).
+      if (/animation[^;{]*\binfinite\b/.test(line) && /\brotate\b|\bspin\b/i.test(line)) {
+        return 'infinite rotate animation as a loader (0021)';
+      }
+      return null;
     },
   },
 ];

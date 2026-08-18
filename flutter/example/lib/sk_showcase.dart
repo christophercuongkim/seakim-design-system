@@ -220,6 +220,12 @@ final List<SkDemo> skShowcase = <SkDemo>[
         mono: true,
       )),
 
+  // sk_loading_state.dart
+  SkDemo('Loading', 'Full-page gate', (BuildContext context) => const SkLoadingState(
+        title: 'Checking 40 airlines…',
+        description: 'Holding your dates while we compare fares.',
+      )),
+
   // sk_pressable.dart
   SkDemo('Pressable', 'Custom press target', (BuildContext context) {
     int presses = 0;
@@ -351,6 +357,19 @@ final List<SkDemo> skShowcase = <SkDemo>[
       ),
     );
   }),
+
+  // sk_skeleton.dart
+  SkDemo('Loading', 'Skeleton rows', (BuildContext context) => const Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SkSkeleton(width: 220, height: SkSpace.s5),
+          SizedBox(height: SkSpace.s2),
+          SkSkeleton(width: 160),
+          SizedBox(height: SkSpace.s2),
+          SkSkeleton(width: 190),
+        ],
+      )),
 
   // sk_slider.dart
   SkDemo('Slider', 'Nightly budget', (BuildContext context) {

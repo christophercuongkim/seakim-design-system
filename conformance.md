@@ -3,13 +3,13 @@
 What a binding must do to legitimately call itself SeaKim. Tiers defined in
 [0008](decisions/0008-conformance-tiers.md); this is the working checklist.
 
-**Rules version 3.4** — a binding claims conformance *to a version*, because this document
+**Rules version 3.5** — a binding claims conformance *to a version*, because this document
 changes. Declare it alongside your own version, per
 [0011](decisions/0011-versioning.md) and [0019](decisions/0019-versioning-second-pass.md):
 
 ```yaml
-version: 1.1.0          # your binding
-seakim_rules: "3.3"     # the rules version you were reviewed against (may lag; never lead)
+version: 1.2.0          # your binding
+seakim_rules: "3.5"     # the rules version you were reviewed against (may lag; never lead)
 ```
 
 A binding may lag. That is a legitimate, visible state — far better than lag nobody can see.
@@ -29,11 +29,14 @@ owns its binding; nobody here is queued to write it.
 [0012](decisions/0012-conformance-checks-ship-with-rules.md),
 [0017](decisions/0017-distribution-interval-glyph.md),
 [0018](decisions/0018-raised-shadow-direction.md),
-[0019](decisions/0019-versioning-second-pass.md), and
-[0020](decisions/0020-preview-surfaces-are-gated.md) are all this shape — a machine-checkable
-gate catches a *symptom* (a stale version claim, a blank preview card) while the rule it
-serves (bump when you should; show every component; share a domain) remains a discipline
-review enforces. Read a green gate as "the outcome held", not "the rule was obeyed".
+[0019](decisions/0019-versioning-second-pass.md),
+[0020](decisions/0020-preview-surfaces-are-gated.md), and
+[0021](decisions/0021-loading-states.md) are all this shape — a machine-checkable
+gate catches a *symptom* (a stale version claim, a blank preview card, an indefinite
+rotation used as a loader) while the rule it serves (bump when you should; show every
+component; share a domain; *is this skeleton shaped like the content it stands in for?*)
+remains a discipline review enforces. Read a green gate as "the outcome held", not "the
+rule was obeyed".
 
 **Not every repo gate is a binding obligation.** `tool/preview-check.mjs`
 ([0020](decisions/0020-preview-surfaces-are-gated.md)) renders *this* repo's gallery,
@@ -70,6 +73,11 @@ No platform exception, ever. Break one and the binding is not SeaKim.
 - [ ] **No floating action button.** (See
       [0002](decisions/0002-no-floating-action-button.md).) A Material-based binding must
       actively neutralise it, not merely avoid it.
+- [ ] **No spinner as a loading affordance.** No indefinite rotation; show a skeleton
+      (when you know what is arriving) or the labeled loading state (when you know only
+      that something is). A Material-based binding must actively neutralise
+      `CircularProgressIndicator`, not merely avoid it. (See
+      [0021](decisions/0021-loading-states.md).)
 
 ## Tier 1 — adapt if you must, and write down why
 

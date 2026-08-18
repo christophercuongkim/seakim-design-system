@@ -43,7 +43,12 @@ void main() {
           ),
         ),
       );
-      await tester.pumpAndSettle();
+      // Not pumpAndSettle: a repeating animation (SkSkeleton's shimmer) never
+      // settles, so settle-to-idle would hang. A couple of frames is enough to
+      // build, paint, and run the first animation frame — which surfaces any
+      // exception — without waiting for an idle that will never come.
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 50));
 
       expect(tester.takeException(), isNull, reason: 'demo ${demo.label} threw');
     });

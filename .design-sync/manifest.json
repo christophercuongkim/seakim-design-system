@@ -5,8 +5,8 @@
       "size": 44735
     },
     "CHANGELOG.md": {
-      "etag": "1785997345541823",
-      "size": 13654
+      "etag": "1786999336003232",
+      "size": 20297
     },
     "CONTRIBUTING-A-BINDING.md": {
       "etag": "1785851163071252",
@@ -21,12 +21,12 @@
       "size": 7469
     },
     "VERSION": {
-      "etag": "1785997127574816",
+      "etag": "1786998309881109",
       "size": 6
     },
     "conformance.md": {
-      "etag": "1785851163071252",
-      "size": 13614
+      "etag": "1786998868434816",
+      "size": 15728
     },
     "decisions/0001-platform-neutral-spec-layer.md": {
       "etag": "1785821527555657",
@@ -109,12 +109,12 @@
       "size": 9553
     },
     "decisions/README.md": {
-      "etag": "1785982008241237",
-      "size": 3168
+      "etag": "1786998571371609",
+      "size": 3735
     },
     "guidelines/accessibility.md": {
-      "etag": "1785846966262390",
-      "size": 6951
+      "etag": "1786998671978477",
+      "size": 7319
     },
     "guidelines/colors-accents.html": {
       "etag": "1785836521046927",
@@ -201,8 +201,8 @@
       "size": 2101
     },
     "guidelines/voice-and-tone.md": {
-      "etag": "1785495681510881",
-      "size": 3577
+      "etag": "1786998571371609",
+      "size": 3830
     },
     "guidelines/wordmark.html": {
       "etag": "1785836521046927",
@@ -241,8 +241,8 @@
       "size": 1287
     },
     "tokens/colors.css": {
-      "etag": "1785980058206979",
-      "size": 5419
+      "etag": "1786998461254617",
+      "size": 5450
     },
     "tokens/depth.css": {
       "etag": "1785950811345125",
@@ -261,8 +261,8 @@
       "size": 768
     },
     "tokens/motion.css": {
-      "etag": "1785493688786856",
-      "size": 1617
+      "etag": "1786998377692000",
+      "size": 2846
     },
     "tokens/radius.css": {
       "etag": "1785493688786856",
@@ -277,16 +277,20 @@
       "size": 2417
     },
     "tokens/src/color.tokens.json": {
-      "etag": "1785997631754370",
-      "size": 11328
+      "etag": "1786998571371609",
+      "size": 11830
     },
     "tokens/theme-light.css": {
-      "etag": "1785997345541823",
-      "size": 2818
+      "etag": "1786998461254617",
+      "size": 2849
     },
     "tokens/typography.css": {
       "etag": "1785493688786856",
       "size": 2118
+    },
+    "decisions/0021-loading-states.md": {
+      "etag": "1786998671978477",
+      "size": 11194
     }
   },
   "projectId": "d4854e4e-47cd-4ae1-a94c-b85f3db05760",

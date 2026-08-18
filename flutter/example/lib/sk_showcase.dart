@@ -359,21 +359,16 @@ final List<SkDemo> skShowcase = <SkDemo>[
   }),
 
   // sk_skeleton.dart
-  SkDemo('Loading', 'Skeleton rows', (BuildContext context) => MediaQuery(
-        // Reduced motion → static blocks, so the coverage test's pumpAndSettle
-        // terminates (a live shimmer loop never settles).
-        data: MediaQuery.of(context).copyWith(disableAnimations: true),
-        child: const Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SkSkeleton(width: 220, height: SkSpace.s5),
-            SizedBox(height: SkSpace.s2),
-            SkSkeleton(width: 160),
-            SizedBox(height: SkSpace.s2),
-            SkSkeleton(width: 190),
-          ],
-        ),
+  SkDemo('Loading', 'Skeleton rows', (BuildContext context) => const Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SkSkeleton(width: 220, height: SkSpace.s5),
+          SizedBox(height: SkSpace.s2),
+          SkSkeleton(width: 160),
+          SizedBox(height: SkSpace.s2),
+          SkSkeleton(width: 190),
+        ],
       )),
 
   // sk_slider.dart

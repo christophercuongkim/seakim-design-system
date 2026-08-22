@@ -29,10 +29,15 @@ suggestions must be clickable.
 ## Positioning and flipping
 
 Both modes position against the trigger's rect and open below it by default, offset by a
-hairline gap. When below would overflow the viewport bottom and there is more room above,
-the popover flips to open upward instead. Flipping is **approximate** — the decision is
-made from the trigger's rect against a fixed space budget, not from the surface's measured
-height, so a popover taller than the budget can still clip.
+hairline gap. The side is resolved on **both axes** so the surface stays on-screen:
+vertically it flips to open upward when below would overflow the viewport bottom and there
+is more room above; horizontally it anchors the surface's left edge to the trigger when the
+trigger sits in the left half of the viewport, and its right edge when the trigger sits in
+the right half — so a trigger hugging the right edge opens leftward rather than off-screen.
+Resolution is **approximate** — the decision is made from the trigger's rect against a
+fixed space budget and the viewport centre, not from the surface's measured size, so a
+popover larger than the budget can still clip. A caller that pins a side passes `placement`
+and takes over both axes (no resolution).
 
 ## Dismissal
 

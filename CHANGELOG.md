@@ -17,6 +17,17 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [4.1.1] — 2026-08-22
+
+### Fixed
+
+- **`spec/Popover.md`** — the positioning section now describes horizontal on-screen
+  resolution, not only the vertical flip, completing the "flip to stay on-screen"
+  behavior 4.1.0 already promised for
+  [0022](decisions/0022-anchored-popover-species.md). The Flutter binding (1.10.1)
+  implements it: a trigger hugging the right edge opens leftward instead of overflowing
+  off the viewport. No new allowance — spec prose and binding catch up to the rule.
+
 ## [4.1.0] — 2026-08-22
 
 ### Added

@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../theme/sk_theme.dart';
 import '../tokens/sk_icons.g.dart';
 import 'sk_icon.dart';
+import 'sk_popover.dart';
 import 'sk_pressable.dart';
 import 'sk_touch_target.dart';
 
@@ -46,19 +47,12 @@ class SkSelect<T> extends StatefulWidget {
 }
 
 class _SkSelectState<T> extends State<SkSelect<T>> {
-  final OverlayPortalController _portal = OverlayPortalController();
-  final LayerLink _link = LayerLink();
   bool _open = false;
 
-  void _toggle() {
-    setState(() => _open = !_open);
-    _open ? _portal.show() : _portal.hide();
-  }
+  void _toggle() => setState(() => _open = !_open);
 
   void _close() {
-    if (!_open) return;
-    setState(() => _open = false);
-    _portal.hide();
+    if (_open) setState(() => _open = false);
   }
 
   @override
@@ -69,94 +63,77 @@ class _SkSelectState<T> extends State<SkSelect<T>> {
         .where((SkSelectOption<T> o) => o.value == widget.value)
         .firstOrNull;
 
-    return CompositedTransformTarget(
-      link: _link,
-      child: OverlayPortal(
-        controller: _portal,
-        overlayChildBuilder: (BuildContext context) => Stack(
-          children: <Widget>[
-            // Tap-away catcher. Transparent, full-screen, below the menu.
-            Positioned.fill(
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: _close,
-                child: const SizedBox.shrink(),
-              ),
-            ),
-            CompositedTransformFollower(
-              link: _link,
-              targetAnchor: Alignment.bottomLeft,
-              followerAnchor: Alignment.topLeft,
-              offset: const Offset(0, 4),
-              child: _Menu<T>(
-                options: widget.options,
-                value: widget.value,
-                onPick: (T v) {
-                  _close();
-                  widget.onChanged?.call(v);
-                },
-              ),
-            ),
-          ],
-        ),
-        child: SkPressable(
-          onPressed: widget.enabled ? _toggle : null,
-          disabled: !widget.enabled,
-          pressScale: 1,
-          semanticLabel: selected?.label ?? widget.placeholder,
-          builder: (BuildContext context, SkInteraction s) {
-            final Color border = !widget.enabled
-                ? c.borderDisabled
-                : widget.invalid
-                    ? c.textDanger
-                    : _open
-                        ? c.borderFocus
-                        : s.liveHover
-                            ? c.borderStrong
-                            : c.borderDefault;
-            // Disabled is a token, not an opacity pass — every colour in the
-            // subtree resolves to its disabled counterpart.
-            final Color contentMuted =
-                widget.enabled ? c.textTertiary : c.textDisabled;
-            return SkTouchTarget(
-              extent: widget.size,
-              child: AnimatedContainer(
-                duration: SkMotion.instant,
-                curve: SkMotion.out,
-                height: widget.size,
-                padding: const EdgeInsets.symmetric(horizontal: SkSpace.s4),
-                decoration: BoxDecoration(
-                  color: widget.enabled ? c.surfaceRaised : c.fillDisabled,
-                  border: Border.all(
-                    color: border,
-                    width: _open ? SkDepth.emphasis : SkDepth.hairline,
-                  ),
+    // The anchored menu is the popover species (0022): SkPopover owns the
+    // OverlayPortal, follower positioning, tap-away, and Escape; the menu only
+    // supplies its list. Non-modal — focus is free to move into the options.
+    return SkPopover(
+      open: _open,
+      onDismiss: _close,
+      overlayBuilder: (BuildContext context) => _Menu<T>(
+        options: widget.options,
+        value: widget.value,
+        onPick: (T v) {
+          _close();
+          widget.onChanged?.call(v);
+        },
+      ),
+      child: SkPressable(
+        onPressed: widget.enabled ? _toggle : null,
+        disabled: !widget.enabled,
+        pressScale: 1,
+        semanticLabel: selected?.label ?? widget.placeholder,
+        builder: (BuildContext context, SkInteraction s) {
+          final Color border = !widget.enabled
+              ? c.borderDisabled
+              : widget.invalid
+                  ? c.textDanger
+                  : _open
+                      ? c.borderFocus
+                      : s.liveHover
+                          ? c.borderStrong
+                          : c.borderDefault;
+          // Disabled is a token, not an opacity pass — every colour in the
+          // subtree resolves to its disabled counterpart.
+          final Color contentMuted =
+              widget.enabled ? c.textTertiary : c.textDisabled;
+          return SkTouchTarget(
+            extent: widget.size,
+            child: AnimatedContainer(
+              duration: SkMotion.instant,
+              curve: SkMotion.out,
+              height: widget.size,
+              padding: const EdgeInsets.symmetric(horizontal: SkSpace.s4),
+              decoration: BoxDecoration(
+                color: widget.enabled ? c.surfaceRaised : c.fillDisabled,
+                border: Border.all(
+                  color: border,
+                  width: _open ? SkDepth.emphasis : SkDepth.hairline,
                 ),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        selected?.label ?? widget.placeholder ?? '',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: SkText.bodySm.copyWith(
-                          fontSize: dense ? SkFontSize.xs : SkFontSize.sm,
-                          color: !widget.enabled
-                              ? c.textDisabled
-                              : selected == null
-                                  ? c.textTertiary
-                                  : c.textPrimary,
-                        ),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      selected?.label ?? widget.placeholder ?? '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: SkText.bodySm.copyWith(
+                        fontSize: dense ? SkFontSize.xs : SkFontSize.sm,
+                        color: !widget.enabled
+                            ? c.textDisabled
+                            : selected == null
+                                ? c.textTertiary
+                                : c.textPrimary,
                       ),
                     ),
-                    const SizedBox(width: SkSpace.s4),
-                    SkIcon(SkIcons.caretDown, size: 14, color: contentMuted),
-                  ],
-                ),
+                  ),
+                  const SizedBox(width: SkSpace.s4),
+                  SkIcon(SkIcons.caretDown, size: 14, color: contentMuted),
+                ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -182,13 +159,10 @@ class _Menu<T> extends StatelessWidget {
         child:
             Transform.translate(offset: Offset(0, (1 - t) * -4), child: child),
       ),
-      child: Container(
+      // Surface (overlay fill, hairline, popover shadow) is supplied by SkPopover;
+      // the menu only sizes and scrolls its options.
+      child: ConstrainedBox(
         constraints: const BoxConstraints(minWidth: 180, maxHeight: 280),
-        decoration: BoxDecoration(
-          color: c.surfaceOverlay,
-          border: Border.all(color: c.borderDefault, width: SkDepth.hairline),
-          boxShadow: SkDepth.popover(c.brightness),
-        ),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,

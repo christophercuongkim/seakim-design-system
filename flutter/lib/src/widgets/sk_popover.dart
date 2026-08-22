@@ -22,8 +22,11 @@ enum SkPopoverSide { above, below }
 ///     to the trigger on close, and Tab is kept within the content.
 ///   * **non-modal** (`modal: false`, the default; a tooltip or autocomplete) —
 ///     no scrim, focus stays on the trigger (a popover that steals focus is
-///     broken for every AT user), and the surface is pointer-live so a suggestion
-///     list can be clicked.
+///     broken for every AT user). An autocomplete keeps the default [barrier] so a
+///     stray tap closes it and its list stays clickable; a tooltip sets
+///     `barrier: false` + `decorated: false` and supplies pointer-inert content,
+///     so it is hover-driven and never blankets the page. `SkSelect`,
+///     `SkDatePicker`, and the tooltip engine all ride this primitive.
 ///
 /// Both modes: position against the trigger's rect, flip to stay on-screen,
 /// dismiss on Escape and outside-press, and wear the overlay surface with
@@ -41,6 +44,9 @@ class SkPopover extends StatefulWidget {
     this.onDismiss,
     this.modal = false,
     this.side = SkPopoverSide.below,
+    this.barrier = true,
+    this.decorated = true,
+    this.placement,
   });
 
   /// The trigger the popover is anchored to.
@@ -59,6 +65,23 @@ class SkPopover extends StatefulWidget {
   final bool modal;
 
   final SkPopoverSide side;
+
+  /// Whether a non-modal popover renders a full-screen outside-press catcher.
+  /// True for a menu or autocomplete (a stray tap should close it); false for a
+  /// hover-driven, pointer-inert overlay like a tooltip, which owns its own
+  /// show/hide and must not blanket the page with a tap-away. Ignored when
+  /// [modal] (a modal always paints the system scrim).
+  final bool barrier;
+
+  /// Whether to wrap [overlayBuilder]'s content in the standard popover surface
+  /// (overlay fill, hairline, [SkDepth.popover]). Set false when the content
+  /// supplies its own surface (a tooltip keeps its stronger border and padding).
+  final bool decorated;
+
+  /// Fixed anchor placement `(target, follower, offset)`. When null the popover
+  /// picks below/above and flips to stay on-screen; when set it is used verbatim
+  /// (a tooltip pins a specific side and centres on the trigger, no flip).
+  final (Alignment, Alignment, Offset)? placement;
 
   @override
   State<SkPopover> createState() => _SkPopoverState();
@@ -161,19 +184,26 @@ class _SkPopoverState extends State<SkPopover> {
 
   Widget _buildOverlay(BuildContext context) {
     final SkColors c = context.skColors;
-    final bool above = _resolveAbove(context);
-    final (Alignment target, Alignment follower, Offset offset) = above
-        ? (Alignment.topLeft, Alignment.bottomLeft, const Offset(0, -4))
-        : (Alignment.bottomLeft, Alignment.topLeft, const Offset(0, 4));
+    final (
+      Alignment target,
+      Alignment follower,
+      Offset offset
+    ) = widget.placement ??
+        (_resolveAbove(context)
+            ? (Alignment.topLeft, Alignment.bottomLeft, const Offset(0, -4))
+            : (Alignment.bottomLeft, Alignment.topLeft, const Offset(0, 4)));
 
-    Widget surface = Container(
-      decoration: BoxDecoration(
-        color: c.surfaceOverlay,
-        border: Border.all(color: c.borderDefault, width: SkDepth.hairline),
-        boxShadow: SkDepth.popover(c.brightness),
-      ),
-      child: widget.overlayBuilder(context),
-    );
+    Widget surface = widget.decorated
+        ? Container(
+            decoration: BoxDecoration(
+              color: c.surfaceOverlay,
+              border:
+                  Border.all(color: c.borderDefault, width: SkDepth.hairline),
+              boxShadow: SkDepth.popover(c.brightness),
+            ),
+            child: widget.overlayBuilder(context),
+          )
+        : widget.overlayBuilder(context);
 
     if (widget.modal) {
       // Move focus into the content and keep Tab within it. FocusScope autofocus
@@ -189,18 +219,20 @@ class _SkPopoverState extends State<SkPopover> {
 
     return Stack(
       children: <Widget>[
-        // Outside-press catcher. Modal paints the system scrim; non-modal is a
-        // transparent full-screen tap-away, like SkSelect.
-        Positioned.fill(
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => widget.onDismiss?.call(),
-            child: ColoredBox(
-              color:
-                  widget.modal ? c.surfaceScrim : const Color(0x00000000),
+        // Outside-press catcher. Modal paints the system scrim; a non-modal menu
+        // is a transparent full-screen tap-away (like SkSelect). A barrier-less
+        // non-modal popover (a tooltip) has none — it owns its own show/hide and
+        // must not blanket the page.
+        if (widget.modal || widget.barrier)
+          Positioned.fill(
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => widget.onDismiss?.call(),
+              child: ColoredBox(
+                color: widget.modal ? c.surfaceScrim : const Color(0x00000000),
+              ),
             ),
           ),
-        ),
         CompositedTransformFollower(
           link: _link,
           targetAnchor: target,

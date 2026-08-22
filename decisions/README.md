@@ -41,6 +41,12 @@ the value is in the trail, and a silently edited ADR is worse than none.
 | [0019](0019-versioning-second-pass.md) | Versioning, second pass: token revalues and honest binding versions | Accepted |
 | [0020](0020-preview-surfaces-are-gated.md) | Preview surfaces are deliverables, and a render gate proves it | Accepted |
 | [0021](0021-loading-states.md) | Loading is a skeleton or a labeled fallback, never a bare spinner | Accepted |
+| [0022](0022-anchored-popover-species.md) | Anchored contextual popover is a third overlay species | Accepted |
+| [0023](0023-sub-floor-chrome-hit-area.md) | A control may render below the touch floor only if its hit area is not | Proposed |
+| [0024](0024-avatar-receipts-and-stack.md) | Avatar as read-receipt, and an avatar stack primitive | Accepted |
+| [0025](0025-progressive-disclosure-metadata.md) | Metadata on demand, with a non-pointer path | Accepted |
+| [0026](0026-accent-as-ownership-fill.md) | The single-accent rule governs competing actions, not identity washes | Accepted |
+| [0027](0027-non-primary-floating-affordance.md) | A non-primary floating affordance is allowed, and is not a FAB | Proposed |
 
 ## Writing one
 

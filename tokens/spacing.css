@@ -28,4 +28,10 @@
   --pad-card:    var(--space-5);
   --pad-section: var(--space-8);
   --pad-control: var(--space-4);
+
+  /* Overlay widths. Only the dialog is shared across bindings — the Flutter side
+     mirrors it as SkChrome.overlayDialogW, and tool/conformance-check.mjs holds the
+     two equal. The sheet width is not here: the sheet is not a promoted component
+     yet (conformance.md item 8). */
+  --overlay-w-dialog: 440px;
 }

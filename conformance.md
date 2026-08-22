@@ -3,13 +3,13 @@
 What a binding must do to legitimately call itself SeaKim. Tiers defined in
 [0008](decisions/0008-conformance-tiers.md); this is the working checklist.
 
-**Rules version 3.5** — a binding claims conformance *to a version*, because this document
+**Rules version 3.7** — a binding claims conformance *to a version*, because this document
 changes. Declare it alongside your own version, per
 [0011](decisions/0011-versioning.md) and [0019](decisions/0019-versioning-second-pass.md):
 
 ```yaml
 version: 1.2.0          # your binding
-seakim_rules: "3.5"     # the rules version you were reviewed against (may lag; never lead)
+seakim_rules: "3.7"     # the rules version you were reviewed against (may lag; never lead)
 ```
 
 A binding may lag. That is a legitimate, visible state — far better than lag nobody can see.
@@ -56,7 +56,10 @@ No platform exception, ever. Break one and the binding is not SeaKim.
       shadow. A shadow promises the thing floats above the page. The only concession is
       the raised shadow on bars that scroll over content.
 - [ ] **One accent hue live at a time**, bound per app, and the shared layer is
-      achromatic. If two things on a screen are accent-coloured, one of them is wrong.
+      achromatic. If two things on a screen compete for a primary *action*, one of them is
+      wrong — but a systematic identity fill (own-message bubbles, selected rows) may
+      repeat, because it marks a category, not a call to action. (See
+      [0026](decisions/0026-accent-as-ownership-fill.md).)
 - [ ] **Semantic tokens only.** No component reads a stone step, a ramp step, or a
       literal colour. This is the rule everything else depends on — theming and per-app
       hue rotation both break the moment it is violated.
@@ -90,7 +93,7 @@ trail, not the latitude.
 | Breakpoints | Measured **container** width; sm/md/lg at 640/1024 | The measuring mechanism |
 | Text input internals | SeaKim chrome, hairline border, inset focus ring | Selection handles, context menu, autofill may come from the platform |
 | Icon delivery | Phosphor, with the weight rules below | Webfont, bundled font, or SVG set |
-| Overlay species | Centred panel at `md`+, bottom sheet at `sm` | Route, portal, or overlay mechanism |
+| Overlay species | Centred panel at `md`+, bottom sheet at `sm`, and a trigger-anchored popover (modal or non-modal) per [0022](decisions/0022-anchored-popover-species.md) | Route, portal, or overlay mechanism |
 | Springy curves | Enters overshoot, exits never | Exact felt overshoot — compositors differ |
 | Accessibility API | Every control labelled, focusable, announced | ARIA, Semantics, accessibilityLabel |
 | Pointer affordances | Present on pointer devices | Native cursor and scrollbar styling is fine |

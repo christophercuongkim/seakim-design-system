@@ -182,16 +182,39 @@ class _SkPopoverState extends State<SkPopover> {
     return spaceBelow < budget && spaceAbove > spaceBelow;
   }
 
+  /// Best-effort horizontal anchor: open toward the side with more room, so a
+  /// trigger near the right edge grows leftward instead of overflowing. Like
+  /// [_resolveAbove] this reads the previous frame's rect, so it is approximate.
+  /// Returns true to anchor the surface's right edge to the trigger's right.
+  bool _resolveRightAnchor(BuildContext overlayContext) {
+    final BuildContext? tctx = _triggerKey.currentContext;
+    final RenderObject? ro = tctx?.findRenderObject();
+    if (ro is! RenderBox || !ro.hasSize) return false;
+    final Offset topLeft = ro.localToGlobal(Offset.zero);
+    final double centerX = topLeft.dx + ro.size.width / 2;
+    return centerX > MediaQuery.sizeOf(overlayContext).width / 2;
+  }
+
+  /// The default (target, follower, offset) when no [placement] is given:
+  /// resolves the vertical side (above/below) and the horizontal side
+  /// (left/right) independently, so the surface stays on-screen on both axes.
+  (Alignment, Alignment, Offset) _autoPlacement(BuildContext overlayContext) {
+    final bool above = _resolveAbove(overlayContext);
+    final double x = _resolveRightAnchor(overlayContext) ? 1 : -1;
+    final double ty = above ? -1 : 1;
+    // Same x for target and follower (left-to-left or right-to-right); opposite
+    // y so the surface stacks above or below the trigger.
+    return (
+      Alignment(x, ty),
+      Alignment(x, -ty),
+      Offset(0, above ? -4 : 4),
+    );
+  }
+
   Widget _buildOverlay(BuildContext context) {
     final SkColors c = context.skColors;
-    final (
-      Alignment target,
-      Alignment follower,
-      Offset offset
-    ) = widget.placement ??
-        (_resolveAbove(context)
-            ? (Alignment.topLeft, Alignment.bottomLeft, const Offset(0, -4))
-            : (Alignment.bottomLeft, Alignment.topLeft, const Offset(0, 4)));
+    final (Alignment target, Alignment follower, Offset offset) =
+        widget.placement ?? _autoPlacement(context);
 
     Widget surface = widget.decorated
         ? Container(

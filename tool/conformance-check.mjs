@@ -292,6 +292,45 @@ for (const file of files) {
   }
 }
 
+/* -------------------------------------------------- cross-binding parity */
+
+/**
+ * Values shared across bindings that have no generated source yet (dimensions —
+ * 0007 phase 2 is not started) are hand-authored in each binding, so they can
+ * drift silently. The sheet width did exactly that (480 vs 460). Assert the
+ * shared ones stay equal. A consuming repo that carries only one side is skipped.
+ */
+const PARITY = [
+  {
+    id: 'overlay-width-parity',
+    why: 'The dialog max-width is hand-authored in both bindings (no dimension token source yet, 0007 phase 2). Keep the Dart constant and the CSS token equal, or overlays drift across bindings.',
+    a: { file: 'flutter/lib/src/tokens/sk_space.dart', re: /overlayDialogW\s*=\s*(\d+(?:\.\d+)?)/ },
+    b: { file: 'tokens/spacing.css', re: /--overlay-w-dialog\s*:\s*(\d+(?:\.\d+)?)px/ },
+  },
+];
+
+function readNumber({ file, re }) {
+  try {
+    const m = readFileSync(join(ROOT, file), 'utf8').match(re);
+    return m ? Number(m[1]) : null;
+  } catch { return null; }
+}
+
+for (const p of PARITY) {
+  const a = readNumber(p.a);
+  const b = readNumber(p.b);
+  if (a == null || b == null) continue; // one side absent — nothing to compare
+  if (a !== b) {
+    violations.push({
+      rule: p.id,
+      file: `${p.a.file} vs ${p.b.file}`,
+      line: 0,
+      detail: `${p.a.file}=${a} but ${p.b.file}=${b} — they must match`,
+      text: p.why,
+    });
+  }
+}
+
 /* ---------------------------------------------------------------- output */
 
 if (JSON_OUT) {
@@ -316,7 +355,8 @@ if (!violations.length) {
 }
 
 for (const [ruleId, list] of byRule) {
-  const rule = RULES.find(r => r.id === ruleId);
+  const rule = RULES.find(r => r.id === ruleId)
+    ?? { tier: 0, why: PARITY.find(p => p.id === ruleId)?.why ?? '' };
   console.log(`  TIER ${rule.tier}  ${ruleId}  (${list.length})`);
   console.log(`          ${rule.why}\n`);
   for (const v of list.slice(0, 12)) {

@@ -17,6 +17,19 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [3.6.0] — 2026-08-22
+
+### Added
+
+- **`--overlay-w-dialog` (440px), the one overlay width shared across bindings.** The
+  dialog max-width was a bare literal in each binding — `440` in React's `Dialog` and
+  Flutter's `SkDialog` — with nothing holding the two equal. It is now a token
+  (`--overlay-w-dialog`) mirrored by `SkChrome.overlayDialogW`, and a new
+  `overlay-width-parity` check in `tool/conformance-check.mjs` fails if the Dart and CSS
+  values drift apart (the class of bug that produced a 480/460 sheet mismatch). The sheet
+  width is deliberately not tokenised: the sheet is not a promoted system component yet
+  (`conformance.md` item 8), so its Flutter primitive keeps its own value.
+
 ## [3.5.0] — 2026-08-17
 
 ### Added

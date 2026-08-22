@@ -47,6 +47,13 @@ class SkChrome {
   static const double sideNavCollapsed = 56;
   static const double tabBar = 56;
   static const double statusBar = 44;
+
+  /// Dialog panel max-width. The one overlay width shared across bindings —
+  /// mirrored in CSS as `--overlay-w-dialog` and held equal by the
+  /// `overlay-width-parity` check in tool/conformance-check.mjs. (The sheet width
+  /// is deliberately not here: the sheet is not a promoted system component yet,
+  /// per conformance.md item 8.)
+  static const double overlayDialogW = 440;
 }
 
 /// Corners are square. The only exceptions are shapes that are conceptually

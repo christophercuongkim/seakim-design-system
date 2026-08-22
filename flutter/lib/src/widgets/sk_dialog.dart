@@ -4,8 +4,10 @@ import '../theme/sk_theme.dart';
 import '../tokens/sk_icons.g.dart';
 import 'sk_icon_button.dart';
 
-/// Width of the desktop species of [showSkSheet]'s panel. Mirrors the web kit's
-/// `PlayerSheet` desktop panel (460), which is a touch wider than the 440 dialog.
+/// Width of the desktop species of [showSkSheet]'s panel — a touch wider than the
+/// [SkChrome.overlayDialogW] dialog. This is the Flutter primitive's own value, not
+/// a shared token: the sheet is not a promoted system component yet (conformance.md
+/// item 8), so unlike the dialog width it has no cross-binding counterpart to track.
 const double _kSheetPanelMaxWidth = 460;
 
 /// The solid panel shared by [SkDialog] and the desktop species of [showSkSheet]:
@@ -33,7 +35,7 @@ class SkDialog extends StatelessWidget {
     this.content,
     this.actions,
     this.onClose,
-    this.width = 440,
+    this.width = SkChrome.overlayDialogW,
   });
 
   final String? title;
@@ -188,8 +190,8 @@ Future<T?> showSkDialog<T>({
 /// Bottom sheet at sm, centred panel from md up.
 ///
 /// The species change is deliberate: on a phone a sheet is thumb-reachable, on a
-/// desktop a bottom sheet is a long way from the pointer. Mirrors PlayerSheet in
-/// the web kit.
+/// desktop a bottom sheet is a long way from the pointer. The web kit does the same
+/// species swap by hand rather than as a shared component (conformance.md item 8).
 Future<T?> showSkSheet<T>({
   required BuildContext context,
   required WidgetBuilder builder,

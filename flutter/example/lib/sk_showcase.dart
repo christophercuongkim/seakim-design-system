@@ -60,6 +60,19 @@ final List<SkDemo> skShowcase = <SkDemo>[
         ],
       )),
 
+  // sk_avatar_stack.dart
+  SkDemo('Avatars', 'Overlapping facepile', (BuildContext context) =>
+      const SkAvatarStack(
+        max: 3,
+        items: <SkAvatarData>[
+          SkAvatarData(name: 'Dana Okafor'),
+          SkAvatarData(name: 'Marcus Reid', status: SkAvatarStatus.live),
+          SkAvatarData(name: 'Priya Shah'),
+          SkAvatarData(name: 'Lena Cruz'),
+          SkAvatarData(name: 'Sam Iwu'),
+        ],
+      )),
+
   // sk_badge.dart
   SkDemo('Badges', 'Tones', (BuildContext context) => const Wrap(
         spacing: SkSpace.s3,
@@ -225,6 +238,29 @@ final List<SkDemo> skShowcase = <SkDemo>[
         title: 'Checking 40 airlines…',
         description: 'Holding your dates while we compare fares.',
       )),
+
+  // sk_popover.dart
+  SkDemo('Popover', 'Anchored menu', (BuildContext context) {
+    bool open = false;
+    return StatefulBuilder(
+      builder: (BuildContext context, StateSetter setState) => SkPopover(
+        open: open,
+        onDismiss: () => setState(() => open = false),
+        overlayBuilder: (BuildContext context) => Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: SkSpace.s5, vertical: SkSpace.s3),
+          child: Text('Rename · Duplicate · Delete',
+              style:
+                  SkText.bodySm.copyWith(color: context.skColors.textPrimary)),
+        ),
+        child: SkButton(
+          label: 'Actions',
+          variant: SkButtonVariant.ghost,
+          onPressed: () => setState(() => open = !open),
+        ),
+      ),
+    );
+  }),
 
   // sk_pressable.dart
   SkDemo('Pressable', 'Custom press target', (BuildContext context) {

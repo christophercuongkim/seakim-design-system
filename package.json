@@ -1,6 +1,6 @@
 {
   "name": "@seakim/design-system",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "SeaKim design system — tokens, React components, and the rules both bindings answer to.",
   "private": true,
   "type": "module",

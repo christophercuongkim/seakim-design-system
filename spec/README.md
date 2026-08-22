@@ -36,6 +36,8 @@ describes the present and then rots.
 | [DatePicker](DatePicker.md) | Built | React, Flutter |
 | [Slider](Slider.md) | Built | React, Flutter |
 | [Range](Range.md) | Built | React — Bench projections; Flutter owed |
+| [Popover](Popover.md) | Built | React, Flutter — anchored overlay species (0022) |
+| [AvatarStack](AvatarStack.md) | Built | React, Flutter — facepile primitive (0024) |
 
 ## Known debt
 

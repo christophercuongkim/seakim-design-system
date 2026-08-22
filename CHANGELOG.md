@@ -17,6 +17,22 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [4.1.0] — 2026-08-22
+
+### Added
+
+- **`SkPopover` / `Popover`** (both bindings), the anchored-overlay primitive owed by
+  [0022](decisions/0022-anchored-popover-species.md). One trigger-anchored surface with a
+  `modal` flag: modal carries a scrim, moves focus in and restores it on close; non-modal
+  keeps focus on the trigger. Both flip to stay on-screen and dismiss on Escape and
+  outside-press, on `--shadow-popover` + a hairline. `spec/Popover.md` documents it.
+- **`SkAvatarStack` / `AvatarStack`** (both bindings), the facepile primitive owed by
+  [0024](decisions/0024-avatar-receipts-and-stack.md). Overlaps avatars by a shared
+  constant (`SkSpace.avatarOverlap` / `--avatar-overlap`), caps at `max`, and collapses
+  the remainder into a mono "+k" pill — with the "+1 shows the avatar instead" rule.
+  `spec/AvatarStack.md` documents it. Both compose the existing `SkAvatar`.
+- Both close the last follow-ups owed by the 3.7.0 acceptances of 0022 and 0024.
+
 ## [4.0.0] — 2026-08-22
 
 Major: two Tier 0 rules change.

@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../theme/sk_theme.dart';
 import 'sk_icon.dart';
 import 'sk_pressable.dart';
+import 'sk_touch_target.dart';
 
 /// Which job the button is doing. One primary per screen — if two things look
 /// primary, one of them is wrong.
@@ -83,16 +84,19 @@ class SkButton extends StatelessWidget {
       focusNode: focusNode,
       semanticLabel: loading ? loadingLabel : label,
       builder: (BuildContext context, SkInteraction s) {
-        final (Color bg, Color fg, Color border) = off ? _disabledPalette(c) : _palette(c, s);
+        final (Color bg, Color fg, Color border) =
+            off ? _disabledPalette(c) : _palette(c, s);
         // Bold weight inside solid fills, where regular strokes thin out.
-        final SkIconWeight iconWeight =
-            variant == SkButtonVariant.primary || variant == SkButtonVariant.danger
-                ? SkIconWeight.bold
-                : SkIconWeight.regular;
+        final SkIconWeight iconWeight = variant == SkButtonVariant.primary ||
+                variant == SkButtonVariant.danger
+            ? SkIconWeight.bold
+            : SkIconWeight.regular;
 
-        return SkFocusRing(
-          visible: s.focused,
-          child: AnimatedContainer(
+        return SkTouchTarget(
+          extent: _height + SkFocusRing.overhead,
+          child: SkFocusRing(
+            visible: s.focused,
+            child: AnimatedContainer(
               duration: SkMotion.instant,
               curve: SkMotion.out,
               height: _height,
@@ -138,6 +142,7 @@ class SkButton extends StatelessWidget {
                               size: _iconSize, weight: iconWeight, color: fg),
                         ],
                       ],
+              ),
             ),
           ),
         );
@@ -147,7 +152,9 @@ class SkButton extends StatelessWidget {
 
   /// See [SkColors.fillDisabled] — disabled is its own palette, not a fade.
   (Color, Color, Color) _disabledPalette(SkColors c) => (
-        variant == SkButtonVariant.ghost ? const Color(0x00000000) : c.fillDisabled,
+        variant == SkButtonVariant.ghost
+            ? const Color(0x00000000)
+            : c.fillDisabled,
         c.textDisabled,
         variant == SkButtonVariant.secondary
             ? c.borderDisabled

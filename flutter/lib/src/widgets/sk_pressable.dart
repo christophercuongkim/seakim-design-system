@@ -144,6 +144,11 @@ class _SkPressableState extends State<SkPressable> {
 class SkFocusRing extends StatelessWidget {
   const SkFocusRing({super.key, required this.visible, required this.child});
 
+  /// How much the ring adds to each axis of its child: a 2px border plus a 2px
+  /// gap on both sides. A control computing its own footprint (e.g. for the touch
+  /// floor, 0023) adds this to its painted size.
+  static const double overhead = (2 + 2) * 2;
+
   final bool visible;
   final Widget child;
 

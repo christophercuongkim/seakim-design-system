@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Icon } from '../core/Icon.jsx';
+import { useCoarsePointer } from '../core/useCoarsePointer.js';
 
 function Item({ item, active, collapsed }) {
   const [hover, setHover] = useState(false);
+  const coarse = useCoarsePointer();
   return (
     <a
       href={item.href || '#'}
@@ -13,7 +15,7 @@ function Item({ item, active, collapsed }) {
       title={collapsed ? item.label : undefined}
       style={{
         display: 'flex', alignItems: 'center', gap: 'var(--space-4)',
-        height: 34, padding: collapsed ? 0 : '0 var(--space-4)',
+        height: 34, minHeight: coarse ? 44 : undefined, padding: collapsed ? 0 : '0 var(--space-4)',
         justifyContent: collapsed ? 'center' : 'flex-start',
         color: active ? 'var(--text-accent)' : hover ? 'var(--text-primary)' : 'var(--text-secondary)',
         background: active ? 'var(--surface-selected)' : hover ? 'var(--surface-hover)' : 'transparent',

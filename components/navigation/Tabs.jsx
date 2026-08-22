@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Icon } from '../core/Icon.jsx';
 import { Badge } from '../core/Badge.jsx';
+import { useCoarsePointer } from '../core/useCoarsePointer.js';
 
 /** Section switch within one screen. Indicator springs; nothing else moves. */
 export function Tabs({ tabs = [], value, defaultValue, onChange, size = 'md', style, ...rest }) {
+  const coarse = useCoarsePointer();
   const first = tabs[0] && (typeof tabs[0] === 'string' ? tabs[0] : tabs[0].value);
   const [inner, setInner] = useState(defaultValue != null ? defaultValue : first);
   const [hoverKey, setHoverKey] = useState(null);
@@ -25,6 +27,7 @@ export function Tabs({ tabs = [], value, defaultValue, onChange, size = 'md', st
             onClick={() => { if (value == null) setInner(tab.value); onChange && onChange(tab.value); }}
             style={{
               position: 'relative', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-3)',
+              minHeight: coarse ? 44 : undefined,
               padding: `${size === 'sm' ? '7px' : '10px'} ${pad}`,
               border: 'none', background: 'transparent', cursor: 'pointer',
               fontFamily: 'var(--font-sans)',

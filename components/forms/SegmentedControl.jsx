@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Icon } from '../core/Icon.jsx';
+import { useCoarsePointer } from '../core/useCoarsePointer.js';
 
 const SIZES = { sm: 'var(--control-h-sm)', md: 'var(--control-h-md)', lg: 'var(--control-h-lg)' };
 
 /** 2–4 short, exclusive options, all visible. Selection is an accent-wash fill. */
 export function SegmentedControl({ options = [], value, defaultValue, onChange, size = 'md', fullWidth = false, style, ...rest }) {
+  const coarse = useCoarsePointer();
   const first = typeof options[0] === 'string' ? options[0] : options[0] && options[0].value;
   const [inner, setInner] = useState(defaultValue != null ? defaultValue : first);
   const current = value != null ? value : inner;
@@ -25,6 +27,7 @@ export function SegmentedControl({ options = [], value, defaultValue, onChange, 
             onClick={() => { if (value == null) setInner(opt.value); onChange && onChange(opt.value); }}
             style={{
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-3)',
+              minHeight: coarse ? 44 : undefined,
               padding: `0 ${size === 'sm' ? 'var(--space-4)' : 'var(--space-5)'}`,
               border: 'none', borderLeft: i === 0 ? 'none' : '1px solid var(--border-subtle)',
               background: on ? 'var(--surface-selected)' : 'transparent',

@@ -1,6 +1,6 @@
 # 0025 — Metadata on demand is allowed; the disclosure must have a non-pointer path
 
-- **Status** Proposed
+- **Status** Accepted
 - **Date** 2026-08-22
 - **Affects** `guidelines/accessibility`, `spec/`; every binding
 

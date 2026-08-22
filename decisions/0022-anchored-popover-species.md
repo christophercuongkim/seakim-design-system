@@ -1,6 +1,6 @@
 # 0022 — Anchored contextual popover is a third overlay species
 
-- **Status** Proposed
+- **Status** Accepted
 - **Date** 2026-08-22
 - **Affects** the overlay-species rule (`conformance.md`), `spec/`; every binding — `flutter/` in particular (`SkSelect`, `SkDatePicker`, `SkHoverLabel` today, a new `SkPopover` tomorrow)
 

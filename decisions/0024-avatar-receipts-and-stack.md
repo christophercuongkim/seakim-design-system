@@ -1,6 +1,6 @@
 # 0024 — Avatar as read-receipt, and an avatar stack primitive
 
-- **Status** Proposed
+- **Status** Accepted
 - **Date** 2026-08-22
 - **Affects** `spec/` (a read-receipt pattern; an `SkAvatarStack` component); every binding
 

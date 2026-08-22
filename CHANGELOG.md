@@ -17,6 +17,32 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [3.7.0] — 2026-08-22
+
+### Added
+
+- **Four chat-pattern ADRs accepted: [0022](decisions/0022-anchored-popover-species.md),
+  [0024](decisions/0024-avatar-receipts-and-stack.md),
+  [0025](decisions/0025-progressive-disclosure-metadata.md),
+  [0026](decisions/0026-accent-as-ownership-fill.md).** A trigger-anchored popover joins
+  the overlay-species table as a third species (modal or non-modal); an avatar
+  read-receipt pattern and an `SkAvatarStack` primitive are sanctioned; metadata may be
+  disclosed on demand provided it stays reachable via the accessible description and any
+  pointer gesture has a non-pointer path; and the single-accent rule is clarified to
+  govern competing *actions*, not repeated identity fills (own-message bubbles, selected
+  rows). The accent-rule gloss and the overlay-species row in `conformance.md` move with
+  them.
+- Owed by acceptance (tracked, not in this release): the `SkPopover` and `SkAvatarStack`
+  components in both bindings, each with its `spec/` file (0001) and preview surface
+  (0020).
+
+### Still proposed
+
+- [0023](decisions/0023-sub-floor-chrome-hit-area.md) (sub-floor hit area) and
+  [0027](decisions/0027-non-primary-floating-affordance.md) (non-primary floating
+  affordance) change Tier 0 rules and are held for a Major release with their
+  conformance-check work (including regularising `SkTag`'s hit area).
+
 ## [3.6.0] — 2026-08-22
 
 ### Added

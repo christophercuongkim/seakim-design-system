@@ -1,6 +1,6 @@
 # 0026 — The single-accent rule governs competing actions, not identity washes
 
-- **Status** Proposed
+- **Status** Accepted
 - **Date** 2026-08-22
 - **Affects** the single-accent gloss in `conformance.md`; `spec/`; every binding
 

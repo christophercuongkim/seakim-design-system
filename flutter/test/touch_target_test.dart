@@ -24,7 +24,7 @@ void main() {
       ));
       await tester.pumpAndSettle();
 
-      final Size hit = tester.getSize(find.byType(SkTouchTarget));
+      final Size hit = tester.getSize(find.byType(SkIconButton));
       expect(hit.height, SkControl.touch);
       expect(hit.width, SkControl.touch);
       // The painted mark stays at its dense 28px — only the tap band grew.
@@ -42,7 +42,7 @@ void main() {
 
       // No touch band on desktop — the control keeps its compact footprint,
       // comfortably below the 44px floor.
-      final Size hit = tester.getSize(find.byType(SkTouchTarget));
+      final Size hit = tester.getSize(find.byType(SkIconButton));
       expect(hit.height, lessThan(SkControl.touch));
       debugDefaultTargetPlatformOverride = null;
     });

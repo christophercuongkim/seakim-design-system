@@ -59,7 +59,6 @@ export 'src/widgets/sk_stat.dart';
 export 'src/widgets/sk_switch.dart';
 export 'src/widgets/sk_tab_bar.dart';
 export 'src/widgets/sk_tabs.dart';
-export 'src/widgets/sk_touch_target.dart';
 export 'src/widgets/sk_table.dart';
 export 'src/widgets/sk_tag.dart';
 export 'src/widgets/sk_textarea.dart';

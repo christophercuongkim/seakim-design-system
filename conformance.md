@@ -3,13 +3,13 @@
 What a binding must do to legitimately call itself SeaKim. Tiers defined in
 [0008](decisions/0008-conformance-tiers.md); this is the working checklist.
 
-**Rules version 3.7** — a binding claims conformance *to a version*, because this document
+**Rules version 4.0** — a binding claims conformance *to a version*, because this document
 changes. Declare it alongside your own version, per
 [0011](decisions/0011-versioning.md) and [0019](decisions/0019-versioning-second-pass.md):
 
 ```yaml
 version: 1.2.0          # your binding
-seakim_rules: "3.7"     # the rules version you were reviewed against (may lag; never lead)
+seakim_rules: "4.0"     # the rules version you were reviewed against (may lag; never lead)
 ```
 
 A binding may lag. That is a legitimate, visible state — far better than lag nobody can see.
@@ -67,7 +67,12 @@ No platform exception, ever. Break one and the binding is not SeaKim.
 - [ ] **Focus is always visible.** 2px accent ring, 2px gap. Never suppressed, never
       replaced by a colour swap alone. Full rules in
       [`guidelines/accessibility.md`](guidelines/accessibility.md).
-- [ ] **44px minimum touch target**, whatever the density says.
+- [ ] **44px minimum touch target** on coarse (touch) pointers, whatever the density
+      says. The 44px floor is a touch-surface requirement; a precise pointer (desktop
+      mouse) may be denser, which is how SeaKim keeps its compact 34px controls. On a
+      coarse pointer a visible mark may still render smaller *only* when its hit area —
+      pointer and assistive-technology bounds — reaches 44px; the mark may shrink, the
+      target may not. (See [0023](decisions/0023-sub-floor-chrome-hit-area.md).)
 - [ ] **Both themes work**, neither derived from the other. (See
       [0005](decisions/0005-light-mode-is-first-class.md).)
 - [ ] **Reduced motion collapses all durations to zero** and press scale to 1.
@@ -75,7 +80,10 @@ No platform exception, ever. Break one and the binding is not SeaKim.
 - [ ] **No gradients.** The dialog scrim is the only exception.
 - [ ] **No floating action button.** (See
       [0002](decisions/0002-no-floating-action-button.md).) A Material-based binding must
-      actively neutralise it, not merely avoid it.
+      actively neutralise it, not merely avoid it. A labelled, square, secondary
+      scroll-position utility (jump-to-latest, back-to-top) that floats transiently with
+      `--shadow-popover` is *not* a FAB and is permitted. (See
+      [0027](decisions/0027-non-primary-floating-affordance.md).)
 - [ ] **No spinner as a loading affordance.** No indefinite rotation; show a skeleton
       (when you know what is arriving) or the labeled loading state (when you know only
       that something is). A Material-based binding must actively neutralise

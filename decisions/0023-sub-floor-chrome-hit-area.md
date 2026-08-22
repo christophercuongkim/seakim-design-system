@@ -1,6 +1,6 @@
 # 0023 — A control may render below the touch floor only if its hit area is not
 
-- **Status** Proposed
+- **Status** Accepted
 - **Date** 2026-08-22
 - **Affects** the 44px touch-target rule (`guidelines/accessibility`, `conformance.md`), `spec/`; every binding
 
@@ -35,6 +35,15 @@ hit area and their accessibility bounds are 44px. Neither is fine when they are 
 **Generalise the slider precedent.** A control may render its *visible mark* below the
 44px floor if and only if its **hit area — both pointer and assistive-technology
 bounds — is at least 44px**. The mark may shrink; the target may not.
+
+**The floor is a touch-surface requirement.** 44px comes from a fingertip, so it binds on
+a *coarse* pointer; a precise pointer (a desktop mouse) may be denser. This is what lets
+SeaKim keep its identity — compact 34px controls — on desktop while still meeting the
+floor on a phone. In practice a control grows its hit area to 44px only under a coarse
+pointer (in the bindings: `skCoarsePointer` / `SkTouchTarget` in Flutter, a
+`(pointer: coarse)` `matchMedia` guard in React) and stays compact otherwise. This
+resolves the tension between this rule and the density identity, and matches what the
+system already did piecemeal (the date-picker cell, the compliant form controls).
 
 Concretely:
 

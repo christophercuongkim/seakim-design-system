@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../theme/sk_theme.dart';
 import 'sk_icon.dart';
 import 'sk_pressable.dart';
+import 'sk_touch_target.dart';
 
 enum SkIconButtonVariant { ghost, secondary }
 
@@ -78,23 +79,27 @@ class SkIconButton extends StatelessWidget {
                     : c.borderDefault)
             : const Color(0x00000000);
 
-        return SkFocusRing(
-          visible: s.focused,
-          child: AnimatedContainer(
-              duration: SkMotion.instant,
-              curve: SkMotion.out,
-              width: size,
-              height: size,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: bg,
-                border: Border.all(color: border, width: SkDepth.hairline),
+        return SkTouchTarget(
+          extent: size + SkFocusRing.overhead,
+          square: true,
+          child: SkFocusRing(
+            visible: s.focused,
+            child: AnimatedContainer(
+                duration: SkMotion.instant,
+                curve: SkMotion.out,
+                width: size,
+                height: size,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: bg,
+                  border: Border.all(color: border, width: SkDepth.hairline),
+                ),
+                child: SkIcon(
+                  icon,
+                  size: _iconSize,
+                  weight: active ? SkIconWeight.fill : SkIconWeight.regular,
+                  color: fg,
               ),
-              child: SkIcon(
-                icon,
-                size: _iconSize,
-                weight: active ? SkIconWeight.fill : SkIconWeight.regular,
-                color: fg,
             ),
           ),
         );

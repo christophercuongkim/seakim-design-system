@@ -5,6 +5,7 @@ import '../tokens/sk_icons.g.dart';
 import 'sk_icon.dart';
 import 'sk_icon_button.dart';
 import 'sk_pressable.dart';
+import 'sk_touch_target.dart';
 
 enum SkToastTone { neutral, success, warning, danger }
 
@@ -83,10 +84,14 @@ class SkToast extends StatelessWidget {
                   onPressed: onAction,
                   semanticLabel: actionLabel,
                   pressScale: 1,
-                  builder: (BuildContext context, SkInteraction s) => Text(
-                    actionLabel!,
-                    style: SkText.label.copyWith(
-                      color: s.liveHover ? c.textLinkHover : c.textAccent,
+                  builder: (BuildContext context, SkInteraction s) =>
+                      SkTouchTarget(
+                    extent: 20,
+                    child: Text(
+                      actionLabel!,
+                      style: SkText.label.copyWith(
+                        color: s.liveHover ? c.textLinkHover : c.textAccent,
+                      ),
                     ),
                   ),
                 ),

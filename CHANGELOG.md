@@ -17,6 +17,39 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [4.0.0] — 2026-08-22
+
+Major: two Tier 0 rules change.
+
+### Changed (Tier 0)
+
+- **The 44px touch floor now decouples mark from target**, per
+  [0023](decisions/0023-sub-floor-chrome-hit-area.md) (accepted). A visible mark may
+  render below 44px *only* when its hit area — pointer and assistive-technology bounds —
+  stays ≥44px. This generalises the slider's long-standing exception into a rule.
+- **A non-primary floating affordance is permitted and is not a FAB**, per
+  [0027](decisions/0027-non-primary-floating-affordance.md) (accepted). A labelled,
+  square, secondary, transient scroll-position utility (jump-to-latest, back-to-top) with
+  `--shadow-popover` is allowed; 0002's ban still reaches every primary/circular/unlabelled
+  case. `conformance.md`'s 44px and no-FAB rules move with these.
+
+### Compliance
+
+- **Both bindings meet the 44px floor on touch across the control library.** An audit
+  found ~30 tappable controls rendering below 44px with the painted box as the hit area.
+  Under the touch-context reading of 0023 they now grow their hit area to 44px on a coarse
+  pointer and stay compact on a precise one:
+  - **Flutter:** a new `SkTouchTarget` / `skCoarsePointer` primitive, applied to
+    `SkIconButton` (which cascades to the Toast/Dialog/DatePicker buttons), `SkButton`,
+    `SkTag` (grows to 44 on touch, dismiss included), `SkSegmentedControl`, `SkTabs`,
+    `SkSideNav`, `SkSelect`, and the Toast action.
+  - **React:** a `useCoarsePointer` (`matchMedia('(pointer: coarse)')`) hook adding a
+    `minHeight`/`minWidth` floor to `IconButton`, `Button`, `Tag`, `SegmentedControl`,
+    `Tabs`, `SideNav`, `Select`, and — closing a cross-binding gap where the React
+    versions lacked the guard their Flutter counterparts already had — `Switch`,
+    `Checkbox`, `Radio`.
+- The Flutter binding is reviewed against rules 4.0.
+
 ## [3.7.0] — 2026-08-22
 
 ### Added

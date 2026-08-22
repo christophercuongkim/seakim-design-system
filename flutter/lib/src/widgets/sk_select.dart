@@ -4,10 +4,12 @@ import '../theme/sk_theme.dart';
 import '../tokens/sk_icons.g.dart';
 import 'sk_icon.dart';
 import 'sk_pressable.dart';
+import 'sk_touch_target.dart';
 
 @immutable
 class SkSelectOption<T> {
-  const SkSelectOption({required this.value, required this.label, this.disabled = false});
+  const SkSelectOption(
+      {required this.value, required this.label, this.disabled = false});
 
   final T value;
   final String label;
@@ -116,38 +118,41 @@ class _SkSelectState<T> extends State<SkSelect<T>> {
             // subtree resolves to its disabled counterpart.
             final Color contentMuted =
                 widget.enabled ? c.textTertiary : c.textDisabled;
-            return AnimatedContainer(
-              duration: SkMotion.instant,
-              curve: SkMotion.out,
-              height: widget.size,
-              padding: const EdgeInsets.symmetric(horizontal: SkSpace.s4),
-              decoration: BoxDecoration(
-                color: widget.enabled ? c.surfaceRaised : c.fillDisabled,
-                border: Border.all(
-                  color: border,
-                  width: _open ? SkDepth.emphasis : SkDepth.hairline,
+            return SkTouchTarget(
+              extent: widget.size,
+              child: AnimatedContainer(
+                duration: SkMotion.instant,
+                curve: SkMotion.out,
+                height: widget.size,
+                padding: const EdgeInsets.symmetric(horizontal: SkSpace.s4),
+                decoration: BoxDecoration(
+                  color: widget.enabled ? c.surfaceRaised : c.fillDisabled,
+                  border: Border.all(
+                    color: border,
+                    width: _open ? SkDepth.emphasis : SkDepth.hairline,
+                  ),
                 ),
-              ),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      selected?.label ?? widget.placeholder ?? '',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: SkText.bodySm.copyWith(
-                        fontSize: dense ? SkFontSize.xs : SkFontSize.sm,
-                        color: !widget.enabled
-                            ? c.textDisabled
-                            : selected == null
-                                ? c.textTertiary
-                                : c.textPrimary,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        selected?.label ?? widget.placeholder ?? '',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: SkText.bodySm.copyWith(
+                          fontSize: dense ? SkFontSize.xs : SkFontSize.sm,
+                          color: !widget.enabled
+                              ? c.textDisabled
+                              : selected == null
+                                  ? c.textTertiary
+                                  : c.textPrimary,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: SkSpace.s4),
-                  SkIcon(SkIcons.caretDown, size: 14, color: contentMuted),
-                ],
+                    const SizedBox(width: SkSpace.s4),
+                    SkIcon(SkIcons.caretDown, size: 14, color: contentMuted),
+                  ],
+                ),
               ),
             );
           },
@@ -158,7 +163,8 @@ class _SkSelectState<T> extends State<SkSelect<T>> {
 }
 
 class _Menu<T> extends StatelessWidget {
-  const _Menu({required this.options, required this.value, required this.onPick});
+  const _Menu(
+      {required this.options, required this.value, required this.onPick});
 
   final List<SkSelectOption<T>> options;
   final T? value;
@@ -173,7 +179,8 @@ class _Menu<T> extends StatelessWidget {
       curve: SkMotion.out,
       builder: (BuildContext context, double t, Widget? child) => Opacity(
         opacity: t,
-        child: Transform.translate(offset: Offset(0, (1 - t) * -4), child: child),
+        child:
+            Transform.translate(offset: Offset(0, (1 - t) * -4), child: child),
       ),
       child: Container(
         constraints: const BoxConstraints(minWidth: 180, maxHeight: 280),

@@ -19,6 +19,7 @@
 
   var FILES = [
     'components/core/Icon.jsx',
+    'components/core/useCoarsePointer.js',
     'components/core/Button.jsx',
     'components/core/IconButton.jsx',
     'components/core/Badge.jsx',

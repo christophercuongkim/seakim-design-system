@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../theme/sk_theme.dart';
 import 'sk_icon.dart';
 import 'sk_pressable.dart';
+import 'sk_touch_target.dart';
 
 /// An interactive filter chip, or a removable token.
 ///
@@ -35,6 +36,10 @@ class SkTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SkColors c = context.skColors;
+    // A chip is chrome-scale, so on a precise pointer it keeps its dense 28px.
+    // On touch it grows to the 44px floor (0023) — the whole pill, and the dismiss
+    // within it, become finger-sized rather than leaving a 28px tap on a phone.
+    final bool coarse = skCoarsePointer(context);
 
     return SkPressable(
       onPressed: onPressed,
@@ -64,7 +69,7 @@ class SkTag extends StatelessWidget {
           child: AnimatedContainer(
               duration: SkMotion.instant,
               curve: SkMotion.out,
-              height: SkControl.sm,
+              height: coarse ? SkControl.touch : SkControl.sm,
               padding: const EdgeInsets.symmetric(horizontal: SkSpace.s3),
               decoration: BoxDecoration(
                 color: bg,
@@ -94,14 +99,19 @@ class SkTag extends StatelessWidget {
                       onPressed: onRemove,
                       semanticLabel: 'Remove $label',
                       pressScale: 1,
-                      builder: (BuildContext context, SkInteraction rs) => Opacity(
-                        opacity: rs.liveHover ? 1 : 0.6,
-                        child: Text(
-                          _closeGlyph,
-                          style: SkText.label.copyWith(
-                            fontSize: 11,
-                            color: fg,
-                            height: 1,
+                      builder: (BuildContext context, SkInteraction rs) =>
+                          SkTouchTarget(
+                        extent: 16,
+                        square: true,
+                        child: Opacity(
+                          opacity: rs.liveHover ? 1 : 0.6,
+                          child: Text(
+                            _closeGlyph,
+                            style: SkText.label.copyWith(
+                              fontSize: 11,
+                              color: fg,
+                              height: 1,
+                            ),
                           ),
                         ),
                       ),

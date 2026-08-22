@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Icon } from '../core/Icon.jsx';
+import { useCoarsePointer } from '../core/useCoarsePointer.js';
 
 export function Checkbox({ checked, defaultChecked = false, indeterminate = false, label, hint, disabled = false, onChange, style, ...rest }) {
   const [inner, setInner] = useState(defaultChecked);
   const on = checked != null ? checked : inner;
   const [hover, setHover] = useState(false);
+  const coarse = useCoarsePointer();
   const marked = on || indeterminate;
   function toggle() {
     if (disabled) return;
@@ -17,6 +19,7 @@ export function Checkbox({ checked, defaultChecked = false, indeterminate = fals
       onMouseLeave={() => setHover(false)}
       style={{
         display: 'flex', gap: 'var(--space-4)', alignItems: hint ? 'flex-start' : 'center',
+        minHeight: coarse ? 44 : undefined,
         cursor: disabled ? 'not-allowed' : 'pointer', ...style,
       }}
       {...rest}

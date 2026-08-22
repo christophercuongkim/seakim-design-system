@@ -4,10 +4,12 @@ import '../theme/sk_theme.dart';
 import 'sk_badge.dart';
 import 'sk_icon.dart';
 import 'sk_pressable.dart';
+import 'sk_touch_target.dart';
 
 @immutable
 class SkTab<T> {
-  const SkTab({required this.value, required this.label, this.icon, this.count});
+  const SkTab(
+      {required this.value, required this.label, this.icon, this.count});
 
   final T value;
   final String label;
@@ -56,44 +58,60 @@ class SkTabs<T> extends StatelessWidget {
               semanticLabel: tab.label,
               pressScale: 1,
               builder: (BuildContext context, SkInteraction s) {
-                final Color fg = on || s.liveHover ? c.textPrimary : c.textSecondary;
+                final Color fg =
+                    on || s.liveHover ? c.textPrimary : c.textSecondary;
+                // Painted height: vertical padding plus the label line box
+                // (SkText.label line-height 1.3). Sub-floor, so on touch the
+                // tap band grows to SkControl.touch; desktop keeps the density.
+                final double tabHeight = 2 * (dense ? 7 : 10) +
+                    (dense ? SkFontSize.xs : SkFontSize.sm) * 1.3;
+                // Wrap only the content, not the Stack, so on touch the tab grows
+                // to the floor while the bottom-anchored accent indicator stays
+                // pinned to the tab-bar edge.
                 return Stack(
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: dense ? SkSpace.s4 : SkSpace.s5,
-                        vertical: dense ? 7 : 10,
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          if (tab.icon != null) ...<Widget>[
-                            SkIcon(
-                              tab.icon!,
-                              size: dense ? 14 : 16,
-                              weight:
-                                  on ? SkIconWeight.fill : SkIconWeight.regular,
-                              color: fg,
+                    SkTouchTarget(
+                      extent: tabHeight,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: dense ? SkSpace.s4 : SkSpace.s5,
+                          vertical: dense ? 7 : 10,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            if (tab.icon != null) ...<Widget>[
+                              SkIcon(
+                                tab.icon!,
+                                size: dense ? 14 : 16,
+                                weight: on
+                                    ? SkIconWeight.fill
+                                    : SkIconWeight.regular,
+                                color: fg,
+                              ),
+                              const SizedBox(width: SkSpace.s3),
+                            ],
+                            Text(
+                              tab.label,
+                              style: SkText.label.copyWith(
+                                fontSize: dense ? SkFontSize.xs : SkFontSize.sm,
+                                color: fg,
+                                fontWeight:
+                                    on ? FontWeight.w600 : FontWeight.w500,
+                              ),
                             ),
-                            const SizedBox(width: SkSpace.s3),
+                            if (tab.count != null) ...<Widget>[
+                              const SizedBox(width: SkSpace.s3),
+                              SkBadge(
+                                label: '${tab.count}',
+                                tone: on
+                                    ? SkBadgeTone.accent
+                                    : SkBadgeTone.neutral,
+                                mono: true,
+                              ),
+                            ],
                           ],
-                          Text(
-                            tab.label,
-                            style: SkText.label.copyWith(
-                              fontSize: dense ? SkFontSize.xs : SkFontSize.sm,
-                              color: fg,
-                              fontWeight: on ? FontWeight.w600 : FontWeight.w500,
-                            ),
-                          ),
-                          if (tab.count != null) ...<Widget>[
-                            const SizedBox(width: SkSpace.s3),
-                            SkBadge(
-                              label: '${tab.count}',
-                              tone: on ? SkBadgeTone.accent : SkBadgeTone.neutral,
-                              mono: true,
-                            ),
-                          ],
-                        ],
+                        ),
                       ),
                     ),
                     Positioned(

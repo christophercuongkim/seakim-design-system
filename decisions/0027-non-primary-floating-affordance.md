@@ -1,6 +1,6 @@
 # 0027 — A non-primary floating affordance is allowed, and is not a FAB
 
-- **Status** Proposed
+- **Status** Accepted
 - **Date** 2026-08-22
 - **Affects** decision 0002 (extends it), the shadow rule (`conformance.md`), `spec/`; every binding
 

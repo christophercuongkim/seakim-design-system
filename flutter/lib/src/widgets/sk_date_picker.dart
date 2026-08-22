@@ -5,6 +5,7 @@ import '../theme/sk_theme.dart';
 import '../tokens/sk_icons.g.dart';
 import 'sk_icon_button.dart';
 import 'sk_input.dart';
+import 'sk_popover.dart';
 
 /* Per spec/DatePicker.md and decision 0004.
 
@@ -18,8 +19,18 @@ import 'sk_input.dart';
 
 const List<String> _dow = <String>['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'];
 const List<String> _months = <String>[
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December',
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ];
 
 String _iso(DateTime d) =>
@@ -37,7 +48,11 @@ DateTime? _parseIso(String s) {
 }
 
 bool _sameDay(DateTime? a, DateTime? b) =>
-    a != null && b != null && a.year == b.year && a.month == b.month && a.day == b.day;
+    a != null &&
+    b != null &&
+    a.year == b.year &&
+    a.month == b.month &&
+    a.day == b.day;
 
 bool _between(DateTime d, DateTime? a, DateTime? b) {
   if (a == null || b == null) return false;
@@ -107,8 +122,9 @@ class _SkDatePickerState extends State<SkDatePicker> {
   @override
   void initState() {
     super.initState();
-    final DateTime anchor =
-        widget.range ? (widget.rangeValue?.$1 ?? DateTime.now()) : (widget.value ?? DateTime.now());
+    final DateTime anchor = widget.range
+        ? (widget.rangeValue?.$1 ?? DateTime.now())
+        : (widget.value ?? DateTime.now());
     _cursor = DateTime(anchor.year, anchor.month);
     _controller.text = _display;
   }
@@ -193,7 +209,8 @@ class _SkDatePickerState extends State<SkDatePicker> {
                 controller: _controller,
                 mono: true,
                 invalid: widget.error != null,
-                placeholder: widget.range ? '2026-03-14 – 2026-03-21' : '2026-03-14',
+                placeholder:
+                    widget.range ? '2026-03-14 – 2026-03-21' : '2026-03-14',
                 onChanged: _commitText,
               ),
             ),
@@ -220,53 +237,47 @@ class _SkDatePickerState extends State<SkDatePicker> {
       ],
     );
 
-    if (!_open) return field;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        field,
-        const SizedBox(height: SkSpace.s2),
-        // The grid floats, so it gets a shadow. At sm the host should present it
-        // via showSkSheet instead; inline here keeps the widget self-contained.
-        DecoratedBox(
-          decoration: BoxDecoration(
-            color: c.surfaceOverlay,
-            border: Border.all(color: c.borderDefault, width: SkDepth.hairline),
-            boxShadow: SkDepth.popover(c.brightness),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              for (int i = 0; i < _monthCount; i++)
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      left: i == 0
-                          ? BorderSide.none
-                          : BorderSide(color: c.borderSubtle, width: SkDepth.hairline),
-                    ),
-                  ),
-                  child: _Month(
-                    year: _cursor.year + ((_cursor.month - 1 + i) ~/ 12),
-                    month: (_cursor.month - 1 + i) % 12 + 1,
-                    selection: _selection,
-                    hover: _hover,
-                    touch: widget.bp.isSm,
-                    showNav: i == 0,
-                    isDateDisabled: widget.isDateDisabled,
-                    onPick: _pick,
-                    onHover: widget.range ? (DateTime d) => setState(() => _hover = d) : null,
-                    onShift: (int delta) => setState(() {
-                      _cursor = DateTime(_cursor.year, _cursor.month + delta);
-                    }),
-                  ),
+    // The grid is the anchored popover species (0022): SkPopover owns the
+    // OverlayPortal, positioning, tap-away, and Escape, and supplies the overlay
+    // surface (fill, hairline, popover shadow). The grid escapes the field's clip
+    // and width instead of pushing content down, which the old inline column could
+    // not. At sm cells still grow to 44px via [_Month.touch].
+    return SkPopover(
+      open: _open,
+      onDismiss: () => setState(() => _open = false),
+      overlayBuilder: (BuildContext context) => Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          for (int i = 0; i < _monthCount; i++)
+            DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border(
+                  left: i == 0
+                      ? BorderSide.none
+                      : BorderSide(
+                          color: c.borderSubtle, width: SkDepth.hairline),
                 ),
-            ],
-          ),
-        ),
-      ],
+              ),
+              child: _Month(
+                year: _cursor.year + ((_cursor.month - 1 + i) ~/ 12),
+                month: (_cursor.month - 1 + i) % 12 + 1,
+                selection: _selection,
+                hover: _hover,
+                touch: widget.bp.isSm,
+                showNav: i == 0,
+                isDateDisabled: widget.isDateDisabled,
+                onPick: _pick,
+                onHover: widget.range
+                    ? (DateTime d) => setState(() => _hover = d)
+                    : null,
+                onShift: (int delta) => setState(() {
+                  _cursor = DateTime(_cursor.year, _cursor.month + delta);
+                }),
+              ),
+            ),
+        ],
+      ),
+      child: field,
     );
   }
 }
@@ -303,7 +314,8 @@ class _Month extends StatelessWidget {
     final DateTime today = DateTime.now();
     final (DateTime? a, DateTime? b) = selection;
     // Preview the provisional span while the second endpoint is being chosen.
-    final DateTime? provisional = a != null && b == null && hover != null ? hover : b;
+    final DateTime? provisional =
+        a != null && b == null && hover != null ? hover : b;
     final List<DateTime> cells = _monthGrid(year, month);
 
     return Column(
@@ -314,7 +326,8 @@ class _Month extends StatelessWidget {
               horizontal: SkSpace.s5, vertical: SkSpace.s4),
           decoration: BoxDecoration(
             border: Border(
-              bottom: BorderSide(color: c.borderSubtle, width: SkDepth.hairline),
+              bottom:
+                  BorderSide(color: c.borderSubtle, width: SkDepth.hairline),
             ),
           ),
           child: Row(
@@ -362,7 +375,8 @@ class _Month extends StatelessWidget {
                       margin: const EdgeInsets.only(right: 1, bottom: 1),
                       color: c.surfaceOverlay,
                       child: Text(d,
-                          style: SkText.eyebrow.copyWith(color: c.textTertiary)),
+                          style:
+                              SkText.eyebrow.copyWith(color: c.textTertiary)),
                     ),
                 ],
               ),
@@ -379,7 +393,8 @@ class _Month extends StatelessWidget {
                         endpoint: _sameDay(cells[row * 7 + col], a) ||
                             _sameDay(cells[row * 7 + col], provisional),
                         inRange: _between(cells[row * 7 + col], a, provisional),
-                        disabled: isDateDisabled?.call(cells[row * 7 + col]) ?? false,
+                        disabled:
+                            isDateDisabled?.call(cells[row * 7 + col]) ?? false,
                         onPick: onPick,
                         onHover: onHover,
                       ),
@@ -446,7 +461,8 @@ class _CellState extends State<_Cell> {
                     : c.textTertiary;
 
     return MouseRegion(
-      cursor: widget.disabled ? SystemMouseCursors.basic : SystemMouseCursors.click,
+      cursor:
+          widget.disabled ? SystemMouseCursors.basic : SystemMouseCursors.click,
       onEnter: (_) {
         setState(() => _hover = true);
         widget.onHover?.call(widget.date);
@@ -455,7 +471,8 @@ class _CellState extends State<_Cell> {
       child: GestureDetector(
         onTap: widget.disabled ? null : () => widget.onPick(widget.date),
         child: Semantics(
-          label: '${widget.date.day} ${_months[widget.date.month - 1]} ${widget.date.year}',
+          label:
+              '${widget.date.day} ${_months[widget.date.month - 1]} ${widget.date.year}',
           selected: widget.endpoint || widget.inRange,
           enabled: !widget.disabled,
           button: true,
@@ -469,7 +486,9 @@ class _CellState extends State<_Cell> {
               // Today is an UNDERLINE: a fill means selected, a ring means focused,
               // and a ring vanishes once the date sits inside a range.
               border: widget.today
-                  ? Border(bottom: BorderSide(color: c.borderAccent, width: SkDepth.emphasis))
+                  ? Border(
+                      bottom: BorderSide(
+                          color: c.borderAccent, width: SkDepth.emphasis))
                   : null,
             ),
             child: Text(

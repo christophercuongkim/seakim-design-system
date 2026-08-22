@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../theme/sk_theme.dart';
 import 'sk_icon.dart';
+import 'sk_popover.dart';
 import 'sk_pressable.dart';
 import 'sk_touch_target.dart';
 
@@ -44,7 +45,11 @@ class SkIconButton extends StatelessWidget {
   /// Set false only when the control already sits inside an SkTooltip.
   final bool tooltip;
 
-  double get _iconSize => size <= SkControl.sm ? 14 : size >= SkControl.lg ? 20 : 16;
+  double get _iconSize => size <= SkControl.sm
+      ? 14
+      : size >= SkControl.lg
+          ? 20
+          : 16;
 
   @override
   Widget build(BuildContext context) {
@@ -85,20 +90,20 @@ class SkIconButton extends StatelessWidget {
           child: SkFocusRing(
             visible: s.focused,
             child: AnimatedContainer(
-                duration: SkMotion.instant,
-                curve: SkMotion.out,
-                width: size,
-                height: size,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: bg,
-                  border: Border.all(color: border, width: SkDepth.hairline),
-                ),
-                child: SkIcon(
-                  icon,
-                  size: _iconSize,
-                  weight: active ? SkIconWeight.fill : SkIconWeight.regular,
-                  color: fg,
+              duration: SkMotion.instant,
+              curve: SkMotion.out,
+              width: size,
+              height: size,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: bg,
+                border: Border.all(color: border, width: SkDepth.hairline),
+              ),
+              child: SkIcon(
+                icon,
+                size: _iconSize,
+                weight: active ? SkIconWeight.fill : SkIconWeight.regular,
+                color: fg,
               ),
             ),
           ),
@@ -129,52 +134,63 @@ class SkHoverLabel extends StatefulWidget {
 }
 
 class _SkHoverLabelState extends State<SkHoverLabel> {
-  final OverlayPortalController _controller = OverlayPortalController();
-  final LayerLink _link = LayerLink();
+  bool _hovered = false;
 
   @override
   Widget build(BuildContext context) {
     final SkColors c = context.skColors;
-
-    return MouseRegion(
-      onEnter: (_) => _controller.show(),
-      onExit: (_) => _controller.hide(),
-      child: CompositedTransformTarget(
-        link: _link,
-        child: OverlayPortal(
-          controller: _controller,
-          overlayChildBuilder: (BuildContext context) {
-            final (Alignment target, Alignment follower, Offset offset) =
-                switch (widget.side) {
-              AxisDirection.up => (Alignment.topCenter, Alignment.bottomCenter, const Offset(0, -6)),
-              AxisDirection.down => (Alignment.bottomCenter, Alignment.topCenter, const Offset(0, 6)),
-              AxisDirection.left => (Alignment.centerLeft, Alignment.centerRight, const Offset(-6, 0)),
-              AxisDirection.right => (Alignment.centerRight, Alignment.centerLeft, const Offset(6, 0)),
-            };
-            return CompositedTransformFollower(
-              link: _link,
-              targetAnchor: target,
-              followerAnchor: follower,
-              offset: offset,
-              child: IgnorePointer(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: SkSpace.s4, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: c.surfaceOverlay,
-                    border: Border.all(color: c.borderStrong, width: SkDepth.hairline),
-                    boxShadow: SkDepth.popover(c.brightness),
-                  ),
-                  child: Text(
-                    widget.label,
-                    style: SkText.caption.copyWith(color: c.textPrimary),
-                  ),
-                ),
-              ),
-            );
-          },
-          child: widget.child,
+    // A tooltip is the non-modal popover species (0022): SkPopover owns the
+    // OverlayPortal and positioning. It is barrier-less (hover drives show/hide,
+    // so no page-blanketing tap-away) and undecorated (the tooltip keeps its own
+    // stronger border), and it pins a fixed side, centred on the trigger.
+    final (Alignment, Alignment, Offset) placement = switch (widget.side) {
+      AxisDirection.up => (
+          Alignment.topCenter,
+          Alignment.bottomCenter,
+          const Offset(0, -6)
         ),
+      AxisDirection.down => (
+          Alignment.bottomCenter,
+          Alignment.topCenter,
+          const Offset(0, 6)
+        ),
+      AxisDirection.left => (
+          Alignment.centerLeft,
+          Alignment.centerRight,
+          const Offset(-6, 0)
+        ),
+      AxisDirection.right => (
+          Alignment.centerRight,
+          Alignment.centerLeft,
+          const Offset(6, 0)
+        ),
+    };
+
+    return SkPopover(
+      open: _hovered,
+      onDismiss: () => setState(() => _hovered = false),
+      barrier: false,
+      decorated: false,
+      placement: placement,
+      overlayBuilder: (BuildContext context) => IgnorePointer(
+        child: Container(
+          padding:
+              const EdgeInsets.symmetric(horizontal: SkSpace.s4, vertical: 5),
+          decoration: BoxDecoration(
+            color: c.surfaceOverlay,
+            border: Border.all(color: c.borderStrong, width: SkDepth.hairline),
+            boxShadow: SkDepth.popover(c.brightness),
+          ),
+          child: Text(
+            widget.label,
+            style: SkText.caption.copyWith(color: c.textPrimary),
+          ),
+        ),
+      ),
+      child: MouseRegion(
+        onEnter: (_) => setState(() => _hovered = true),
+        onExit: (_) => setState(() => _hovered = false),
+        child: widget.child,
       ),
     );
   }

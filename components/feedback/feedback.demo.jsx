@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Toast } from './Toast.jsx';
 import { Tooltip } from './Tooltip.jsx';
+import { Popover } from './Popover.jsx';
 import { EmptyState } from './EmptyState.jsx';
 import { Skeleton } from './Skeleton.jsx';
 import { LoadingState } from './LoadingState.jsx';
@@ -23,6 +24,16 @@ export function Demo() {
           <Tooltip label="Saved trips" side="right"><IconButton icon="bookmark-simple" label="Saved trips" variant="secondary" /></Tooltip>
           <Button variant="secondary" size="sm" onClick={() => setOpen(true)}>Open dialog</Button>
         </div>
+        <div className="lbl" style={{ marginTop: 'var(--space-4)' }}>Popover</div>
+        <Popover
+          open
+          onDismiss={() => {}}
+          trigger={<Button variant="secondary" size="sm">Actions</Button>}
+        >
+          <div style={{ padding: 'var(--space-4)', font: 'var(--type-body-sm)', color: 'var(--text-primary)' }}>
+            Rename · Duplicate · Delete
+          </div>
+        </Popover>
       </div>
       <div className="col">
         <div className="lbl">EmptyState</div>

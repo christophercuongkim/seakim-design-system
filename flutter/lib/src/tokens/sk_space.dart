@@ -24,6 +24,12 @@ class SkSpace {
 
   /// Standard section inset.
   static const double padSection = s8;
+
+  /// How far each avatar in an [SkAvatarStack] slides under the one beside it —
+  /// a fixed fraction of the small-avatar diameter, held here as one shared
+  /// constant so every facepile overlaps the same amount (decision 0024).
+  /// Mirrored in CSS as `--avatar-overlap`.
+  static const double avatarOverlap = 8;
 }
 
 /// Control heights. [touch] is the floor for anything tappable, on every

@@ -34,4 +34,10 @@
      two equal. The sheet width is not here: the sheet is not a promoted component
      yet (conformance.md item 8). */
   --overlay-w-dialog: 440px;
+
+  /* How far each avatar in an AvatarStack slides under the one beside it — a
+     fixed fraction of the small-avatar diameter, held as one shared constant so
+     every facepile overlaps the same amount (decision 0024). Mirrored in Flutter
+     as SkSpace.avatarOverlap. */
+  --avatar-overlap: 8px;
 }

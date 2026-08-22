@@ -35,6 +35,7 @@ export 'src/theme/sk_material_theme.dart';
 export 'src/theme/sk_breakpoints.dart';
 
 export 'src/widgets/sk_avatar.dart';
+export 'src/widgets/sk_avatar_stack.dart';
 export 'src/widgets/sk_badge.dart';
 export 'src/widgets/sk_button.dart';
 export 'src/widgets/sk_card.dart';
@@ -47,6 +48,7 @@ export 'src/widgets/sk_icon.dart';
 export 'src/widgets/sk_icon_button.dart';
 export 'src/widgets/sk_input.dart';
 export 'src/widgets/sk_loading_state.dart';
+export 'src/widgets/sk_popover.dart';
 export 'src/widgets/sk_pressable.dart';
 export 'src/widgets/sk_radio.dart';
 export 'src/widgets/sk_range.dart';

@@ -71,8 +71,8 @@ inline calendar onto the primitive — none carries its own `OverlayPortal` plum
 
 - Consumers get a sanctioned, accessible anchored overlay instead of a raw `Overlay`
   that fails the focus and Escape rules.
-- The three existing hand-rolled anchored overlays converge on one implementation;
-  their a11y and shadow behaviour stop drifting apart.
+- The three existing ad-hoc implementations (two hand-rolled overlays, one inline picker)
+  converge on one primitive; their a11y and shadow behaviour stop drifting apart.
 - Per 0012, the overlay-species conformance check must grow the two anchored rows so a
   floating surface with no lift shadow, or an anchored overlay with no Escape handler, is
   caught. The focus-mode distinction stays a manual pass — "a tooltip must not trap

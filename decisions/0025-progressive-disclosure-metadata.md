@@ -27,9 +27,9 @@ reconciled by separating *what is shown* from *what is announced*.
 
 ## Decision
 
-**Metadata may be disclosed on demand — visually — provided it is always present in the
-accessible name of the element**, and **any pointer-only affordance carries a documented
-non-pointer trigger.**
+**Metadata may be disclosed on demand — visually — provided it is always reachable
+non-visually as the element's accessible description**, and **any pointer-only affordance
+carries a documented non-pointer trigger.**
 
 - **Time-on-demand.** A bubble may hide its timestamp from view and reveal it on tap. The
   timestamp must nonetheless be reachable non-visually at all times — but as the element's
@@ -52,8 +52,8 @@ non-pointer trigger.**
 ## Consequences
 
 - Chat keeps its clean, timestamp-free column and its long-press reactions, and gains a
-  keyboard/AT path to both — the timestamp in the accessible name, the reaction picker
-  behind focus-plus-key or a visible affordance.
+  keyboard/AT path to both — the timestamp in the accessible description, the reaction
+  picker behind focus-plus-key or a visible affordance.
 - Any surface tempted to hide metadata behind a gesture now has a rule to meet rather
   than an omission to exploit.
 - Per 0012, the automatable half is genuinely weak and the ADR should say so plainly. A
@@ -75,5 +75,5 @@ non-pointer trigger.**
   affordances do not exist for keyboard and AT users; a timestamp no screen reader can
   reach is not "disclosed", it is missing.
 - **Make the reveal a persistent per-message toggle in state.** Solves nothing for AT
-  (the value still is not announced) and adds state to every message for a sighted
-  convenience the accessible name already delivers for free.
+  (the value is already reachable via the description) and adds state to every message for
+  a sighted convenience the description already delivers for free.

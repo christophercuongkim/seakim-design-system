@@ -16,10 +16,15 @@ a field — these must sit next to the element that spawned them, because their 
 meaning is "this, here". Forcing them into a centred panel or a bottom sheet severs the
 spatial link that is the point.
 
-The system already builds this shape repeatedly and pretends it hasn't. `SkSelect`,
-`SkDatePicker`, and `SkHoverLabel` each hand-roll an `OverlayPortal` +
-`CompositedTransformFollower`, none of them exported or shared. So the pattern exists
-three times with three implementations and **no name**, which produces two failures:
+The system already builds this shape repeatedly and pretends it hasn't. `SkSelect` and
+`SkHoverLabel` each hand-roll an `OverlayPortal` + `CompositedTransformFollower`, neither
+exported nor shared; `SkDatePicker` dodges the overlay entirely and renders its calendar
+inline in a `Column` below the field, which is its own bug (an anchored picker that
+cannot escape its parent's clip or width). So the anchored shape appears across three
+components with no primitive and **no name** — two ad-hoc overlays and one inline
+work-around — and **none of the three** meets the overlay obligations (focus does not
+move in, Tab is not trapped, focus is not restored, there is no Escape). That produces
+two failures:
 
 1. **Consumers re-derive it badly.** A binding consumer that needs an anchored menu
    (chat reactions were the trigger for this ADR) drops to a raw `Overlay` and, with no
@@ -37,24 +42,30 @@ three times with three implementations and **no name**, which produces two failu
 **Add the anchored popover as a third overlay species**, and grow a primitive that owns
 it so bindings stop re-deriving it.
 
-The species, in the Tier-1 overlay table:
+The species, in the Tier-1 overlay table. The anchored popover has **two modes**, and
+the split is not cosmetic — scrim presence *is* modality, and modality determines the
+focus rule. A modal popover (a reaction bar) takes focus; a non-modal one (a tooltip, an
+autocomplete list) must not, because it is a description or a suggestion attached to a
+trigger the user is still driving, not a container they have entered.
 
 | Species | Trigger | Surface | Dismissal | Focus |
 | --- | --- | --- | --- | --- |
 | Centred panel | modal, `md`+ | overlay + `--shadow-dialog` | scrim tap, Escape | trap + restore |
 | Bottom sheet | modal, `sm` | overlay + `--shadow-sheet` | scrim tap, Escape, drag | trap + restore |
-| **Anchored popover** | **contextual, any size** | **overlay + `--shadow-popover`, hairline border** | **scrim tap (if scrim), Escape, outside-press** | **moves in, restores on close** |
+| **Anchored popover — modal** | **contextual + scrim** (reaction bar) | **overlay + `--shadow-popover`, hairline border** | **scrim tap, Escape, outside-press** | **moves in, restores on close** |
+| **Anchored popover — non-modal** | **contextual, no scrim** (tooltip, autocomplete) | **overlay + `--shadow-popover`, hairline border** | **Escape, outside-press, trigger blur** | **stays on the trigger** |
 
-An anchored popover positions against its trigger's rect, flips to stay on-screen, and
-may or may not carry a scrim (a reaction bar does; an autocomplete does not). Escape and
-outside-press always close it; focus moves into it on open and returns to the trigger on
-close.
+Both modes position against the trigger's rect and flip to stay on-screen. The modal mode
+moves focus in and restores it on close; the non-modal mode leaves focus on the trigger
+(a tooltip that steals focus is broken for every AT user, and today `SkHoverLabel` wraps
+its content in `IgnorePointer` precisely so it cannot).
 
 **Primitive.** Add `SkPopover` (React and Flutter): given an anchor rect/target and a
-child, it produces the positioned surface with the popover shadow, optional scrim,
-on-screen flipping, focus management, and keyboard dismissal. `SkSelect`,
-`SkDatePicker`, and `SkHoverLabel` are refactored onto it rather than each carrying
-their own `OverlayPortal` plumbing.
+child, it produces the positioned surface with the popover shadow, on-screen flipping,
+outside-press and Escape dismissal, and a `modal` flag selecting the focus behaviour
+above (scrim + focus-trap when set, focus-inert when not). `SkSelect` refactors onto the
+modal mode, `SkHoverLabel` onto the non-modal mode, and `SkDatePicker` moves off its
+inline calendar onto the primitive — none carries its own `OverlayPortal` plumbing.
 
 ## Consequences
 
@@ -62,8 +73,14 @@ their own `OverlayPortal` plumbing.
   that fails the focus and Escape rules.
 - The three existing hand-rolled anchored overlays converge on one implementation;
   their a11y and shadow behaviour stop drifting apart.
-- Per 0012, the overlay-species conformance check must grow the third row so a floating
-  surface with no lift shadow, or an anchored overlay with no Escape handler, is caught.
+- Per 0012, the overlay-species conformance check must grow the two anchored rows so a
+  floating surface with no lift shadow, or an anchored overlay with no Escape handler, is
+  caught. The focus-mode distinction stays a manual pass — "a tooltip must not trap
+  focus" is a judgement a static check cannot make.
+- `SkPopover` is a new component: per 0001 it owes a `spec/` file, and per 0020 a
+  preview-surface entry and manifest row before it can ship.
+- Versioning (0019): **Minor**. The overlay-species rule is Tier 1, and this adds a
+  species rather than changing a Tier 0 rule.
 
 ## Rejected alternatives
 

@@ -23,9 +23,13 @@ over scrolling content, but they are:
 
 So 0002's ban does not reach it — but 0002 also doesn't *sanction* it, and the shadow
 rule ("borders define, shadows lift") leaves it in a gap: it genuinely floats over
-content, yet there is no defined lift treatment for a floating utility that isn't one of
-the anchored bars. The chat build shipped one flat, which reads as an object that forgot
-to say it floats.
+content, yet there is no named lift treatment for a floating utility that isn't one of the
+anchored bars. 0018 (Accepted) defines the *raised* shadow only for edge-anchored bars —
+a top bar casts down, a footer casts up — and exposes it as `raisedTopBar`/`raisedFooter`
+with, deliberately, no general `raised()`. A jump-to-latest button is anchored to no edge;
+it floats with margins on every side, so it has no anchor edge to cast away from and 0018's
+raised role simply does not describe it. The chat build shipped one flat, which reads as an
+object that forgot to say it floats.
 
 ## Decision
 
@@ -34,22 +38,29 @@ fixed constraints:
 
 1. **Square, `0px`** — an `SkIconButton`, never a circle.
 2. **Labelled** — tooltip and accessible name, always.
-3. **Secondary only** — a navigation/scroll utility (jump-to-latest, back-to-top).
-   Never the screen's primary action, which continues to live where 0002 puts it. If you
-   reach for this to hold a "compose" or "add", that is a FAB and 0002 forbids it.
+3. **A scroll-position utility only** — the sanctioned set is narrow and named:
+   jump-to-latest and back-to-top. Not "any navigation utility," which stretches to
+   swallow the ban — a "new message" or "add" is not a scroll utility because it happens
+   to move the viewport, and holding a compose/add here is a FAB that 0002 forbids. If it
+   is not moving the user within content they are already scrolling, it does not qualify.
 4. **Transient** — driven by a scroll or view state, not permanent chrome.
-5. **Lifted** — because it floats over content, it carries the raised lift treatment
-   (`--shadow-raised`), the same exception the sticky footer already takes. A floating
-   thing must promise it floats.
+5. **Lifted with `--shadow-popover`** — it floats over content, but it is not edge-anchored,
+   so it takes the popover lift, not `raised`. 0018's raised role is defined only for
+   edge-anchored bars (and Flutter exposes no general `raised()` to call); `--shadow-popover`
+   is the honest token for a thing that floats free of any edge. A floating thing must
+   promise it floats.
 
 ## Consequences
 
 - Chat's jump-to-latest, and back-to-top on long feeds, are sanctioned and get a defined
-  shadow instead of sitting flat or being waved through case by case.
+  shadow (`--shadow-popover`) instead of sitting flat or being waved through case by case.
 - 0002 keeps its full force: the test is still "is this the primary action wearing a
   popover's costume?" — and a labelled, secondary, transient scroll utility is not.
 - Per 0012, the FAB check narrows from "no floating control" to "no floating *primary*
-  action and no circle"; a labelled square scroll utility with a raised shadow passes.
+  action and no circle"; a labelled square scroll utility with a popover shadow passes.
+  ("Primary" stays a manual judgement; the circle and the shadow are checkable.)
+- Versioning (0019): **Major**. It changes two Tier 0 rules — it extends 0002's FAB ban
+  and the shadow rule — even though the net effect is to permit a narrow, well-fenced case.
 
 ## Rejected alternatives
 

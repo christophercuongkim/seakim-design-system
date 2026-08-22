@@ -7,9 +7,13 @@
 ## Context
 
 The touch-target rule is a hard 44px minimum for anything tappable. It already carries
-one documented escape: the slider thumb renders at 12px but is legal because its **hit
-area** is 44px — the visible mark and the touch target are decoupled, and only the mark
-is allowed to shrink.
+one *documented* escape — the slider thumb renders at 12px but is legal because its **hit
+area** is 44px, decoupling the visible mark from the touch target, and only the mark is
+allowed to shrink. It also already carries one *undocumented* one: `SkTag` renders a 28px
+tappable control (`SkControl.sm`) with no evident padded hit area, which is a sub-floor
+target shipping today without a rule to bless or catch it. So the pattern is not
+hypothetical — the system has both a sanctioned instance and an unsanctioned one, and no
+general statement to tell them apart.
 
 Dense chrome wants the same latitude the slider already has, and the rule doesn't say so
 in general terms. The trigger was a chat reaction pill: a count chip that sits *on* a
@@ -39,8 +43,18 @@ Concretely:
   (`behavior: HitTestBehavior.opaque` on a padded box), not a smaller opaque one.
 - This covers a named class of **dense chrome**: reaction pills, message-attached
   affordances, chip-scale counts that annotate another element. It is not a licence for
-  small standalone buttons — a button that is the primary way to do a thing is not
-  chrome and takes the full 44px, visual included.
+  small standalone buttons — but the reason is *discoverability*, not reachability. A
+  standalone control is the thing a user hunts for; shrinking its mark below the floor
+  hides it. Chrome annotates something already on screen, so its mark can be small
+  without being lost. Both keep the 44px hit area; only standalone controls also keep the
+  44px *visual*, and for a different reason than the target rule.
+- **Overlapping targets.** Padding a sub-floor mark out to 44px can make its hit area
+  overlap a neighbour's — adjacent reaction pills, or a pill sitting on a bubble that is
+  itself tappable to reveal its timestamp (0025). Where 44px targets would overlap, the
+  chrome's target takes priority on its own mark and yields elsewhere, and same-class
+  marks (a row of pills) hold a minimum centre-to-centre spacing so no two targets
+  contend for the same pixel. A mark with a target that silently steals its host's tap is
+  not conformant, even though both are individually 44px.
 
 **Optional primitive.** If the reaction pill recurs across bindings, add `SkReactionPill`
 (or fold it into an `SkChip` size) that bakes the 44px hit area in, so the exception
@@ -54,7 +68,15 @@ lives in one component rather than being re-argued in a comment at each call sit
   instance, rather than a slider carve-out plus an unwritten "chrome is different".
 - Per 0012, the touch-target check must measure the **hit area**, not the painted box,
   or it will false-positive on every legal small mark and miss the real violation (a
-  small mark with a small target).
+  small mark with a small target). This is honest in Flutter — a widget test can hit-test
+  the padded region directly — but not statically computable in CSS/React, where the
+  effective target depends on layout, padding, pseudo-elements, and stacking. Per 0018's
+  lesson (a check that catches Dart but not CSS is how one interpretation becomes three),
+  the CSS side stays a manual pass until it can be measured, and the ADR says so rather
+  than pretending the gate is symmetric.
+- Versioning (0019): **Major**. The 44px minimum is a Tier 0 rule (`conformance.md`), and
+  generalising it — even to permit only what the slider already does — changes a Tier 0
+  rule.
 
 ## Rejected alternatives
 

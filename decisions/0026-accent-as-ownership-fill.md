@@ -1,67 +1,78 @@
-# 0026 — Accent as a repeated ownership fill is exempt from the single-accent rule
+# 0026 — The single-accent rule governs competing actions, not identity washes
 
 - **Status** Proposed
 - **Date** 2026-08-22
-- **Affects** the accent-emphasis rule (`conformance.md`), `spec/`; every binding
+- **Affects** the single-accent gloss in `conformance.md`; `spec/`; every binding
 
 ## Context
 
-A Tier-0 identity rule says one accent hue is live at a time: "if two things on a screen
-are accent-coloured, one of them is wrong." It exists to stop a screen from having three
-things shouting "click me" — competing accent *actions* that destroy the hierarchy the
-accent is supposed to create.
+A Tier-0 identity rule is stated, in `decisions/0008`, as: "one accent hue live at a time,
+bound per app, and the shared layer is achromatic." That is the normative content, and it
+is about hue *rotation* — which single accent a product is allowed to be — not about how
+many times that accent may appear on a screen.
 
-A chat thread breaks the letter of that rule on purpose. The convention for "this message
-is mine" is an accent-filled bubble with on-accent text — and a normal thread has a dozen
-of them on screen at once, plus an accent send button and accent-tinted reaction
-highlights. By a literal reading, eleven of those bubbles are "wrong". They are not; the
-thread reads perfectly, because the accent here is not eleven competing calls to action —
-it is one **identity wash** repeated: every accent bubble means the same thing, "mine".
+`conformance.md` restates it and appends a gloss: "if two things on a screen are
+accent-coloured, one of them is wrong." The gloss is illustrative, and for its intended
+subject — competing calls to action — it is right: two primary buttons, three "featured"
+cards, and one loses. But read literally, as a counting rule, it misfires the moment a
+surface uses accent as *identity* rather than *emphasis*.
 
-The rule conflates two different uses of accent that happen to share a colour:
+A chat thread is where it misfires hardest. The convention for "this message is mine" is
+an accent-filled bubble with on-accent text, and a normal thread shows a dozen at once. By
+the gloss's literal reading, eleven of them are "wrong." They are not; the thread reads
+perfectly, because those bubbles are not a dozen competing calls to action — they are one
+**identity wash** repeated, every instance meaning the same thing, "mine." The same is
+true of selected rows in a multi-select list.
 
-- **Accent as emphasis** — a call to action, a primary button, a selected tab. Here the
-  scarcity rule is right: two primaries compete, and one loses.
-- **Accent as identity/ownership** — own message bubbles, the selected rows in a
-  multi-select list. Here repetition is the *point*: the wash marks a category, and it
-  must appear as many times as the category does.
-
-Left undocumented, this reads as an oversight — a conformance pass flags every own-bubble
-after the first, and a reviewer either waives the whole rule (bad) or repaints ownership
-in a neutral colour (worse: it discards the strongest, most conventional ownership signal
-there is).
+The gloss, in other words, was written about emphasis and is being read as if it governed
+every accent pixel. The fix is to say what it always meant, not to invent a second kind of
+accent with its own rules. (An earlier draft of this ADR created an "identity-accent"
+category gated by conditions like "the primary action must stay the most prominent accent
+element" — unenforceable, and the wrong shape: a rule that needs a new category and a
+judgement call every time is the failure, not the fix.)
 
 ## Decision
 
-**The single-accent rule governs competing accent *actions*, not identity washes.**
-Accent used as a systematic ownership/identity fill — own-message bubbles, selected rows,
-the "you" marker in a list — is exempt, subject to two conditions:
+**Clarify the gloss: the single-accent rule governs competing accent *actions*, not the
+repeated use of accent as an identity or ownership fill.** No new category, no conditions —
+one sentence of scope on an existing rule.
 
-1. **One meaning per surface.** On a given screen the ownership accent means exactly one
-   thing. You may not also use the same accent as a selection wash *and* an ownership
-   wash in the same view; pick one identity for the accent to carry.
-2. **It must not compete with an accent primary action for attention.** If a screen has
-   an accent identity wash and also an accent primary action, the primary action stays
-   the single most prominent accent element — by size, position, and weight — so the
-   hierarchy the original rule protects still holds.
+- The `conformance.md` gloss changes from "if two things on a screen are accent-coloured,
+  one of them is wrong" to, in substance: *if two things on a screen compete for a primary
+  **action**, one of them is wrong; a systematic identity fill (own-message bubbles,
+  selected rows) may repeat, because it marks a category rather than a call to action.*
+- Own-message bubbles keep the accent fill. Selected rows are already covered — `spec/`'s
+  table (`spec/Table.md`) specifies `--surface-selected` plus a `--border-accent` leading
+  edge — so this clarification simply stops the gloss from appearing to contradict a spec
+  that already ships; it does not re-permit anything.
+- The scarcity rule keeps its full force where it belongs: competing accent *actions*.
 
 ## Consequences
 
-- Own-message bubbles keep the conventional accent fill; the rule text now says so
-  instead of implying they are violations.
-- The scarcity rule keeps its teeth where it matters — two primary buttons, three
-  "featured" cards — because the carve-out is narrowly for repeated *identity*, not for
-  emphasis.
-- Per 0012, the accent check distinguishes accent *actions* (still capped) from accent
-  identity surfaces (bubbles, selected rows — exempt), rather than counting every accent
-  fill on the screen.
+- Own-message bubbles and selected rows read as conformant because the rule text now says
+  what it meant, not because a reviewer waived it.
+- The scarcity rule keeps its teeth for action hierarchy — two primary buttons still lose
+  one — because the clarification narrows scope to actions, it does not weaken the rule.
+- Per 0012, this needs **no** conformance-check change, because there is no accent check
+  to change: `tool/conformance-check.mjs` deliberately excludes "one accent per screen" as
+  a judgement call (it says so at the top of the file), and it stays a manual pass. The
+  earlier draft's claim that "the check distinguishes accent actions from identity
+  surfaces" described a gate that does not exist.
+- Versioning (0019): **Minor**. This clarifies a gloss to match the unchanged normative
+  rule in 0008 — it does not change the Tier 0 rule itself, and adds no stricter
+  obligation. (Had it created a new accent category, that would have been a Tier 0 change
+  and Major; the reframe is deliberately the lighter one.)
 
 ## Rejected alternatives
 
+- **Create an exempt "identity accent" category with conditions.** The original draft.
+  Manufactures a second kind of accent gated by an unenforceable "most prominent element"
+  test, and re-permits selected rows the spec already sanctions. A category that needs
+  re-arguing at each surface is the problem this was meant to solve.
 - **Paint own bubbles a neutral fill.** Throws away the clearest ownership signal in
-  messaging for literal compliance with a rule that was written about buttons. The result
-  is a chat that reads worse to satisfy a rule that never meant to govern it.
-- **Drop the single-accent rule.** The rule is load-bearing for action hierarchy; the
-  problem is scope, not the rule. Narrowing it to actions keeps its value.
-- **Leave it as a per-app waiver.** A waiver that every chat surface needs is a missing
-  rule, and it fails audits until someone re-argues it each time.
+  messaging to satisfy a gloss that was written about buttons. The chat reads worse to
+  obey a rule that never meant to govern it.
+- **Drop the single-accent rule.** It is load-bearing for action hierarchy. The problem
+  was the gloss's scope, not the rule; narrowing the gloss keeps the rule's value intact.
+- **Leave it as a per-app waiver.** A waiver every chat surface needs is a missing
+  clarification, and it fails audits until someone re-argues it each time.

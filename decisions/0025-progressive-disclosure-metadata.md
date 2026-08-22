@@ -31,10 +31,16 @@ reconciled by separating *what is shown* from *what is announced*.
 accessible name of the element**, and **any pointer-only affordance carries a documented
 non-pointer trigger.**
 
-- **Time-on-demand.** A bubble may hide its timestamp from view and reveal it on tap.
-  The timestamp must nonetheless be part of the message's accessible name at all times,
-  so a screen-reader user hears "Ana, 3:42 PM, see you there" without needing the reveal.
-  The visual reveal is a sighted-density convenience, not the source of truth.
+- **Time-on-demand.** A bubble may hide its timestamp from view and reveal it on tap. The
+  timestamp must nonetheless be reachable non-visually at all times — but as the element's
+  **accessible description**, not folded into its accessible name. The distinction
+  matters: a name is announced on every traversal, so putting the time there stamps
+  "3:42 PM" onto all fifty messages a screen-reader user arrows past — trading sighted
+  density for AT verbosity, which is not an improvement, only a relocation of the noise. A
+  description is available on demand (the AT user asks for detail on the message they care
+  about), which preserves the real principle — the value is never pointer-only — without
+  making the AT pass the loud one. The visual reveal stays a sighted-density convenience,
+  not the source of truth.
 - **Non-pointer trigger for gestures.** Any hover- or long-press-driven action (the
   reaction picker) must also be reachable without a pointer: the host element is
   focusable, an activation key opens the same affordance, or a visible control appears in
@@ -50,9 +56,16 @@ non-pointer trigger.**
   behind focus-plus-key or a visible affordance.
 - Any surface tempted to hide metadata behind a gesture now has a rule to meet rather
   than an omission to exploit.
-- Per 0012, the check can assert the weaker, automatable half — that a bubble exposing a
-  hidden timestamp still carries it in its accessible name — even though "has a
-  non-pointer trigger" needs human review.
+- Per 0012, the automatable half is genuinely weak and the ADR should say so plainly. A
+  static check can, at most, assert that a component declaring a hidden-then-revealed
+  value also carries that value in its accessible description — but nothing in source
+  *declares* "this has a hidden timestamp," so even that is closer to a per-component test
+  someone must remember to write than a rule the gate enforces. The half that actually
+  protects users — "the gesture has a non-pointer path" — is human review, full stop.
+  This ADR is therefore mostly a guideline with a manual review, not a gated rule, and is
+  honest about it.
+- Versioning (0019): **Minor**. It adds an accessibility allowance; no Tier 0 rule
+  changes.
 
 ## Rejected alternatives
 

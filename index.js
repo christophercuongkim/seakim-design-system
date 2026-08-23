@@ -44,6 +44,7 @@ export { Dialog } from "./components/feedback/Dialog.jsx";
 export { Toast } from "./components/feedback/Toast.jsx";
 export { Tooltip } from "./components/feedback/Tooltip.jsx";
 export { Popover } from "./components/feedback/Popover.jsx";
+export { Combobox } from "./components/feedback/Combobox.jsx";
 export { EmptyState } from "./components/feedback/EmptyState.jsx";
 export { Skeleton } from "./components/feedback/Skeleton.jsx";
 export { LoadingState } from "./components/feedback/LoadingState.jsx";
@@ -51,3 +52,7 @@ export { Tabs } from "./components/navigation/Tabs.jsx";
 export { SideNav } from "./components/navigation/SideNav.jsx";
 export { TabBar } from "./components/navigation/TabBar.jsx";
 export { Viewport, useMeasuredBreakpoint, breakpointFor, BREAKPOINTS } from "./ui_kits/shared/Frames.jsx";
+
+// Filter matchers for the searchable picker (0028) — shared so every long list
+// ranks identically. Utilities, not components (hence not a .jsx path).
+export { skMatchScore, skFuzzyScore } from "./components/core/match.js";

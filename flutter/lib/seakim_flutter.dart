@@ -40,6 +40,7 @@ export 'src/widgets/sk_badge.dart';
 export 'src/widgets/sk_button.dart';
 export 'src/widgets/sk_card.dart';
 export 'src/widgets/sk_checkbox.dart';
+export 'src/widgets/sk_combobox.dart';
 export 'src/widgets/sk_date_picker.dart';
 export 'src/widgets/sk_dialog.dart';
 export 'src/widgets/sk_empty_state.dart';

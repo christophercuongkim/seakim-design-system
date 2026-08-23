@@ -129,6 +129,26 @@ final List<SkDemo> skShowcase = <SkDemo>[
     );
   }),
 
+  // sk_combobox.dart
+  SkDemo('Inputs', 'Combobox (searchable)', (BuildContext context) {
+    String? value;
+    return StatefulBuilder(
+      builder: (BuildContext context, StateSetter setState) =>
+          SkCombobox<String>(
+        value: value,
+        placeholder: 'Currency',
+        onChanged: (String v) => setState(() => value = v),
+        options: const <SkComboboxOption<String>>[
+          SkComboboxOption<String>(value: 'usd', label: 'US Dollar'),
+          SkComboboxOption<String>(value: 'eur', label: 'Euro'),
+          SkComboboxOption<String>(value: 'gbp', label: 'British Pound'),
+          SkComboboxOption<String>(value: 'jpy', label: 'Japanese Yen'),
+          SkComboboxOption<String>(value: 'chf', label: 'Swiss Franc'),
+        ],
+      ),
+    );
+  }),
+
   // sk_date_picker.dart
   SkDemo('Date picker', 'Departure', (BuildContext context) {
     DateTime? date = DateTime(2026, 8, 20);

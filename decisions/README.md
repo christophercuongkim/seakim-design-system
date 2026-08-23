@@ -47,6 +47,7 @@ the value is in the trail, and a silently edited ADR is worse than none.
 | [0025](0025-progressive-disclosure-metadata.md) | Metadata on demand, with a non-pointer path | Accepted |
 | [0026](0026-accent-as-ownership-fill.md) | The single-accent rule governs competing actions, not identity washes | Accepted |
 | [0027](0027-non-primary-floating-affordance.md) | A non-primary floating affordance is allowed, and is not a FAB | Accepted |
+| [0028](0028-searchable-select.md) | A searchable long-list picker is its own component (SkCombobox), not a hand-rolled trigger | Proposed |
 
 ## Writing one
 

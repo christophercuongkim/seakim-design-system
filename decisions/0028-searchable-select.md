@@ -54,7 +54,9 @@ The primitive owns, as one unit:
 - **Type-to-filter.** A default matcher (substring at minimum; a scored subsequence is a
   reasonable default for code+name lists), a defined empty-result state, and a selection
   highlight. The matcher lives in the binding as shared code, not re-invented per call
-  site — TripTogether's `fuzzyScore` is a candidate to contribute up.
+  site — TripTogether's `fuzzyScore` is contributed up on this branch as `skFuzzyScore`
+  (a standalone util, not yet wired to any widget), so the picker, if accepted, adopts,
+  replaces, or rejects it without churn.
 - **The a11y.** Field label wired to the trigger; on open, focus moves into the filter
   input; arrow keys move the active option; Enter selects; Escape and outside-press close
   (0022); the selection is announced. The overlay obligations are the primitive's job,

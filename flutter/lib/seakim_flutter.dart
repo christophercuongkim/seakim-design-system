@@ -66,3 +66,5 @@ export 'src/widgets/sk_tag.dart';
 export 'src/widgets/sk_textarea.dart';
 export 'src/widgets/sk_toast.dart';
 export 'src/widgets/sk_tooltip.dart';
+
+export 'src/util/sk_fuzzy_match.dart';

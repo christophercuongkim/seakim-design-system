@@ -43,4 +43,16 @@ void main() {
       greaterThan(skFuzzyScore('dol', 'Diamond of Lore')),
     );
   });
+
+  test('accent-insensitive: an un-accented query finds an accented name', () {
+    // The lists this feeds (timezone, country, currency) are full of these.
+    expect(skFuzzyScore('zurich', 'Zürich'), greaterThan(0));
+    expect(skFuzzyScore('koln', 'Köln'), greaterThan(0));
+    expect(skFuzzyScore('sao', 'São Paulo'), greaterThan(0));
+    expect(skFuzzyScore('cote', "Côte d'Ivoire"), greaterThan(0));
+    // Ligatures expand: æ -> ae, ß -> ss.
+    expect(skFuzzyScore('str', 'Straße'), greaterThan(0));
+    // A folded accented query still hits a plain target.
+    expect(skFuzzyScore('Zür', 'zurich'), greaterThan(0));
+  });
 }

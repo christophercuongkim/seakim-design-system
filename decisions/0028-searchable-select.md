@@ -1,6 +1,6 @@
 # 0028 — A searchable long-list picker is its own component, not a hand-rolled trigger
 
-- **Status** Proposed
+- **Status** Accepted
 - **Date** 2026-08-23
 - **Affects** `spec/` (a new `Combobox` spec), the field-trigger conformance check (`conformance.md`); **every binding** — a native `<select>` cannot be searchable, so this is a fully custom widget in React *and* Flutter, not a Flutter-only concern
 

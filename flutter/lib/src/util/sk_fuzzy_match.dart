@@ -58,6 +58,26 @@ int skFuzzyScore(String query, String target) {
   return score;
 }
 
+/// The **default** combobox matcher (decision 0028): a predictable, tiered rank
+/// — exact, then prefix, then substring, then no match. Case- and
+/// accent-insensitive. Returns 0 for a miss, or a tier score (higher is better)
+/// otherwise; callers sort by score descending and keep original list order
+/// within a tier (a stable sort, or an index tiebreaker).
+///
+/// This is the default because it is explicable: what you typed appears in what
+/// you got, and where. Reach for [skFuzzyScore] only when the list's shape
+/// (short codes plus long names) justifies a scattered match — fuzzy ranking is
+/// harder for a user to predict.
+int skMatchScore(String query, String target) {
+  final String q = _fold(query.trim().toLowerCase());
+  if (q.isEmpty) return 1;
+  final String t = _fold(target.toLowerCase());
+  if (t == q) return 300; // exact
+  if (t.startsWith(q)) return 200; // prefix
+  if (t.contains(q)) return 100; // substring
+  return 0;
+}
+
 bool _isWordChar(int c) {
   // a-z, 0-9 (target is already lower-cased and folded to ASCII).
   return (c >= 0x61 && c <= 0x7a) || (c >= 0x30 && c <= 0x39);

@@ -2,10 +2,10 @@ import 'package:flutter/widgets.dart';
 
 import '../theme/sk_theme.dart';
 import '../tokens/sk_icons.g.dart';
+import 'sk_field_trigger.dart';
 import 'sk_icon.dart';
 import 'sk_popover.dart';
 import 'sk_pressable.dart';
-import 'sk_touch_target.dart';
 
 @immutable
 class SkSelectOption<T> {
@@ -77,63 +77,30 @@ class _SkSelectState<T> extends State<SkSelect<T>> {
           widget.onChanged?.call(v);
         },
       ),
-      child: SkPressable(
-        onPressed: widget.enabled ? _toggle : null,
-        disabled: !widget.enabled,
-        pressScale: 1,
+      // The closed-state chrome (border, focus ring, caret, touch floor) is the
+      // shared SkFieldTrigger — the same part SkCombobox uses (0028). Reading the
+      // focus ring from that one place is why the select can no longer ship
+      // without it, and why a keyboard-focused-but-closed select now rings.
+      child: SkFieldTrigger(
+        open: _open,
+        invalid: widget.invalid,
+        enabled: widget.enabled,
+        size: widget.size,
+        onPressed: _toggle,
         semanticLabel: selected?.label ?? widget.placeholder,
-        builder: (BuildContext context, SkInteraction s) {
-          final Color border = !widget.enabled
-              ? c.borderDisabled
-              : widget.invalid
-                  ? c.textDanger
-                  : _open
-                      ? c.borderFocus
-                      : s.liveHover
-                          ? c.borderStrong
-                          : c.borderDefault;
-          // Disabled is a token, not an opacity pass — every colour in the
-          // subtree resolves to its disabled counterpart.
-          final Color contentMuted =
-              widget.enabled ? c.textTertiary : c.textDisabled;
-          return SkTouchTarget(
-            extent: widget.size,
-            child: AnimatedContainer(
-              duration: SkMotion.instant,
-              curve: SkMotion.out,
-              height: widget.size,
-              padding: const EdgeInsets.symmetric(horizontal: SkSpace.s4),
-              decoration: BoxDecoration(
-                color: widget.enabled ? c.surfaceRaised : c.fillDisabled,
-                border: Border.all(
-                  color: border,
-                  width: _open ? SkDepth.emphasis : SkDepth.hairline,
-                ),
-              ),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      selected?.label ?? widget.placeholder ?? '',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: SkText.bodySm.copyWith(
-                        fontSize: dense ? SkFontSize.xs : SkFontSize.sm,
-                        color: !widget.enabled
-                            ? c.textDisabled
-                            : selected == null
-                                ? c.textTertiary
-                                : c.textPrimary,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: SkSpace.s4),
-                  SkIcon(SkIcons.caretDown, size: 14, color: contentMuted),
-                ],
-              ),
-            ),
-          );
-        },
+        child: Text(
+          selected?.label ?? widget.placeholder ?? '',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: SkText.bodySm.copyWith(
+            fontSize: dense ? SkFontSize.xs : SkFontSize.sm,
+            color: !widget.enabled
+                ? c.textDisabled
+                : selected == null
+                    ? c.textTertiary
+                    : c.textPrimary,
+          ),
+        ),
       ),
     );
   }

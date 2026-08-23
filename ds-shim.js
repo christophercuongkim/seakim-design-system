@@ -20,6 +20,7 @@
   var FILES = [
     'components/core/Icon.jsx',
     'components/core/useCoarsePointer.js',
+    'components/core/match.js',
     'components/core/Button.jsx',
     'components/core/IconButton.jsx',
     'components/core/Badge.jsx',
@@ -42,6 +43,7 @@
     'components/feedback/Toast.jsx',
     'components/feedback/Tooltip.jsx',
     'components/feedback/Popover.jsx',
+    'components/feedback/Combobox.jsx',
     'components/feedback/EmptyState.jsx',
     'components/feedback/Skeleton.jsx',
     'components/feedback/LoadingState.jsx',

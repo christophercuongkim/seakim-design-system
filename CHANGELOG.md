@@ -17,6 +17,29 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [4.2.0] — 2026-08-23
+
+### Added
+
+- **`SkCombobox` / `Combobox`** (both bindings), the searchable long-list picker owed by
+  [0028](decisions/0028-searchable-select.md) (now **Accepted**). A field trigger opens an
+  anchored-popover (0022) filter surface — a search input over a ranked, keyboard-navigable
+  option list, resolving to a sheet on `sm`. Ranking is in the contract: exact → prefix →
+  substring → list order, case- and accent-insensitive (`zurich` finds `Zürich`), with a
+  scored-subsequence fuzzy matcher opt-in per picker. The filtered-to-nothing state names
+  the filter and offers to clear it. `spec/Combobox.md`.
+- **`SkFieldTrigger`** — the shared closed-state field chrome (border, focus ring, caret,
+  44px floor) now backs both `SkSelect` and `SkCombobox`, so a picker can never again ship
+  a trigger that forgot its focus ring.
+- **`skMatchScore` / `skFuzzyScore`** matchers exported in both bindings (Flutter util +
+  React `components/core/match.js`), so every long list ranks the same way.
+
+### Fixed
+
+- **Flutter `SkSelect` now shows a keyboard focus ring while closed** — a standing Tier 0
+  ("focus is always visible") gap where the trigger only lit `borderFocus` while open,
+  diverging from React's `Select`. The `SkFieldTrigger` extraction closes it. (See 0028.)
+
 ## [4.1.1] — 2026-08-22
 
 ### Fixed

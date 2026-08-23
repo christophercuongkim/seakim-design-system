@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Toast } from './Toast.jsx';
 import { Tooltip } from './Tooltip.jsx';
 import { Popover } from './Popover.jsx';
+import { Combobox } from './Combobox.jsx';
 import { EmptyState } from './EmptyState.jsx';
 import { Skeleton } from './Skeleton.jsx';
 import { LoadingState } from './LoadingState.jsx';
@@ -11,6 +12,7 @@ import { IconButton } from '../core/IconButton.jsx';
 
 export function Demo() {
   const [open, setOpen] = useState(false);
+  const [currency, setCurrency] = useState('EUR');
   return (
     <div className="grid" style={{ gridTemplateColumns: '1fr 1fr', alignItems: 'start' }}>
       <div className="col">
@@ -34,6 +36,19 @@ export function Demo() {
             Rename · Duplicate · Delete
           </div>
         </Popover>
+        <div className="lbl" style={{ marginTop: 'var(--space-4)' }}>Combobox</div>
+        <Combobox
+          value={currency}
+          onChanged={setCurrency}
+          placeholder="Select currency"
+          options={[
+            { value: 'USD', label: 'US Dollar' },
+            { value: 'EUR', label: 'Euro' },
+            { value: 'GBP', label: 'British Pound' },
+            { value: 'JPY', label: 'Japanese Yen' },
+            { value: 'AUD', label: 'Australian Dollar' },
+          ]}
+        />
       </div>
       <div className="col">
         <div className="lbl">EmptyState</div>

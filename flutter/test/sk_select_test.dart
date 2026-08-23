@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:seakim_flutter/seakim_flutter.dart';
 
@@ -65,5 +66,39 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
     expect(find.text('Tokyo'), findsNothing);
+  });
+
+  testWidgets('the closed trigger rings on keyboard focus (the 0028 fix)',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(_host(SkSelect<String>(
+      options: _opts,
+      value: null,
+      placeholder: 'Where to?',
+      onChanged: (_) {},
+    )));
+    await tester.pump();
+
+    Border borderNow() {
+      final AnimatedContainer box = tester.widget<AnimatedContainer>(
+        find
+            .descendant(
+                of: find.byType(SkSelect<String>),
+                matching: find.byType(AnimatedContainer))
+            .first,
+      );
+      return (box.decoration! as BoxDecoration).border! as Border;
+    }
+
+    // Closed and unfocused: the plain hairline.
+    expect(borderNow().top.width, SkDepth.hairline);
+
+    // Move keyboard focus to the trigger — no tap, so the menu stays closed.
+    await tester.sendKeyEvent(LogicalKeyboardKey.tab);
+    await tester.pumpAndSettle();
+
+    // The trigger thickens to the 2px inset accent border — the ring the old
+    // select only showed while open, and a hand-rolled trigger forgot entirely.
+    expect(borderNow().top.width, SkDepth.emphasis);
+    expect(find.text('Oslo'), findsNothing); // still closed
   });
 }

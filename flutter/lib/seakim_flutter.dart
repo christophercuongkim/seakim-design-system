@@ -44,6 +44,7 @@ export 'src/widgets/sk_combobox.dart';
 export 'src/widgets/sk_date_picker.dart';
 export 'src/widgets/sk_dialog.dart';
 export 'src/widgets/sk_empty_state.dart';
+export 'src/widgets/sk_error_state.dart';
 export 'src/widgets/sk_field.dart';
 export 'src/widgets/sk_icon.dart';
 export 'src/widgets/sk_icon_button.dart';

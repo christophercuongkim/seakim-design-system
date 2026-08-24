@@ -46,6 +46,7 @@ export { Tooltip } from "./components/feedback/Tooltip.jsx";
 export { Popover } from "./components/feedback/Popover.jsx";
 export { Combobox } from "./components/feedback/Combobox.jsx";
 export { EmptyState } from "./components/feedback/EmptyState.jsx";
+export { ErrorState } from "./components/feedback/ErrorState.jsx";
 export { Skeleton } from "./components/feedback/Skeleton.jsx";
 export { LoadingState } from "./components/feedback/LoadingState.jsx";
 export { Tabs } from "./components/navigation/Tabs.jsx";

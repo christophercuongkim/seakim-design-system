@@ -198,6 +198,15 @@ final List<SkDemo> skShowcase = <SkDemo>[
             action: SkButton(label: 'Plan a trip', onPressed: () {}),
           )),
 
+  // sk_error_state.dart
+  SkDemo('Error state', 'Failed load with retry',
+      (BuildContext context) => SkErrorState(
+            title: "Couldn't load places",
+            description: 'Check your connection and try again.',
+            compact: true,
+            onRetry: () {},
+          )),
+
   // sk_field.dart
   SkDemo('Inputs', 'Field wrapping an input',
       (BuildContext context) => SkField(

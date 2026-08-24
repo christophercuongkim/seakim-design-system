@@ -4,6 +4,7 @@ import { Tooltip } from './Tooltip.jsx';
 import { Popover } from './Popover.jsx';
 import { Combobox } from './Combobox.jsx';
 import { EmptyState } from './EmptyState.jsx';
+import { ErrorState } from './ErrorState.jsx';
 import { Skeleton } from './Skeleton.jsx';
 import { LoadingState } from './LoadingState.jsx';
 import { Dialog } from './Dialog.jsx';
@@ -68,6 +69,13 @@ export function Demo() {
           title="Checking 40 airlines…"
           description="Holding your dates while we compare fares."
           compact
+        />
+        <div className="lbl" style={{ marginTop: 'var(--space-4)' }}>ErrorState</div>
+        <ErrorState
+          title="Couldn't load places"
+          description="Check your connection and try again."
+          compact
+          onRetry={() => {}}
         />
       </div>
       <Dialog

@@ -45,6 +45,7 @@
     'components/feedback/Popover.jsx',
     'components/feedback/Combobox.jsx',
     'components/feedback/EmptyState.jsx',
+    'components/feedback/ErrorState.jsx',
     'components/feedback/Skeleton.jsx',
     'components/feedback/LoadingState.jsx',
     'components/data/Table.jsx',

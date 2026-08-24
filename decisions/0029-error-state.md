@@ -1,6 +1,6 @@
 # 0029 — The error state is a first-class treatment, not an SkEmptyState variant
 
-- **Status** Proposed
+- **Status** Accepted
 - **Date** 2026-08-23
 - **Affects** every binding; adds an error-state treatment (React + Flutter);
   `guidelines/voice-and-tone.md`'s "Empty, loading, error" section — its third

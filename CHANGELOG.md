@@ -17,6 +17,21 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [4.3.0] — 2026-08-24
+
+### Added
+
+- **`SkErrorState` / `ErrorState`** (both bindings), the first-class error treatment owed
+  by [0029](decisions/0029-error-state.md) (now **Accepted**). A centred frame — the same
+  layout as the empty and loading states — but its own treatment: **no dashed border**
+  (that is empty's alone), an **error-toned glyph** (`--text-danger`), cause →
+  consequence → next-step copy, and a **recovery action** — a `Try again` retry by
+  default, or a navigational escape for a terminal error (a 403) where retrying cannot
+  help. It announces **assertively** (`role="alert"` / `SemanticsService.announce` with
+  `Assertiveness.assertive`), unlike loading's polite-busy region or empty's static
+  content. `spec/ErrorState.md`. Closes the third of `voice-and-tone.md`'s empty/loading/
+  error states, which had a rule but no component.
+
 ## [4.2.0] — 2026-08-23
 
 ### Added

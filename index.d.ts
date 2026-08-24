@@ -36,6 +36,7 @@ export { Tooltip } from "./components/feedback/Tooltip";
 export { Popover } from "./components/feedback/Popover";
 export { Combobox } from "./components/feedback/Combobox";
 export { EmptyState } from "./components/feedback/EmptyState";
+export { ErrorState } from "./components/feedback/ErrorState";
 export { Tabs } from "./components/navigation/Tabs";
 export { SideNav } from "./components/navigation/SideNav";
 export { TabBar } from "./components/navigation/TabBar";

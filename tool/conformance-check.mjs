@@ -155,6 +155,7 @@ const DART_RUNGS = LADDER.map(([n]) => DART_ALIAS[n] ?? n);
 const RULES = [
   {
     id: 'literal-colour',
+    clause: '0.4',
     tier: 0,
     why: 'Semantic tokens only. A literal colour cannot follow the theme or the app accent.',
     skip: f => exempt(f, PALETTE_FILES),
@@ -170,6 +171,7 @@ const RULES = [
   },
   {
     id: 'composed-alpha',
+    clause: '0.4',
     tier: 0,
     why: 'An alpha variant is a token, not a per-component constant — see decision 0013.',
     skip: f => exempt(f, PALETTE_FILES),
@@ -184,6 +186,7 @@ const RULES = [
   },
   {
     id: 'raw-ramp-step',
+    clause: '0.4',
     tier: 0,
     why: 'Components read the semantic layer, never a stone or brand ramp step directly.',
     skip: f => exempt(f, PALETTE_FILES),
@@ -194,6 +197,7 @@ const RULES = [
   },
   {
     id: 'untokenised-radius',
+    clause: '0.1',
     tier: 0,
     why: 'Every corner names a rung of the closed ladder — decision 0030. No literal radius, and no rung that is not in tokens/radius.css.',
     skip: f => exempt(f, GEOMETRY_EXEMPT),
@@ -224,6 +228,7 @@ const RULES = [
   },
   {
     id: 'literal-font-family',
+    clause: '0.4',
     tier: 0,
     why: 'A typeface is a token. Tier 1 fixes the family set (0031) and leaves delivery free — but component code reads --font-* / SkFonts, never a family name.',
     skip: f => exempt(f, TYPE_EXEMPT),
@@ -239,6 +244,7 @@ const RULES = [
   },
   {
     id: 'disabled-opacity',
+    clause: '0.4',
     tier: 0,
     why: 'Disabled is a token. Blanket opacity survives dark and collapses in light — see decision 0005.',
     skip: f => exempt(f, GEOMETRY_EXEMPT),
@@ -252,6 +258,7 @@ const RULES = [
   },
   {
     id: 'suppressed-focus',
+    clause: '0.6',
     tier: 0,
     why: 'Focus is always visible. Never remove the outline without providing a ring.',
     skip: f => exempt(f, GEOMETRY_EXEMPT),
@@ -264,6 +271,7 @@ const RULES = [
   },
   {
     id: 'unlabelled-icon-control',
+    clause: '0.6',
     tier: 0,
     why: 'Every icon-only control carries a label — it becomes the accessible name and the tooltip.',
     skip: f => exempt(f, GEOMETRY_EXEMPT),
@@ -281,6 +289,7 @@ const RULES = [
   },
   {
     id: 'hardcoded-touch-target',
+    clause: '0.7',
     tier: 0,
     why: '44px is the touch floor. Use --control-h-touch so it moves with the token.',
     skip: f => exempt(f, GEOMETRY_EXEMPT),
@@ -293,6 +302,7 @@ const RULES = [
   },
   {
     id: 'indefinite-rotation',
+    clause: '0.13',
     tier: 0,
     why: 'No indefinite rotation as a loading affordance — SeaKim has no spinner (0021). Use a skeleton (known shape) or the labeled loading state (unknown outcome).',
     skip: f => exempt(f, LOADING_TREATMENT_FILES),
@@ -504,7 +514,7 @@ try {
         const line = `${app}/${theme}: ${fg} on ${bg} is ${r.toFixed(2)}:1, floor is ${min}:1`;
         if (gated) {
           violations.push({
-            rule: 'contrast-floor', file: 'tokens/', line: 0, detail: line,
+            rule: 'contrast-floor', clause: '0.8', file: 'tokens/', line: 0, detail: line,
             text: 'guidelines/accessibility.md sets the floor. A revalue that breaks it is Major per 0019.',
           });
         } else {
@@ -549,7 +559,8 @@ if (!violations.length) {
 for (const [ruleId, list] of byRule) {
   const rule = RULES.find(r => r.id === ruleId)
     ?? { tier: 0, why: PARITY.find(p => p.id === ruleId)?.why ?? '' };
-  console.log(`  TIER ${rule.tier}  ${ruleId}  (${list.length})`);
+  const clause = rule.clause ?? list[0]?.clause;
+  console.log(`  TIER ${rule.tier}${clause ? `  §${clause}` : ''}  ${ruleId}  (${list.length})`);
   console.log(`          ${rule.why}\n`);
   for (const v of list.slice(0, 12)) {
     console.log(`    ${v.file}:${v.line}`);

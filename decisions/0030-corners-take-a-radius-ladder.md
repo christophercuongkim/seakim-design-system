@@ -57,7 +57,7 @@ component takes the rung its **role** names, not a value its author likes.
 | `lg` | 8px | Cards, panels, list rows |
 | `xl` | 12px | Dialogs, sheets, popovers, menus |
 | `2xl` | 16px | Full-screen surfaces, media containers |
-| `full` | 9999px | Count badges, toggle tracks, pills |
+| `full` | 999px | Count badges, toggle tracks, pills |
 | `circle` | 50% | Avatars, dots |
 
 Three clauses carry the weight:
@@ -89,9 +89,9 @@ Three clauses carry the weight:
   that every corner names a rung. The check must also read `tokens/radius.css` itself —
   the enforcement gap above is not fixed by changing the values, only by making the gate
   look at them.
-- **`--radius-full` moves `999px → 9999px`**, which forces `SkRadius.pill` to move with it.
-  This is a revalue with no visual consequence, taken only to match the ladder it came
-  from; keeping `999` would cost nothing. Flagged so the reviewer can say no.
+- **`--radius-full` does not move.** It stays `999px`, and `SkRadius.pill` stays `999`.
+  Every other rung here is new vocabulary; this one already existed and already works, so
+  it is the one value in the table that is unchanged.
 - Versioning (0019): **Major**. A Tier 0 rule changes.
 
 ## Enforceability
@@ -124,6 +124,12 @@ one call site in the system sits in exactly that blind spot.
 - **Adopt the external proposal wholesale**, including its `--sk-` prefixes and its
   neutral rename. That is 217 token renames — every one Major under 0011 — to acquire a
   vocabulary this repo already has under different names.
+- **Take the external proposal's `9999px` for `full`.** It renders identically — both
+  values are past the point where the corner is already a semicircle, and CSS and Flutter
+  both scale radii down to fit, so a 32px switch track resolves to 16px either way. The
+  two diverge only above ~1998px of height, which no badge or toggle track reaches. Its
+  only argument was sitting in the same table as the rungs being adopted; that is
+  inheriting a value, not choosing one.
 - **Leave the rungs undefined and let each component pick a pixel value.** The status quo
   ante with extra steps; it is what the unenforced rule was already permitting in
   practice.

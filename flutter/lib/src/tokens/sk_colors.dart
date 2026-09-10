@@ -170,7 +170,9 @@ class SkColors {
         surfaceScrim: SkRawColors.scrimDark,
         textPrimary: SkRawColors.textPrimaryDark,
         textSecondary: SkStone.s400,
-        textTertiary: SkStone.s500,
+        // s450, not s500: 500 is 4.12:1 on card. No single grey clears 4.5:1
+        // against both a near-black and a white card — lesson 18.
+        textTertiary: SkStone.s450,
         textInverse: SkStone.s950,
         textAccent: brand.s300,
         textLink: brand.s300,
@@ -220,7 +222,7 @@ class SkColors {
         surfaceScrim: SkRawColors.scrimLight,
         textPrimary: SkStone.s900,
         textSecondary: SkStone.s600,
-        textTertiary: SkStone.s500,
+        textTertiary: SkStone.s550,
         textInverse: SkStone.s50,
         // 700, not 600 — one fixed oklch L is one perceptual lightness, but WCAG
         // weights green at 0.7152, so turf lands at 4.38:1 on card. See lesson 18

@@ -17,7 +17,28 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
-## [6.2.0] — 2026-09-10
+## [6.3.0] — 2026-09-10
+
+### Added
+
+- **`--stone-450` (`#8e8a84`) and `--stone-550` (`#6c6964`)**, and `SkStone.s450` /
+  `s550`. They exist for one reason: **no single grey clears 4.5:1 against both a
+  near-black card and a white one.** The window is arithmetically empty — a colour needs
+  relative luminance ≥ 0.209 to clear the floor on `--stone-900`, and ≤ 0.183 to clear it
+  on white. So the third text tier has to split by theme, and 400/600 were already spoken
+  for by `--text-secondary`.
+
+### Fixed
+
+- **`--text-tertiary` was under the contrast floor in every app, in both themes** —
+  4.12:1 on the dark card and 4.38:1 on the light one, from a single `--stone-500` binding.
+  It is 165 call sites across both bindings, so collapsing it into `--text-secondary` would
+  have cost a real tier. It now resolves to `--stone-450` in dark (5.26:1 card, 5.62:1
+  page) and `--stone-550` in light (5.47:1 card, 5.19:1 page). `SkColors` moves with it.
+- The pair is now **gated** in `contrast-floor` rather than reported, on both card and
+  page. It was the only entry the gate printed and did not enforce.
+
+
 
 ### Fixed
 

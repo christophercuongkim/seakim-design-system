@@ -132,8 +132,14 @@
     "400": {
       "$value": "#a09c95"
     },
+    "450": {
+      "$value": "#8e8a84"
+    },
     "500": {
       "$value": "#7c7873"
+    },
+    "550": {
+      "$value": "#6c6964"
     },
     "600": {
       "$value": "#5c5955"
@@ -154,7 +160,7 @@
       "$value": "#0f0e0d"
     },
     "$type": "color",
-    "$description": "The warm achromatic spine. Never per-app. Warm on purpose — near-blacks keep a trace of yellow so the system reads as paper and graphite, never blue-grey."
+    "$description": "The warm achromatic spine. Never per-app. Warm on purpose — near-blacks keep a trace of yellow so the system reads as paper and graphite, never blue-grey. 450 and 550 exist for --text-tertiary: no single grey clears 4.5:1 against BOTH a near-black card and a white one (the window is empty), so the third text tier has to split by theme, and 400/600 were already taken by --text-secondary. See lesson 18."
   },
   "status": {
     "$description": "Status ramps in oklch. `400` is tuned for dark surfaces, `500` for light — separately, not derived. Status colours are not accents and may coexist with one.",

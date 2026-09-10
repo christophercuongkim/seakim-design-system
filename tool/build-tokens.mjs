@@ -171,7 +171,7 @@ function emitCss() {
   L.push('');
   L.push(`  --text-primary:    ${raw.textPrimaryDark.$value};`);
   L.push('  --text-secondary:  var(--stone-400);');
-  L.push('  --text-tertiary:   var(--stone-500);');
+  L.push('  --text-tertiary:   var(--stone-450);'); // 500 is 4.12:1 on card — lesson 18
   L.push('  --text-inverse:    var(--stone-950);');
   L.push('  --text-accent:     var(--brand-300);');
   L.push('  --text-link:       var(--brand-300);');
@@ -266,7 +266,7 @@ function emitCssLight() {
   L.push('');
   L.push('  --text-primary:    var(--stone-900);');
   L.push('  --text-secondary:  var(--stone-600);');
-  L.push('  --text-tertiary:   var(--stone-500);');
+  L.push('  --text-tertiary:   var(--stone-550);'); // 500 is 4.38:1 on card — lesson 18
   L.push('  --text-inverse:    var(--stone-50);');
   L.push('  /* 700, not 600. At one fixed oklch L every hue is the same PERCEPTUAL');
   L.push('     lightness, but WCAG weights green at 0.7152, so turf and sea sit');

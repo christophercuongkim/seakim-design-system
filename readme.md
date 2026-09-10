@@ -20,7 +20,7 @@ it. See [`CONTRIBUTING-A-BINDING.md`](CONTRIBUTING-A-BINDING.md) and
 
 ## Context
 
-SeaKim is building a portfolio of consumer apps. Two are in flight, more are planned:
+SeaKim is building a portfolio of consumer apps.
 
 | App | What it is | Surfaces | Accent |
 | --- | --- | --- | --- |
@@ -29,6 +29,35 @@ SeaKim is building a portfolio of consumer apps. Two are in flight, more are pla
 | _next_ | reserved | — | Plum `--hue-plum` (320) |
 
 Internal slide decks are a third surface and share the same tokens.
+
+### Who actually consumes this
+
+`ui_kits/voyage` and `ui_kits/bench` in this repo are **demo kits** — they exist to prove
+the rules reflow, not to ship. The real consumers are separate repositories, and none of
+them is visible to any gate here:
+
+| Repo | Consumes via | Accent | Rules version | Last synced |
+| --- | --- | --- | --- | --- |
+| [`fantasy-hub`](https://github.com/christophercuongkim/fantasy-hub) | vendored copy, `web/vendor/seakim/` | `data-app="bench"` | **1.0** | 2026-08-07 |
+| [`juntio`](https://github.com/juntio/juntio) | `seakim_flutter` git dep pinned at `ref: 1cc352d`, plus a docs mirror | — | **4.2** | 2026-08-26 |
+| [`job-search`](https://github.com/christophercuongkim/job-search) | vendored copy, `web/vendor/seakim/` | `data-app="job-search"` | **4.1** | 2026-09-02 |
+
+Three things this table is here to stop anyone assuming:
+
+1. **"Nothing ships, so anything can be renegotiated cheaply"** — the Sources note below
+   says that about the *values*, and it was true when written. It is no longer true about
+   the *rules*. This repo is at 7.0.0; the consumers are at 1.0, 4.1 and 4.2. Every one is
+   at least one full Major behind, which [0019](decisions/0019-versioning-second-pass.md)
+   treats as a failure state for a binding it can see — and it cannot see these.
+2. **Nothing pins them.** `tool/version-check.mjs` audits only the bindings listed in its
+   own `BINDINGS` array, which is `flutter/pubspec.yaml`. A consumer vendoring a copy is
+   invisible: it neither declares `seakim_rules` nor gets audited. Both vendored copies
+   drift silently by design.
+3. **`job-search` runs a hue this system does not define.** It declares
+   `[data-app="job-search"]` locally at hue 265 and hand-writes the whole `--brand-*` ramp
+   in its own `globals.css`, because the system reserves only brick, sea, turf and plum.
+   That is a fourth product answering to no slot, and the conformance checker shipped for
+   consumers to run (0012) would flag those literals if it were run there.
 
 ### Sources
 

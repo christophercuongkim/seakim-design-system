@@ -19,6 +19,7 @@
 
 import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs';
 import { join, relative, extname, basename } from 'node:path';
+import { oklchToRgb, contrast } from './oklch.mjs';
 
 const args = process.argv.slice(2);
 const JSON_OUT = args.includes('--json');
@@ -345,6 +346,17 @@ for (const file of files) {
  */
 const PARITY = [
   {
+    id: 'accent-text-step-parity',
+    why: 'The light-theme accent text step is hand-mapped in both bindings. It drifted to a sub-4.5:1 step once already (lesson 18); if CSS and Dart name different rungs, one binding is under the contrast floor.',
+    a: { file: 'tokens/theme-light.css', re: /--text-accent:\s*var\(--brand-(\d+)\)/ },
+    b: {
+      file: 'flutter/lib/src/tokens/sk_colors.dart',
+      // Scoped to SkColors.light — the dark factory names textAccent too.
+      scope: src => src.slice(src.indexOf('factory SkColors.light')),
+      re: /textAccent: brand\.s(\d+),/,
+    },
+  },
+  {
     id: 'overlay-width-parity',
     why: 'The dialog max-width is hand-authored in both bindings (no dimension token source yet, 0007 phase 2). Keep the Dart constant and the CSS token equal, or overlays drift across bindings.',
     a: { file: 'flutter/lib/src/tokens/sk_space.dart', re: /overlayDialogW\s*=\s*(\d+(?:\.\d+)?)/ },
@@ -352,9 +364,11 @@ const PARITY = [
   },
 ];
 
-function readNumber({ file, re }) {
+function readNumber({ file, re, scope }) {
   try {
-    const m = readFileSync(join(ROOT, file), 'utf8').match(re);
+    let src = readFileSync(join(ROOT, file), 'utf8');
+    if (scope) src = scope(src);
+    const m = src.match(re);
     return m ? Number(m[1]) : null;
   } catch { return null; }
 }
@@ -417,6 +431,92 @@ for (const p of PARITY) {
   }
 }
 
+/* ------------------------------------------------------- contrast (0005) */
+
+/**
+ * guidelines/accessibility.md states the floors and nothing checked them: the
+ * numbers were written down and the gate never read them. Resolve the semantic
+ * pairs for real — every app, both themes — and measure.
+ *
+ * 0019 makes a revalue that "fails a documented contrast gate" Major. This is
+ * that gate; before it existed the clause had nothing to point at.
+ */
+const CONTRAST_PAIRS = [
+  ['--text-primary', '--surface-page', 4.5, true],
+  ['--text-primary', '--surface-card', 4.5, true],
+  ['--text-secondary', '--surface-page', 4.5, true],
+  ['--text-secondary', '--surface-card', 4.5, true],
+  ['--text-accent', '--surface-card', 4.5, true],
+  ['--text-link', '--surface-card', 4.5, true],
+  ['--text-danger', '--surface-card', 4.5, true],
+  ['--on-accent', '--fill-accent', 4.5, true],
+  ['--border-focus', '--surface-card', 3.0, true],
+  // Reported, not failed: whether metadata text is "body and UI text" or the
+  // "decorative" row is a judgement the guideline does not settle. It sits just
+  // under 4.5 in both themes, which is worth seeing on every run.
+  ['--text-tertiary', '--surface-card', 4.5, false],
+];
+
+const notes = [];
+
+function cssDecls(src, want) {
+  const out = {};
+  for (const m of src.matchAll(/([^{}]+)\{([^}]*)\}/g)) {
+    const sel = m[1].replace(/\s+/g, ' ').trim();
+    if (want && !want.test(sel)) continue;
+    for (const d of m[2].matchAll(/(--[\w-]+)\s*:\s*([^;]+)/g)) out[d[1]] = d[2].trim();
+  }
+  return out;
+}
+
+function toRgb(name, map, depth = 0) {
+  if (depth > 8) return null;
+  const v = map[name]?.trim();
+  if (!v) return null;
+  const ref = v.match(/^var\(\s*(--[\w-]+)/);
+  if (ref) return toRgb(ref[1], map, depth + 1);
+  const hx = v.match(/^#([0-9a-fA-F]{6})$/);
+  if (hx) return [0, 2, 4].map(i => parseInt(hx[1].slice(i, i + 2), 16));
+  const ok = v.match(/^oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)/);
+  if (ok) return oklchToRgb(+ok[1], +ok[2], +ok[3]);
+  return null;
+}
+
+try {
+  const strip = f => readFileSync(join(ROOT, f), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+  const base = cssDecls(strip('tokens/colors.css'));
+  const light = cssDecls(strip('tokens/theme-light.css'));
+  const appsSrc = strip('tokens/apps.css');
+  const apps = {};
+  for (const m of appsSrc.matchAll(/\[data-app="(\w+)"\][^{]*\{([^}]*)\}/g)) {
+    if (apps[m[1]]) continue;
+    apps[m[1]] = cssDecls(`x{${m[2]}}`);
+  }
+
+  for (const [app, appVars] of Object.entries(apps)) {
+    for (const [theme, over] of [['dark', {}], ['light', light]]) {
+      const map = { ...base, ...appVars, ...over };
+      for (const [fg, bg, min, gated] of CONTRAST_PAIRS) {
+        const F = toRgb(fg, map), B = toRgb(bg, map);
+        if (!F || !B) continue; // a consuming repo may not carry every token
+        const r = contrast(F, B);
+        if (r >= min) continue;
+        const line = `${app}/${theme}: ${fg} on ${bg} is ${r.toFixed(2)}:1, floor is ${min}:1`;
+        if (gated) {
+          violations.push({
+            rule: 'contrast-floor', file: 'tokens/', line: 0, detail: line,
+            text: 'guidelines/accessibility.md sets the floor. A revalue that breaks it is Major per 0019.',
+          });
+        } else {
+          notes.push(line);
+        }
+      }
+    }
+  }
+} catch {
+  // Token files absent — a consuming repo running the checker over its own source.
+}
+
 /* ---------------------------------------------------------------- output */
 
 if (JSON_OUT) {
@@ -431,6 +531,12 @@ for (const v of violations) {
 }
 
 console.log(`\nSeaKim conformance — ${scanned} files in ${ROOT}\n`);
+
+if (notes.length && !JSON_OUT) {
+  console.log('  below the 4.5:1 floor, reported not failed:');
+  for (const n of [...new Set(notes)]) console.log(`   \u00b7  ${n}`);
+  console.log('');
+}
 
 if (!violations.length) {
   console.log('  clean\n');

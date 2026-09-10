@@ -8,7 +8,7 @@ version: 3.0.0
 
 # The rules version this binding was reviewed against — see decisions/0011.
 # A binding may lag the rules; it may not claim a version it has not been checked to.
-seakim_rules: "6.1"
+seakim_rules: "6.2"
 publish_to: none
 
 environment:

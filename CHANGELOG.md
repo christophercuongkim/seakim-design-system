@@ -17,7 +17,38 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
-## [6.1.0] — 2026-09-10
+## [6.2.0] — 2026-09-10
+
+### Fixed
+
+- **Two shipped accent hues were under the contrast floor in light mode.**
+  `guidelines/accessibility.md` stated the admission test for a new hue — 4.5:1 at
+  `oklch(0.56 0.14 H)` on `--stone-50` — and nothing had ever computed it. Sea scored
+  4.39:1 and turf 4.17:1; Voyage and Bench are the two apps in flight. `--text-accent` and
+  `--text-link` resolved to `--brand-600` in light, giving Bench **4.38:1** on card and
+  Voyage 4.62:1 with no headroom. Both now resolve to **`--brand-700`**, which clears
+  6.7:1 for every hue. Fixed in both bindings — `tokens/theme-light.css` and
+  `SkColors.light`, which named `brand.s600` and would otherwise have diverged.
+- The guideline's admission criterion now names `oklch(0.46 0.12 H)` — the step
+  `--text-accent` actually resolves to — and records why the old one was wrong.
+
+### Added
+
+- **`contrast-floor`** gate. Resolves the semantic pairs for real — every app, both
+  themes, `var()` chains and oklch included — and measures them against
+  `guidelines/accessibility.md`. This is the gate [0019](decisions/0019-versioning-second-pass.md)
+  already pointed at when it made "a revalue that fails a documented contrast gate" Major;
+  until now there was nothing behind that clause. `--text-tertiary` sits at 4.12:1 / 4.38:1
+  and is **reported, not failed** — whether metadata is body text or decorative is a
+  judgement the guideline does not settle.
+- **`accent-text-step-parity`** — the light accent text step is hand-mapped in both
+  bindings and drifted once already; CSS and Dart must now name the same rung.
+- `tool/oklch.mjs` — the oklch→sRGB transform, previously private to
+  `build-tokens.mjs`, extracted so the contrast gate uses the same maths rather than a
+  second implementation. Generated outputs verified byte-identical across the move.
+- Lesson 18: a uniform perceptual ladder is not a uniform contrast ladder.
+
+
 
 ### Added
 

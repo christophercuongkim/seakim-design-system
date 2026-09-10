@@ -17,6 +17,34 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [6.0.0] — 2026-09-10
+
+### Changed
+
+- **One text family** — [0031](decisions/0031-one-typeface.md). Outfit, Plus Jakarta Sans
+  and IBM Plex Mono are replaced by **Instrument Sans** for every word in the system and
+  **JetBrains Mono** for data. Hierarchy is now carried by size and weight, never by a
+  change of face. The twelve-step size scale is **unchanged** — this moves the faces only.
+- **`--font-display` is kept as a named slot**, pointing at Instrument Sans rather than
+  being deleted or aliased away. It is what the wordmark, every `h1`–`h5`, the nav rail
+  and the deck chrome read, so a future display face or a real logotype is one edit
+  instead of a four-role rewrite in both bindings. `SkFonts.display` mirrors it.
+- **Flutter bundles variable fonts** — one `.ttf` per family (381 KB) in place of ten
+  static cuts (~1.1 MB). Every `SkText` style gained `fontVariations` alongside
+  `fontWeight`, because the `wght` axis is what moves on a variable font; `fontWeight`
+  alone risks a synthesised bold instead of the real cut.
+- **The wordmark loses its distinct letterform.** `readme.md`'s founding line "Type:
+  geometric sans, clean and wide" is superseded, and the wordmark rule now names
+  Instrument Sans SemiBold. Identity rests on hue until a real mark exists; the retained
+  slot is what keeps that reversible.
+
+### Fixed
+
+- **`conformance.md` claimed the text font binaries were not committed.** They have been
+  tracked in `flutter/assets/fonts/` for some time. The note now says what is true: the
+  two text faces ship with the package, and only the four Phosphor icon `.ttf` files are
+  still absent from a fresh clone.
+
 ## [5.0.0] — 2026-09-10
 
 ### Changed

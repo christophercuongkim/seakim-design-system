@@ -50,6 +50,7 @@ the value is in the trail, and a silently edited ADR is worse than none.
 | [0028](0028-searchable-select.md) | A searchable long-list picker is its own component (SkCombobox), not a hand-rolled trigger | Accepted |
 | [0029](0029-error-state.md) | The error state is a first-class treatment, not an SkEmptyState variant | Accepted |
 | [0030](0030-corners-take-a-radius-ladder.md) | Corners take a radius ladder | Accepted |
+| [0031](0031-one-typeface.md) | One text family, and a display slot kept open | Accepted |
 
 ## Writing one
 

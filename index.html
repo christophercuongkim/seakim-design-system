@@ -287,9 +287,9 @@ export default function RootLayout({ children }) {
     <div class="step">
       <div class="stepnum">STEP 3 — FONTS</div>
       <h3>Swap the CSS @import for next/font</h3>
-      <p>The token file pulls the three families from Google with an <code>@import</code>. That blocks render and adds a third-party round trip. <code>next/font</code> self-hosts them and assigns the same variable names, so no component changes.</p>
+      <p>The token file pulls the two families from Google with an <code>@import</code>. That blocks render and adds a third-party round trip. <code>next/font</code> self-hosts them and assigns the same variable names, so no component changes.</p>
       <pre>// app/fonts.ts — self-hosted at build time, zero layout shift
-export const fontDisplay = Outfit({
+export const fontDisplay = Instrument_Sans({
   weight: ["400", "500", "600", "700"],
   variable: "--font-display",            // the SAME variable the tokens read
   subsets: ["latin"], display: "swap",
@@ -378,12 +378,11 @@ dependencies:
   seakim_flutter:
     path: ../seakim/flutter      # or a git ref / private pub server
 
-# then drop nine .ttf files into flutter/assets/fonts/
-#   Outfit-{Regular,Medium,SemiBold,Bold}.ttf
-#   PlusJakartaSans-{Regular,Medium,SemiBold,Bold}.ttf
-#   IBMPlexMono-{Regular,Medium}.ttf
-# All three are open-licence Google Fonts. Not committed —
-# no licensed binaries were supplied.</pre>
+# then drop the Phosphor icon fonts into flutter/assets/icons/
+# The two text faces ARE committed:
+#   InstrumentSans-Variable.ttf
+#   JetBrainsMono-Variable.ttf
+# Only the 4 Phosphor icon .ttf files still need dropping in.</pre>
     </div>
 
     <div class="step">
@@ -630,7 +629,7 @@ dart run tool/gen_tokens.dart
       <a class="card" href="guidelines/colors-surfaces-dark.html"><span class="t">Surfaces · dark</span><span class="d">Page, card, raised, overlay</span></a>
       <a class="card" href="guidelines/colors-surfaces-light.html"><span class="t">Surfaces · light</span><span class="d">A peer of dark, not a filter of it</span></a>
       <a class="card" href="guidelines/colors-text.html"><span class="t">Text colours</span><span class="d">Primary, secondary, tertiary, accent</span></a>
-      <a class="card" href="guidelines/type-families.html"><span class="t">Type families</span><span class="d">Outfit · Plus Jakarta Sans · IBM Plex Mono</span></a>
+      <a class="card" href="guidelines/type-families.html"><span class="t">Type families</span><span class="d">Instrument Sans · JetBrains Mono</span></a>
       <a class="card" href="guidelines/type-display.html"><span class="t">Display type</span><span class="d">7xl–2xl. Tracking tightens as size grows</span></a>
       <a class="card" href="guidelines/type-ui.html"><span class="t">UI type</span><span class="d">xl–2xs. 13px is the floor for dense web</span></a>
       <a class="card" href="guidelines/type-data.html"><span class="t">Data type</span><span class="d">Tabular mono — prices, times, codes, stat lines</span></a>

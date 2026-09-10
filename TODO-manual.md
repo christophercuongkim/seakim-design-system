@@ -69,7 +69,7 @@ I can write SVG and code, but not generate imagery. Nothing has been invented in
 these — every gap is a labelled placeholder, so they drop in cleanly.
 
 - [ ] **A logo or wordmark.** There is none. Every mark position currently sets the name
-      in Outfit SemiBold at `--tracking-tight`. Supply real marks and nothing else changes.
+      in Instrument Sans SemiBold at `--tracking-tight`. Supply real marks and nothing else changes.
 
 - [ ] **Destination photography for Voyage.** Every image area is a `Placeholder` reading
       `<city> photography`. Do not substitute stock or generated imagery — the placeholders

@@ -42,7 +42,7 @@ Decisions taken from the user directly:
 - Vibe: Swiss-clean baseline, warm and human in tone, playful in motion and accent
 - Palette: warm neutral core (achromatic), one accent per app
 - Mode: light and dark; **dark is the default**
-- Type: geometric sans, clean and wide
+- Type: one geometric sans across every role (0031 superseded the original three-family split; the original brief said "clean and wide")
 - Density: 7/10
 - Corners: a closed nine-rung ladder, assigned by role (0030 superseded the original "sharp (0px)"; `none` is still the answer for dividers, table cells and full-bleed media)
 - Motion: springy — slight overshoot on enter
@@ -52,7 +52,7 @@ Decisions taken from the user directly:
 ### No logo exists
 
 No logo or brand mark was supplied and none has been invented. Wherever a mark
-would sit, the system sets the wordmark **SeaKim** in Outfit SemiBold at
+would sit, the system sets the wordmark **SeaKim** in Instrument Sans SemiBold at
 `--tracking-tight`; each app sets its own name the same way. Supply real marks
 and they drop in with no other change.
 
@@ -133,17 +133,20 @@ so the system reads as paper and graphite, never blue-grey.
 
 ### Type
 
-Three families, strictly divided by job:
+One text family, plus mono for data (decision 0031):
 
-- **Outfit** — display and headings. Wide, geometric, clean; earns its keep above
-  17px. Set tight: `--tracking-tight` to `--tracking-tighter`.
-- **Plus Jakarta Sans** — UI and body. Geometric skeleton with humanist
-  apertures, so it stays legible at 13px where Outfit gets stiff.
-- **IBM Plex Mono** — data and eyebrows. Prices, times, confirmation codes,
+- **Instrument Sans** — everything that is words. Display, headings, UI, body.
+  Hierarchy is carried by size and weight, not by a change of face. Set the large
+  end tight: `--tracking-tight` to `--tracking-tighter`.
+- **JetBrains Mono** — data and eyebrows. Prices, times, confirmation codes,
   flight numbers, stat lines, and uppercase `--tracking-caps` eyebrow labels.
 
+`--font-display` remains its own token, pointing at Instrument Sans. It is the slot
+the wordmark and every `h1`–`h5` read, so a future display face is one edit rather
+than a rewrite of four roles in both bindings.
+
 Numbers in any column use `.tnum` (`font-variant-numeric: tabular-nums`). Prose
-caps at 68ch. Never use Outfit below 17px; never use Plus Jakarta above 24px.
+caps at 68ch.
 
 ### Responsive
 

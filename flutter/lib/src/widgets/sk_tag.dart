@@ -131,7 +131,7 @@ class SkTag extends StatelessWidget {
   ///
   /// Deliberately a character in a [Text], not an [IconData]. Naming a text font
   /// in an IconData puts that font in front of `--tree-shake-icons`, which would
-  /// happily subset Plus Jakarta Sans down to this one glyph and take every
+  /// happily subset Instrument Sans down to this one glyph and take every
   /// other character in the app with it.
   static const String _closeGlyph = '×';
 }

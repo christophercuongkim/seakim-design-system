@@ -18,6 +18,6 @@ dark only — decks are projected.
 - One accent per slide, and only on the thing being argued for.
 - Hairline borders and flat fills only — no shadows, no gradients, no rounded cards.
 - Wordmark bottom-left, page number bottom-right, both in `--text-tertiary`.
-- Numbers are IBM Plex Mono with tabular figures, and every figure names its source.
+- Numbers are JetBrains Mono with tabular figures, and every figure names its source.
 - No photography is used because none was supplied. Full-bleed imagery, when it
   exists, replaces the padded slide body entirely rather than sitting inside a card.

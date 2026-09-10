@@ -17,7 +17,29 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
-## [6.4.0] — 2026-09-10
+## [7.0.0] — 2026-09-10
+
+### Added
+
+- **Tier 0 §0.14 — a concentric corner never rounds more than the corner it sits in**,
+  per [0032](decisions/0032-concentric-corners.md), extending 0030. When a child's corner
+  is flush with its parent's or inset by less than one space rung, the child's rung never
+  exceeds the parent's; prefer `parent − inset`, snapped down a rung.
+
+  A child that does **not** sit in the parent's corner takes its own role's rung. That
+  clause is what keeps this from becoming the rule it resembles: `Toast` and `EmptyState`
+  are `none` and both hold a `md` Button, which is correct and ordinary — the naive "a
+  child never rounds more than its parent" would have made both a violation and pushed
+  toasts to invent a rung they do not need.
+
+  **Nothing in either binding changes.** Every current pairing already complies; this
+  records a rule the system was keeping by accident. It is Major because Tier 0 gains an
+  obligation, so a contributed binding never reviewed against it may now be
+  non-conformant even though nothing here moved.
+- Machine coverage is now six of **fourteen**. §0.14 is judgement — concentricity depends
+  on render-time layout, which a line-based checker cannot see — and joins the manual list.
+
+
 
 ### Added
 

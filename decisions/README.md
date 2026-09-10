@@ -51,6 +51,7 @@ the value is in the trail, and a silently edited ADR is worse than none.
 | [0029](0029-error-state.md) | The error state is a first-class treatment, not an SkEmptyState variant | Accepted |
 | [0030](0030-corners-take-a-radius-ladder.md) | Corners take a radius ladder | Accepted |
 | [0031](0031-one-typeface.md) | One text family, and a display slot kept open | Accepted |
+| [0032](0032-concentric-corners.md) | Concentric corners never round more than the corner they sit in | Accepted |
 
 ## Writing one
 

@@ -30,6 +30,11 @@ jobs:
       - name: Conformance
         run: node tool/conformance-check.mjs
 
+      # Proves the rules above were exercised, not merely that nothing matched —
+      # each rule fires on a bad fixture and stays quiet on a good one (lesson 7).
+      - name: Conformance self-test
+        run: node tool/conformance-selftest.mjs
+
       # VERSION, package.json, and the CHANGELOG must not drift apart; and each
       # binding's seakim_rules must be honest (decision 0019).
       - name: Version consistency

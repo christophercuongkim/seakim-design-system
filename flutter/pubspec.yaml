@@ -4,11 +4,11 @@ description: >-
   corners from a closed rung ladder, hairline borders, shadows only on
   things that float. Colour
   values are generated from the CSS token layer; see tool/gen_tokens.dart.
-version: 2.0.0
+version: 3.0.0
 
 # The rules version this binding was reviewed against — see decisions/0011.
 # A binding may lag the rules; it may not claim a version it has not been checked to.
-seakim_rules: "5.0"
+seakim_rules: "6.0"
 publish_to: none
 
 environment:
@@ -29,9 +29,8 @@ flutter:
     # Licence notices for the bundled fonts, loaded at runtime by
     # registerSkLicenses() so showLicensePage() can display them.
     - assets/icons/LICENSE-phosphor.txt
-    - assets/fonts/OFL-Outfit.txt
-    - assets/fonts/OFL-PlusJakartaSans.txt
-    - assets/fonts/OFL-IBMPlexMono.txt
+    - assets/fonts/OFL-InstrumentSans.txt
+    - assets/fonts/OFL-JetBrainsMono.txt
 
   fonts:
     # Icon fonts. Bundled here rather than pulled from a package, because every
@@ -50,29 +49,11 @@ flutter:
     - family: PhosphorDuotone
       fonts:
         - asset: assets/icons/Phosphor-Duotone.ttf
-    - family: Outfit
+    # Variable fonts: one file per family, weights selected on the wght axis
+    # via SkText's fontVariations. Both SIL OFL 1.1.
+    - family: InstrumentSans
       fonts:
-        - asset: assets/fonts/Outfit-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/Outfit-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/Outfit-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/Outfit-Bold.ttf
-          weight: 700
-    - family: PlusJakartaSans
+        - asset: assets/fonts/InstrumentSans-Variable.ttf
+    - family: JetBrainsMono
       fonts:
-        - asset: assets/fonts/PlusJakartaSans-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/PlusJakartaSans-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/PlusJakartaSans-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/PlusJakartaSans-Bold.ttf
-          weight: 700
-    - family: IBMPlexMono
-      fonts:
-        - asset: assets/fonts/IBMPlexMono-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/IBMPlexMono-Medium.ttf
-          weight: 500
+        - asset: assets/fonts/JetBrainsMono-Variable.ttf

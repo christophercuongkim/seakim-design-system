@@ -18,8 +18,8 @@ dependencies:
     path: ../seakim/flutter   # or a git ref, or a private pub server
 ```
 
-The fonts ship with the package — **Outfit**, **Plus Jakarta Sans**, **IBM Plex Mono**,
-all SIL OFL, in `assets/fonts/` alongside their licences. Nothing to download; the
+The fonts ship with the package — **Instrument Sans** and **JetBrains Mono**, both SIL
+OFL and both variable, in `assets/fonts/` alongside their licences. Nothing to download; the
 notices are registered for `showLicensePage()` automatically.
 
 ## Use
@@ -232,7 +232,7 @@ taps it, renders every icon weight, and checks the bundled font licence is regis
 Two things to know before shipping an app on it:
 
 1. **The fonts are not committed.** `pubspec.yaml` declares ten `.ttf` files under
-   `assets/fonts/` — Outfit, Plus Jakarta Sans, IBM Plex Mono, all on Google Fonts under
+   `assets/fonts/` — Instrument Sans and JetBrains Mono, both on Google Fonts under
    the SIL OFL. Drop them in or the asset bundle will not build. The OFL notice has to
    ship with your app; add it in `lib/src/tokens/sk_licenses.dart` next to the icon one.
 2. **Tree shaking is unverified.** The const `IconData` shape is designed for

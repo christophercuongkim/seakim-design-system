@@ -244,9 +244,9 @@ at build time and emits zero layout shift. It assigns them to **the same three C
 variables the system already uses**, so no component changes:
 
 ```ts
-variable: "--font-display"  // Outfit
-variable: "--font-sans"     // Plus Jakarta Sans
-variable: "--font-mono"     // IBM Plex Mono
+variable: "--font-display"  // Instrument Sans (the display SLOT)
+variable: "--font-sans"     // Instrument Sans
+variable: "--font-mono"     // JetBrains Mono
 ```
 
 Then **comment out the `@import` line in `tokens/fonts.css`** (or import the token

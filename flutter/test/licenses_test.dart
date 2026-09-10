@@ -18,7 +18,7 @@ void main() {
     }
   });
 
-  test('all four notices reach LicenseRegistry for showLicensePage', () async {
+  test('every notice reaches LicenseRegistry for showLicensePage', () async {
     registerSkLicenses();
     final List<LicenseEntry> entries = await LicenseRegistry.licenses.toList();
     final Set<String> packages = entries
@@ -34,7 +34,7 @@ void main() {
   test('the OFL notices carry their reserved-name terms', () async {
     // The OFL is not MIT: it also reserves the font names and forbids selling
     // the fonts on their own. Shipping the text is what keeps that binding.
-    for (final String key in <String>['Outfit', 'Plus Jakarta Sans', 'IBM Plex Mono']) {
+    for (final String key in <String>['Instrument Sans', 'JetBrains Mono']) {
       final String text = await rootBundle.loadString(skLicenseAssets[key]!);
       expect(text, contains('SIL OPEN FONT LICENSE'), reason: '$key is OFL');
     }

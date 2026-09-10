@@ -3,13 +3,13 @@
 What a binding must do to legitimately call itself SeaKim. Tiers defined in
 [0008](decisions/0008-conformance-tiers.md); this is the working checklist.
 
-**Rules version 5.0** — a binding claims conformance *to a version*, because this document
+**Rules version 6.0** — a binding claims conformance *to a version*, because this document
 changes. Declare it alongside your own version, per
 [0011](decisions/0011-versioning.md) and [0019](decisions/0019-versioning-second-pass.md):
 
 ```yaml
 version: 1.2.0          # your binding
-seakim_rules: "5.0"     # the rules version you were reviewed against (may lag; never lead)
+seakim_rules: "6.0"     # the rules version you were reviewed against (may lag; never lead)
 ```
 
 A binding may lag. That is a legitimate, visible state — far better than lag nobody can see.
@@ -236,10 +236,10 @@ Two things are needed, and neither can be produced from here:
 
 Until both land, treat the Flutter binding as **written and reviewed but unbuilt**.
 
-**4. Font binaries are not committed.** `flutter/pubspec.yaml` declares 10 text `.ttf`
-assets plus 4 Phosphor icon fonts, none of which are in the repo. Outfit, Plus Jakarta
-Sans, and IBM Plex Mono are open-licence Google Fonts (SIL OFL 1.1); Phosphor is MIT. A
-real build needs them dropped into `flutter/assets/fonts/` and `flutter/assets/icons/`.
+**4. Text font binaries are committed; the icon fonts are not.** `flutter/assets/fonts/`
+carries the two text faces — Instrument Sans and JetBrains Mono, one **variable** `.ttf`
+each, SIL OFL 1.1 — with their licence notices. The 4 Phosphor icon `.ttf` files are still
+absent and a real build needs them dropped into `flutter/assets/icons/`; Phosphor is MIT.
 Licence notices are already committed and wired to `showLicensePage()`. The web bindings
 fetch their fonts at runtime, so only Flutter is blocked on this.
 

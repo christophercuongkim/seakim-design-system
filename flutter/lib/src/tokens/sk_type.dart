@@ -1,6 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-/// Three families, strictly divided by job. Bundled as assets — see pubspec.yaml.
+/// One text family, plus mono for data. Bundled as VARIABLE assets — see pubspec.yaml.
+/// Every style therefore carries `fontVariations` alongside `fontWeight`: the wght
+/// axis is what actually moves on a variable font, and relying on `fontWeight`
+/// alone risks a synthesised bold on some backends instead of the real cut.
 /// The package that bundles the text fonts. A TextStyle must carry this or
 /// the family resolves only when the *app* happens to declare it too — which
 /// silently falls back to the platform font for every consuming app.
@@ -9,14 +12,16 @@ const String skFontPackage = 'seakim_flutter';
 class SkFonts {
   const SkFonts._();
 
-  /// Display and headings. Wide and geometric; earns its keep above 17px.
-  static const String display = 'Outfit';
+  /// The display SLOT. Points at the text face today (0031) — SeaKim has one
+  /// text family. Kept as its own name so a future display face is one edit
+  /// here, picked up by the wordmark, every heading and the deck chrome at once.
+  static const String display = 'InstrumentSans';
 
-  /// UI and body. Geometric skeleton, humanist apertures — legible at 13px.
-  static const String sans = 'PlusJakartaSans';
+  /// UI and body. The one text family.
+  static const String sans = 'InstrumentSans';
 
   /// Data and eyebrows. Prices, times, codes, stat lines.
-  static const String mono = 'IBMPlexMono';
+  static const String mono = 'JetBrainsMono';
 }
 
 class SkFontSize {
@@ -51,6 +56,7 @@ class SkText {
     package: skFontPackage,
     fontSize: SkFontSize.xl5,
     fontWeight: FontWeight.w600,
+    fontVariations: const <FontVariation>[FontVariation('wght', 600)],
     height: 1.1,
     letterSpacing: SkFontSize.xl5 * -0.03,
   );
@@ -60,6 +66,7 @@ class SkText {
     package: skFontPackage,
     fontSize: SkFontSize.xl3,
     fontWeight: FontWeight.w600,
+    fontVariations: const <FontVariation>[FontVariation('wght', 600)],
     height: 1.1,
     letterSpacing: SkFontSize.xl3 * -0.03,
   );
@@ -69,6 +76,7 @@ class SkText {
     package: skFontPackage,
     fontSize: SkFontSize.xl,
     fontWeight: FontWeight.w600,
+    fontVariations: const <FontVariation>[FontVariation('wght', 600)],
     height: 1.3,
     letterSpacing: SkFontSize.xl * -0.018,
   );
@@ -78,6 +86,7 @@ class SkText {
     package: skFontPackage,
     fontSize: SkFontSize.lg,
     fontWeight: FontWeight.w500,
+    fontVariations: const <FontVariation>[FontVariation('wght', 500)],
     height: 1.3,
     letterSpacing: SkFontSize.lg * -0.018,
   );
@@ -87,6 +96,7 @@ class SkText {
     package: skFontPackage,
     fontSize: SkFontSize.md,
     fontWeight: FontWeight.w400,
+    fontVariations: const <FontVariation>[FontVariation('wght', 400)],
     height: 1.55,
   );
 
@@ -95,6 +105,7 @@ class SkText {
     package: skFontPackage,
     fontSize: SkFontSize.sm,
     fontWeight: FontWeight.w400,
+    fontVariations: const <FontVariation>[FontVariation('wght', 400)],
     height: 1.55,
   );
 
@@ -103,6 +114,7 @@ class SkText {
     package: skFontPackage,
     fontSize: SkFontSize.sm,
     fontWeight: FontWeight.w600,
+    fontVariations: const <FontVariation>[FontVariation('wght', 600)],
     height: 1.3,
   );
 
@@ -111,6 +123,7 @@ class SkText {
     package: skFontPackage,
     fontSize: SkFontSize.xs,
     fontWeight: FontWeight.w400,
+    fontVariations: const <FontVariation>[FontVariation('wght', 400)],
     height: 1.3,
   );
 
@@ -120,6 +133,7 @@ class SkText {
     package: skFontPackage,
     fontSize: SkFontSize.sm,
     fontWeight: FontWeight.w500,
+    fontVariations: const <FontVariation>[FontVariation('wght', 500)],
     height: 1.2,
     fontFeatures: [FontFeature.tabularFigures()],
   );
@@ -131,6 +145,7 @@ class SkText {
     package: skFontPackage,
     fontSize: SkFontSize.xs2,
     fontWeight: FontWeight.w500,
+    fontVariations: const <FontVariation>[FontVariation('wght', 500)],
     height: 1.2,
     letterSpacing: SkFontSize.xs2 * 0.10,
   );

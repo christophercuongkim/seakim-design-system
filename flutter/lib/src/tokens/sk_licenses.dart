@@ -11,10 +11,10 @@ const Map<String, String> _bundledLicences = <String, String>{
   'Phosphor Icons': 'packages/seakim_flutter/assets/icons/LICENSE-phosphor.txt',
   // Text fonts. SIL OFL 1.1: the notice must ship, the fonts may not be sold on
   // their own, and the reserved names may not be reused on a modified copy.
-  'Outfit': 'packages/seakim_flutter/assets/fonts/OFL-Outfit.txt',
-  'Plus Jakarta Sans':
-      'packages/seakim_flutter/assets/fonts/OFL-PlusJakartaSans.txt',
-  'IBM Plex Mono': 'packages/seakim_flutter/assets/fonts/OFL-IBMPlexMono.txt',
+  'Instrument Sans':
+      'packages/seakim_flutter/assets/fonts/OFL-InstrumentSans.txt',
+  'JetBrains Mono':
+      'packages/seakim_flutter/assets/fonts/OFL-JetBrainsMono.txt',
 };
 
 /// Registers the licences of the fonts this package bundles.

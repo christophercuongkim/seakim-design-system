@@ -17,7 +17,23 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
-## [6.3.0] — 2026-09-10
+## [6.4.0] — 2026-09-10
+
+### Added
+
+- **Tier 0 clauses are numbered §0.1–§0.13**, and the numbers are a contract: a removed
+  clause has its number **retired, never reused**, the same discipline the decision records
+  follow. Renumbering would silently invalidate every citation written before it. Review
+  can now say "this fails §0.4" instead of quoting the bullet.
+- **The checker prints the clause it enforces** — `TIER 0  §0.1  untokenised-radius` — so a
+  violation names the law rather than only the rule id. Each rule carries a `clause` field;
+  `contrast-floor` and `radius-ladder-drift` carry theirs inline.
+- **Coverage is now stated rather than implied.** Six of the thirteen are machine-checked
+  (§0.1, §0.4, §0.6, §0.7, §0.8, §0.13). The other seven are judgement and stay manual by
+  design, per [0012](decisions/0012-conformance-checks-ship-with-rules.md). A green gate
+  means the six held, not that the thirteen were obeyed.
+
+
 
 ### Added
 

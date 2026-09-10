@@ -3,13 +3,13 @@
 What a binding must do to legitimately call itself SeaKim. Tiers defined in
 [0008](decisions/0008-conformance-tiers.md); this is the working checklist.
 
-**Rules version 6.3** — a binding claims conformance *to a version*, because this document
+**Rules version 6.4** — a binding claims conformance *to a version*, because this document
 changes. Declare it alongside your own version, per
 [0011](decisions/0011-versioning.md) and [0019](decisions/0019-versioning-second-pass.md):
 
 ```yaml
 version: 1.2.0          # your binding
-seakim_rules: "6.3"     # the rules version you were reviewed against (may lag; never lead)
+seakim_rules: "6.4"     # the rules version you were reviewed against (may lag; never lead)
 ```
 
 A binding may lag. That is a legitimate, visible state — far better than lag nobody can see.
@@ -49,46 +49,57 @@ A SwiftUI binding owes SeaKim its Tier 0 conformance, not three preview surfaces
 
 No platform exception, ever. Break one and the binding is not SeaKim.
 
-- [ ] **Every corner names a rung.** No literal radius in any binding — not in CSS, not
+**Six of the thirteen are machine-checked.** `tool/conformance-check.mjs` asserts §0.1,
+§0.4, §0.6, §0.7, §0.8 and §0.13, and prints the clause beside every violation. The other
+seven — §0.2, §0.3, §0.5, §0.9, §0.10, §0.11, §0.12 — are judgement, and stay on the
+manual list by design (0012: a linter that guesses teaches people to ignore it). A green
+gate means the six held, not that the thirteen were obeyed.
+
+**Clause numbers are stable.** Cite them in review — "this fails §0.4" is a shorter
+conversation than quoting the bullet. A clause that is removed has its number **retired,
+never reused**, the same discipline the decision records follow: renumbering silently
+invalidates every citation written before it. New clauses append.
+
+- [ ] **§0.1 — Every corner names a rung.** No literal radius in any binding — not in CSS, not
       in a style object, not in `BorderRadius.circular`. The ladder is closed at nine
       rungs (`none` 0, `xs` 2, `sm` 4, `md` 6, `lg` 8, `xl` 12, `2xl` 16, `full` 999,
       `circle` 50%) and a component takes the rung its **role** names, not a value that
       looked right. Adding a rung is an ADR, not a token edit. (See
       [0030](decisions/0030-corners-take-a-radius-ladder.md). Which rung suits a role is
       judgement and stays on the manual list; that a corner is a legal rung is checked.)
-- [ ] **Borders define, shadows lift.** In-flow surfaces get a 1px hairline and no
+- [ ] **§0.2 — Borders define, shadows lift.** In-flow surfaces get a 1px hairline and no
       shadow. A shadow promises the thing floats above the page. The only concession is
       the raised shadow on bars that scroll over content.
-- [ ] **One accent hue live at a time**, bound per app, and the shared layer is
+- [ ] **§0.3 — One accent hue live at a time**, bound per app, and the shared layer is
       achromatic. If two things on a screen compete for a primary *action*, one of them is
       wrong — but a systematic identity fill (own-message bubbles, selected rows) may
       repeat, because it marks a category, not a call to action. (See
       [0026](decisions/0026-accent-as-ownership-fill.md).)
-- [ ] **Semantic tokens only.** No component reads a stone step, a ramp step, or a
+- [ ] **§0.4 — Semantic tokens only.** No component reads a stone step, a ramp step, or a
       literal colour. This is the rule everything else depends on — theming and per-app
       hue rotation both break the moment it is violated.
-- [ ] **Press is a scale, not a ripple.** 0.97 at 80ms, on every clickable thing.
-- [ ] **Focus is always visible.** 2px accent ring, 2px gap. Never suppressed, never
+- [ ] **§0.5 — Press is a scale, not a ripple.** 0.97 at 80ms, on every clickable thing.
+- [ ] **§0.6 — Focus is always visible.** 2px accent ring, 2px gap. Never suppressed, never
       replaced by a colour swap alone. Full rules in
       [`guidelines/accessibility.md`](guidelines/accessibility.md).
-- [ ] **44px minimum touch target** on coarse (touch) pointers, whatever the density
+- [ ] **§0.7 — 44px minimum touch target** on coarse (touch) pointers, whatever the density
       says. The 44px floor is a touch-surface requirement; a precise pointer (desktop
       mouse) may be denser, which is how SeaKim keeps its compact 34px controls. On a
       coarse pointer a visible mark may still render smaller *only* when its hit area —
       pointer and assistive-technology bounds — reaches 44px; the mark may shrink, the
       target may not. (See [0023](decisions/0023-sub-floor-chrome-hit-area.md).)
-- [ ] **Both themes work**, neither derived from the other. (See
+- [ ] **§0.8 — Both themes work**, neither derived from the other. (See
       [0005](decisions/0005-light-mode-is-first-class.md).)
-- [ ] **Reduced motion collapses all durations to zero** and press scale to 1.
-- [ ] **Sentence case, verbs on buttons, no emoji in product UI.**
-- [ ] **No gradients.** The dialog scrim is the only exception.
-- [ ] **No floating action button.** (See
+- [ ] **§0.9 — Reduced motion collapses all durations to zero** and press scale to 1.
+- [ ] **§0.10 — Sentence case, verbs on buttons, no emoji in product UI.**
+- [ ] **§0.11 — No gradients.** The dialog scrim is the only exception.
+- [ ] **§0.12 — No floating action button.** (See
       [0002](decisions/0002-no-floating-action-button.md).) A Material-based binding must
       actively neutralise it, not merely avoid it. A labelled, square, secondary
       scroll-position utility (jump-to-latest, back-to-top) that floats transiently with
       `--shadow-popover` is *not* a FAB and is permitted. (See
       [0027](decisions/0027-non-primary-floating-affordance.md).)
-- [ ] **No spinner as a loading affordance.** No indefinite rotation; show a skeleton
+- [ ] **§0.13 — No spinner as a loading affordance.** No indefinite rotation; show a skeleton
       (when you know what is arriving) or the labeled loading state (when you know only
       that something is). A Material-based binding must actively neutralise
       `CircularProgressIndicator`, not merely avoid it. (See

@@ -17,7 +17,21 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
-## [6.0.0] — 2026-09-10
+## [6.1.0] — 2026-09-10
+
+### Added
+
+- **A Tier 1 row for type delivery.** [0031](decisions/0031-one-typeface.md) noted that no
+  rule named a typeface at any tier — icons were pinned, type never was, so a binding could
+  ship any face and pass every gate. Fixed intent is the family set and that components
+  read `--font-*` / `SkFonts`; free to differ is delivery — CDN, self-hosted webfont or a
+  bundled binary, static cuts or a variable file.
+- **`literal-font-family`** conformance rule, so the row is enforced rather than merely
+  written down. It flags a quoted family name in component code and passes anything that
+  resolves a token, including Dart's `'packages/$skFontPackage/${SkFonts.sans}'` — which
+  `ThemeData.fontFamily` requires, because it takes no package argument.
+
+
 
 ### Changed
 

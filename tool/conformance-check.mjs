@@ -61,6 +61,16 @@ const PALETTE_FILES = [
 ];
 
 /** Files exempt from the geometry rules — slides are a fixed-canvas medium. */
+/** Files that legitimately NAME a typeface: the token file that declares them, the
+ *  loader that fetches them, and the specimens whose subject is the face itself. */
+const TYPE_EXEMPT = [
+  /tokens\/fonts\.css$/,
+  /fonts\.ts$/,
+  /guidelines\/type-/,
+  /index\.html$/,
+  /signoff\.html$/,
+];
+
 const GEOMETRY_EXEMPT = [
   /tokens\/radius\.css$/,
   /tokens\/spacing\.css$/,
@@ -209,6 +219,21 @@ const RULES = [
         return `literal radius ${lit[1]}${lit[2] ?? ''} — name a rung instead`;
       }
       return null;
+    },
+  },
+  {
+    id: 'literal-font-family',
+    tier: 0,
+    why: 'A typeface is a token. Tier 1 fixes the family set (0031) and leaves delivery free — but component code reads --font-* / SkFonts, never a family name.',
+    skip: f => exempt(f, TYPE_EXEMPT),
+    test(line) {
+      const m = line.match(/font-?[Ff]amily\s*[:=]\s*(['"`])([^'"`]+)\1/);
+      if (!m) return null;
+      // A quoted value that RESOLVES a token is fine: the CSS var form, and Dart's
+      // interpolation — ThemeData.fontFamily takes no package argument, so the
+      // family has to be string-prefixed by hand around ${SkFonts.x}.
+      if (/var\(--font-|\$\{?SkFonts\./.test(m[2])) return null;
+      return `font family named directly: ${m[2].slice(0, 40)}`;
     },
   },
   {

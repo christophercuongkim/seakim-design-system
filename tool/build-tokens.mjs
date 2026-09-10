@@ -23,6 +23,7 @@
  */
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { oklchToRgb } from './oklch.mjs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -34,37 +35,7 @@ const src = JSON.parse(readFileSync(SRC, 'utf8'));
 
 /* ---------------------------------------------------------------- colour maths */
 
-const oklchToLinear = (L, C, hDeg) => {
-  const h = (hDeg * Math.PI) / 180;
-  const a = C * Math.cos(h);
-  const b = C * Math.sin(h);
-  const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
-  const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
-  const s_ = L - 0.0894841775 * a - 1.2914855480 * b;
-  const l = l_ ** 3, m = m_ ** 3, s = s_ ** 3;
-  return [
-     4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
-    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
-    -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s,
-  ];
-};
-
-const gamma = v => (v <= 0.0031308 ? 12.92 * v : 1.055 * v ** (1 / 2.4) - 0.055);
-const inGamut = rgb => rgb.every(v => v >= -0.0005 && v <= 1.0005);
-
-/** oklch → 8-bit sRGB, gamut-mapped by chroma reduction rather than clipping. */
-function oklchToRgb(L, C, h) {
-  let rgb = oklchToLinear(L, C, h);
-  if (!inGamut(rgb)) {
-    let lo = 0, hi = C;
-    for (let i = 0; i < 30; i++) {
-      const mid = (lo + hi) / 2;
-      const attempt = oklchToLinear(L, mid, h);
-      if (inGamut(attempt)) { lo = mid; rgb = attempt; } else { hi = mid; }
-    }
-  }
-  return rgb.map(v => Math.round(Math.min(1, Math.max(0, gamma(v))) * 255));
-}
+// Shared with the conformance contrast gate — see tool/oklch.mjs.
 
 const hex = (L, C, h) =>
   '#' + oklchToRgb(L, C, h).map(v => v.toString(16).padStart(2, '0')).join('');
@@ -297,9 +268,14 @@ function emitCssLight() {
   L.push('  --text-secondary:  var(--stone-600);');
   L.push('  --text-tertiary:   var(--stone-500);');
   L.push('  --text-inverse:    var(--stone-50);');
-  L.push('  --text-accent:     var(--brand-600);');
-  L.push('  --text-link:       var(--brand-600);');
-  L.push('  --text-link-hover: var(--brand-700);');
+  L.push('  /* 700, not 600. At one fixed oklch L every hue is the same PERCEPTUAL');
+  L.push('     lightness, but WCAG weights green at 0.7152, so turf and sea sit');
+  L.push('     brighter in luminance terms: 600 lands at 4.38:1 for turf and 4.62:1');
+  L.push('     for sea on card. 700 clears 6.7:1 for every hue. See lesson 18, and');
+  L.push('     the contrast gate in tool/conformance-check.mjs that measures it. */');
+  L.push('  --text-accent:     var(--brand-700);');
+  L.push('  --text-link:       var(--brand-700);');
+  L.push('  --text-link-hover: var(--brand-800);');
   L.push('');
   L.push('  --border-subtle:  var(--stone-200);');
   L.push('  --border-default: var(--stone-300);');

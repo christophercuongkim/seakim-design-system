@@ -222,9 +222,12 @@ class SkColors {
         textSecondary: SkStone.s600,
         textTertiary: SkStone.s500,
         textInverse: SkStone.s50,
-        textAccent: brand.s600,
-        textLink: brand.s600,
-        textLinkHover: brand.s700,
+        // 700, not 600 — one fixed oklch L is one perceptual lightness, but WCAG
+        // weights green at 0.7152, so turf lands at 4.38:1 on card. See lesson 18
+        // and tokens/theme-light.css; the two must name the same step.
+        textAccent: brand.s700,
+        textLink: brand.s700,
+        textLinkHover: brand.s800,
         borderSubtle: SkStone.s200,
         borderDefault: SkStone.s300,
         borderStrong: SkStone.s400,

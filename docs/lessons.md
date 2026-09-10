@@ -288,3 +288,33 @@ Python and asserting the mutated text was present made the difference visible.
 from the call sites. And prove a new check can fail before believing it passes: mutate the
 thing it guards, in both directions (make the rule under-fire, then over-fire), and assert
 the mutation actually landed before reading the result.
+
+## 18. A uniform perceptual ladder is not a uniform contrast ladder
+
+`guidelines/accessibility.md` stated the admission test for a new accent hue: clear 4.5:1
+at `oklch(0.72 0.13 H)` on `--stone-950` **and** at `oklch(0.56 0.14 H)` on `--stone-50`.
+The first time anything actually computed it, **two of the four shipped hues failed the
+light half** — sea at 4.39:1, turf at 4.17:1. Voyage and Bench are the two apps in flight.
+
+The cause is a real property of the design, not a typo. Decision 0003 fixes lightness and
+chroma across the ramp so only the hue angle moves, which is what makes a `600` mean the
+same thing in every product. But oklch `L` is *perceptual* lightness, and WCAG relative
+luminance weights the green channel at 0.7152 against 0.2126 for red and 0.0722 for blue.
+At one fixed `L`, a green sits far brighter in luminance terms than a plum. The ladder
+guarantees perceptual parity between products and says nothing about contrast parity, and
+those two guarantees look identical until something measures them.
+
+Rendered text was affected: `--text-accent` and `--text-link` resolved to `--brand-600` in
+light, giving 4.38:1 for Bench — under the floor — and 4.62:1 for Voyage, which passes with
+no headroom left for a future revalue. Both now resolve to `--brand-700`, which clears
+6.7:1 for every hue.
+
+Note what did *not* catch this. Every gate was green. The contrast numbers were written
+down in a guideline, the admission test named itself "the check", and 0019 already made "a
+revalue that fails a documented contrast gate" a Major bump — pointing at a gate that did
+not exist. A written threshold with no code behind it reads exactly like an enforced one.
+
+**Rule.** A stated ratio is a claim until something computes it. Any threshold written into
+a guideline gets a check in the same change, and the check runs over every product and both
+themes — a single-theme, single-hue spot check is how two of four hues shipped under the
+floor.

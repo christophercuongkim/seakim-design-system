@@ -26,9 +26,14 @@
   --text-secondary:  var(--stone-600);
   --text-tertiary:   var(--stone-500);
   --text-inverse:    var(--stone-50);
-  --text-accent:     var(--brand-600);
-  --text-link:       var(--brand-600);
-  --text-link-hover: var(--brand-700);
+  /* 700, not 600. At one fixed oklch L every hue is the same PERCEPTUAL
+     lightness, but WCAG weights green at 0.7152, so turf and sea sit
+     brighter in luminance terms: 600 lands at 4.38:1 for turf and 4.62:1
+     for sea on card. 700 clears 6.7:1 for every hue. See lesson 18, and
+     the contrast gate in tool/conformance-check.mjs that measures it. */
+  --text-accent:     var(--brand-700);
+  --text-link:       var(--brand-700);
+  --text-link-hover: var(--brand-800);
 
   --border-subtle:  var(--stone-200);
   --border-default: var(--stone-300);

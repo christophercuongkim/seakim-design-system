@@ -68,6 +68,7 @@ class SkCheckbox extends StatelessWidget {
                         height: 16,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(SkRadius.sm),
                           color: s.disabled
                               ? c.fillDisabled
                               : marked

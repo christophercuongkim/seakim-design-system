@@ -76,6 +76,7 @@ class SkFieldTrigger extends StatelessWidget {
             height: size,
             padding: const EdgeInsets.symmetric(horizontal: SkSpace.s4),
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(SkRadius.sm),
               color: enabled ? c.surfaceRaised : c.fillDisabled,
               // Inset accent border on focus, like SkInput — 2px, so a field in
               // a tight grid does not overlap its neighbour.

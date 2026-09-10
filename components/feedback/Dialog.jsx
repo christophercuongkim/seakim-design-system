@@ -22,7 +22,7 @@ export function Dialog({ open = true, title, description, children, footer, onCl
           width: '100%', maxWidth: width,
           background: 'var(--surface-overlay)',
           border: '1px solid var(--border-default)',
-          borderRadius: 'var(--radius-none)',
+          borderRadius: 'var(--radius-xl)',
           boxShadow: 'var(--shadow-dialog)',
           display: 'flex', flexDirection: 'column', ...style,
         }}

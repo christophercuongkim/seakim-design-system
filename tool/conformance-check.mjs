@@ -125,6 +125,22 @@ function stripNoise(src) {
     .replace(/(^|[^:])\/\/[^\n]*/g, (m, pre) => pre + ' '.repeat(m.length - pre.length));
 }
 
+/**
+ * The corner ladder (0030). Encoded HERE, not merely referenced, because the old
+ * rule asserted a vocabulary and never a value: it whitelisted three token names
+ * and never opened tokens/radius.css, so a full non-zero ladder could be swapped
+ * into the tokens with every gate still green (lesson 17). These numbers are the
+ * assertion — tokens/radius.css and SkRadius are both checked against them below.
+ */
+const LADDER = [
+  ['none', 0], ['xs', 2], ['sm', 4], ['md', 6],
+  ['lg', 8], ['xl', 12], ['2xl', 16], ['full', 999],
+];
+// Dart identifiers cannot start with a digit, and `pill` predates the ladder.
+const DART_ALIAS = { '2xl': 'xxl', full: 'pill' };
+const CSS_RUNGS = [...LADDER.map(([n]) => n), 'circle'];
+const DART_RUNGS = LADDER.map(([n]) => DART_ALIAS[n] ?? n);
+
 const RULES = [
   {
     id: 'literal-colour',
@@ -166,29 +182,31 @@ const RULES = [
     },
   },
   {
-    id: 'non-zero-radius',
+    id: 'untokenised-radius',
     tier: 0,
-    why: 'Corners are 0px. Round only where the shape is conceptually round — use --radius-full or --radius-circle.',
+    why: 'Every corner names a rung of the closed ladder — decision 0030. No literal radius, and no rung that is not in tokens/radius.css.',
     skip: f => exempt(f, GEOMETRY_EXEMPT),
     test(line) {
-      const css = line.match(/border-radius\s*:\s*([^;}]+)/);
-      if (css) {
-        // The declaration may sit inside a JS string ('border-radius:0',), so the
-        // capture can carry a trailing quote and comma. Strip them before testing,
-        // or a compliant `border-radius:0` reads as a violation.
-        const v = css[1].trim().replace(/['"`,\s]+$/, '');
-        if (/var\(--radius-(?:none|full|circle)\)/.test(v)) return null;
-        if (/^0(px|rem|%)?$/.test(v)) return null;
-        if (/50%|999/.test(v)) return null;
-        return `border-radius: ${v}`;
+      // Cheap gate first: most lines are not about corners at all.
+      if (!/border-?[Rr]adius|BorderRadius\.circular/.test(line)) return null;
+
+      // A named rung must exist. This is the branch the old rule could not reach:
+      // it whitelisted three token NAMES and never saw the camelCase
+      // `borderRadius: 'var(...)'` form React actually writes.
+      for (const m of line.matchAll(/--radius-([A-Za-z0-9]+)/g)) {
+        if (!CSS_RUNGS.includes(m[1])) return `--radius-${m[1]} is not a rung in the ladder`;
       }
-      const dart = line.match(/BorderRadius\.circular\(\s*([\d.]+)/);
-      if (dart && Number(dart[1]) > 0 && Number(dart[1]) < 900) {
-        return `BorderRadius.circular(${dart[1]})`;
+      for (const m of line.matchAll(/SkRadius\.([A-Za-z]+)/g)) {
+        if (!DART_RUNGS.includes(m[1])) return `SkRadius.${m[1]} is not a rung in the ladder`;
       }
-      if (/borderRadius:\s*['"`]?\d+px/.test(line)) {
-        const m = line.match(/borderRadius:\s*['"`]?(\d+)px/);
-        if (m && m[1] !== '0') return `borderRadius: ${m[1]}px`;
+
+      // A literal in a radius position. Bare 0 stays legal — it renders as
+      // --radius-none and reads unambiguously in a reset.
+      const lit = line.match(/border-radius\s*:\s*([0-9.]+)(px|rem|em|%)/)
+        || line.match(/borderRadius:\s*['"`]?([0-9.]+)(px|rem|em)/)
+        || line.match(/BorderRadius\.circular\(\s*([0-9.]+)\s*\)/);
+      if (lit && Number(lit[1]) !== 0) {
+        return `literal radius ${lit[1]}${lit[2] ?? ''} — name a rung instead`;
       }
       return null;
     },
@@ -314,6 +332,49 @@ function readNumber({ file, re }) {
     const m = readFileSync(join(ROOT, file), 'utf8').match(re);
     return m ? Number(m[1]) : null;
   } catch { return null; }
+}
+
+/**
+ * The ladder is a value contract, so read the values. CSS and Dart are each
+ * compared to LADDER rather than to each other — comparing the two bindings alone
+ * would pass happily if both drifted the same way.
+ */
+const LADDER_FILES = [
+  {
+    file: 'tokens/radius.css',
+    re: n => new RegExp(`--radius-${n}\\s*:\\s*(\\d+(?:\\.\\d+)?)px`),
+  },
+  {
+    file: 'flutter/lib/src/tokens/sk_space.dart',
+    // Scoped to the SkRadius body: sk_space.dart also declares SkSpace and the
+    // control heights, where `md = 34` is a control height, not a corner.
+    scope: src => (src.match(/class SkRadius \{[\s\S]*?\n\}/) ?? [''])[0],
+    re: n => new RegExp(`\\b${DART_ALIAS[n] ?? n}\\s*=\\s*(\\d+(?:\\.\\d+)?)\\s*;`),
+  },
+];
+
+for (const { file, re, scope } of LADDER_FILES) {
+  let src;
+  try {
+    src = readFileSync(join(ROOT, file), 'utf8');
+  } catch {
+    continue; // a consuming repo carrying only one binding
+  }
+  if (scope) src = scope(src);
+  for (const [name, want] of LADDER) {
+    const m = src.match(re(name));
+    const got = m ? Number(m[1]) : null;
+    if (got === want) continue;
+    violations.push({
+      rule: 'radius-ladder-drift',
+      file,
+      line: 0,
+      detail: got === null
+        ? `rung \`${name}\` is missing — the ladder in 0030 has ${LADDER.length} rungs`
+        : `rung \`${name}\` is ${got}, the ladder says ${want}`,
+      text: 'The corner ladder is fixed by decision 0030. Change it there and in tool/conformance-check.mjs together, per 0012 — never in one binding alone.',
+    });
+  }
 }
 
 for (const p of PARITY) {

@@ -72,6 +72,7 @@ class SkTag extends StatelessWidget {
               height: coarse ? SkControl.touch : SkControl.sm,
               padding: const EdgeInsets.symmetric(horizontal: SkSpace.s3),
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(SkRadius.xs),
                 color: bg,
                 border: Border.all(
                   color: border,

@@ -49,7 +49,7 @@ the value is in the trail, and a silently edited ADR is worse than none.
 | [0027](0027-non-primary-floating-affordance.md) | A non-primary floating affordance is allowed, and is not a FAB | Accepted |
 | [0028](0028-searchable-select.md) | A searchable long-list picker is its own component (SkCombobox), not a hand-rolled trigger | Accepted |
 | [0029](0029-error-state.md) | The error state is a first-class treatment, not an SkEmptyState variant | Accepted |
-| [0030](0030-corners-take-a-radius-ladder.md) | Corners take a radius ladder | Proposed |
+| [0030](0030-corners-take-a-radius-ladder.md) | Corners take a radius ladder | Accepted |
 
 ## Writing one
 

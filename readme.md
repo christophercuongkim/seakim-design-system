@@ -44,7 +44,7 @@ Decisions taken from the user directly:
 - Mode: light and dark; **dark is the default**
 - Type: geometric sans, clean and wide
 - Density: 7/10
-- Corners: sharp (0px)
+- Corners: a closed nine-rung ladder, assigned by role (0030 superseded the original "sharp (0px)"; `none` is still the answer for dividers, table cells and full-bleed media)
 - Motion: springy — slight overshoot on enter
 - Surface separation: borders by default, shadows only for things that overlay
 - Icons: Phosphor

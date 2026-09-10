@@ -110,10 +110,9 @@ for (const id of RULE_IDS) {
 // Inputs the checker is currently known NOT to catch. Asserted so the gap stays a
 // recorded fact rather than a surprise, and so closing one is a visible change here.
 const BLIND_SPOTS = [
-  {
-    dir: 'radius-token-camelcase',
-    why: 'camelCase borderRadius holding a non-whitelisted var() — invisible to every branch of non-zero-radius. ADR 0030 closes it.',
-  },
+  // Empty on purpose. The one entry here — camelCase `borderRadius` holding a
+  // var() that names no rung — was closed by decision 0030, and its case now
+  // lives in untokenised-radius/bad/tag.jsx as a positive assertion instead.
 ];
 
 for (const spot of BLIND_SPOTS) {

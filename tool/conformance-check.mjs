@@ -451,10 +451,10 @@ const CONTRAST_PAIRS = [
   ['--text-danger', '--surface-card', 4.5, true],
   ['--on-accent', '--fill-accent', 4.5, true],
   ['--border-focus', '--surface-card', 3.0, true],
-  // Reported, not failed: whether metadata text is "body and UI text" or the
-  // "decorative" row is a judgement the guideline does not settle. It sits just
-  // under 4.5 in both themes, which is worth seeing on every run.
-  ['--text-tertiary', '--surface-card', 4.5, false],
+  // Gated as of the stone-450/550 split. It sat at 4.12:1 / 4.38:1 on a single
+  // mid step, which no grey can fix for both themes at once — see lesson 18.
+  ['--text-tertiary', '--surface-card', 4.5, true],
+  ['--text-tertiary', '--surface-page', 4.5, true],
 ];
 
 const notes = [];

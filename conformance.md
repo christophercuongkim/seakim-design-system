@@ -3,13 +3,13 @@
 What a binding must do to legitimately call itself SeaKim. Tiers defined in
 [0008](decisions/0008-conformance-tiers.md); this is the working checklist.
 
-**Rules version 6.2** — a binding claims conformance *to a version*, because this document
+**Rules version 6.3** — a binding claims conformance *to a version*, because this document
 changes. Declare it alongside your own version, per
 [0011](decisions/0011-versioning.md) and [0019](decisions/0019-versioning-second-pass.md):
 
 ```yaml
 version: 1.2.0          # your binding
-seakim_rules: "6.2"     # the rules version you were reviewed against (may lag; never lead)
+seakim_rules: "6.3"     # the rules version you were reviewed against (may lag; never lead)
 ```
 
 A binding may lag. That is a legitimate, visible state — far better than lag nobody can see.

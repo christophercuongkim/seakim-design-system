@@ -118,7 +118,9 @@ class SkStone {
   static const Color s200 = Color(0xFFE0DEDA);
   static const Color s300 = Color(0xFFC6C3BD);
   static const Color s400 = Color(0xFFA09C95);
+  static const Color s450 = Color(0xFF8E8A84);
   static const Color s500 = Color(0xFF7C7873);
+  static const Color s550 = Color(0xFF6C6964);
   static const Color s600 = Color(0xFF5C5955);
   static const Color s700 = Color(0xFF413F3C);
   static const Color s800 = Color(0xFF2B2A27);

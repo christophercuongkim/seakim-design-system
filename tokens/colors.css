@@ -33,7 +33,9 @@
   --stone-200: #e0deda;
   --stone-300: #c6c3bd;
   --stone-400: #a09c95;
+  --stone-450: #8e8a84;
   --stone-500: #7c7873;
+  --stone-550: #6c6964;
   --stone-600: #5c5955;
   --stone-700: #413f3c;
   --stone-800: #2b2a27;
@@ -71,7 +73,7 @@
 
   --text-primary:    #f5f3f0;
   --text-secondary:  var(--stone-400);
-  --text-tertiary:   var(--stone-500);
+  --text-tertiary:   var(--stone-450);
   --text-inverse:    var(--stone-950);
   --text-accent:     var(--brand-300);
   --text-link:       var(--brand-300);

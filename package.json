@@ -39,6 +39,7 @@
     "tokens": "node tool/build-tokens.mjs",
     "tokens:check": "node tool/build-tokens.mjs --check",
     "conformance": "node tool/conformance-check.mjs",
+    "conformance:selftest": "node tool/conformance-selftest.mjs",
     "version:check": "node tool/version-check.mjs"
   },
   "types": "./index.d.ts"

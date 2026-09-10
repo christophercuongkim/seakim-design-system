@@ -252,3 +252,39 @@ number. If a rules release changed a binding, its `pubspec.yaml` / `package.json
 or the release is half-recorded. And only raise `seakim_rules` to a version the binding has
 actually been checked against (it passes machine-checkable conformance at that rules
 version); 0011 forbids claiming one it has not.
+
+## 17. A rule enforced by token name is not enforced
+
+`non-zero-radius` is the check behind the loudest rule in the system — `tokens/radius.css`
+opens by saying nothing that contains content is ever rounded, at any size, in any app.
+The check whitelists three token *names* (`--radius-none`, `--radius-full`,
+`--radius-circle`) and flags literal values. It never opens `tokens/radius.css`. A full
+non-zero ladder — `xs 2 / sm 4 / md 6 / lg 8` — swapped into the tokens on a throwaway
+copy left **all four static gates green**. Every component still named a whitelisted
+token; the tokens now resolved to rounded corners; nothing looked.
+
+Two other things had drifted into the gap the check left. `components/core/Tag.prompt.md`
+documents `--radius-xs` as "(2px)" against a token that has always been `0px` — and no
+gate reads `.md` at all, so the written system and the rendered system disagreed in
+writing for months. And React's `Tag` names `--radius-xs` while Flutter's `SkRadius`
+carries only `none` and `pill`: the two bindings agreed on tags **only because** the token
+resolved to zero. The check also cannot see the camelCase `borderRadius: 'var(...)'` form
+React actually uses — branch one matches kebab-case CSS, branch three matches a literal
+`px`, and the one real call site in the system falls between them.
+
+The trap is that a name-based check reads as a value-based one. "No literal radius" and
+"corners are square" sound like the same assertion and are not: the first constrains
+vocabulary, the second constrains what renders. A check that only inspects call sites can
+never see a token redefinition, and a green run says nothing about which of the two it
+just proved.
+
+Writing the fixture harness reproduced the same failure one level up. The first mutation
+test — break a rule's regex, confirm the self-test fails — was applied with a `sed`
+expression whose escaping did not match, so nothing was mutated and the harness reported
+green. That green looked exactly like a passing test. Only re-running the substitution in
+Python and asserting the mutated text was present made the difference visible.
+
+**Rule.** If a rule names a value, the check reads the value — from the token file, not
+from the call sites. And prove a new check can fail before believing it passes: mutate the
+thing it guards, in both directions (make the rule under-fire, then over-fire), and assert
+the mutation actually landed before reading the result.

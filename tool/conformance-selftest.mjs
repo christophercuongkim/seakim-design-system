@@ -105,6 +105,45 @@ for (const id of RULE_IDS) {
   }
 }
 
+/* --------------------------------------------- whole-repo file gates */
+
+/**
+ * Four gates do not scan lines — they READ token files and compare values:
+ * the ladder, the two cross-binding parities, and the contrast floors. RULES
+ * fixtures cannot reach them, so each gets a tree under _gates/ that mirrors
+ * the paths it reads, with one value deliberately drifted.
+ *
+ * There is no good/ here on purpose. The real repository is the good case, and
+ * CI asserts it on every run; a second hand-maintained copy of colors.css would
+ * go stale and prove less than the original already does.
+ */
+const FILE_GATES = [
+  ['radius-ladder-drift', 'a rung drifted in tokens/radius.css'],
+  ['accent-text-step-parity', 'CSS and Dart name different accent rungs'],
+  ['overlay-width-parity', 'the dialog width disagrees across bindings'],
+  ['contrast-floor', 'body text below 4.5:1 on its own surface'],
+];
+
+for (const [id, why] of FILE_GATES) {
+  const dir = join(FIXTURES, '_gates', id);
+  if (!existsSync(dir)) {
+    fail(id, `no gate fixture — expected .conformance-fixtures/_gates/${id}/`);
+    continue;
+  }
+  const r = run(dir);
+  if (r.violations === null) {
+    fail(id, 'gate fixture produced no parseable JSON');
+  } else if (r.status !== 1) {
+    fail(id, `gate fixture exited ${r.status}, expected 1 — ${why} should be caught`);
+  } else if (!r.violations.some(v => v.rule === id)) {
+    const got = [...new Set(r.violations.map(v => v.rule))].join(', ') || 'none';
+    fail(id, `gate fixture was flagged as [${got}] — not as ${id}`);
+  } else {
+    const stray = [...new Set(r.violations.map(v => v.rule))].filter(x => x !== id);
+    if (stray.length) notes.push(`${id}: gate fixture also tripped [${stray.join(', ')}]`);
+  }
+}
+
 /* ------------------------------------------- documented blind spots */
 
 // Inputs the checker is currently known NOT to catch. Asserted so the gap stays a
@@ -141,13 +180,14 @@ const fixtureDirs = readdirSync(FIXTURES, { withFileTypes: true })
 const orphans = fixtureDirs.filter(d => !RULE_IDS.includes(d));
 for (const o of orphans) fail(o, 'fixture directory matches no rule id in RULES');
 
-console.log(`\nSeaKim conformance self-test — ${RULE_IDS.length} rules, ${BLIND_SPOTS.length} recorded blind spot(s)\n`);
+console.log(`\nSeaKim conformance self-test — ${RULE_IDS.length} line rules, ${FILE_GATES.length} file gates, ${BLIND_SPOTS.length} recorded blind spot(s)\n`);
 
 for (const n of notes) console.log(`  note  ${n}`);
 if (notes.length) console.log('');
 
 if (failures.length === 0) {
-  console.log(`  every rule fires on its bad fixture and stays quiet on its good one.\n`);
+  console.log(`  every line rule fires on its bad fixture and stays quiet on its good one,`);
+  console.log(`  and every file gate fires on a drifted token tree.\n`);
   console.log(`  A green gate now means the rules were exercised, not merely that`);
   console.log(`  nothing matched. See decisions/0012 and docs/lessons.md lesson 7.\n`);
   process.exit(0);

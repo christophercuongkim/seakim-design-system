@@ -410,6 +410,10 @@ for (const { file, re, scope } of LADDER_FILES) {
     continue; // a consuming repo carrying only one binding
   }
   if (scope) src = scope(src);
+  // A file that exists but carries no ladder at all — a consuming repo with its own
+  // sk_space.dart, or a binding that has not adopted 0030 — is out of scope, not
+  // eight missing rungs. Absent and empty mean the same thing here.
+  if (!src.trim()) continue;
   for (const [name, want] of LADDER) {
     const m = src.match(re(name));
     const got = m ? Number(m[1]) : null;

@@ -3,13 +3,13 @@
 What a binding must do to legitimately call itself SeaKim. Tiers defined in
 [0008](decisions/0008-conformance-tiers.md); this is the working checklist.
 
-**Rules version 6.4** — a binding claims conformance *to a version*, because this document
+**Rules version 7.0** — a binding claims conformance *to a version*, because this document
 changes. Declare it alongside your own version, per
 [0011](decisions/0011-versioning.md) and [0019](decisions/0019-versioning-second-pass.md):
 
 ```yaml
 version: 1.2.0          # your binding
-seakim_rules: "6.4"     # the rules version you were reviewed against (may lag; never lead)
+seakim_rules: "7.0"     # the rules version you were reviewed against (may lag; never lead)
 ```
 
 A binding may lag. That is a legitimate, visible state — far better than lag nobody can see.
@@ -49,11 +49,11 @@ A SwiftUI binding owes SeaKim its Tier 0 conformance, not three preview surfaces
 
 No platform exception, ever. Break one and the binding is not SeaKim.
 
-**Six of the thirteen are machine-checked.** `tool/conformance-check.mjs` asserts §0.1,
+**Six of the fourteen are machine-checked.** `tool/conformance-check.mjs` asserts §0.1,
 §0.4, §0.6, §0.7, §0.8 and §0.13, and prints the clause beside every violation. The other
-seven — §0.2, §0.3, §0.5, §0.9, §0.10, §0.11, §0.12 — are judgement, and stay on the
-manual list by design (0012: a linter that guesses teaches people to ignore it). A green
-gate means the six held, not that the thirteen were obeyed.
+eight — §0.2, §0.3, §0.5, §0.9, §0.10, §0.11, §0.12, §0.14 — are judgement, and stay on
+the manual list by design (0012: a linter that guesses teaches people to ignore it). A
+green gate means the six held, not that the fourteen were obeyed.
 
 **Clause numbers are stable.** Cite them in review — "this fails §0.4" is a shorter
 conversation than quoting the bullet. A clause that is removed has its number **retired,
@@ -104,6 +104,14 @@ invalidates every citation written before it. New clauses append.
       that something is). A Material-based binding must actively neutralise
       `CircularProgressIndicator`, not merely avoid it. (See
       [0021](decisions/0021-loading-states.md).)
+- [ ] **§0.14 — A concentric corner never rounds more than the corner it sits in.** When a
+      child's corner is flush with its parent's, or inset by less than one space rung, the
+      child's rung never exceeds the parent's; prefer `parent − inset`, snapped down. A
+      child that does **not** sit in the parent's corner takes its own role's rung — a `md`
+      Button inside a `none` Toast is correct. (See
+      [0032](decisions/0032-concentric-corners.md). Concentricity depends on render-time
+      layout, so this one is judgement: ask whether the corner is flush, and if so whether
+      it is rounder.)
 
 ## Tier 1 — adapt if you must, and write down why
 

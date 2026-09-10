@@ -15,7 +15,7 @@ export function SegmentedControl({ options = [], value, defaultValue, onChange, 
       display: fullWidth ? 'grid' : 'inline-grid',
       gridAutoFlow: 'column', gridAutoColumns: fullWidth ? '1fr' : 'auto',
       height: SIZES[size] || SIZES.md,
-      border: '1px solid var(--border-default)', borderRadius: 'var(--radius-none)',
+      border: '1px solid var(--border-default)', borderRadius: 'var(--radius-md)',
       background: 'var(--surface-raised)', ...style,
     }} {...rest}>
       {options.map((o, i) => {

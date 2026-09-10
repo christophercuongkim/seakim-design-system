@@ -62,12 +62,22 @@ class SkChrome {
   static const double overlayDialogW = 440;
 }
 
-/// Corners are square. The only exceptions are shapes that are conceptually
-/// circular — avatars, status dots, switch tracks, count pills. There is
-/// deliberately no 4px option.
+/// Every corner is a token, and every rung has one documented use (decision 0030).
+/// A component takes the rung its ROLE names, never a value that looked right.
+/// The ladder is closed: adding a rung is an ADR, not an edit here.
+///
+/// Mirrors `tokens/radius.css`; `tool/conformance-check.mjs` asserts the two are
+/// equal, so a value changed on one side alone fails the gate. `2xl` is `xxl`
+/// here because Dart identifiers cannot start with a digit.
 class SkRadius {
   const SkRadius._();
 
-  static const double none = 0;
-  static const double pill = 999;
+  static const double none = 0; // dividers, table cells, full-bleed images
+  static const double xs = 2; // tags, chips, inline marks
+  static const double sm = 4; // inputs, selects, checkboxes
+  static const double md = 6; // buttons, icon buttons, segmented control
+  static const double lg = 8; // cards, panels, list rows
+  static const double xl = 12; // dialogs, sheets, popovers, menus
+  static const double xxl = 16; // full-screen surfaces, media containers
+  static const double pill = 999; // count badges, toggle tracks, pills
 }

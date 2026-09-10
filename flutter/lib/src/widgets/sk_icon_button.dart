@@ -96,6 +96,7 @@ class SkIconButton extends StatelessWidget {
               height: size,
               alignment: Alignment.center,
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(SkRadius.md),
                 color: bg,
                 border: Border.all(color: border, width: SkDepth.hairline),
               ),

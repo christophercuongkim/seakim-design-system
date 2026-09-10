@@ -151,7 +151,7 @@ export function Combobox({
           padding: '0 var(--space-8) 0 var(--space-4)',
           background: disabled ? 'var(--fill-disabled)' : 'var(--surface-raised)',
           border: `1px solid ${disabled ? 'var(--border-disabled)' : border}`,
-          borderRadius: 'var(--radius-none)',
+          borderRadius: 'var(--radius-sm)',
           boxShadow: focus ? 'var(--focus-ring-inset)' : 'none',
           font: 'inherit', fontFamily: 'var(--font-sans)', fontSize: s.fs, textAlign: 'left',
           color: disabled ? 'var(--text-disabled)' : selected ? 'var(--text-primary)' : 'var(--text-tertiary)',
@@ -173,7 +173,7 @@ export function Combobox({
             background: 'var(--surface-overlay)',
             border: '1px solid var(--border-default)',
             boxShadow: 'var(--shadow-popover)',
-            borderRadius: 'var(--radius-none)',
+            borderRadius: 'var(--radius-xl)',
             display: 'flex', flexDirection: 'column',
           }}
         >
@@ -181,7 +181,7 @@ export function Combobox({
             <div style={{
               display: 'flex', alignItems: 'center', gap: 'var(--space-3)',
               height: s.h, padding: '0 var(--space-4)',
-              background: 'var(--surface-raised)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-none)',
+              background: 'var(--surface-raised)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-sm)',
             }}>
               <Icon name="magnifying-glass" size={14} style={{ color: 'var(--text-tertiary)' }} />
               <input

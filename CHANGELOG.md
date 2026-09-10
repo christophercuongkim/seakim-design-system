@@ -17,6 +17,35 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [5.0.0] — 2026-09-10
+
+### Changed
+
+- **Corners take a radius ladder** — [0030](decisions/0030-corners-take-a-radius-ladder.md)
+  (now **Accepted**), superseding the square-corners rule. Tier 0 no longer says "0px on
+  everything that contains content"; it says **every corner names a rung of a closed
+  ladder**: `none` 0, `xs` 2, `sm` 4, `md` 6, `lg` 8, `xl` 12, `2xl` 16, `full` 999,
+  `circle` 50%. A component takes the rung its *role* names — buttons and icon buttons
+  `md`, inputs, selects and checkboxes `sm`, cards `lg`, dialogs, sheets and popovers
+  `xl`, tags `xs`. `none` stays the answer for dividers, table cells and full-bleed media,
+  and `full`/`circle` are unchanged. Applied across both bindings; roles the decision does
+  not name (toast, tooltip, skeleton, empty and loading states, the range track) stay at
+  `none` pending a rung of their own.
+- **`non-zero-radius` → `untokenised-radius`** — the check moves with the rule, per
+  [0012](decisions/0012-conformance-checks-ship-with-rules.md). It now flags any literal
+  radius and any `--radius-*` or `SkRadius.*` that names no rung, and it reads the
+  **camelCase `borderRadius: 'var(...)'` form** that the old rule could not see at all.
+
+### Fixed
+
+- **The corner rule is enforced at the value level for the first time.** The old check
+  whitelisted three token *names* and never opened `tokens/radius.css`, so a full non-zero
+  ladder could be swapped into the tokens with every gate still green. A new
+  `radius-ladder-drift` assertion compares both `tokens/radius.css` and Flutter's
+  `SkRadius` against the ladder the checker itself encodes — each against the ladder
+  rather than against each other, so drifting both bindings the same way no longer passes.
+  Recorded as lesson 17.
+
 ## [4.3.0] — 2026-08-24
 
 ### Added

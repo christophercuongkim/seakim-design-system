@@ -73,7 +73,7 @@ export function Popover({ trigger, children, open, onDismiss, modal = false, sid
             background: 'var(--surface-overlay)',
             border: '1px solid var(--border-default)',
             boxShadow: 'var(--shadow-popover)',
-            borderRadius: 'var(--radius-none)',
+            borderRadius: 'var(--radius-xl)',
             outline: 'none',
             ...style,
           }}

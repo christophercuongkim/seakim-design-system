@@ -1,6 +1,6 @@
 # 0030 — Corners take a radius ladder
 
-- **Status** Proposed
+- **Status** Accepted
 - **Date** 2026-09-10
 - **Affects** the corner rule in `conformance.md` (Tier 0), `tokens/radius.css`,
   `tool/conformance-check.mjs` (per 0012), `spec/`; every binding

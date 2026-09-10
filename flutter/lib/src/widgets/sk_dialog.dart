@@ -17,6 +17,7 @@ const double _kSheetPanelMaxWidth = 460;
 /// to the screen edge, it carries a top-only hairline and [SkDepth.sheet] (which
 /// casts upward), not this all-round dialog treatment.
 BoxDecoration _skPanelDecoration(SkColors colors) => BoxDecoration(
+      borderRadius: BorderRadius.circular(SkRadius.xl),
       color: colors.surfaceOverlay,
       border: Border.all(color: colors.borderDefault, width: SkDepth.hairline),
       boxShadow: SkDepth.dialog(colors.brightness),
@@ -233,6 +234,8 @@ Future<T?> showSkSheet<T>({
               maxHeight: MediaQuery.sizeOf(context).height * 0.82,
             ),
             decoration: BoxDecoration(
+              // edge-anchored sheet: top corners only
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(SkRadius.xl)),
               color: theme.colors.surfaceOverlay,
               border: Border(
                 top: BorderSide(

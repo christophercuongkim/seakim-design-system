@@ -124,6 +124,7 @@ class SkCard extends StatelessWidget {
   }
 
   BoxDecoration _decoration(SkColors c, bool hovered) => BoxDecoration(
+        borderRadius: BorderRadius.circular(SkRadius.lg),
         // Hover is a lightness shift, never a lift — nothing in the layout moves,
         // because nothing in the layout has depth.
         color: hovered ? c.surfaceHover : c.surfaceCard,

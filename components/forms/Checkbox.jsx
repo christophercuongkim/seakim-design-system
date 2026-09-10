@@ -31,7 +31,7 @@ export function Checkbox({ checked, defaultChecked = false, indeterminate = fals
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         background: disabled ? 'var(--fill-disabled)' : marked ? 'var(--fill-accent)' : 'var(--surface-raised)',
         border: `1px solid ${disabled ? 'var(--border-disabled)' : marked ? 'var(--fill-accent)' : hover ? 'var(--border-strong)' : 'var(--border-default)'}`,
-        borderRadius: 'var(--radius-none)',
+        borderRadius: 'var(--radius-sm)',
         color: disabled ? 'var(--text-disabled)' : 'var(--on-accent)',
         transition: 'var(--transition-control)',
         transform: marked ? 'scale(1)' : 'scale(0.94)',

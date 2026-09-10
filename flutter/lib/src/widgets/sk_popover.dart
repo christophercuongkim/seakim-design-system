@@ -219,6 +219,7 @@ class _SkPopoverState extends State<SkPopover> {
     Widget surface = widget.decorated
         ? Container(
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(SkRadius.xl),
               color: c.surfaceOverlay,
               border:
                   Border.all(color: c.borderDefault, width: SkDepth.hairline),

@@ -1,13 +1,14 @@
 name: seakim_flutter
 description: >-
   SeaKim design system for Flutter. Custom widgets built on Flutter primitives —
-  square corners, hairline borders, shadows only on things that float. Colour
+  corners from a closed rung ladder, hairline borders, shadows only on
+  things that float. Colour
   values are generated from the CSS token layer; see tool/gen_tokens.dart.
-version: 1.12.0
+version: 2.0.0
 
 # The rules version this binding was reviewed against — see decisions/0011.
 # A binding may lag the rules; it may not claim a version it has not been checked to.
-seakim_rules: "4.3"
+seakim_rules: "5.0"
 publish_to: none
 
 environment:

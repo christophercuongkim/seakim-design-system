@@ -11,7 +11,7 @@ export function Card({ children, eyebrow, title, meta, footer, media, interactiv
         display: 'flex', flexDirection: 'column',
         background: selected ? 'var(--surface-selected)' : lift ? 'var(--surface-hover)' : 'var(--surface-card)',
         border: `1px solid ${selected ? 'var(--border-accent)' : lift ? 'var(--border-strong)' : 'var(--border-subtle)'}`,
-        borderRadius: 'var(--radius-none)', cursor: interactive ? 'pointer' : undefined,
+        borderRadius: 'var(--radius-lg)', cursor: interactive ? 'pointer' : undefined,
         transition: 'background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)',
         ...style,
       }}

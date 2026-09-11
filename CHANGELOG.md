@@ -17,6 +17,24 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [7.0.1] — 2026-09-11
+
+### Fixed
+
+- **`Skeleton` and `LoadingState` are now declared in `index.d.ts`.** Both shipped with
+  0021, were registered in `ds-shim.js` and the preview manifest, were demoed and rendered
+  green — and were unreachable from a TypeScript consumer under `strict`, because the barrel
+  whose entire job is to keep the typed surface equal to the runtime surface had never heard
+  of them. The rule that cannot be satisfied without them (Tier 0 §0.13, no spinners) was
+  therefore unsatisfiable in any typed binding. Found from a consuming app, which is
+  [lesson 4](docs/lessons.md) happening a second time one level in.
+- **`tool/preview-check.mjs` now asserts barrel parity** — every name exported from
+  `index.js` must also be exported from `index.d.ts`. Per [0012](decisions/0012-conformance-checks-ship-with-rules.md),
+  the drift and its check move together; this one is unambiguous, so it fails rather than warns.
+
+No rules changed and no runtime behaviour changed: this is the React binding's public
+surface being declared as what it already was.
+
 ## [7.0.0] — 2026-09-10
 
 ### Added

@@ -37,6 +37,8 @@ export { Popover } from "./components/feedback/Popover";
 export { Combobox } from "./components/feedback/Combobox";
 export { EmptyState } from "./components/feedback/EmptyState";
 export { ErrorState } from "./components/feedback/ErrorState";
+export { Skeleton } from "./components/feedback/Skeleton";
+export { LoadingState } from "./components/feedback/LoadingState";
 export { Tabs } from "./components/navigation/Tabs";
 export { SideNav } from "./components/navigation/SideNav";
 export { TabBar } from "./components/navigation/TabBar";

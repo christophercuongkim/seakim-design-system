@@ -69,6 +69,23 @@ function runStatic() {
     }
   }
 
+  // Barrel parity — the lesson-4 check, one level in. index.d.ts exists only to keep
+  // the typed surface equal to the runtime surface ("Keep in step with index.js"), and
+  // nothing asserted that. Skeleton and LoadingState shipped, were registered, demoed and
+  // rendered, and were still unreachable from a `strict` consumer: TS resolves the barrel's
+  // .d.ts, which had never heard of them. An in-repo example cannot see this — it is a
+  // consumer-side error about a file no runtime ever loads.
+  const typedNames = new Set(
+    [...readFileSync(`${ROOT}/index.d.ts`, 'utf8').matchAll(/export \{([^}]*)\}/g)]
+      .flatMap(m => m[1].split(',').map(n => n.trim()))
+      .filter(Boolean),
+  );
+  for (const c of webComponents) {
+    if (!typedNames.has(c.name)) {
+      fail.push(`${c.name}: exported from index.js but missing from index.d.ts — a strict consumer cannot import it`);
+    }
+  }
+
   // A component in the registry with no demo reference is a warning, not a fail —
   // compositional primitives (Icon, Card) legitimately appear only inside others.
   const demoSrc = execSync(`cat ${ROOT}/components/*/*.demo.jsx`, { encoding: 'utf8' });

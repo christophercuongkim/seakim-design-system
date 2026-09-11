@@ -38,26 +38,32 @@ them is visible to any gate here:
 
 | Repo | Consumes via | Accent | Rules version | Last synced |
 | --- | --- | --- | --- | --- |
-| [`fantasy-hub`](https://github.com/christophercuongkim/fantasy-hub) | vendored copy, `web/vendor/seakim/` | `data-app="bench"` | **1.0** | 2026-08-07 |
-| [`juntio`](https://github.com/juntio/juntio) | `seakim_flutter` git dep pinned at `ref: 1cc352d`, plus a docs mirror | — | **4.2** | 2026-08-26 |
-| [`job-search`](https://github.com/christophercuongkim/job-search) | vendored copy, `web/vendor/seakim/` | `data-app="job-search"` | **4.1** | 2026-09-02 |
+| [`fantasy-hub`](https://github.com/christophercuongkim/fantasy-hub) | vendored copy, `web/vendor/seakim/` | `data-app="bench"` | **3.2.0** | 2026-08-07 |
+| [`juntio`](https://github.com/juntio/juntio) | `seakim_flutter` git dep pinned at `ref: 1cc352d`, plus a docs mirror | — | **4.2.0** | 2026-08-26 |
+| [`job-search`](https://github.com/christophercuongkim/job-search) | vendored copy, `web/vendor/seakim/` | `data-app="job-search"` | **7.0.0** — current | 2026-09-11 |
 
-Three things this table is here to stop anyone assuming:
+Four things this table is here to stop anyone assuming:
 
 1. **"Nothing ships, so anything can be renegotiated cheaply"** — the Sources note below
-   says that about the *values*, and it was true when written. It is no longer true about
-   the *rules*. This repo is at 7.0.0; the consumers are at 1.0, 4.1 and 4.2. Every one is
-   at least one full Major behind, which [0019](decisions/0019-versioning-second-pass.md)
-   treats as a failure state for a binding it can see — and it cannot see these.
-2. **Nothing pins them.** `tool/version-check.mjs` audits only the bindings listed in its
-   own `BINDINGS` array, which is `flutter/pubspec.yaml`. A consumer vendoring a copy is
-   invisible: it neither declares `seakim_rules` nor gets audited. Both vendored copies
-   drift silently by design.
-3. **`job-search` runs a hue this system does not define.** It declares
+   says that about the *values*, and it was true when written. It is not true of the
+   *rules*. `job-search` re-vendored 7.0.0 the morning after it landed and took the radius
+   ladder, the typeface swap and the concentric-corner clause in one go; nobody has looked
+   at whether it still renders.
+2. **A vendored copy does not say what version it is.** Neither carries a `VERSION` file or
+   a `CHANGELOG`, and the `Rules version` header inside `conformance.md` goes stale — this
+   repo's own header sat at 4.1 while `VERSION` said 4.3, and `fantasy-hub`'s vendored copy
+   still reads **1.0** while actually carrying rules **3.2.0** (its decisions folder stops
+   at 0017, and the commit that vendored it says so). The only reliable version signal is
+   the consumer's own commit message.
+3. **Nothing audits them.** `tool/version-check.mjs` audits only the bindings in its own
+   `BINDINGS` array, which is `flutter/pubspec.yaml`. A vendored copy declares no
+   `seakim_rules` and is invisible, so the lag in this table had to be measured by hand.
+4. **`job-search` runs a hue this system does not define.** It declares
    `[data-app="job-search"]` locally at hue 265 and hand-writes the whole `--brand-*` ramp
    in its own `globals.css`, because the system reserves only brick, sea, turf and plum.
-   That is a fourth product answering to no slot, and the conformance checker shipped for
-   consumers to run (0012) would flag those literals if it were run there.
+   That is a fourth product answering to no slot, and it survived the 7.0.0 re-vendor
+   intact — the conformance checker shipped for consumers to run (0012) would flag those
+   literals if it were run there.
 
 ### Sources
 

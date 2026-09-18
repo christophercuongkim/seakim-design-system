@@ -83,7 +83,7 @@ class SkApp extends StatelessWidget {
     super.key,
     required this.child,
     this.brand = SkAppBrand.seakim,
-    this.mode = SkThemeMode.dark,
+    this.mode = SkThemeMode.light,
     this.textDirection = TextDirection.ltr,
   });
 

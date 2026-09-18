@@ -30,7 +30,7 @@ import 'package:seakim_flutter/seakim_flutter.dart';
 void main() => runApp(
       const SkApp(
         brand: SkAppBrand.voyage,   // rotates the accent hue
-        mode: SkThemeMode.dark,     // dark is the default
+        mode: SkThemeMode.light,    // light is the default
         child: TripsScreen(),
       ),
     );

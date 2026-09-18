@@ -13,7 +13,7 @@
   }
 
   function current() {
-    return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
   }
 
   // Restore before first paint where possible.

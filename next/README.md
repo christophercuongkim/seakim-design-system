@@ -37,7 +37,7 @@ no-flash script. Change `APP` to your product:
 
 ```tsx
 const APP = "voyage";          // seakim · voyage · bench — sets the accent hue
-const DEFAULT_THEME = "dark";  // dark · light
+const DEFAULT_THEME = "light"; // light · dark
 ```
 
 **5. Use it.** Import from the package root; there is no barrel to write.
@@ -266,10 +266,10 @@ Do not import it in a component or a page; Next will refuse.
 
 ## 4. Theme without a flash or a hydration mismatch
 
-Dark is the system default and is set statically in the layout, so a first-time
-visitor sees no flash. The problem is a **returning** visitor who chose light: their
+Light is the system default (0033) and is set statically in the layout, so a first-time
+visitor sees no flash. The problem is a **returning** visitor who chose dark: their
 preference lives in `localStorage`, which the server cannot read, so the server sends
-`data-theme="dark"` and the client corrects it after hydration — a visible flash, plus
+`data-theme="light"` and the client corrects it after hydration — a visible flash, plus
 a React hydration warning.
 
 The fix is the standard one, and `app/layout.tsx` implements it:

@@ -24,7 +24,7 @@ class ExampleApp extends StatefulWidget {
 
 class _ExampleAppState extends State<ExampleApp> {
   SkAppBrand _brand = SkAppBrand.voyage;
-  ThemeMode _mode = ThemeMode.dark;
+  ThemeMode _mode = ThemeMode.light;
 
   @override
   Widget build(BuildContext context) {

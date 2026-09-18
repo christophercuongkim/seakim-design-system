@@ -76,7 +76,7 @@ Decisions taken from the user directly:
 
 - Vibe: Swiss-clean baseline, warm and human in tone, playful in motion and accent
 - Palette: warm neutral core (achromatic), one accent per app
-- Mode: light and dark; **dark is the default**
+- Mode: light and dark; **light is the default** (0033 flipped it; dark is a peer, never derived)
 - Type: one geometric sans across every role (0031 superseded the original three-family split; the original brief said "clean and wide")
 - Density: 7/10
 - Corners: a closed nine-rung ladder, assigned by role (0030 superseded the original "sharp (0px)"; `none` is still the answer for dividers, table cells and full-bleed media)
@@ -150,7 +150,7 @@ A warm achromatic **stone** ramp (`--stone-0` → `--stone-950`) carries every
 surface, border, and text color. It is warm — near-blacks keep a trace of yellow
 so the system reads as paper and graphite, never blue-grey.
 
-- **Dark is the default theme.** `--surface-page: #0f0e0d`, never `#000`.
+- **Dark is a peer theme, opted into with `data-theme="dark"`.** `--surface-page: #0f0e0d`, never `#000`.
   Surfaces step up: page `#0f0e0d` → card `#181614` → raised `#211f1d` →
   overlay `#2b2a27`.
 - **Light is a peer**, not a filter of dark. Its card is pure `#ffffff` on a

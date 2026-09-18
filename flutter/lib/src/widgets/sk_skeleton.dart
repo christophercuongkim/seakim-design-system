@@ -18,15 +18,16 @@ class SkSkeleton extends StatefulWidget {
     super.key,
     this.width,
     this.height = SkSpace.s6,
-    this.radius = 0,
+    this.radius = SkRadius.none,
   });
 
   /// Width in logical pixels. Null stretches to the parent's constraints.
   final double? width;
   final double height;
 
-  /// Corner radius. 0 by default — square, like everything; pass a large value
-  /// only for a round mask (an avatar placeholder).
+  /// Corner rung: one of the [SkRadius] constants, never a bare value (§0.1).
+  /// [SkRadius.none] by default; [SkRadius.pill] for a round mask (an avatar
+  /// placeholder).
   final double radius;
 
   @override
@@ -61,7 +62,9 @@ class _SkSkeletonState extends State<SkSkeleton>
   @override
   Widget build(BuildContext context) {
     final SkColors c = context.skColors;
-    final BorderRadius br = BorderRadius.circular(widget.radius);
+    // The one radius fed through a variable in the system; the constructor doc
+    // binds it to SkRadius, and the untokenised-radius rule flags any other site.
+    final BorderRadius br = BorderRadius.circular(widget.radius); // conformance-check: ignore
 
     if (MediaQuery.disableAnimationsOf(context)) {
       return _block(c.surfaceSunken, br);

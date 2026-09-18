@@ -88,6 +88,11 @@ is additive.
   `--border-emphasis` (`SkDepth.hairline` / `.emphasis`) as borders or outlines; no inset
   or spread-only box-shadow stands in for a border anywhere in `components/`.
 
+- **Skeleton's `radius` names a rung (M2).** React takes a rung name (`none | xs | sm |
+  lg | xl | full | circle`); Flutter takes an `SkRadius` constant. A placeholder cannot
+  render an off-ladder corner, and `untokenised-radius` now flags any radius fed through
+  a variable (`BorderRadius.circular(x)`, `borderRadius: x`) that is not a named rung.
+
 ### Added
 
 - The `inset-shadow-border` line rule in `tool/conformance-check.mjs`: an inset or

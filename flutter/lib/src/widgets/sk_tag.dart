@@ -51,18 +51,14 @@ class SkTag extends StatelessWidget {
             : selected
                 ? c.textAccent
                 : c.textSecondary;
+        // A chip is a fill (0037); only the selected chip carries an edge.
         final Color bg = selected
             ? c.surfaceSelected
             : s.liveHover
-                ? c.surfaceHover
-                : const Color(0x00000000);
-        final Color border = disabled
-            ? c.borderDisabled
-            : selected
-                ? c.borderAccent
-                : s.liveHover
-                    ? c.borderStrong
-                    : c.borderDefault;
+                ? c.fillNeutralHover
+                : c.fillNeutral;
+        final Color border =
+            selected ? c.borderAccent : const Color(0x00000000);
 
         return SkFocusRing(
           visible: s.focused,
@@ -74,10 +70,7 @@ class SkTag extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(SkRadius.xs),
                 color: bg,
-                border: Border.all(
-                  color: border,
-                  width: selected ? SkDepth.emphasis : SkDepth.hairline,
-                ),
+                border: Border.all(color: border, width: SkDepth.hairline),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -91,7 +84,7 @@ class SkTag extends StatelessWidget {
                     style: SkText.label.copyWith(
                       fontSize: SkFontSize.xs,
                       color: fg,
-                      fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   if (onRemove != null) ...<Widget>[

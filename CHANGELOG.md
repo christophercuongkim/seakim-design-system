@@ -77,6 +77,12 @@ is additive.
   borders, not inset shadows; Slider rail and Range track are `--surface-inset` fills with
   no outline; Slider ticks name `--border-hairline`.
 
+- **Chips, badges, segmented control and empty state are fills (M2).** Tag rests on
+  `--fill-neutral` with no outline (the selected chip keeps its accent edge); subtle Badge
+  loses its hairline; SegmentedControl is a `--surface-sunken` well whose selected segment
+  is a raised `--surface-raised` fill, no outer border, no dividers; EmptyState is a
+  `--surface-sunken` fill with no dashed outline (the Flutter dash painter is deleted).
+
 ### Added
 
 - The `alpha-hairline` gate in `tool/conformance-check.mjs`, which reads the resolved

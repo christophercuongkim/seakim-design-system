@@ -15,8 +15,9 @@ export function Tag({ children, icon, selected = false, onRemove, onClick, disab
         height: 'var(--control-h-sm)', minHeight: coarse ? 44 : undefined,
         padding: `0 ${onRemove ? 'var(--space-2)' : 'var(--space-4)'} 0 var(--space-4)`,
         borderRadius: 'var(--radius-xs)', cursor: clickable ? 'pointer' : 'default', opacity: 1,
-        background: selected ? 'var(--surface-selected)' : hover && clickable ? 'var(--surface-hover)' : 'transparent',
-        border: `1px solid ${selected ? 'var(--border-accent)' : hover && clickable ? 'var(--border-strong)' : 'var(--border-default)'}`,
+        // A chip is a fill (0037); only the selected chip carries an edge.
+        background: selected ? 'var(--surface-selected)' : hover && clickable ? 'var(--fill-neutral-hover)' : 'var(--fill-neutral)',
+        border: `1px solid ${selected ? 'var(--border-accent)' : 'transparent'}`,
         color: selected ? 'var(--text-accent)' : 'var(--text-primary)',
         fontFamily: 'var(--font-sans)', fontSize: 'var(--text-xs)', fontWeight: 'var(--weight-medium)',
         transition: 'var(--transition-control)', ...style,

@@ -27,7 +27,7 @@ export function TabBar({ items = [], active, onChange, style, ...rest }) {
             <span style={{
               display: 'inline-flex',
               transform: on ? 'translateY(-1px) scale(1.04)' : 'none',
-              transition: 'transform var(--dur-base) var(--ease-spring)',
+              transition: 'transform var(--dur-base) var(--ease-out)',
             }}>
               <Icon name={item.icon} size={22} weight={on ? 'fill' : 'regular'} />
             </span>

@@ -9,7 +9,7 @@ const TONES = {
   danger:  { icon: 'x-circle', color: 'var(--text-danger)' },
 };
 
-/** Transient confirmation. Pops in with --ease-pop, fades out. Never blocks. */
+/** Transient confirmation. Fades in and out on --ease-out (0034). Never blocks. */
 export function Toast({ message, tone = 'neutral', action, actionLabel, onDismiss, style, ...rest }) {
   const t = TONES[tone] || TONES.neutral;
   return (
@@ -20,7 +20,7 @@ export function Toast({ message, tone = 'neutral', action, actionLabel, onDismis
         minWidth: 280, maxWidth: 420, padding: 'var(--space-4) var(--space-4) var(--space-4) var(--space-5)',
         background: 'var(--surface-overlay)', border: '1px solid var(--border-default)',
         borderRadius: 'var(--radius-none)', boxShadow: 'var(--shadow-toast)',
-        animation: 'sk-toast-in var(--dur-base) var(--ease-pop) both',
+        animation: 'sk-toast-in var(--dur-base) var(--ease-out) both',
         ...style,
       }}
       {...rest}

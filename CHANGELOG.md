@@ -17,6 +17,32 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [8.0.0] — unreleased
+
+The Quiet revamp, per [0033](decisions/0033-quiet.md). Milestone 1 lands here one
+change at a time; the entry is dated when 8.0.0 ships. Consumers on 7.x: nothing below
+is additive.
+
+### Changed
+
+- **Light is the default theme; dark is opted into.** The generated CSS carries the light
+  semantic layer at bare `:root` and the dark layer under `[data-theme="dark"]`; no token
+  value changed. `SkApp` defaults to `SkThemeMode.light`. `ui_kits/` and `slides/` keep an
+  explicit dark root.
+- **Tier 0 §0.5 (press is a scale) is retired; §0.15 (press is a tint, and nothing
+  overshoots) replaces it**, per [0034](decisions/0034-press-is-a-tint.md). Press feedback
+  is the control's active fill. `--press-scale`, `--press-scale-lg`, `--ease-spring`,
+  `--ease-pop` and `--transition-spring` are removed; `--transition-enter` is added.
+  Durations are 80 / 100 / 120 / 150ms. Flutter: `SkPressable` no longer takes
+  `pressScale` and no longer scales; `SkMotion.spring`, `.pop`, `.pressScale` and
+  `.pressScaleLarge` are removed. Tappable cards, table rows and combobox options now
+  tint on press.
+
+### Added
+
+- `tool/conformance-check.mjs` gains the `press-transform` line rule and the
+  `overshoot-easing` value gate, which reads both bindings' motion token values.
+
 ## [7.0.1] — 2026-09-11
 
 ### Fixed

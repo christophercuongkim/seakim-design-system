@@ -371,7 +371,6 @@ class _OptionRow<T> extends StatelessWidget {
     return SkPressable(
       onPressed: option.disabled ? null : () => onPick(option),
       disabled: option.disabled,
-      pressScale: 1,
       semanticLabel: option.label,
       builder: (BuildContext context, SkInteraction s) => Container(
         constraints: const BoxConstraints(minHeight: SkControl.touch),
@@ -380,8 +379,10 @@ class _OptionRow<T> extends StatelessWidget {
             horizontal: SkSpace.s5, vertical: SkSpace.s3),
         color: selected
             ? c.surfaceSelected
-            : (active || s.liveHover)
-                ? c.surfaceHover
+            : s.livePress
+                ? c.surfaceActive
+                : (active || s.liveHover)
+                    ? c.surfaceHover
                 : const Color(0x00000000),
         child: Row(
           children: <Widget>[
@@ -434,7 +435,6 @@ class _EmptyRow extends StatelessWidget {
           const SizedBox(width: SkSpace.s3),
           SkPressable(
             onPressed: onClear,
-            pressScale: 1,
             semanticLabel: 'Clear',
             builder: (BuildContext context, SkInteraction s) => Text(
               'Clear',

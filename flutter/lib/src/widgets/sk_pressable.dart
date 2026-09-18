@@ -27,7 +27,8 @@ class SkInteraction {
 /// The interaction primitive every SeaKim control is built on.
 ///
 /// Deliberately not [InkWell]: Material's ink ripple contradicts the system's
-/// press rule, which is a 0.97 scale over 80ms. This gives hover, press, focus,
+/// press rule (0034): press is a tint the builder paints from
+/// [SkInteraction.livePress], never a ripple and never a scale. This gives hover, press, focus,
 /// keyboard activation, a pointer cursor, and [Semantics] without any ink.
 class SkPressable extends StatefulWidget {
   const SkPressable({
@@ -35,7 +36,6 @@ class SkPressable extends StatefulWidget {
     required this.builder,
     this.onPressed,
     this.disabled = false,
-    this.pressScale,
     this.semanticLabel,
     this.isButton = true,
     this.focusNode,
@@ -47,10 +47,6 @@ class SkPressable extends StatefulWidget {
   final SkStateBuilder builder;
   final VoidCallback? onPressed;
   final bool disabled;
-
-  /// Defaults to [SkMotion.pressScale]. Pass [SkMotion.pressScaleLarge] for big
-  /// surfaces like cards, where 0.97 reads as a jolt, or 1.0 to opt out.
-  final double? pressScale;
 
   final String? semanticLabel;
 
@@ -86,16 +82,7 @@ class _SkPressableState extends State<SkPressable> {
       focused: _focused,
       disabled: _off,
     );
-    final double scale = _off || !_pressed
-        ? 1.0
-        : (widget.pressScale ?? SkMotion.pressScale);
-
-    Widget result = AnimatedScale(
-      scale: scale,
-      duration: SkMotion.instant,
-      curve: SkMotion.out,
-      child: widget.builder(context, state),
-    );
+    Widget result = widget.builder(context, state);
 
     result = MouseRegion(
       cursor: _off ? SystemMouseCursors.basic : widget.cursor,

@@ -41,7 +41,7 @@ export function PlayerSheet({ player, onClose, bp = 'lg' }) {
           boxShadow: isSm ? 'var(--shadow-sheet)' : 'var(--shadow-dialog)',
           animation: isSm
             ? 'sk-sheet-up var(--dur-slow) var(--ease-out) both'
-            : 'sk-sheet-pop var(--dur-base) var(--ease-spring) both',
+            : 'sk-sheet-pop var(--dur-base) var(--ease-out) both',
           display: 'flex', flexDirection: 'column',
         }}
       >

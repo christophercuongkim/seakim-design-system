@@ -12,8 +12,8 @@ enum SkToastTone { neutral, success, warning, danger }
 /// Transient confirmation of something that already happened.
 ///
 /// Past tense, no exclamation mark, no emoji. One at a time, bottom-trailing on
-/// desktop and full-width above the tab bar on mobile. Pops in with [SkMotion.pop]
-/// and fades out — arrival is the only thing that overshoots.
+/// desktop and full-width above the tab bar on mobile. Pops in with [SkMotion.out]
+/// and fades out on [SkMotion.out]; nothing overshoots (0034).
 ///
 /// Not for errors that need a decision; that is an SkDialog.
 class SkToast extends StatelessWidget {
@@ -49,7 +49,7 @@ class SkToast extends StatelessWidget {
       child: TweenAnimationBuilder<double>(
         tween: Tween<double>(begin: 0, end: 1),
         duration: SkMotion.base,
-        curve: SkMotion.pop,
+        curve: SkMotion.out,
         builder: (BuildContext context, double t, Widget? child) => Opacity(
           opacity: t.clamp(0, 1),
           child: Transform.translate(
@@ -83,7 +83,6 @@ class SkToast extends StatelessWidget {
                 SkPressable(
                   onPressed: onAction,
                   semanticLabel: actionLabel,
-                  pressScale: 1,
                   builder: (BuildContext context, SkInteraction s) =>
                       SkTouchTarget(
                     extent: 20,

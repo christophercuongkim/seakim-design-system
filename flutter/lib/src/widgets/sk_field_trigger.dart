@@ -49,7 +49,6 @@ class SkFieldTrigger extends StatelessWidget {
     return SkPressable(
       onPressed: enabled ? onPressed : null,
       disabled: !enabled,
-      pressScale: 1,
       semanticLabel: semanticLabel,
       builder: (BuildContext context, SkInteraction s) {
         // Focus ring: keyboard focus OR an open overlay thickens the border to

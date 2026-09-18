@@ -3,13 +3,13 @@
 What a binding must do to legitimately call itself SeaKim. Tiers defined in
 [0008](decisions/0008-conformance-tiers.md); this is the working checklist.
 
-**Rules version 7.0** — a binding claims conformance *to a version*, because this document
+**Rules version 8.0** — a binding claims conformance *to a version*, because this document
 changes. Declare it alongside your own version, per
 [0011](decisions/0011-versioning.md) and [0019](decisions/0019-versioning-second-pass.md):
 
 ```yaml
 version: 1.2.0          # your binding
-seakim_rules: "7.0"     # the rules version you were reviewed against (may lag; never lead)
+seakim_rules: "8.0"     # the rules version you were reviewed against (may lag; never lead)
 ```
 
 A binding may lag. That is a legitimate, visible state — far better than lag nobody can see.
@@ -49,11 +49,12 @@ A SwiftUI binding owes SeaKim its Tier 0 conformance, not three preview surfaces
 
 No platform exception, ever. Break one and the binding is not SeaKim.
 
-**Six of the fourteen are machine-checked.** `tool/conformance-check.mjs` asserts §0.1,
-§0.4, §0.6, §0.7, §0.8 and §0.13, and prints the clause beside every violation. The other
-eight — §0.2, §0.3, §0.5, §0.9, §0.10, §0.11, §0.12, §0.14 — are judgement, and stay on
-the manual list by design (0012: a linter that guesses teaches people to ignore it). A
-green gate means the six held, not that the fourteen were obeyed.
+**Seven of the fourteen live clauses are machine-checked.** `tool/conformance-check.mjs`
+asserts §0.1, §0.4, §0.6, §0.7, §0.8, §0.13 and §0.15, and prints the clause beside every
+violation. The other seven — §0.2, §0.3, §0.9, §0.10, §0.11, §0.12, §0.14 — are judgement,
+and stay on the manual list by design (0012: a linter that guesses teaches people to
+ignore it). A green gate means the seven held, not that the fourteen were obeyed. §0.5 is
+retired; its number is not reused.
 
 **Clause numbers are stable.** Cite them in review — "this fails §0.4" is a shorter
 conversation than quoting the bullet. A clause that is removed has its number **retired,
@@ -78,7 +79,8 @@ invalidates every citation written before it. New clauses append.
 - [ ] **§0.4 — Semantic tokens only.** No component reads a stone step, a ramp step, or a
       literal colour. This is the rule everything else depends on — theming and per-app
       hue rotation both break the moment it is violated.
-- [ ] **§0.5 — Press is a scale, not a ripple.** 0.97 at 80ms, on every clickable thing.
+- ~~§0.5 — Press is a scale, not a ripple.~~ Retired 2026-09-18 by
+      [0034](decisions/0034-press-is-a-tint.md); superseded by §0.15. The number is not reused.
 - [ ] **§0.6 — Focus is always visible.** 2px accent ring, 2px gap. Never suppressed, never
       replaced by a colour swap alone. Full rules in
       [`guidelines/accessibility.md`](guidelines/accessibility.md).
@@ -90,7 +92,8 @@ invalidates every citation written before it. New clauses append.
       target may not. (See [0023](decisions/0023-sub-floor-chrome-hit-area.md).)
 - [ ] **§0.8 — Both themes work**, neither derived from the other. (See
       [0005](decisions/0005-light-mode-is-first-class.md).)
-- [ ] **§0.9 — Reduced motion collapses all durations to zero** and press scale to 1.
+- [ ] **§0.9 — Reduced motion collapses all durations to zero.** The press tint is not
+      motion and stays.
 - [ ] **§0.10 — Sentence case, verbs on buttons, no emoji in product UI.**
 - [ ] **§0.11 — No gradients.** The dialog scrim is the only exception.
 - [ ] **§0.12 — No floating action button.** (See
@@ -112,6 +115,12 @@ invalidates every citation written before it. New clauses append.
       [0032](decisions/0032-concentric-corners.md). Concentricity depends on render-time
       layout, so this one is judgement: ask whether the corner is flush, and if so whether
       it is rounder.)
+- [ ] **§0.15 — Press is a tint, and nothing overshoots.** Press feedback is the control's
+      active fill; no scale, no ripple, nothing moves. Every easing is ease-out and every
+      duration is at or under 150ms — `--ease-out` / `SkMotion.out` is the only curve. (See
+      [0034](decisions/0034-press-is-a-tint.md). Machine-checked two ways: the checker
+      reads the motion token *values* in both bindings for overshoot and over-length, and
+      flags a press transform in component code.)
 
 ## Tier 1 — adapt if you must, and write down why
 

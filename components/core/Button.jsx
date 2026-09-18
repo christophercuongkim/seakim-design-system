@@ -61,7 +61,6 @@ export function Button({
         fontFamily: 'var(--font-sans)', fontSize: s.fs, fontWeight: 'var(--weight-semibold)',
         letterSpacing: '0.005em', whiteSpace: 'nowrap', cursor: off ? 'not-allowed' : 'pointer',
         transition: 'var(--transition-control)',
-        transform: active && !off ? 'scale(var(--press-scale))' : 'scale(1)',
         ...palette(variant, hover && !off, active && !off, off), ...style,
       }}
       {...rest}

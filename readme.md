@@ -80,7 +80,7 @@ Decisions taken from the user directly:
 - Type: one geometric sans across every role (0031 superseded the original three-family split; the original brief said "clean and wide")
 - Density: 7/10
 - Corners: a closed nine-rung ladder, assigned by role (0030 superseded the original "sharp (0px)"; `none` is still the answer for dividers, table cells and full-bleed media)
-- Motion: springy — slight overshoot on enter
+- Motion: quiet — ease-out only, at or under 150ms; nothing overshoots, nothing scales (0034)
 - Surface separation: borders by default, shadows only for things that overlay
 - Icons: Phosphor
 
@@ -257,16 +257,16 @@ surface fill). Never on cards, never on buttons, never for "glass."
 
 ### Motion
 
-Springy, but disciplined.
+Quiet (0034). One curve, nothing overshoots, nothing scales.
 
-- **Enters and toggles overshoot** — `--ease-spring` `cubic-bezier(.34,1.42,.5,1)`
-  at `--dur-base` 200ms. Badges, knobs, and chips use the punchier `--ease-pop`.
-- **Exits never overshoot** — `--ease-out` at `--dur-fast` 140ms. Leaving is
-  always faster than arriving.
+- **Everything eases out** — `--ease-out` `cubic-bezier(.22,.9,.28,1)` is the only
+  curve. Enters and toggles take `--dur-base` 120ms; exits `--dur-fast` 100ms, so
+  leaving is always faster than arriving.
+- **150ms is the ceiling** — `--dur-slow`, for sheets and layout shifts.
 - **Never animate a value the user is reading.** Prices, scores, and times cut
   instantly; their containers may animate.
-- Sheets slide 320ms; tab indicators spring; toasts pop in and fade out.
-- `prefers-reduced-motion` collapses all durations to 0 and `--press-scale` to 1.
+- `prefers-reduced-motion` collapses all durations to 0. The press tint is not motion
+  and stays.
 
 ### Interaction states
 
@@ -275,7 +275,7 @@ Springy, but disciplined.
 | Hover (solid) | Fill steps one ramp stop lighter in dark, darker in light. No lift, no shadow. |
 | Hover (outline/ghost) | `--surface-hover` fill appears; border goes to `--border-strong`. |
 | Hover (card/row) | Background steps to `--surface-hover`. Border unchanged. |
-| Press | `scale(var(--press-scale))` = 0.97 at 80ms. Every clickable thing. |
+| Press | The control's active fill (`--fill-*-active`, `--surface-active`) at 80ms. No scale, no ripple, nothing moves (0034). |
 | Focus | `--focus-ring`: 2px accent ring with a 2px canvas gap. Visible-only, never suppressed. |
 | Selected | 2px accent border, or `--surface-selected` fill plus `--text-accent`. |
 | Disabled | `--fill-disabled` / `--text-disabled` / `--border-disabled`, `cursor: not-allowed`. **Not an opacity pass** — blanket opacity survives dark and collapses in light, where everything fades toward white. |
@@ -362,7 +362,7 @@ component inventory split into mandatory, expected, on demand, and forbidden.
 | `tokens/radius.css` | Radius scale (and why it's mostly zero). |
 | `tokens/depth.css` | Border widths, the shadow set, focus ring, blur. |
 | `tokens/layout.css` | Containers, fixed chrome dimensions, z-index scale. |
-| `tokens/motion.css` | Durations, easings, composed transitions, press scale. |
+| `tokens/motion.css` | Durations, the one easing, composed transitions. |
 | `tokens/base.css` | Reset and element defaults. |
 | `decisions/` | Numbered ADRs for contested or reversible calls. Append-only. |
 | `spec/` | Platform-neutral component contracts. No code — see decision 0001. |

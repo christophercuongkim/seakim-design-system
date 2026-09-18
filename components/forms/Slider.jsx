@@ -55,7 +55,6 @@ export function Slider({
 }) {
   const trackRef = useRef(null);
   const [hovered, setHovered] = useState(false);
-  const [pressed, setPressed] = useState(false);
   const [focusIndex, setFocusIndex] = useState(-1);
   const dragIndex = useRef(-1);
 
@@ -89,7 +88,6 @@ export function Slider({
     const v = valueFromEvent(e);
     const i = nearestIndex(v);
     dragIndex.current = i;
-    setPressed(true);
     setFocusIndex(i);
     emit(v, i);
 
@@ -99,7 +97,6 @@ export function Slider({
     };
     const up = () => {
       dragIndex.current = -1;
-      setPressed(false);
       window.removeEventListener('pointermove', move);
       window.removeEventListener('pointerup', up);
     };
@@ -155,8 +152,6 @@ export function Slider({
           display: 'flex', alignItems: 'center',
           cursor: disabled ? 'not-allowed' : 'pointer',
           touchAction: 'none',
-          transform: pressed ? 'scale(var(--press-scale))' : 'scale(1)',
-          transition: 'transform var(--dur-instant) var(--ease-out)',
         }}
       >
         <div style={RAIL} />

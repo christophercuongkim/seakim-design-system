@@ -14,7 +14,7 @@ function Dot({ on, hover, disabled }) {
         width: 7, height: 7, borderRadius: 'var(--radius-circle)',
         background: disabled ? 'var(--text-disabled)' : 'var(--fill-accent)',
         transform: on ? 'scale(1)' : 'scale(0)',
-        transition: 'transform var(--dur-base) var(--ease-pop)',
+        transition: 'transform var(--dur-base) var(--ease-out)',
       }} />
     </span>
   );

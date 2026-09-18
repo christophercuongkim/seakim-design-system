@@ -168,18 +168,12 @@ Future<T?> showSkDialog<T>({
       ),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondary, Widget child) {
-        final Animation<double> curved = CurvedAnimation(
-          parent: animation,
-          curve: SkMotion.out,
-        );
+        // An overlay fades in; it does not grow (0034, Quiet).
         return FadeTransition(
           opacity: Tween<double>(begin: 0, end: 1).animate(
             CurvedAnimation(parent: animation, curve: SkMotion.out),
           ),
-          child: ScaleTransition(
-            scale: Tween<double>(begin: 0.97, end: 1).animate(curved),
-            child: child,
-          ),
+          child: child,
         );
       },
     ),

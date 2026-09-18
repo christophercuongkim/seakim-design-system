@@ -224,6 +224,16 @@ const RULES = [
       if (lit && Number(lit[1]) !== 0) {
         return `literal radius ${lit[1]}${lit[2] ?? ''} — name a rung instead`;
       }
+
+      // A radius fed through a variable is invisible to the checks above: the value
+      // could be anything by the time it reaches the corner (lesson 17). Only a named
+      // rung may reach BorderRadius.circular or borderRadius.
+      const viaVar = line.match(/BorderRadius\.circular\(\s*([A-Za-z_][\w.]*)\s*\)/)
+        || line.match(/borderRadius:\s*([A-Za-z_$][\w$.]*)\s*[,}]/);
+      // BorderRadius.zero is `none` by another name, legal like a bare 0 above.
+      if (viaVar && !/^SkRadius\./.test(viaVar[1]) && viaVar[1] !== 'BorderRadius.zero') {
+        return `radius fed through \`${viaVar[1]}\` — pass a rung name (SkRadius.* / --radius-*) instead`;
+      }
       return null;
     },
   },

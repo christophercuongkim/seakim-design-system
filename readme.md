@@ -1,6 +1,6 @@
 # SeaKim Design System
 
-**SeaKim rules 8.0 (Quiet, in flight)** · see [`CHANGELOG.md`](CHANGELOG.md) and
+**SeaKim rules 8.0 (Quiet)** · see [`CHANGELOG.md`](CHANGELOG.md) and
 [decision 0011](decisions/0011-versioning.md)
 
 A multi-product design system for the SeaKim family of apps. One warm-neutral

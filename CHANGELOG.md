@@ -93,6 +93,11 @@ is additive.
   render an off-ladder corner, and `untokenised-radius` now flags any radius fed through
   a variable (`BorderRadius.circular(x)`, `borderRadius: x`) that is not a named rung.
 
+- **Overlays enter without scale (M2).** SkDialog drops its 0.97 → 1 `ScaleTransition`;
+  the React Toast keyframe rises and fades only. The Checkbox mark keeps its settle-in:
+  state feedback, not a press or an enter. The motion specimen no longer demonstrates an
+  overshoot curve.
+
 ### Added
 
 - The `inset-shadow-border` line rule in `tool/conformance-check.mjs`: an inset or

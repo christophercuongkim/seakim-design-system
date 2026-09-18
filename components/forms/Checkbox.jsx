@@ -34,6 +34,7 @@ export function Checkbox({ checked, defaultChecked = false, indeterminate = fals
         borderRadius: 'var(--radius-sm)',
         color: disabled ? 'var(--text-disabled)' : 'var(--on-accent)',
         transition: 'var(--transition-control)',
+        // The mark settles in on toggle: state feedback, not a press or an enter (0034).
         transform: marked ? 'scale(1)' : 'scale(0.94)',
       }}>
         {indeterminate ? <Icon name="minus" size={11} weight="bold" /> : on ? <Icon name="check" size={11} weight="bold" /> : null}

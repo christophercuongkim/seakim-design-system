@@ -56,6 +56,8 @@ class SkCheckbox extends StatelessWidget {
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.only(top: hint != null ? 2 : 0),
+                    // The mark settles in on toggle: state feedback, not a press
+                    // or an enter (0034).
                     child: AnimatedScale(
                       scale: marked ? 1 : 0.94,
                       duration: SkMotion.instant,

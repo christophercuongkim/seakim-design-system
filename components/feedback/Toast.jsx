@@ -35,7 +35,7 @@ export function Toast({ message, tone = 'neutral', action, actionLabel, onDismis
           }}>{actionLabel}</button>
       )}
       {onDismiss && <IconButton icon="x" label="Dismiss" size="sm" variant="ghost" onClick={onDismiss} />}
-      <style>{'@keyframes sk-toast-in{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}'}</style>
+      <style>{'@keyframes sk-toast-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}'}</style>
     </div>
   );
 }

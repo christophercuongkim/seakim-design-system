@@ -21,9 +21,10 @@ export function AvatarStack({ items = [], size = 'sm', max = 3, frontToBack = tr
   const plus = overflow ? remainder : 0;
   const slots = shown.length + (plus > 0 ? 1 : 0);
 
-  // A ring of --surface-card separates each mark from the one it overlaps —
-  // the box-shadow analogue of an outline, so it never changes the diameter.
-  const ring = '0 0 0 2px var(--surface-card)';
+  // A ring of --surface-card separates each mark from the one it overlaps. An
+  // outline draws outside the box without changing the diameter (0037: never an
+  // inset or spread shadow standing in for a border).
+  const ring = 'var(--border-emphasis) solid var(--surface-card)';
 
   const label = plus > 0
     ? `${shown.length} people, and ${plus} more`
@@ -38,7 +39,7 @@ export function AvatarStack({ items = [], size = 'sm', max = 3, frontToBack = tr
         // First-in-front means slot 0 paints on top; otherwise the last does.
         zIndex: frontToBack ? slots - i : i + 1,
         borderRadius: pill ? 'var(--radius-full)' : 'var(--radius-circle)',
-        boxShadow: ring,
+        outline: ring,
         display: 'inline-flex',
       }}
     >

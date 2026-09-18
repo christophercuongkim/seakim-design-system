@@ -81,11 +81,11 @@ class SkAvatarStack extends StatelessWidget {
     final List<SkAvatarData> shown = overflow ? items.take(max).toList() : items;
     final int plus = overflow ? remainder : 0;
 
-    // A ring of --surface-card separates each mark from the one it overlaps — a
-    // spread-only box shadow, the outline analogue that never changes the size.
-    final List<BoxShadow> ring = <BoxShadow>[
-      BoxShadow(color: c.surfaceCard, spreadRadius: 2),
-    ];
+    // A ring of --surface-card separates each mark from the one it overlaps. A
+    // border, never a spread shadow standing in for one (0037); it paints over
+    // the outer emphasis-width of each mark, so the diameter is unchanged.
+    final BoxBorder ring =
+        Border.all(color: c.surfaceCard, width: SkDepth.emphasis);
 
     // Measure the pill so the Stack can size to it exactly.
     double pillW = 0;
@@ -109,7 +109,7 @@ class SkAvatarStack extends StatelessWidget {
         decoration: BoxDecoration(
           color: c.surfaceSunken,
           borderRadius: BorderRadius.circular(SkRadius.pill),
-          boxShadow: ring,
+          border: ring,
         ),
         child: Text(text, style: style),
       );
@@ -125,7 +125,7 @@ class SkAvatarStack extends StatelessWidget {
       final Widget child = isPill
           ? pill!
           : DecoratedBox(
-              decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: ring),
+              decoration: BoxDecoration(shape: BoxShape.circle, border: ring),
               child: SkAvatar(
                 name: shown[i].name,
                 image: shown[i].image,

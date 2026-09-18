@@ -25,6 +25,9 @@ class ExampleApp extends StatefulWidget {
 class _ExampleAppState extends State<ExampleApp> {
   SkAppBrand _brand = SkAppBrand.voyage;
   ThemeMode _mode = ThemeMode.light;
+  // Type trial (CHR-188): 14px UI text is 13 × this. Weight is not trialled
+  // here — SkText styles set it explicitly — so the web specimens decide that half.
+  bool _typeTrial = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +39,19 @@ class _ExampleAppState extends State<ExampleApp> {
       themeMode: _mode,
       // Puts SeaKim tokens in scope so Sk* widgets can be mixed in. Follows the
       // ambient Material brightness, so it tracks themeMode on its own.
-      builder: (BuildContext context, Widget? child) =>
-          SkThemeScope(brand: _brand, child: child!),
+      builder: (BuildContext context, Widget? child) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(
+          textScaler: TextScaler.linear(_typeTrial ? 14 / 13 : 1),
+        ),
+        child: SkThemeScope(brand: _brand, child: child!),
+      ),
       home: _Home(
         brand: _brand,
         mode: _mode,
         onBrand: (SkAppBrand b) => setState(() => _brand = b),
         onMode: (ThemeMode m) => setState(() => _mode = m),
+        typeTrial: _typeTrial,
+        onTypeTrial: (bool v) => setState(() => _typeTrial = v),
       ),
     );
   }
@@ -54,12 +63,16 @@ class _Home extends StatelessWidget {
     required this.mode,
     required this.onBrand,
     required this.onMode,
+    required this.typeTrial,
+    required this.onTypeTrial,
   });
 
   final SkAppBrand brand;
   final ThemeMode mode;
   final ValueChanged<SkAppBrand> onBrand;
   final ValueChanged<ThemeMode> onMode;
+  final bool typeTrial;
+  final ValueChanged<bool> onTypeTrial;
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +97,11 @@ class _Home extends StatelessWidget {
               MaterialPageRoute<void>(
                   builder: (BuildContext _) => const GalleryScreen()),
             ),
+          ),
+          IconButton(
+            tooltip: typeTrial ? 'Type trial on (14px)' : 'Type trial off (13px)',
+            icon: SkIcon(typeTrial ? SkIcons.textAa : SkIcons.textT),
+            onPressed: () => onTypeTrial(!typeTrial),
           ),
           IconButton(
             tooltip: 'Toggle theme',

@@ -1,36 +1,42 @@
-/* Theme toggle for specimen cards and guideline pages.
+/* Theme and type-trial toggles for specimen cards and guideline pages.
    Decision 0005 makes light first-class, which means every card has to be
    reviewable in both themes — a component only ever seen in dark is not done.
-   This injects a fixed, unobtrusive control rather than each page hand-rolling one.
+   The type trial (CHR-188) is reviewed the same way. This injects two fixed,
+   unobtrusive controls rather than each page hand-rolling them.
 
-   Not part of the shipped system: consumers set data-theme themselves. */
+   Not part of the shipped system: consumers set data-theme themselves and
+   never set data-type. */
 (function () {
-  var KEY = 'sk-card-theme';
+  var THEME_KEY = 'sk-card-theme';
+  var TYPE_KEY = 'sk-card-type';
 
-  function apply(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    try { localStorage.setItem(KEY, theme); } catch (e) {}
+  function setAttr(name, value, key) {
+    if (value) document.documentElement.setAttribute(name, value);
+    else document.documentElement.removeAttribute(name);
+    try { localStorage.setItem(key, value || ''); } catch (e) {}
   }
-
-  function current() {
+  function theme() {
     return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  }
+  function type() {
+    return document.documentElement.getAttribute('data-type') === 'trial' ? 'trial' : 'today';
   }
 
   // Restore before first paint where possible.
   try {
-    var stored = localStorage.getItem(KEY);
-    if (stored === 'light' || stored === 'dark') apply(stored);
+    var t = localStorage.getItem(THEME_KEY);
+    if (t === 'light' || t === 'dark') setAttr('data-theme', t, THEME_KEY);
+    var y = localStorage.getItem(TYPE_KEY);
+    if (y === 'trial') setAttr('data-type', 'trial', TYPE_KEY);
   } catch (e) {}
 
-  function mount() {
-    if (document.getElementById('sk-theme-toggle')) return;
-
+  function button(id, right, label, onClick) {
     var btn = document.createElement('button');
-    btn.id = 'sk-theme-toggle';
+    btn.id = id;
     btn.type = 'button';
-    btn.setAttribute('aria-label', 'Switch theme');
+    btn.setAttribute('aria-label', label);
     btn.style.cssText = [
-      'position:fixed', 'top:10px', 'right:10px', 'z-index:9000',
+      'position:fixed', 'top:10px', 'right:' + right, 'z-index:9000',
       'height:26px', 'padding:0 9px', 'cursor:pointer',
       'display:inline-flex', 'align-items:center', 'gap:6px',
       'background:var(--surface-raised)', 'color:var(--text-secondary)',
@@ -39,15 +45,7 @@
       'letter-spacing:0.1em', 'text-transform:uppercase',
       'transition:var(--transition-control)'
     ].join(';');
-
-    function label() {
-      btn.textContent = current();
-    }
-
-    btn.addEventListener('click', function () {
-      apply(current() === 'dark' ? 'light' : 'dark');
-      label();
-    });
+    btn.addEventListener('click', onClick);
     btn.addEventListener('mouseenter', function () {
       btn.style.color = 'var(--text-primary)';
       btn.style.borderColor = 'var(--border-strong)';
@@ -56,9 +54,26 @@
       btn.style.color = 'var(--text-secondary)';
       btn.style.borderColor = 'var(--border-default)';
     });
+    return btn;
+  }
 
-    label();
-    document.body.appendChild(btn);
+  function mount() {
+    if (document.getElementById('sk-theme-toggle')) return;
+
+    var themeBtn = button('sk-theme-toggle', '10px', 'Switch theme', function () {
+      setAttr('data-theme', theme() === 'dark' ? 'light' : 'dark', THEME_KEY);
+      themeBtn.textContent = theme();
+    });
+    themeBtn.textContent = theme();
+
+    var typeBtn = button('sk-type-toggle', '70px', 'Toggle the type trial', function () {
+      setAttr('data-type', type() === 'trial' ? '' : 'trial', TYPE_KEY);
+      typeBtn.textContent = 'type: ' + type();
+    });
+    typeBtn.textContent = 'type: ' + type();
+
+    document.body.appendChild(themeBtn);
+    document.body.appendChild(typeBtn);
   }
 
   if (document.readyState === 'loading') {

@@ -113,7 +113,7 @@ class SkSegmentedControl<T> extends StatelessWidget {
     return Container(
       height: size,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(SkRadius.md),
+        borderRadius: BorderRadius.circular(SkRadius.lg),
         color: c.surfaceRaised,
         border: Border.all(color: c.borderDefault, width: SkDepth.hairline),
       ),

@@ -96,7 +96,7 @@ class _SkTextareaState extends State<SkTextarea> {
         curve: SkMotion.out,
         padding: const EdgeInsets.all(SkSpace.s4),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(SkRadius.sm),
+          borderRadius: BorderRadius.circular(SkRadius.lg),
           color: widget.enabled ? c.surfaceRaised : c.fillDisabled,
           border: Border.all(
             color: border,

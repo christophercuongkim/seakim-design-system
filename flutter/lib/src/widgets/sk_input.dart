@@ -158,7 +158,7 @@ class _SkInputState extends State<SkInput> {
           horizontal: widget.size == SkInputSize.lg ? SkSpace.s5 : SkSpace.s4,
         ),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(SkRadius.sm),
+          borderRadius: BorderRadius.circular(SkRadius.lg),
           color: widget.enabled ? c.surfaceRaised : c.fillDisabled,
           border: Border.all(
             color: border,

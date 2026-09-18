@@ -22,7 +22,7 @@ export function Select({ options = [], size = 'md', invalid = false, disabled = 
         position: 'relative', display: 'flex', alignItems: 'center',
         width: fullWidth ? '100%' : undefined, height: s.h, minHeight: coarse ? 44 : undefined,
         background: disabled ? 'var(--fill-disabled)' : 'var(--surface-raised)',
-        border: `1px solid ${disabled ? 'var(--border-disabled)' : border}`, borderRadius: 'var(--radius-sm)',
+        border: `1px solid ${disabled ? 'var(--border-disabled)' : border}`, borderRadius: 'var(--radius-lg)',
         boxShadow: focus ? 'var(--focus-ring-inset)' : 'none',
          transition: 'var(--transition-control)', ...style,
       }}

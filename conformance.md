@@ -62,9 +62,9 @@ never reused**, the same discipline the decision records follow: renumbering sil
 invalidates every citation written before it. New clauses append.
 
 - [ ] **§0.1 — Every corner names a rung.** No literal radius in any binding — not in CSS, not
-      in a style object, not in `BorderRadius.circular`. The ladder is closed at nine
-      rungs (`none` 0, `xs` 2, `sm` 4, `md` 6, `lg` 8, `xl` 12, `2xl` 16, `full` 999,
-      `circle` 50%) and a component takes the rung its **role** names, not a value that
+      in a style object, not in `BorderRadius.circular`. The ladder is closed at seven
+      rungs (`none` 0, `xs` 2, `sm` 4, `lg` 8, `xl` 12, `full` 999, `circle` 50%; 0035
+      pruned `md` and `2xl`) and a component takes the rung its **role** names, not a value that
       looked right. Adding a rung is an ADR, not a token edit. (See
       [0030](decisions/0030-corners-take-a-radius-ladder.md). Which rung suits a role is
       judgement and stays on the manual list; that a corner is a legal rung is checked.)

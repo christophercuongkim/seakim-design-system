@@ -54,6 +54,7 @@ the value is in the trail, and a silently edited ADR is worse than none.
 | [0032](0032-concentric-corners.md) | Concentric corners never round more than the corner they sit in | Accepted |
 | [0033](0033-quiet.md) | Quiet: chrome recedes, features stay. Direction for rules 8.0 | Accepted |
 | [0034](0034-press-is-a-tint.md) | Press is a tint, and nothing overshoots | Accepted |
+| [0035](0035-rungs-reassigned.md) | Controls take `lg`, cards take `xl`; `md` and `2xl` are pruned | Accepted |
 
 ## Writing one
 

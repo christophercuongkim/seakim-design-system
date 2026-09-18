@@ -125,7 +125,7 @@ class SkCard extends StatelessWidget {
   BoxDecoration _decoration(SkColors c, bool hovered,
           [bool pressed = false]) =>
       BoxDecoration(
-        borderRadius: BorderRadius.circular(SkRadius.lg),
+        borderRadius: BorderRadius.circular(SkRadius.xl),
         // Hover and press are lightness shifts, never a lift and never a scale
         // (0034) — nothing in the layout moves, because nothing has depth.
         color: pressed

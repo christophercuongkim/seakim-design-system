@@ -57,7 +57,7 @@ export function Button({
       style={{
         display: fullWidth ? 'flex' : 'inline-flex', width: fullWidth ? '100%' : undefined,
         alignItems: 'center', justifyContent: 'center', gap: s.gap,
-        height: s.h, minHeight: coarse ? 44 : undefined, padding: `0 ${s.px}`, borderRadius: 'var(--radius-md)',
+        height: s.h, minHeight: coarse ? 44 : undefined, padding: `0 ${s.px}`, borderRadius: 'var(--radius-lg)',
         fontFamily: 'var(--font-sans)', fontSize: s.fs, fontWeight: 'var(--weight-semibold)',
         letterSpacing: '0.005em', whiteSpace: 'nowrap', cursor: off ? 'not-allowed' : 'pointer',
         transition: 'var(--transition-control)',

@@ -151,7 +151,7 @@ export function Combobox({
           padding: '0 var(--space-8) 0 var(--space-4)',
           background: disabled ? 'var(--fill-disabled)' : 'var(--surface-raised)',
           border: `1px solid ${disabled ? 'var(--border-disabled)' : border}`,
-          borderRadius: 'var(--radius-sm)',
+          borderRadius: 'var(--radius-lg)',
           boxShadow: focus ? 'var(--focus-ring-inset)' : 'none',
           font: 'inherit', fontFamily: 'var(--font-sans)', fontSize: s.fs, textAlign: 'left',
           color: disabled ? 'var(--text-disabled)' : selected ? 'var(--text-primary)' : 'var(--text-tertiary)',

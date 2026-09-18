@@ -18,7 +18,7 @@ export function IconButton({ icon, label, variant = 'ghost', size = 'md', active
       style={{
         width: s.box, height: s.box, minWidth: coarse ? 44 : undefined, minHeight: coarse ? 44 : undefined,
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-        borderRadius: 'var(--radius-md)', cursor: disabled ? 'not-allowed' : 'pointer',
+        borderRadius: 'var(--radius-lg)', cursor: disabled ? 'not-allowed' : 'pointer',
         border: bordered
           ? `1px solid ${disabled ? 'var(--border-disabled)' : hover ? 'var(--border-strong)' : 'var(--border-default)'}`
           : '1px solid transparent',

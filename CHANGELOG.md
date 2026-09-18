@@ -38,6 +38,13 @@ is additive.
   `.pressScaleLarge` are removed. Tappable cards, table rows and combobox options now
   tint on press.
 
+- **Controls take `lg` (8), cards take `xl` (12); `md` (6) and `2xl` (16) are removed
+  from the ladder**, per [0035](decisions/0035-rungs-reassigned.md). Buttons, icon
+  buttons, segmented controls, inputs, selects, textareas and the combobox trigger move to
+  `lg`; Card moves to `xl`; checkboxes and menu items stay `sm`; dialogs, popovers and menus
+  stay `xl`. `--radius-md`, `--radius-2xl`, `SkRadius.md` and `SkRadius.xxl` no longer
+  exist. A consumer that named them fails at build time, which is what a Major is for.
+
 ### Added
 
 - `tool/conformance-check.mjs` gains the `press-transform` line rule and the

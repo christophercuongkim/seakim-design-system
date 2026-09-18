@@ -144,11 +144,12 @@ function stripNoise(src) {
  * assertion — tokens/radius.css and SkRadius are both checked against them below.
  */
 const LADDER = [
-  ['none', 0], ['xs', 2], ['sm', 4], ['md', 6],
-  ['lg', 8], ['xl', 12], ['2xl', 16], ['full', 999],
+  ['none', 0], ['xs', 2], ['sm', 4],
+  ['lg', 8], ['xl', 12], ['full', 999],
 ];
-// Dart identifiers cannot start with a digit, and `pill` predates the ladder.
-const DART_ALIAS = { '2xl': 'xxl', full: 'pill' };
+// 0035 pruned `md` and `2xl` — no component named them after controls moved to `lg`
+// and cards to `xl`. `pill` predates the ladder.
+const DART_ALIAS = { full: 'pill' };
 const CSS_RUNGS = [...LADDER.map(([n]) => n), 'circle'];
 const DART_RUNGS = LADDER.map(([n]) => DART_ALIAS[n] ?? n);
 

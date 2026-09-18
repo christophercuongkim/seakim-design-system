@@ -103,7 +103,7 @@ class SkButton extends StatelessWidget {
               width: fullWidth ? double.infinity : null,
               padding: EdgeInsets.symmetric(horizontal: _padX),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(SkRadius.md),
+                borderRadius: BorderRadius.circular(SkRadius.lg),
                 color: bg,
                 border: Border.all(color: border, width: SkDepth.hairline),
                 // Radius is the md rung (0030). No boxShadow: a button sits in the

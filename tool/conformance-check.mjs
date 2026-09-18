@@ -339,6 +339,30 @@ const RULES = [
       return null;
     },
   },
+  {
+    id: 'inset-shadow-border',
+    clause: '0.16',
+    tier: 0,
+    why: 'A ring, bar or edge is a border, never an inset or spread-only box-shadow standing in for one (0037). Shadows lift overlays; they do not draw lines.',
+    // The depth tokens define the focus ring (a box-shadow by design, §0.6); components read it
+    // by name, and a ring that names --border-focus is that ring, not a border in disguise.
+    // The specimen pages that show rejected alternatives are exempt like the colour rules.
+    skip: f => exempt(f, PALETTE_FILES) || /sk_depth\.dart$|tool\/conformance-(check|selftest)\.mjs$/.test(f.replace(/\\/g, '/')),
+    test(line, ctx) {
+      if (/box-?[Ss]hadow/.test(line) && !/--border-focus|focus-ring/.test(line)) {
+        if (/\binset\s+-?\d+px\s+-?\d+px\s+0\b/.test(line) || /\binset\s+0\s+0\s+0\s+\d+px/.test(line)) {
+          return 'inset box-shadow drawn as a border or bar — use a border (0037)';
+        }
+        if (/(?:^|[^-\w])0\s+0\s+0\s+\d+px\s+var\(/.test(line)) {
+          return 'spread-only box-shadow drawn as a ring — use a border or outline (0037)';
+        }
+      }
+      if (/\bBoxShadow\s*\(/.test(line) && /spreadRadius/.test(ctx ?? '')) {
+        return 'spread-only BoxShadow drawn as a ring — use a Border (0037)';
+      }
+      return null;
+    },
+  },
 ];
 
 /* ------------------------------------------------------------------- run */

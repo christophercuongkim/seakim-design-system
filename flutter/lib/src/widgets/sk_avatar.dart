@@ -99,7 +99,7 @@ class SkAvatar extends StatelessWidget {
                       SkAvatarStatus.out => c.textDanger,
                       SkAvatarStatus.idle => c.textTertiary,
                     },
-                    border: Border.all(color: c.surfaceCard, width: 2),
+                    border: Border.all(color: c.surfaceCard, width: SkDepth.emphasis),
                   ),
                 ),
               ),

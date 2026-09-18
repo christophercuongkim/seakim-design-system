@@ -83,8 +83,16 @@ is additive.
   is a raised `--surface-raised` fill, no outer border, no dividers; EmptyState is a
   `--surface-sunken` fill with no dashed outline (the Flutter dash painter is deleted).
 
+- **Rings and edges are borders (M2).** Avatar's hairline ring and status-dot gap ring,
+  AvatarStack's separator ring, and Radio's on/off widths name `--border-hairline` /
+  `--border-emphasis` (`SkDepth.hairline` / `.emphasis`) as borders or outlines; no inset
+  or spread-only box-shadow stands in for a border anywhere in `components/`.
+
 ### Added
 
+- The `inset-shadow-border` line rule in `tool/conformance-check.mjs`: an inset or
+  spread-only box-shadow (or a `BoxShadow` with `spreadRadius`) outside the depth tokens
+  fails as a border in disguise.
 - The `alpha-hairline` gate in `tool/conformance-check.mjs`, which reads the resolved
   border roles in both themes and `SkColors` and fails on an opaque one.
 - `--fill-primary`, `--fill-primary-hover`, `--fill-primary-active`, `--on-primary`, and

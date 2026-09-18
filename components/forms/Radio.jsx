@@ -7,7 +7,7 @@ function Dot({ on, hover, disabled }) {
       width: 16, height: 16, flex: 'none', borderRadius: 'var(--radius-circle)',
       display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
       background: disabled ? 'var(--fill-disabled)' : 'var(--surface-raised)',
-      border: `${on ? 2 : 1}px solid ${disabled ? 'var(--border-disabled)' : on ? 'var(--fill-accent)' : hover ? 'var(--border-strong)' : 'var(--border-default)'}`,
+      border: `${on ? 'var(--border-emphasis)' : 'var(--border-hairline)'} solid ${disabled ? 'var(--border-disabled)' : on ? 'var(--fill-accent)' : hover ? 'var(--border-strong)' : 'var(--border-default)'}`,
       transition: 'var(--transition-control)',
     }}>
       <span style={{

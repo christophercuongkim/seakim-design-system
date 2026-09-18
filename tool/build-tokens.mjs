@@ -74,6 +74,9 @@ const stone = Object.fromEntries(
     .map(([k, v]) => [k, v.$value]),
 );
 
+/** An alpha raw token as CSS: the scrim's shape, reused for hairlines and tints (0037). */
+const mix = r => `color-mix(in oklab, ${r.$value} ${Math.round(r.alpha * 100)}%, transparent)`;
+
 const raw = Object.fromEntries(
   Object.entries(src.raw)
     .filter(([k]) => !k.startsWith('$'))
@@ -166,8 +169,8 @@ function emitCss() {
   L.push('  --surface-overlay:  var(--stone-800);');
   L.push(`  --surface-inset:    ${raw.surfaceSunkenDark.$value};`);
   L.push(`  --surface-shimmer:  ${raw.surfaceShimmerDark.$value};`);
-  L.push('  --surface-hover:    var(--stone-800);');
-  L.push('  --surface-active:   var(--stone-700);');
+  L.push(`  --surface-hover:    ${mix(raw.hoverDark)};`);
+  L.push(`  --surface-active:   ${mix(raw.activeDark)};`);
   L.push('  --surface-selected: var(--brand-wash);');
   L.push(`  --surface-scrim:    color-mix(in oklab, ${raw.scrimDark.$value} ${raw.scrimDark.alpha * 100}%, transparent);`);
   L.push('');
@@ -179,9 +182,10 @@ function emitCss() {
   L.push('  --text-link:       var(--brand-300);');
   L.push('  --text-link-hover: var(--brand-200);');
   L.push('');
-  L.push(`  --border-subtle:  ${raw.borderSubtleDark.$value};`);
-  L.push(`  --border-default: ${raw.borderDefaultDark.$value};`);
-  L.push(`  --border-strong:  ${raw.borderStrongDark.$value};`);
+  L.push('  /* Hairlines are alpha (0037): one token composes on any surface. */');
+  L.push(`  --border-subtle:  ${mix(raw.hairlineSubtleDark)};`);
+  L.push(`  --border-default: ${mix(raw.hairlineDefaultDark)};`);
+  L.push(`  --border-strong:  ${mix(raw.hairlineStrongDark)};`);
   L.push('  --border-accent:  var(--brand-400);');
   L.push('  --border-focus:   var(--brand-400);');
   L.push('');
@@ -252,24 +256,24 @@ function emitCss() {
 
 function emitCssLight() {
   const L = [];
-  L.push(BANNER('Light is a PEER of dark, not a filter of it — the card is pure white on an'));
-  L.push('/* off-white page, so cards read lighter than the page, the inverse of dark\'s */');
-  L.push('/* logic. Never derive one theme from the other. */');
+  L.push(BANNER('Light is a PEER of dark, not a filter of it. Fills define (0037): the page is'));
+  L.push('/* white and a card is a stone tint on it, so a region is its fill, not its outline. */');
+  L.push('/* Never derive one theme from the other. */');
   L.push('');
   L.push('/* Light is the DEFAULT (0033): bare :root carries it; the attribute form rethemes a subtree. */');
   L.push(':root, [data-theme="light"] {');
   L.push('  color-scheme: light;');
   L.push('');
-  L.push('  --bg-base:          var(--stone-50);');
-  L.push('  --surface-page:     var(--stone-50);');
-  L.push('  --surface-sunken:   var(--stone-100);');
-  L.push('  --surface-card:     var(--stone-0);');
+  L.push('  --bg-base:          var(--stone-0);');
+  L.push('  --surface-page:     var(--stone-0);');
+  L.push('  --surface-sunken:   var(--stone-200);');
+  L.push('  --surface-card:     var(--stone-100);');
   L.push('  --surface-raised:   var(--stone-0);');
   L.push('  --surface-overlay:  var(--stone-0);');
-  L.push('  --surface-inset:    var(--stone-100);');
+  L.push('  --surface-inset:    var(--stone-200);');
   L.push(`  --surface-shimmer:  ${raw.surfaceShimmerLight.$value};`);
-  L.push('  --surface-hover:    var(--stone-100);');
-  L.push('  --surface-active:   var(--stone-200);');
+  L.push(`  --surface-hover:    ${mix(raw.hoverLight)};`);
+  L.push(`  --surface-active:   ${mix(raw.activeLight)};`);
   L.push('  --surface-selected: var(--brand-050);');
   L.push(`  --surface-scrim:    color-mix(in oklab, ${raw.scrimLight.$value} ${raw.scrimLight.alpha * 100}%, transparent);`);
   L.push('');
@@ -286,9 +290,10 @@ function emitCssLight() {
   L.push('  --text-link:       var(--brand-700);');
   L.push('  --text-link-hover: var(--brand-800);');
   L.push('');
-  L.push('  --border-subtle:  var(--stone-200);');
-  L.push('  --border-default: var(--stone-300);');
-  L.push('  --border-strong:  var(--stone-400);');
+  L.push('  /* Hairlines are alpha (0037): one token composes on any surface. */');
+  L.push(`  --border-subtle:  ${mix(raw.hairlineSubtleLight)};`);
+  L.push(`  --border-default: ${mix(raw.hairlineDefaultLight)};`);
+  L.push(`  --border-strong:  ${mix(raw.hairlineStrongLight)};`);
   L.push('  --border-accent:  var(--brand-500);');
   L.push('  --border-focus:   var(--brand-600);');
   L.push('');

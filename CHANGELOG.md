@@ -52,8 +52,19 @@ is additive.
   bubbles). `SkColors` gains `fillPrimary`, `fillPrimaryHover`, `fillPrimaryActive`,
   `onPrimary`; Material's `ColorScheme.primary` maps to `fillPrimary`.
 
+- **Tier 0 §0.2 (borders define) is retired; §0.16 (fills and gaps define; a hairline is
+  the exception, and it is alpha) replaces it**, per [0037](decisions/0037-fills-define.md).
+  Light surfaces invert: page `stone-0`, card `stone-100`, sunken and inset `stone-200`;
+  raised and overlay stay white. Hairlines (`--border-subtle` / `-default` / `-strong`) are
+  now alpha in both themes (light: ink 8 / 14 / 24%; dark: white 10 / 16 / 26%), and so are
+  `--surface-hover` and `--surface-active` (light 6 / 12%, dark 8 / 14%). Card and SkCard
+  drop their outline; `SkCard.borderless` is removed. Other components lose their
+  hairlines in the M2 component pass.
+
 ### Added
 
+- The `alpha-hairline` gate in `tool/conformance-check.mjs`, which reads the resolved
+  border roles in both themes and `SkColors` and fails on an opaque one.
 - `--fill-primary`, `--fill-primary-hover`, `--fill-primary-active`, `--on-primary`, and
   the `ink-primary` gate in `tool/conformance-check.mjs`, which resolves the primary fill
   in both themes and both bindings and fails on hue.

@@ -37,7 +37,7 @@
   --text-link-hover: var(--brand-800);
 
   /* Hairlines are alpha (0037): one token composes on any surface. */
-  --border-subtle:  color-mix(in oklab, #181614 8%, transparent);
+  --border-subtle:  var(--stone-200);  /* drifted: a hairline is alpha (0037) */
   --border-default: color-mix(in oklab, #181614 14%, transparent);
   --border-strong:  color-mix(in oklab, #181614 24%, transparent);
   --border-accent:  var(--brand-500);

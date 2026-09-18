@@ -18,7 +18,6 @@ class SkCard extends StatelessWidget {
     this.footer,
     this.onPressed,
     this.padding = SkSpace.s5,
-    this.borderless = false,
   });
 
   final Widget? child;
@@ -42,10 +41,6 @@ class SkCard extends StatelessWidget {
   final VoidCallback? onPressed;
 
   final double padding;
-
-  /// Drops the border for cards that butt against a container edge, as they do in
-  /// full-bleed mobile lists.
-  final bool borderless;
 
   @override
   Widget build(BuildContext context) {
@@ -133,10 +128,6 @@ class SkCard extends StatelessWidget {
             : hovered
                 ? c.surfaceHover
                 : c.surfaceCard,
-        border: borderless
-            ? Border(
-                top: BorderSide(color: c.borderSubtle, width: SkDepth.hairline),
-              )
-            : Border.all(color: c.borderSubtle, width: SkDepth.hairline),
+        // A card is a fill, not an outline (0037).
       );
 }

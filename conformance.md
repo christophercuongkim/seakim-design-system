@@ -49,12 +49,12 @@ A SwiftUI binding owes SeaKim its Tier 0 conformance, not three preview surfaces
 
 No platform exception, ever. Break one and the binding is not SeaKim.
 
-**Seven of the fourteen live clauses are machine-checked.** `tool/conformance-check.mjs`
-asserts §0.1, §0.4, §0.6, §0.7, §0.8, §0.13 and §0.15, and prints the clause beside every
-violation. The other seven — §0.2, §0.3, §0.9, §0.10, §0.11, §0.12, §0.14 — are judgement,
+**Eight of the fourteen live clauses are machine-checked.** `tool/conformance-check.mjs`
+asserts §0.1, §0.4, §0.6, §0.7, §0.8, §0.13, §0.15 and §0.16, and prints the clause beside
+every violation. The other six — §0.3, §0.9, §0.10, §0.11, §0.12, §0.14 — are judgement,
 and stay on the manual list by design (0012: a linter that guesses teaches people to
-ignore it). A green gate means the seven held, not that the fourteen were obeyed. §0.5 is
-retired; its number is not reused.
+ignore it). A green gate means the eight held, not that the fourteen were obeyed. §0.2 and
+§0.5 are retired; their numbers are not reused.
 
 **Clause numbers are stable.** Cite them in review — "this fails §0.4" is a shorter
 conversation than quoting the bullet. A clause that is removed has its number **retired,
@@ -68,9 +68,8 @@ invalidates every citation written before it. New clauses append.
       looked right. Adding a rung is an ADR, not a token edit. (See
       [0030](decisions/0030-corners-take-a-radius-ladder.md). Which rung suits a role is
       judgement and stays on the manual list; that a corner is a legal rung is checked.)
-- [ ] **§0.2 — Borders define, shadows lift.** In-flow surfaces get a 1px hairline and no
-      shadow. A shadow promises the thing floats above the page. The only concession is
-      the raised shadow on bars that scroll over content.
+- ~~§0.2 — Borders define, shadows lift.~~ Retired 2026-09-18 by
+      [0037](decisions/0037-fills-define.md); superseded by §0.16. The number is not reused.
 - [ ] **§0.3 — One accent hue live at a time, and the primary action is ink.** The accent
       is bound per app and the shared layer is achromatic. The primary action reads
       `--fill-primary` / `--on-primary`, which are stone in both themes; the accent lives in
@@ -126,6 +125,16 @@ invalidates every citation written before it. New clauses append.
       [0034](decisions/0034-press-is-a-tint.md). Machine-checked two ways: the checker
       reads the motion token *values* in both bindings for overshoot and over-length, and
       flags a press transform in component code.)
+- [ ] **§0.16 — Fills and gaps define; a hairline is the exception, and it is alpha.** A
+      region is its surface fill and the whitespace around it, not an outline. A hairline
+      is a 1px alpha border (`--border-subtle` / `-default` / `-strong`) used only where a
+      gap cannot separate: table rows, inputs, dividers, the edge of an overlay. Cards,
+      panels and navigation carry none. In-flow surfaces still carry no shadow; a shadow
+      promises the thing floats, and the raised bar over scrolling content is the one
+      concession (0018). (See [0037](decisions/0037-fills-define.md). Machine-checked
+      half: `alpha-hairline` reads the resolved border values in both themes and both
+      bindings and fails on an opaque one. Whether a component should carry a hairline
+      at all is judgement.)
 
 ## Tier 1 — adapt if you must, and write down why
 

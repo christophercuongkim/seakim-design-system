@@ -621,6 +621,72 @@ try {
   // Token files absent — a consuming repo running the checker over its own source.
 }
 
+/* ------------------------------------------------ alpha hairlines (0037) */
+
+/**
+ * A hairline is alpha in both themes so one token composes on any surface. Read the
+ * resolved value of each border role: color-mix(... N%, transparent), rgba(), or an
+ * oklch/hsl with a slash alpha all carry one; a hex or a stone var is opaque.
+ */
+const HAIRLINE_ROLES = ['--border-subtle', '--border-default', '--border-strong'];
+function cssAlpha(v) {
+  if (!v) return null;
+  let m = v.match(/color-mix\([^,]+,\s*[^\s,]+\s+([\d.]+)%\s*,\s*transparent\s*\)/);
+  if (m) return Number(m[1]) / 100;
+  m = v.match(/\b(?:rgba?|hsla?)\([^)]*,\s*([\d.]+)\s*\)/);
+  if (m) return Number(m[1]);
+  m = v.match(/\/\s*([\d.]+)(%?)\s*\)/);
+  if (m) return m[2] ? Number(m[1]) / 100 : Number(m[1]);
+  return 1;
+}
+for (const [theme, file] of [['dark', 'tokens/colors.css'], ['light', 'tokens/theme-light.css']]) {
+  let decls;
+  try {
+    decls = cssDecls(readFileSync(join(ROOT, file), 'utf8').replace(/\/\*[\s\S]*?\*\//g, ''));
+  } catch {
+    continue;
+  }
+  for (const role of HAIRLINE_ROLES) {
+    if (!(role in decls)) continue;
+    const a = cssAlpha(decls[role]);
+    if (a >= 1) {
+      violations.push({
+        rule: 'alpha-hairline', clause: '0.16', file, line: 0,
+        detail: `${theme}: ${role} is opaque (${decls[role]}) — a hairline is alpha (0037)`,
+        text: 'Fills and gaps define; a hairline is the exception, and it is alpha. Give it an alpha raw token.',
+      });
+    }
+  }
+}
+try {
+  const dart = readFileSync(join(ROOT, 'flutter/lib/src/tokens/sk_colors.dart'), 'utf8');
+  const palette = readFileSync(join(ROOT, 'flutter/lib/src/tokens/palette.g.dart'), 'utf8');
+  for (const theme of ['dark', 'light']) {
+    const at = dart.indexOf(`factory SkColors.${theme}`);
+    if (at < 0) continue;
+    const next = dart.indexOf('factory SkColors.', at + 1);
+    const scope = dart.slice(at, next > 0 ? next : undefined);
+    for (const role of ['borderSubtle', 'borderDefault', 'borderStrong']) {
+      const m = scope.match(new RegExp(`${role}:\\s*(\\w+)\\.(\\w+)`));
+      if (!m) continue;
+      let opaque = m[1] !== 'SkRawColors';
+      if (!opaque) {
+        const c = palette.match(new RegExp(`static const Color ${m[2]} = Color\\(0x([0-9A-Fa-f]{2})`));
+        opaque = !c || c[1].toUpperCase() === 'FF';
+      }
+      if (opaque) {
+        violations.push({
+          rule: 'alpha-hairline', clause: '0.16', file: 'flutter/lib/src/tokens/sk_colors.dart', line: 0,
+          detail: `SkColors.${theme}: ${role} reads ${m[1]}.${m[2]}, which is opaque — a hairline is alpha (0037)`,
+          text: 'Fills and gaps define; a hairline is the exception, and it is alpha, in every binding.',
+        });
+      }
+    }
+  }
+} catch {
+  // No Flutter binding here.
+}
+
 // The Dart side of the same rule: SkColors maps fillPrimary onto SkStone in both factories.
 try {
   const dart = readFileSync(join(ROOT, 'flutter/lib/src/tokens/sk_colors.dart'), 'utf8');

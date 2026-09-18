@@ -68,8 +68,8 @@
   --surface-overlay:  var(--stone-800);
   --surface-inset:    #0a0908;
   --surface-shimmer:  #1e1b18;
-  --surface-hover:    var(--stone-800);
-  --surface-active:   var(--stone-700);
+  --surface-hover:    color-mix(in oklab, #faf9f7 8%, transparent);
+  --surface-active:   color-mix(in oklab, #faf9f7 14%, transparent);
   --surface-selected: var(--brand-wash);
   --surface-scrim:    color-mix(in oklab, #000000 68%, transparent);
 
@@ -81,9 +81,10 @@
   --text-link:       var(--brand-300);
   --text-link-hover: var(--brand-200);
 
-  --border-subtle:  #2a2724;
-  --border-default: #383431;
-  --border-strong:  #4c4844;
+  /* Hairlines are alpha (0037): one token composes on any surface. */
+  --border-subtle:  color-mix(in oklab, #faf9f7 10%, transparent);
+  --border-default: color-mix(in oklab, #faf9f7 16%, transparent);
+  --border-strong:  color-mix(in oklab, #faf9f7 26%, transparent);
   --border-accent:  var(--brand-400);
   --border-focus:   var(--brand-400);
 

@@ -50,5 +50,17 @@
   --type-eyebrow:    var(--weight-medium) var(--text-2xs)/1.2 var(--font-mono);
 }
 
+/* Type trial (CHR-188), decided at the M1 checkpoint: 14px UI, 16px body, weight 500
+   everywhere, tracking -0.01em. Toggled on the specimen pages by theme-toggle.js and
+   never set by a consumer; it is removed or adopted when the trial resolves. */
+:root[data-type="trial"] {
+  --text-sm: 14px;
+  --text-md: 16px;
+  --weight-regular: 500;
+  --weight-semibold: 500;
+  --tracking-normal: -0.01em;
+  letter-spacing: -0.01em;
+}
+
 /* Numbers that sit in columns always align. */
 .tnum { font-variant-numeric: tabular-nums; }

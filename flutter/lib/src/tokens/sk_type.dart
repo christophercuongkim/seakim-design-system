@@ -1,6 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-/// One text family, plus mono for data. Bundled as VARIABLE assets — see pubspec.yaml.
+/// One text family, plus mono for data. Quiet (0033, CHR-193): 14px UI, 16px
+/// body, weight 500 throughout, UI tracking -0.01em; hierarchy comes from size
+/// and colour, not from bold.
+/// Bundled as VARIABLE assets — see pubspec.yaml.
 /// Every style therefore carries `fontVariations` alongside `fontWeight`: the wght
 /// axis is what actually moves on a variable font, and relying on `fontWeight`
 /// alone risks a synthesised bold on some backends instead of the real cut.
@@ -29,8 +32,8 @@ class SkFontSize {
 
   static const double xs2 = 10;
   static const double xs = 11;
-  static const double sm = 13; // UI default
-  static const double md = 15; // body default
+  static const double sm = 14; // UI default
+  static const double md = 16; // body default
   static const double lg = 17;
   static const double xl = 20;
   static const double xl2 = 24;
@@ -55,8 +58,8 @@ class SkText {
     fontFamily: SkFonts.display,
     package: skFontPackage,
     fontSize: SkFontSize.xl5,
-    fontWeight: FontWeight.w600,
-    fontVariations: const <FontVariation>[FontVariation('wght', 600)],
+    fontWeight: FontWeight.w500,
+    fontVariations: const <FontVariation>[FontVariation('wght', 500)],
     height: 1.1,
     letterSpacing: SkFontSize.xl5 * -0.03,
   );
@@ -65,8 +68,8 @@ class SkText {
     fontFamily: SkFonts.display,
     package: skFontPackage,
     fontSize: SkFontSize.xl3,
-    fontWeight: FontWeight.w600,
-    fontVariations: const <FontVariation>[FontVariation('wght', 600)],
+    fontWeight: FontWeight.w500,
+    fontVariations: const <FontVariation>[FontVariation('wght', 500)],
     height: 1.1,
     letterSpacing: SkFontSize.xl3 * -0.03,
   );
@@ -75,8 +78,8 @@ class SkText {
     fontFamily: SkFonts.display,
     package: skFontPackage,
     fontSize: SkFontSize.xl,
-    fontWeight: FontWeight.w600,
-    fontVariations: const <FontVariation>[FontVariation('wght', 600)],
+    fontWeight: FontWeight.w500,
+    fontVariations: const <FontVariation>[FontVariation('wght', 500)],
     height: 1.3,
     letterSpacing: SkFontSize.xl * -0.018,
   );
@@ -95,36 +98,40 @@ class SkText {
     fontFamily: SkFonts.sans,
     package: skFontPackage,
     fontSize: SkFontSize.md,
-    fontWeight: FontWeight.w400,
-    fontVariations: const <FontVariation>[FontVariation('wght', 400)],
+    fontWeight: FontWeight.w500,
+    fontVariations: const <FontVariation>[FontVariation('wght', 500)],
     height: 1.55,
+    letterSpacing: SkFontSize.md * -0.01,
   );
 
   static const TextStyle bodySm = TextStyle(
     fontFamily: SkFonts.sans,
     package: skFontPackage,
     fontSize: SkFontSize.sm,
-    fontWeight: FontWeight.w400,
-    fontVariations: const <FontVariation>[FontVariation('wght', 400)],
+    fontWeight: FontWeight.w500,
+    fontVariations: const <FontVariation>[FontVariation('wght', 500)],
     height: 1.55,
+    letterSpacing: SkFontSize.sm * -0.01,
   );
 
   static const TextStyle label = TextStyle(
     fontFamily: SkFonts.sans,
     package: skFontPackage,
     fontSize: SkFontSize.sm,
-    fontWeight: FontWeight.w600,
-    fontVariations: const <FontVariation>[FontVariation('wght', 600)],
+    fontWeight: FontWeight.w500,
+    fontVariations: const <FontVariation>[FontVariation('wght', 500)],
     height: 1.3,
+    letterSpacing: SkFontSize.sm * -0.01,
   );
 
   static const TextStyle caption = TextStyle(
     fontFamily: SkFonts.sans,
     package: skFontPackage,
     fontSize: SkFontSize.xs,
-    fontWeight: FontWeight.w400,
-    fontVariations: const <FontVariation>[FontVariation('wght', 400)],
+    fontWeight: FontWeight.w500,
+    fontVariations: const <FontVariation>[FontVariation('wght', 500)],
     height: 1.3,
+    letterSpacing: SkFontSize.xs * -0.01,
   );
 
   /// Tabular by default, so columns of figures always align.

@@ -47,7 +47,7 @@ export function SideNav({ brand, groups = [], active, collapsed = false, footer,
           padding: collapsed ? 0 : '0 var(--space-5)', justifyContent: collapsed ? 'center' : 'flex-start',
           borderBottom: '1px solid var(--border-subtle)',
           fontFamily: 'var(--font-display)', fontSize: 'var(--text-lg)',
-          fontWeight: 'var(--weight-semibold)', letterSpacing: 'var(--tracking-tight)',
+          fontWeight: 'var(--weight-medium)', letterSpacing: 'var(--tracking-tight)',
           color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden',
         }}>{collapsed ? String(brand)[0] : brand}</div>
       )}

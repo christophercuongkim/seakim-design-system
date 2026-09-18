@@ -61,6 +61,12 @@ is additive.
   drop their outline; `SkCard.borderless` is removed. Other components lose their
   hairlines in the M2 component pass.
 
+- **Type: 14px UI, 16px body, weight 500 throughout, UI tracking −0.01em** (CHR-188 trial,
+  adopted at the M1 checkpoint). `--text-sm` 13 → 14, `--text-md` 15 → 16; every composed
+  `--type-*` role except data and eyebrow is `--weight-medium`; `--tracking-ui` is applied on
+  `<body>` in `tokens/base.css`. `SkFontSize.sm` / `.md` and every `SkText` role follow.
+  The 12-step scale and 0031 are unchanged; this is a revalue.
+
 ### Added
 
 - The `alpha-hairline` gate in `tool/conformance-check.mjs`, which reads the resolved

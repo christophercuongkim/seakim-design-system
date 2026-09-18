@@ -1,14 +1,12 @@
-/* Theme and type-trial toggles for specimen cards and guideline pages.
+/* Theme toggle for specimen cards and guideline pages.
    Decision 0005 makes light first-class, which means every card has to be
    reviewable in both themes — a component only ever seen in dark is not done.
-   The type trial (CHR-188) is reviewed the same way. This injects two fixed,
-   unobtrusive controls rather than each page hand-rolling them.
+   This injects one fixed, unobtrusive control rather than each page
+   hand-rolling it.
 
-   Not part of the shipped system: consumers set data-theme themselves and
-   never set data-type. */
+   Not part of the shipped system: consumers set data-theme themselves. */
 (function () {
   var THEME_KEY = 'sk-card-theme';
-  var TYPE_KEY = 'sk-card-type';
 
   function setAttr(name, value, key) {
     if (value) document.documentElement.setAttribute(name, value);
@@ -18,16 +16,11 @@
   function theme() {
     return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
   }
-  function type() {
-    return document.documentElement.getAttribute('data-type') === 'trial' ? 'trial' : 'today';
-  }
 
   // Restore before first paint where possible.
   try {
     var t = localStorage.getItem(THEME_KEY);
     if (t === 'light' || t === 'dark') setAttr('data-theme', t, THEME_KEY);
-    var y = localStorage.getItem(TYPE_KEY);
-    if (y === 'trial') setAttr('data-type', 'trial', TYPE_KEY);
   } catch (e) {}
 
   function button(id, right, label, onClick) {
@@ -66,14 +59,7 @@
     });
     themeBtn.textContent = theme();
 
-    var typeBtn = button('sk-type-toggle', '70px', 'Toggle the type trial', function () {
-      setAttr('data-type', type() === 'trial' ? '' : 'trial', TYPE_KEY);
-      typeBtn.textContent = 'type: ' + type();
-    });
-    typeBtn.textContent = 'type: ' + type();
-
     document.body.appendChild(themeBtn);
-    document.body.appendChild(typeBtn);
   }
 
   if (document.readyState === 'loading') {

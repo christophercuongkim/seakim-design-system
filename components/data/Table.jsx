@@ -12,7 +12,7 @@ const TH = {
   letterSpacing: 'var(--tracking-caps)', color: 'var(--text-tertiary)',
   textAlign: 'left', padding: 'var(--space-4) var(--space-5)',
   borderBottom: '1px solid var(--border-subtle)', whiteSpace: 'nowrap',
-  fontWeight: 500, background: 'var(--surface-card)',
+  fontWeight: 'var(--weight-medium)', background: 'var(--surface-card)',
   position: 'sticky', top: 0, zIndex: 1,
 };
 

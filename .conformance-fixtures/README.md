@@ -18,9 +18,9 @@ pass and prove nothing.
 
 ## `_gates/` — the whole-repo gates
 
-Six gates do not scan lines. They read token files and compare values: `radius-ladder-drift`,
+Seven gates do not scan lines. They read token files and compare values: `radius-ladder-drift`,
 `accent-text-step-parity`, `overlay-width-parity`, `contrast-floor`, `overshoot-easing`,
-`ink-primary`. A rule fixture cannot
+`ink-primary`, `alpha-hairline`. A rule fixture cannot
 reach them, so each gets a tree here mirroring the paths it reads, with one value drifted.
 
 **No `good/` on purpose.** The real repository is the good case and CI asserts it on every

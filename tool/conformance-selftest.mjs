@@ -124,6 +124,7 @@ const FILE_GATES = [
   ['contrast-floor', 'body text below 4.5:1 on its own surface'],
   ['overshoot-easing', 'a motion curve overshoots or a duration exceeds the ceiling'],
   ['ink-primary', 'the primary fill resolves to a brand step instead of stone'],
+  ['alpha-hairline', 'a border role resolves to an opaque value'],
 ];
 
 for (const [id, why] of FILE_GATES) {

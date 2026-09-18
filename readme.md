@@ -81,7 +81,7 @@ Decisions taken from the user directly:
 - Density: 7/10
 - Corners: a closed seven-rung ladder, assigned by role (0035 moved controls to `lg` and cards to `xl`, and pruned `md` and `2xl`) (0030 superseded the original "sharp (0px)"; `none` is still the answer for dividers, table cells and full-bleed media)
 - Motion: quiet — ease-out only, at or under 150ms; nothing overshoots, nothing scales (0034)
-- Surface separation: borders by default, shadows only for things that overlay
+- Surface separation: fills and gaps; hairlines are alpha and the exception (0037). Shadows only for things that overlay
 - Icons: Phosphor
 
 ### No logo exists

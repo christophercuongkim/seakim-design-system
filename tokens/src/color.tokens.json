@@ -566,14 +566,50 @@
       "$value": "#f5f3f0",
       "$description": "Warm off-white. Not stone-50, which is too cool against the warm blacks."
     },
-    "borderSubtleDark": {
-      "$value": "#2a2724"
+    "hairlineSubtleLight": {
+      "$value": "#181614",
+      "alpha": 0.08,
+      "$description": "Hairlines are alpha (0037): stone-900 at 8%. Table rows, dividers. Decorative — 1.2:1 on white, never a boundary on its own."
     },
-    "borderDefaultDark": {
-      "$value": "#383431"
+    "hairlineDefaultLight": {
+      "$value": "#181614",
+      "alpha": 0.14,
+      "$description": "Inputs, overlay edges."
     },
-    "borderStrongDark": {
-      "$value": "#4c4844"
+    "hairlineStrongLight": {
+      "$value": "#181614",
+      "alpha": 0.24,
+      "$description": "Hover on an outlined control."
+    },
+    "hairlineSubtleDark": {
+      "$value": "#faf9f7",
+      "alpha": 0.1,
+      "$description": "stone-50 at 10%; the dark peer of hairlineSubtleLight, tuned by eye rather than mirrored."
+    },
+    "hairlineDefaultDark": {
+      "$value": "#faf9f7",
+      "alpha": 0.16
+    },
+    "hairlineStrongDark": {
+      "$value": "#faf9f7",
+      "alpha": 0.26
+    },
+    "hoverLight": {
+      "$value": "#181614",
+      "alpha": 0.06,
+      "$description": "Hover and active are alpha tints (0037) so one token composes on the page and on a card."
+    },
+    "activeLight": {
+      "$value": "#181614",
+      "alpha": 0.12
+    },
+    "hoverDark": {
+      "$value": "#faf9f7",
+      "alpha": 0.08
+    },
+    "activeDark": {
+      "$value": "#faf9f7",
+      "alpha": 0.14
     },
     "borderDisabledDark": {
       "$value": "#2e2b28"

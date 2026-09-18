@@ -175,8 +175,8 @@ class SkColors {
         surfaceOverlay: SkStone.s800,
         surfaceInset: SkRawColors.surfaceSunkenDark,
         surfaceShimmer: SkRawColors.surfaceShimmerDark,
-        surfaceHover: SkStone.s800,
-        surfaceActive: SkStone.s700,
+        surfaceHover: SkRawColors.hoverDark,
+        surfaceActive: SkRawColors.activeDark,
         surfaceSelected: brand.wash,
         // warm black at 68%
         surfaceScrim: SkRawColors.scrimDark,
@@ -189,9 +189,10 @@ class SkColors {
         textAccent: brand.s300,
         textLink: brand.s300,
         textLinkHover: brand.s200,
-        borderSubtle: SkRawColors.borderSubtleDark,
-        borderDefault: SkRawColors.borderDefaultDark,
-        borderStrong: SkRawColors.borderStrongDark,
+        // Hairlines are alpha (0037): one value composes on any surface.
+        borderSubtle: SkRawColors.hairlineSubtleDark,
+        borderDefault: SkRawColors.hairlineDefaultDark,
+        borderStrong: SkRawColors.hairlineStrongDark,
         borderAccent: brand.s400,
         borderFocus: brand.s400,
         fillAccent: brand.s400,
@@ -220,19 +221,19 @@ class SkColors {
         borderDisabled: SkRawColors.borderDisabledDark,
       );
 
-  /// Mirrors tokens/theme-light.css. A peer of dark, not a filter of it — the card
-  /// is pure white on an off-white page, the inverse of dark mode's logic.
+  /// Mirrors tokens/theme-light.css. A peer of dark, not a filter of it. Fills
+  /// define (0037): the page is white and a card is a stone tint on it.
   factory SkColors.light(SkBrandRamp brand) => SkColors(
         brightness: Brightness.light,
-        surfacePage: SkStone.s50,
-        surfaceSunken: SkStone.s100,
-        surfaceCard: SkStone.s0,
+        surfacePage: SkStone.s0,
+        surfaceSunken: SkStone.s200,
+        surfaceCard: SkStone.s100,
         surfaceRaised: SkStone.s0,
         surfaceOverlay: SkStone.s0,
-        surfaceInset: SkStone.s100,
+        surfaceInset: SkStone.s200,
         surfaceShimmer: SkRawColors.surfaceShimmerLight,
-        surfaceHover: SkStone.s100,
-        surfaceActive: SkStone.s200,
+        surfaceHover: SkRawColors.hoverLight,
+        surfaceActive: SkRawColors.activeLight,
         surfaceSelected: brand.s050,
         // stone-800 at 40%
         surfaceScrim: SkRawColors.scrimLight,
@@ -246,9 +247,10 @@ class SkColors {
         textAccent: brand.s700,
         textLink: brand.s700,
         textLinkHover: brand.s800,
-        borderSubtle: SkStone.s200,
-        borderDefault: SkStone.s300,
-        borderStrong: SkStone.s400,
+        // Hairlines are alpha (0037): one value composes on any surface.
+        borderSubtle: SkRawColors.hairlineSubtleLight,
+        borderDefault: SkRawColors.hairlineDefaultLight,
+        borderStrong: SkRawColors.hairlineStrongLight,
         borderAccent: brand.s500,
         borderFocus: brand.s600,
         fillAccent: brand.s500,

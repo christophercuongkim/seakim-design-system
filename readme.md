@@ -201,7 +201,7 @@ Rules that hold across both apps:
 
 - **Navigation swaps, it does not shrink** — side nav from md up, tab bar at sm.
 - **Columns are dropped, not shrunk.** A table loses its widest columns before any
-  type goes below 13px.
+  type goes below 14px.
 - **Rows change species.** A 6-column table row becomes a two-line tappable row at
   sm; hover-revealed actions become an inline trailing button.
 - **Primary actions move to a sticky footer below lg**, where no rail exists to hold

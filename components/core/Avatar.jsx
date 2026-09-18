@@ -19,7 +19,7 @@ export function Avatar({ name = '', src, size = 'md', status, style, ...rest }) 
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
           background: src ? 'var(--surface-inset)' : 'var(--fill-neutral)',
           color: 'var(--text-secondary)', fontFamily: 'var(--font-sans)',
-          fontSize: fs, fontWeight: 'var(--weight-semibold)', letterSpacing: '0.01em',
+          fontSize: fs, fontWeight: 'var(--weight-medium)', letterSpacing: '0.01em',
           boxShadow: 'inset 0 0 0 1px var(--border-subtle)', userSelect: 'none', ...style,
         }}
       >

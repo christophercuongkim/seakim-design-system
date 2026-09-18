@@ -17,10 +17,10 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
-## [8.0.0] — unreleased
+## [8.0.0] — 2026-09-18
 
-The Quiet revamp, per [0033](decisions/0033-quiet.md). Milestone 1 lands here one
-change at a time; the entry is dated when 8.0.0 ships. Consumers on 7.x: nothing below
+The Quiet revamp, per [0033](decisions/0033-quiet.md): chrome recedes, features stay.
+Shipped after job-search ran it end to end on its QA slot. Consumers on 7.x: nothing below
 is additive.
 
 ### Changed

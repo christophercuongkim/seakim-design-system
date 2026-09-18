@@ -1,7 +1,9 @@
 /* ============================================================
-   SeaKim — depth. BORDERS DEFINE, SHADOWS LIFT.
-   Anything in the page flow gets a 1px hairline and no shadow. Shadow is
-   reserved for things that OVERLAY other content — menus, popovers, sheets,
+   SeaKim — depth. FILLS DEFINE, SHADOWS LIFT (0037, §0.16).
+   A region in the page flow is its surface fill; a hairline is the alpha
+   exception where a gap cannot separate (rows, inputs, overlay edges), and
+   nothing in flow carries a shadow. Shadow is reserved for things that OVERLAY
+   other content — menus, popovers, sheets,
    dialogs, toasts, drag ghosts — so elevation carries meaning instead of
    decoration. A raised bar is the one in-layout exception: a bar that scrolls
    over content earns a shadow. Per 0018 that shadow casts toward the content it

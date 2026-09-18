@@ -67,12 +67,9 @@ class SkSideNav<T> extends StatelessWidget {
       duration: SkMotion.slow,
       curve: SkMotion.out,
       width: collapsed ? SkChrome.sideNavCollapsed : SkChrome.sideNav,
-      decoration: BoxDecoration(
-        color: c.surfaceCard,
-        border: Border(
-          right: BorderSide(color: c.borderSubtle, width: SkDepth.hairline),
-        ),
-      ),
+      // A rail is a fill, not an outlined box (0037): no right border; the
+      // header and footer separate by gap.
+      decoration: BoxDecoration(color: c.surfaceCard),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -82,12 +79,6 @@ class SkSideNav<T> extends StatelessWidget {
               alignment: collapsed ? Alignment.center : Alignment.centerLeft,
               padding:
                   EdgeInsets.symmetric(horizontal: collapsed ? 0 : SkSpace.s5),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                      color: c.borderSubtle, width: SkDepth.hairline),
-                ),
-              ),
               child: Text(
                 collapsed ? brand!.characters.first : brand!,
                 maxLines: 1,
@@ -128,14 +119,8 @@ class SkSideNav<T> extends StatelessWidget {
             ),
           ),
           if (footer != null)
-            Container(
+            Padding(
               padding: const EdgeInsets.all(SkSpace.s4),
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                      color: c.borderSubtle, width: SkDepth.hairline),
-                ),
-              ),
               child: footer!,
             ),
         ],

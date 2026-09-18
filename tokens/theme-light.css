@@ -6,7 +6,8 @@
 /* off-white page, so cards read lighter than the page, the inverse of dark's */
 /* logic. Never derive one theme from the other. */
 
-[data-theme="light"] {
+/* Light is the DEFAULT (0033): bare :root carries it; the attribute form rethemes a subtree. */
+:root, [data-theme="light"] {
   color-scheme: light;
 
   --bg-base:          var(--stone-50);

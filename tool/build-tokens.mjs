@@ -152,8 +152,10 @@ function emitCss() {
   }
   L.push('}');
   L.push('');
-  L.push('/* ---- Semantic layer: DARK (default) ---- */');
-  L.push(':root, [data-theme="dark"] {');
+  L.push('/* ---- Semantic layer: DARK. Light is the default (0033); dark is opted into. ---- */');
+  L.push('/* :root[data-theme] outranks the bare :root that theme-light.css sets, and the plain */');
+  L.push('/* attribute selector still rethemes a nested subtree. */');
+  L.push(':root[data-theme="dark"], [data-theme="dark"] {');
   L.push('  color-scheme: dark;');
   L.push('');
   L.push('  --bg-base:          var(--stone-950);');
@@ -248,7 +250,8 @@ function emitCssLight() {
   L.push('/* off-white page, so cards read lighter than the page, the inverse of dark\'s */');
   L.push('/* logic. Never derive one theme from the other. */');
   L.push('');
-  L.push('[data-theme="light"] {');
+  L.push('/* Light is the DEFAULT (0033): bare :root carries it; the attribute form rethemes a subtree. */');
+  L.push(':root, [data-theme="light"] {');
   L.push('  color-scheme: light;');
   L.push('');
   L.push('  --bg-base:          var(--stone-50);');

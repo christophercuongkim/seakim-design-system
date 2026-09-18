@@ -14,7 +14,7 @@ import { fontVariables } from "./fonts";
 const APP = "voyage";
 
 /** The system default. A first-time visitor never sees a flash. */
-const DEFAULT_THEME = "dark";
+const DEFAULT_THEME = "light";
 
 export const metadata: Metadata = {
   title: "Voyage",

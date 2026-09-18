@@ -22,3 +22,6 @@ next/example/node_modules/
 next/example/.next/
 next/example/next-env.d.ts
 next/example/tsconfig.tsbuildinfo
+
+# Agent worktrees are scratch clones, never content.
+.claude/worktrees/

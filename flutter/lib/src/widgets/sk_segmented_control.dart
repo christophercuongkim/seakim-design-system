@@ -52,7 +52,7 @@ class SkSegmentedControl<T> extends StatelessWidget {
         semanticLabel: seg.label,
         builder: (BuildContext context, SkInteraction s) {
           final Color fg = on
-              ? c.textAccent
+              ? c.textPrimary
               : s.liveHover
                   ? c.textPrimary
                   : c.textSecondary;
@@ -61,21 +61,17 @@ class SkSegmentedControl<T> extends StatelessWidget {
             child: AnimatedContainer(
               duration: SkMotion.instant,
               curve: SkMotion.out,
-              height: size,
+              height: size - 4,
               padding: EdgeInsets.symmetric(
                   horizontal: dense ? SkSpace.s4 : SkSpace.s5),
+              // The selected segment is a raised fill in a sunken well (0037).
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(SkRadius.sm),
                 color: on
-                    ? c.surfaceSelected
+                    ? c.surfaceRaised
                     : s.liveHover
                         ? c.surfaceHover
                         : const Color(0x00000000),
-                border: Border(
-                  left: i == 0
-                      ? BorderSide.none
-                      : BorderSide(
-                          color: c.borderSubtle, width: SkDepth.hairline),
-                ),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -97,7 +93,7 @@ class SkSegmentedControl<T> extends StatelessWidget {
                     style: SkText.label.copyWith(
                       fontSize: dense ? SkFontSize.xs : SkFontSize.sm,
                       color: fg,
-                      fontWeight: on ? FontWeight.w600 : FontWeight.w500,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],
@@ -112,10 +108,10 @@ class SkSegmentedControl<T> extends StatelessWidget {
 
     return Container(
       height: size,
+      padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(SkRadius.lg),
-        color: c.surfaceRaised,
-        border: Border.all(color: c.borderDefault, width: SkDepth.hairline),
+        color: c.surfaceSunken,
       ),
       child: Row(
         mainAxisSize: fullWidth ? MainAxisSize.max : MainAxisSize.min,

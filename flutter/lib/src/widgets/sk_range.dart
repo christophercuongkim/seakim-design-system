@@ -91,7 +91,6 @@ class SkRange extends StatelessWidget {
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       color: c.surfaceInset,
-                      border: Border.all(color: c.borderSubtle),
                       borderRadius: BorderRadius.zero,
                     ),
                   ),

@@ -138,7 +138,6 @@ class SkTable<T> extends StatelessWidget {
       return DecoratedBox(
         decoration: BoxDecoration(
           color: c.surfaceCard,
-          border: Border.all(color: c.borderSubtle, width: SkDepth.hairline),
         ),
         child: Padding(
           padding: const EdgeInsets.all(SkSpace.s6),
@@ -298,9 +297,8 @@ class SkTable<T> extends StatelessWidget {
     );
 
     return DecoratedBox(
-      decoration: BoxDecoration(
-        border: Border.all(color: c.borderSubtle, width: SkDepth.hairline),
-      ),
+      // A table is a fill, not an outlined box (0037); rows keep their hairlines.
+      decoration: BoxDecoration(color: c.surfaceCard),
       child: Semantics(
         label: caption,
         child: matrix && bp.isSm

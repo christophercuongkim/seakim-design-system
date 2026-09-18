@@ -195,11 +195,7 @@ class _SkSliderState extends State<SkSlider> {
                             // Track: 4px, square ends.
                             Container(
                               height: 4,
-                              decoration: BoxDecoration(
-                                color: c.surfaceInset,
-                                border: Border.all(
-                                    color: c.borderSubtle, width: SkDepth.hairline),
-                              ),
+                              color: c.surfaceInset, // a fill, no outline (0037)
                             ),
                             FractionallySizedBox(
                               widthFactor: fraction,
@@ -221,7 +217,9 @@ class _SkSliderState extends State<SkSlider> {
                                         Positioned(
                                           left: (width - 1) * (i / (tickCount - 1)),
                                           child: Container(
-                                              width: 1, height: 6, color: c.borderDefault),
+                                              width: SkDepth.hairline,
+                                              height: 6,
+                                              color: c.borderDefault),
                                         ),
                                     ],
                                   ),

@@ -20,8 +20,7 @@ function snap(v, min, max, step) {
 
 const RAIL = {
   position: 'absolute', left: 0, right: 0, height: 4,
-  background: 'var(--surface-inset)',
-  border: '1px solid var(--border-subtle)',
+  background: 'var(--surface-inset)', // a fill, no outline (0037)
   boxSizing: 'border-box',
 };
 
@@ -167,7 +166,7 @@ export function Slider({
             {Array.from({ length: tickCount }, (_, i) => (
               <span key={i} style={{
                 position: 'absolute', left: (i / (tickCount - 1)) * 100 + '%',
-                width: 1, height: 6, background: 'var(--border-default)',
+                width: 'var(--border-hairline)', height: 6, background: 'var(--border-default)',
               }} />
             ))}
           </div>

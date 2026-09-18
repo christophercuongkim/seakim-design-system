@@ -72,6 +72,11 @@ is additive.
   Tabs' indicator height names `--border-emphasis`. Active nav and tab labels are weight
   500 like everything else; the accent colour and fill carry the state.
 
+- **Data surfaces are fills (M2).** Table loses its container outline (rows keep their
+  hairlines); the selected row's accent edge and the DatePicker's today underline are
+  borders, not inset shadows; Slider rail and Range track are `--surface-inset` fills with
+  no outline; Slider ticks name `--border-hairline`.
+
 ### Added
 
 - The `alpha-hairline` gate in `tool/conformance-check.mjs`, which reads the resolved

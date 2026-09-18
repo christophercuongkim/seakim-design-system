@@ -71,11 +71,16 @@ invalidates every citation written before it. New clauses append.
 - [ ] **§0.2 — Borders define, shadows lift.** In-flow surfaces get a 1px hairline and no
       shadow. A shadow promises the thing floats above the page. The only concession is
       the raised shadow on bars that scroll over content.
-- [ ] **§0.3 — One accent hue live at a time**, bound per app, and the shared layer is
-      achromatic. If two things on a screen compete for a primary *action*, one of them is
-      wrong — but a systematic identity fill (own-message bubbles, selected rows) may
-      repeat, because it marks a category, not a call to action. (See
-      [0026](decisions/0026-accent-as-ownership-fill.md).)
+- [ ] **§0.3 — One accent hue live at a time, and the primary action is ink.** The accent
+      is bound per app and the shared layer is achromatic. The primary action reads
+      `--fill-primary` / `--on-primary`, which are stone in both themes; the accent lives in
+      links, the focus ring, selection, active navigation and identity fills (See
+      [0036](decisions/0036-ink-primary.md).) If two things on a screen compete for a
+      primary *action*, one of them is wrong — but a systematic identity fill (own-message
+      bubbles, selected rows) may repeat, because it marks a category, not a call to
+      action. (See [0026](decisions/0026-accent-as-ownership-fill.md).) The ink half is
+      machine-checked (`ink-primary` reads the resolved value in both themes and both
+      bindings); the one-hue half is judgement.
 - [ ] **§0.4 — Semantic tokens only.** No component reads a stone step, a ramp step, or a
       literal colour. This is the rule everything else depends on — theming and per-app
       hue rotation both break the moment it is violated.

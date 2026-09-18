@@ -51,6 +51,10 @@ class SkColors {
     required this.fillAccentHover,
     required this.fillAccentActive,
     required this.onAccent,
+    required this.fillPrimary,
+    required this.fillPrimaryHover,
+    required this.fillPrimaryActive,
+    required this.onPrimary,
     required this.fillNeutral,
     required this.fillNeutralHover,
     required this.fillNeutralActive,
@@ -121,6 +125,14 @@ class SkColors {
   final Color fillAccentActive;
   final Color onAccent;
 
+  /// The primary action is ink (0036): stone, never brand. [fillAccent] and
+  /// friends are identity and selection — checked marks, the switch track,
+  /// the tab indicator, own-message bubbles.
+  final Color fillPrimary;
+  final Color fillPrimaryHover;
+  final Color fillPrimaryActive;
+  final Color onPrimary;
+
   final Color fillNeutral;
   final Color fillNeutralHover;
   final Color fillNeutralActive;
@@ -186,6 +198,10 @@ class SkColors {
         fillAccentHover: brand.s300,
         fillAccentActive: brand.s500,
         onAccent: SkStone.s950,
+        fillPrimary: SkStone.s100,
+        fillPrimaryHover: SkStone.s200,
+        fillPrimaryActive: SkStone.s300,
+        onPrimary: SkStone.s950,
         fillNeutral: SkStone.s800,
         fillNeutralHover: SkStone.s700,
         fillNeutralActive: SkStone.s600,
@@ -239,6 +255,10 @@ class SkColors {
         fillAccentHover: brand.s600,
         fillAccentActive: brand.s700,
         onAccent: SkStone.s950,
+        fillPrimary: SkStone.s900,
+        fillPrimaryHover: SkStone.s800,
+        fillPrimaryActive: SkStone.s700,
+        onPrimary: SkStone.s50,
         fillNeutral: SkStone.s100,
         fillNeutralHover: SkStone.s200,
         fillNeutralActive: SkStone.s300,

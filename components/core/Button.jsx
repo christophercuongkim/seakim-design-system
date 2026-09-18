@@ -30,8 +30,9 @@ function palette(variant, hover, active, off) {
       return { background: active ? 'var(--danger-500)' : hover ? 'var(--danger-400)' : 'var(--fill-danger)',
                color: 'var(--on-danger)', border: '1px solid transparent' };
     default:
-      return { background: active ? 'var(--fill-accent-active)' : hover ? 'var(--fill-accent-hover)' : 'var(--fill-accent)',
-               color: 'var(--on-accent)', border: '1px solid transparent' };
+      // The primary action is ink (0036); accent is for links, focus, selection, identity.
+      return { background: active ? 'var(--fill-primary-active)' : hover ? 'var(--fill-primary-hover)' : 'var(--fill-primary)',
+               color: 'var(--on-primary)', border: '1px solid transparent' };
   }
 }
 

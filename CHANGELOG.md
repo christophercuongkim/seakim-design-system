@@ -45,8 +45,18 @@ is additive.
   stay `xl`. `--radius-md`, `--radius-2xl`, `SkRadius.md` and `SkRadius.xxl` no longer
   exist. A consumer that named them fails at build time, which is what a Major is for.
 
+- **The primary action is ink**, per [0036](decisions/0036-ink-primary.md). Tier 0 §0.3
+  keeps its number and gains a second half: `--fill-primary` / `--on-primary` (stone in
+  both themes) are the primary button's fill; `--fill-accent` and `--on-accent` stay for
+  identity and selection (checked marks, switch track, tab indicator, own-message
+  bubbles). `SkColors` gains `fillPrimary`, `fillPrimaryHover`, `fillPrimaryActive`,
+  `onPrimary`; Material's `ColorScheme.primary` maps to `fillPrimary`.
+
 ### Added
 
+- `--fill-primary`, `--fill-primary-hover`, `--fill-primary-active`, `--on-primary`, and
+  the `ink-primary` gate in `tool/conformance-check.mjs`, which resolves the primary fill
+  in both themes and both bindings and fails on hue.
 - `tool/conformance-check.mjs` gains the `press-transform` line rule and the
   `overshoot-easing` value gate, which reads both bindings' motion token values.
 

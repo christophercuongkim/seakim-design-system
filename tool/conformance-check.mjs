@@ -534,6 +534,7 @@ const CONTRAST_PAIRS = [
   ['--text-danger', '--surface-card', 4.5, true],
   ['--on-accent', '--fill-accent', 4.5, true],
   ['--border-focus', '--surface-card', 3.0, true],
+  ['--on-primary', '--fill-primary', 4.5, true],
   // Gated as of the stone-450/550 split. It sat at 4.12:1 / 4.38:1 on a single
   // mid step, which no grey can fix for both themes at once — see lesson 18.
   ['--text-tertiary', '--surface-card', 4.5, true],
@@ -596,8 +597,48 @@ try {
       }
     }
   }
+
+  /* ------------------------------------------------- ink primary (0036) */
+
+  // The primary action carries no hue in either theme. Read the resolved value:
+  // a warm stone step spreads its channels by a few units; any brand step by dozens.
+  const INK_SPREAD = 12;
+  const firstApp = Object.values(apps)[0] ?? {};
+  for (const [theme, over] of [['dark', {}], ['light', light]]) {
+    const F = toRgb('--fill-primary', { ...base, ...firstApp, ...over });
+    if (!F) continue;
+    const scaled = Math.max(...F) <= 1 ? F.map(v => v * 255) : F;
+    const spread = Math.max(...scaled) - Math.min(...scaled);
+    if (spread > INK_SPREAD) {
+      violations.push({
+        rule: 'ink-primary', clause: '0.3', file: 'tokens/', line: 0,
+        detail: `${theme}: --fill-primary resolves to rgb(${scaled.map(Math.round).join(', ')}) — channel spread ${spread.toFixed(0)}, ink allows ${INK_SPREAD}`,
+        text: 'The primary action is ink (0036). Point --fill-primary at a stone step, not a brand step.',
+      });
+    }
+  }
 } catch {
   // Token files absent — a consuming repo running the checker over its own source.
+}
+
+// The Dart side of the same rule: SkColors maps fillPrimary onto SkStone in both factories.
+try {
+  const dart = readFileSync(join(ROOT, 'flutter/lib/src/tokens/sk_colors.dart'), 'utf8');
+  for (const theme of ['dark', 'light']) {
+    const at = dart.indexOf(`factory SkColors.${theme}`);
+    if (at < 0) continue;
+    const scope = dart.slice(at, dart.indexOf('factory SkColors.', at + 1) > 0 ? dart.indexOf('factory SkColors.', at + 1) : undefined);
+    const m = scope.match(/fillPrimary:\s*(\w+)\./);
+    if (m && m[1] !== 'SkStone') {
+      violations.push({
+        rule: 'ink-primary', clause: '0.3', file: 'flutter/lib/src/tokens/sk_colors.dart', line: 0,
+        detail: `SkColors.${theme}: fillPrimary reads ${m[1]} — ink is a stone step (0036)`,
+        text: 'The primary action is ink in every binding (0036).',
+      });
+    }
+  }
+} catch {
+  // No Flutter binding here.
 }
 
 /* ---------------------------------------------------------------- output */

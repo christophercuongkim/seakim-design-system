@@ -81,8 +81,8 @@ class SkMaterialTheme {
 
     final ColorScheme scheme = ColorScheme(
       brightness: brightness,
-      primary: c.fillAccent,
-      onPrimary: c.onAccent,
+      primary: c.fillPrimary, // the primary action is ink (0036)
+      onPrimary: c.onPrimary,
       secondary: c.fillNeutral,
       onSecondary: c.textPrimary,
       error: c.fillDanger,
@@ -550,13 +550,13 @@ class SkMaterialTheme {
       backgroundColor: WidgetStateProperty.resolveWith((Set<WidgetState> s) {
         if (!filled) return const Color(0x00000000);
         if (s.contains(WidgetState.disabled)) return c.fillNeutral;
-        if (s.contains(WidgetState.pressed)) return c.fillAccentActive;
-        if (s.contains(WidgetState.hovered)) return c.fillAccentHover;
-        return c.fillAccent;
+        if (s.contains(WidgetState.pressed)) return c.fillPrimaryActive;
+        if (s.contains(WidgetState.hovered)) return c.fillPrimaryHover;
+        return c.fillPrimary;
       }),
       foregroundColor: WidgetStateProperty.resolveWith((Set<WidgetState> s) {
         if (s.contains(WidgetState.disabled)) return c.textTertiary;
-        return filled ? c.onAccent : c.textAccent;
+        return filled ? c.onPrimary : c.textAccent;
       }),
       overlayColor: WidgetStateProperty.resolveWith((Set<WidgetState> s) =>
           s.contains(WidgetState.hovered) ? c.surfaceHover : const Color(0x00000000)),

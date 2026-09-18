@@ -7,8 +7,8 @@ enum SkSwitchSize { sm, md }
 
 /// An immediate on or off for a setting. No save step, no confirmation.
 ///
-/// The knob springs across with [SkMotion.spring] — the one place overshoot is
-/// visible inside a control. If the change needs saving, that is an SkCheckbox.
+/// The knob slides across on [SkMotion.out]; nothing overshoots (0034). If the
+/// change needs saving, that is an SkCheckbox.
 class SkSwitch extends StatelessWidget {
   const SkSwitch({
     super.key,
@@ -66,7 +66,7 @@ class SkSwitch extends StatelessWidget {
         children: <Widget>[
           AnimatedAlign(
             duration: SkMotion.base,
-            curve: SkMotion.spring,
+            curve: SkMotion.out,
             alignment: value ? Alignment.centerRight : Alignment.centerLeft,
             child: Container(
               width: _knob,
@@ -89,7 +89,6 @@ class SkSwitch extends StatelessWidget {
       onPressed: onChanged == null ? null : () => onChanged!(!value),
       disabled: disabled,
       isButton: false,
-      pressScale: 1,
       semanticLabel: label,
       builder: (BuildContext context, SkInteraction s) => Semantics(
         toggled: value,

@@ -53,7 +53,6 @@ class SkSlider extends StatefulWidget {
 
 class _SkSliderState extends State<SkSlider> {
   bool _hover = false;
-  bool _pressed = false;
   final FocusNode _focus = FocusNode();
 
   @override
@@ -171,20 +170,15 @@ class _SkSliderState extends State<SkSlider> {
                 onExit: (_) => setState(() => _hover = false),
                 child: GestureDetector(
                   onTapDown: (TapDownDetails d) {
-                    setState(() => _pressed = true);
                     _focus.requestFocus();
                     _emitFromLocal(d.localPosition.dx, width);
                   },
-                  onTapUp: (_) => setState(() => _pressed = false),
-                  onTapCancel: () => setState(() => _pressed = false),
                   onHorizontalDragStart: (DragStartDetails d) {
-                    setState(() => _pressed = true);
                     _focus.requestFocus();
                     _emitFromLocal(d.localPosition.dx, width);
                   },
                   onHorizontalDragUpdate: (DragUpdateDetails d) =>
                       _emitFromLocal(d.localPosition.dx, width),
-                  onHorizontalDragEnd: (_) => setState(() => _pressed = false),
                   child: Semantics(
                     slider: true,
                     label: widget.label,
@@ -192,13 +186,7 @@ class _SkSliderState extends State<SkSlider> {
                     increasedValue: _text,
                     decreasedValue: _text,
                     enabled: !widget.disabled,
-                    child: AnimatedScale(
-                      scale: _pressed && !widget.disabled
-                          ? SkMotion.pressScale
-                          : 1.0,
-                      duration: SkMotion.instant,
-                      curve: SkMotion.out,
-                      child: SizedBox(
+                    child: SizedBox(
                         height: SkControl.touch,
                         child: Stack(
                           alignment: Alignment.centerLeft,
@@ -262,7 +250,6 @@ class _SkSliderState extends State<SkSlider> {
                           ],
                         ),
                       ),
-                    ),
                   ),
                 ),
               ),

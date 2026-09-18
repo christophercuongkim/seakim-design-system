@@ -21,7 +21,7 @@ class SkTab<T> {
 
 /// Switches between sections of one screen, keeping the surrounding chrome.
 ///
-/// The 2px accent indicator springs into place; the labels never move. For two to
+/// The 2px accent indicator slides into place; the labels never move. For two to
 /// four short options that filter rather than navigate, use SkSegmentedControl.
 class SkTabs<T> extends StatelessWidget {
   const SkTabs({
@@ -56,10 +56,9 @@ class SkTabs<T> extends StatelessWidget {
             return SkPressable(
               onPressed: onChanged == null ? null : () => onChanged!(tab.value),
               semanticLabel: tab.label,
-              pressScale: 1,
               builder: (BuildContext context, SkInteraction s) {
                 final Color fg =
-                    on || s.liveHover ? c.textPrimary : c.textSecondary;
+                    on || s.liveHover || s.livePress ? c.textPrimary : c.textSecondary;
                 // Painted height: vertical padding plus the label line box
                 // (SkText.label line-height 1.3). Sub-floor, so on touch the
                 // tap band grows to SkControl.touch; desktop keeps the density.
@@ -121,7 +120,7 @@ class SkTabs<T> extends StatelessWidget {
                       child: TweenAnimationBuilder<double>(
                         tween: Tween<double>(begin: 0, end: on ? 1 : 0),
                         duration: SkMotion.base,
-                        curve: SkMotion.spring,
+                        curve: SkMotion.out,
                         builder: (BuildContext context, double t, _) =>
                             Transform.scale(
                           scaleX: t.clamp(0, 1),

@@ -41,7 +41,6 @@ class SkCheckbox extends StatelessWidget {
       onPressed: onChanged == null ? null : () => onChanged!(!value),
       disabled: disabled,
       isButton: false,
-      pressScale: 1,
       semanticLabel: label,
       builder: (BuildContext context, SkInteraction s) => Semantics(
         checked: value,
@@ -60,7 +59,7 @@ class SkCheckbox extends StatelessWidget {
                     child: AnimatedScale(
                       scale: marked ? 1 : 0.94,
                       duration: SkMotion.instant,
-                      curve: SkMotion.pop,
+                      curve: SkMotion.out,
                       child: AnimatedContainer(
                         duration: SkMotion.instant,
                         curve: SkMotion.out,

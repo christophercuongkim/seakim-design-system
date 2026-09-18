@@ -44,7 +44,7 @@ export function Tabs({ tabs = [], value, defaultValue, onChange, size = 'md', st
               position: 'absolute', left: 0, right: 0, bottom: -1, height: 2,
               background: 'var(--fill-accent)',
               transform: on ? 'scaleX(1)' : 'scaleX(0)',
-              transition: 'transform var(--dur-base) var(--ease-spring)',
+              transition: 'transform var(--dur-base) var(--ease-out)',
             }} />
           </button>
         );

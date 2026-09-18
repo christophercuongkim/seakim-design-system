@@ -110,24 +110,29 @@ class SkCard extends StatelessWidget {
     return SkPressable(
       onPressed: onPressed,
       isButton: false,
-      pressScale: SkMotion.pressScaleLarge,
       builder: (BuildContext context, SkInteraction s) => SkFocusRing(
         visible: s.focused,
         child: AnimatedContainer(
           duration: SkMotion.base,
           curve: SkMotion.out,
-          decoration: _decoration(c, s.liveHover),
+          decoration: _decoration(c, s.liveHover, s.livePress),
           child: content,
         ),
       ),
     );
   }
 
-  BoxDecoration _decoration(SkColors c, bool hovered) => BoxDecoration(
+  BoxDecoration _decoration(SkColors c, bool hovered,
+          [bool pressed = false]) =>
+      BoxDecoration(
         borderRadius: BorderRadius.circular(SkRadius.lg),
-        // Hover is a lightness shift, never a lift — nothing in the layout moves,
-        // because nothing in the layout has depth.
-        color: hovered ? c.surfaceHover : c.surfaceCard,
+        // Hover and press are lightness shifts, never a lift and never a scale
+        // (0034) — nothing in the layout moves, because nothing has depth.
+        color: pressed
+            ? c.surfaceActive
+            : hovered
+                ? c.surfaceHover
+                : c.surfaceCard,
         border: borderless
             ? Border(
                 top: BorderSide(color: c.borderSubtle, width: SkDepth.hairline),

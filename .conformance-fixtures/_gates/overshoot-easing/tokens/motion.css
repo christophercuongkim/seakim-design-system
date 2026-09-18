@@ -1,0 +1,5 @@
+:root {
+  --dur-base: 200ms;
+  --ease-out: cubic-bezier(0.22, 0.90, 0.28, 1);
+  --ease-spring: cubic-bezier(0.34, 1.42, 0.50, 1);
+}

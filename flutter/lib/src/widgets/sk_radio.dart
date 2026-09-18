@@ -76,7 +76,6 @@ class SkRadioGroup<T> extends StatelessWidget {
       onPressed: off ? null : () => onChanged!(option.value),
       disabled: off,
       isButton: false,
-      pressScale: 1,
       semanticLabel: option.label,
       builder: (BuildContext context, SkInteraction s) => Semantics(
         inMutuallyExclusiveGroup: true,
@@ -116,7 +115,7 @@ class SkRadioGroup<T> extends StatelessWidget {
                       child: AnimatedScale(
                         scale: on ? 1 : 0,
                         duration: SkMotion.base,
-                        curve: SkMotion.pop,
+                        curve: SkMotion.out,
                         child: Container(
                           width: 7,
                           height: 7,

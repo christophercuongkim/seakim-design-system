@@ -76,7 +76,7 @@ Focus **order** follows reading order. Two places that need attention:
 
 ## Motion
 
-`prefers-reduced-motion` collapses every duration to 0 and `--press-scale` to 1. Already
+`prefers-reduced-motion` collapses every duration to 0 (the press tint is not motion and stays). Already
 handled in `tokens/motion.css`; Flutter reads `MediaQuery.disableAnimations`.
 
 **Never animate a value the user is reading.** Prices, scores, times, and counts cut

@@ -164,11 +164,10 @@ class _NavRow<T> extends StatelessWidget {
     return SkPressable(
       onPressed: onTap,
       semanticLabel: item.label,
-      pressScale: 1,
       builder: (BuildContext context, SkInteraction s) {
         final Color fg = active
             ? c.textAccent
-            : s.liveHover
+            : s.liveHover || s.livePress
                 ? c.textPrimary
                 : c.textSecondary;
         return SkTouchTarget(

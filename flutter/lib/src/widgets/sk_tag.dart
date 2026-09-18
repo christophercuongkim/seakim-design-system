@@ -99,7 +99,6 @@ class SkTag extends StatelessWidget {
                     SkPressable(
                       onPressed: onRemove,
                       semanticLabel: 'Remove $label',
-                      pressScale: 1,
                       builder: (BuildContext context, SkInteraction rs) =>
                           SkTouchTarget(
                         extent: 16,

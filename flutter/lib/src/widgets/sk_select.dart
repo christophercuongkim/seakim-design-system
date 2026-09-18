@@ -139,7 +139,6 @@ class _Menu<T> extends StatelessWidget {
               return SkPressable(
                 onPressed: o.disabled ? null : () => onPick(o.value),
                 disabled: o.disabled,
-                pressScale: 1,
                 semanticLabel: o.label,
                 builder: (BuildContext context, SkInteraction s) => Container(
                   constraints: const BoxConstraints(minHeight: SkControl.touch),

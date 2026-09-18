@@ -168,11 +168,9 @@ Future<T?> showSkDialog<T>({
       ),
       transitionsBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondary, Widget child) {
-        // Enters spring, exits do not.
-        final bool leaving = animation.status == AnimationStatus.reverse;
         final Animation<double> curved = CurvedAnimation(
           parent: animation,
-          curve: leaving ? SkMotion.out : SkMotion.spring,
+          curve: SkMotion.out,
         );
         return FadeTransition(
           opacity: Tween<double>(begin: 0, end: 1).animate(

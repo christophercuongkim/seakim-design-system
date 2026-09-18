@@ -318,6 +318,26 @@ const RULES = [
       return null;
     },
   },
+  {
+    id: 'press-transform',
+    clause: '0.15',
+    tier: 0,
+    why: 'Press is a tint, and nothing overshoots (0034). No press scale, no spring or pop easing, no retired motion token.',
+    skip: f => /tool\/conformance-(check|selftest)\.mjs$/.test(f.replace(/\\/g, '/')),
+    test(line, ctx) {
+      const tok = line.match(/--(?:press-scale(?:-lg)?|ease-spring|ease-pop|transition-spring)\b/)
+        || line.match(/\bSkMotion\.(?:spring|pop|pressScale(?:Large)?)\b/);
+      if (tok) return `${tok[0]} was retired by 0034 — press is a tint, easing is --ease-out / SkMotion.out`;
+      // A transform that scales while pressed/active — CSS, inline React, or Dart.
+      if (/scale\s*\(/.test(line) && /\b(?:press(?:ed)?|active)\b/i.test(line) && /transform|:active/.test(line)) {
+        return 'scales on press — press feedback is a fill change, never a transform (0034)';
+      }
+      if (/\bAnimatedScale\s*\(/.test(line) && /\bpress(?:ed)?\b/i.test(ctx ?? '')) {
+        return 'AnimatedScale driven by press — press feedback is a fill change (0034)';
+      }
+      return null;
+    },
+  },
 ];
 
 /* ------------------------------------------------------------------- run */
@@ -427,6 +447,54 @@ for (const { file, re, scope } of LADDER_FILES) {
         : `rung \`${name}\` is ${got}, the ladder says ${want}`,
       text: 'The corner ladder is fixed by decision 0030. Change it there and in tool/conformance-check.mjs together, per 0012 — never in one binding alone.',
     });
+  }
+}
+
+/**
+ * Motion is a value contract too (0034): every curve eases out and every duration
+ * sits at or under 150ms. Read the numbers from both bindings' token files rather
+ * than trusting names — a `--ease-out` that overshoots is the lesson-17 shape.
+ */
+const MOTION_CEILING_MS = 150;
+const MOTION_FILES = [
+  {
+    file: 'tokens/motion.css',
+    curves: /cubic-bezier\(\s*([\d.]+)\s*,\s*(-?[\d.]+)\s*,\s*([\d.]+)\s*,\s*(-?[\d.]+)\s*\)/g,
+    durations: /--dur-([\w-]+)\s*:\s*(\d+)ms/g,
+  },
+  {
+    file: 'flutter/lib/src/tokens/sk_motion.dart',
+    curves: /Cubic\(\s*([\d.]+)\s*,\s*(-?[\d.]+)\s*,\s*([\d.]+)\s*,\s*(-?[\d.]+)\s*\)/g,
+    durations: /Duration\s+(\w+)\s*=\s*Duration\(milliseconds:\s*(\d+)\)/g,
+  },
+];
+
+for (const { file, curves, durations } of MOTION_FILES) {
+  let src;
+  try {
+    src = readFileSync(join(ROOT, file), 'utf8');
+  } catch {
+    continue; // a consuming repo carrying only one binding
+  }
+  src = src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
+  for (const m of src.matchAll(curves)) {
+    if (Number(m[2]) > 1 || Number(m[4]) > 1) {
+      violations.push({
+        rule: 'overshoot-easing', clause: '0.15', file, line: 0,
+        detail: `curve (${m[1]}, ${m[2]}, ${m[3]}, ${m[4]}) overshoots — a control point above 1`,
+        text: 'Every easing eases out (0034). Change it there and in tool/conformance-check.mjs together, per 0012.',
+      });
+    }
+  }
+  for (const m of src.matchAll(durations)) {
+    if (/shimmer/i.test(m[1])) continue; // a loop, not a transition (0021)
+    if (Number(m[2]) > MOTION_CEILING_MS) {
+      violations.push({
+        rule: 'overshoot-easing', clause: '0.15', file, line: 0,
+        detail: `duration ${m[1]} is ${m[2]}ms — the ceiling is ${MOTION_CEILING_MS}ms`,
+        text: 'Every duration sits at or under 150ms (0034). The shimmer loop is the one exemption.',
+      });
+    }
   }
 }
 

@@ -38,7 +38,7 @@ either a shadow or bulk to read, and SeaKim gives it neither.
 | State | Treatment |
 | --- | --- |
 | Hover | Thumb border goes to `--border-focus`. No growth, no halo. |
-| Press / drag | Whole control scales `--press-scale`. The thumb does not grow. |
+| Press / drag | Nothing scales or moves (0034). The hover treatment holds for the drag; the thumb does not grow. |
 | Focus | Standard `--focus-ring` around the whole control, not the thumb |
 | Disabled | `opacity: 0.4` |
 

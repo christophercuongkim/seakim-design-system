@@ -53,7 +53,6 @@ class SkTabBar<T> extends StatelessWidget {
               child: SkPressable(
                 onPressed: onChanged == null ? null : () => onChanged!(item.value),
                 semanticLabel: item.label,
-                pressScale: 1,
                 builder: (BuildContext context, SkInteraction s) {
                   final Color fg = on ? c.textAccent : c.textTertiary;
                   return Semantics(
@@ -61,15 +60,15 @@ class SkTabBar<T> extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        // The active icon springs up 1px — the only motion in the bar.
+                        // The active icon rises 1px — the only motion in the bar.
                         TweenAnimationBuilder<double>(
                           tween: Tween<double>(begin: 0, end: on ? 1 : 0),
                           duration: SkMotion.base,
-                          curve: SkMotion.spring,
+                          curve: SkMotion.out,
                           builder: (BuildContext context, double t, Widget? child) =>
                               Transform.translate(
                             offset: Offset(0, -t),
-                            child: Transform.scale(scale: 1 + t * 0.04, child: child),
+                            child: child,
                           ),
                           child: SkIcon(
                             item.icon,

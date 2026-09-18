@@ -176,13 +176,16 @@ class SkTable<T> extends StatelessWidget {
             return SkPressable(
               onPressed: onSelectRow == null ? null : () => onSelectRow!(row),
               isButton: false,
-              pressScale: SkMotion.pressScaleLarge,
               builder: (BuildContext context, SkInteraction s) => Container(
                 constraints: const BoxConstraints(minHeight: SkControl.touch),
                 padding: const EdgeInsets.symmetric(
                     horizontal: SkSpace.s5, vertical: SkSpace.s4),
                 decoration: BoxDecoration(
-                  color: s.liveHover ? c.surfaceHover : null,
+                  color: s.livePress
+                      ? c.surfaceActive
+                      : s.liveHover
+                          ? c.surfaceHover
+                          : null,
                   border: Border(
                     top: BorderSide(color: c.borderSubtle, width: SkDepth.hairline),
                   ),

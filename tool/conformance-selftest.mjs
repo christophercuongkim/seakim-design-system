@@ -122,6 +122,7 @@ const FILE_GATES = [
   ['accent-text-step-parity', 'CSS and Dart name different accent rungs'],
   ['overlay-width-parity', 'the dialog width disagrees across bindings'],
   ['contrast-floor', 'body text below 4.5:1 on its own surface'],
+  ['overshoot-easing', 'a motion curve overshoots or a duration exceeds the ceiling'],
 ];
 
 for (const [id, why] of FILE_GATES) {

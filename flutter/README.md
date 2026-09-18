@@ -3,7 +3,7 @@
 **seakim_flutter 1.0.0 — conforms to SeaKim 1.0**
 
 Custom widgets built on Flutter primitives — not themed Material. The system's three
-loudest decisions (0px radius everywhere, shadows only on things that float, scale-press
+loudest decisions (0px radius everywhere, shadows only on things that float, tint-press
 instead of ink ripple) are the three Material resists hardest, so the widget layer is
 ours and only the invisible platform machinery is borrowed.
 
@@ -125,10 +125,9 @@ an undocumented adaptation is a Tier 0 violation in practice.
   to selection over `textPrimary` for that reason —
   see [decision 0014](../decisions/0014-text-selection-tier-1.md).
 
-- **Springy curves are tuned, not identical.** `SkMotion.spring` uses the same
-  `cubic-bezier(0.34, 1.42, 0.50, 1)` control points, but Flutter composites
-  differently from a browser, so the felt overshoot is close rather than pixel-equal.
-  Colour tweens clamp badly on overshoot — use `spring` for transforms, `out` for colour.
+- **One curve.** `SkMotion.out` carries the same `cubic-bezier(0.22, 0.90, 0.28, 1)`
+  control points as `--ease-out`; nothing overshoots (0034), so colour and transform
+  tweens share it.
 - **`SkInput` and `SkTextarea` keep a Material ancestor.** Only for selection colours,
   handles, and the platform context menu. Rebuilding those faithfully is a lot of
   invisible work to get wrong.
@@ -173,7 +172,7 @@ Under a `MaterialApp` the `Overlay`, `Navigator`, and `MediaQuery` that
 supplies none of them.
 
 **Where the ramp ends.** A theme carries the look, not the feel. Material has no
-hook for the scale-press, so buttons themed this way lose the ripple but do not
+hook for the tint-press, so buttons themed this way lose the ripple but do not
 gain the press; duotone empty states and the exact focus-ring geometry are also
 widget-only. Swap in `SkButton`, `SkCard`, `SkEmptyState` and the rest where that
 fidelity earns its keep — screen by screen, not all at once.

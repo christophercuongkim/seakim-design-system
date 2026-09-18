@@ -50,7 +50,6 @@ class SkSegmentedControl<T> extends StatelessWidget {
       final Widget button = SkPressable(
         onPressed: onChanged == null ? null : () => onChanged!(seg.value),
         semanticLabel: seg.label,
-        pressScale: 1,
         builder: (BuildContext context, SkInteraction s) {
           final Color fg = on
               ? c.textAccent

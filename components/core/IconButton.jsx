@@ -26,7 +26,7 @@ export function IconButton({ icon, label, variant = 'ghost', size = 'md', active
           : active ? 'var(--surface-selected)' : press ? 'var(--surface-active)' : hover ? 'var(--surface-hover)' : 'transparent',
         color: disabled ? 'var(--text-disabled)'
           : active ? 'var(--text-accent)' : hover ? 'var(--text-primary)' : 'var(--text-secondary)',
-        transition: 'var(--transition-control)', transform: press && !disabled ? 'scale(var(--press-scale))' : 'scale(1)',
+        transition: 'var(--transition-control)',
         ...style,
       }}
       {...rest}

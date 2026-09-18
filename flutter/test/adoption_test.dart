@@ -51,7 +51,7 @@ void main() {
     expect(card.elevation, 0, reason: 'a card does not float');
 
     // Accent flows into Material's primary.
-    expect(theme.colorScheme.primary, expected.fillAccent);
+    expect(theme.colorScheme.primary, expected.fillPrimary);
 
     // No ink ripple anywhere.
     expect(theme.splashFactory, NoSplash.splashFactory);

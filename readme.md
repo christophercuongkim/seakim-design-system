@@ -156,7 +156,7 @@ so the system reads as paper and graphite, never blue-grey.
 - **Light is a peer**, not a filter of dark. Its card is pure `#ffffff` on a
   `#faf9f7` page, so cards read *lighter* than the page — the inverse of dark
   mode's logic. Never derive one from the other algorithmically.
-- **One accent per screen.** Accent marks the primary action, the active nav
+- **One accent per screen, and the primary action is ink (0036).** Accent marks links, focus, selection, the active nav
   item, the selected state, and data emphasis. Nothing else. If two things on a
   screen are accent-colored, one of them is wrong.
 - **Status colors are not accents** and may coexist with the accent. Each has a

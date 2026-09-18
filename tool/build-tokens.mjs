@@ -190,6 +190,12 @@ function emitCss() {
   L.push('  --fill-accent-active: var(--brand-500);');
   L.push('  --on-accent:          var(--stone-950);');
   L.push('');
+  L.push('  /* The primary action is ink (0036); the accent above is identity and selection. */');
+  L.push('  --fill-primary:        var(--stone-100);');
+  L.push('  --fill-primary-hover:  var(--stone-200);');
+  L.push('  --fill-primary-active: var(--stone-300);');
+  L.push('  --on-primary:          var(--stone-950);');
+  L.push('');
   L.push('  --fill-neutral:        var(--stone-800);');
   L.push('  --fill-neutral-hover:  var(--stone-700);');
   L.push('  --fill-neutral-active: var(--stone-600);');
@@ -291,6 +297,12 @@ function emitCssLight() {
   L.push('  --fill-accent-hover:  var(--brand-600);');
   L.push('  --fill-accent-active: var(--brand-700);');
   L.push('  --on-accent:          var(--stone-950);');
+  L.push('');
+  L.push('  /* The primary action is ink (0036); the accent above is identity and selection. */');
+  L.push('  --fill-primary:        var(--stone-900);');
+  L.push('  --fill-primary-hover:  var(--stone-800);');
+  L.push('  --fill-primary-active: var(--stone-700);');
+  L.push('  --on-primary:          var(--stone-50);');
   L.push('');
   L.push('  --fill-neutral:        var(--stone-100);');
   L.push('  --fill-neutral-hover:  var(--stone-200);');

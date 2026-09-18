@@ -197,12 +197,13 @@ class SkButton extends StatelessWidget {
         );
       case SkButtonVariant.primary:
         return (
+          // The primary action is ink (0036).
           s.livePress
-              ? c.fillAccentActive
+              ? c.fillPrimaryActive
               : s.liveHover
-                  ? c.fillAccentHover
-                  : c.fillAccent,
-          c.onAccent,
+                  ? c.fillPrimaryHover
+                  : c.fillPrimary,
+          c.onPrimary,
           const Color(0x00000000),
         );
     }

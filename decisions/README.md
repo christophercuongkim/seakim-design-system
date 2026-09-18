@@ -55,6 +55,7 @@ the value is in the trail, and a silently edited ADR is worse than none.
 | [0033](0033-quiet.md) | Quiet: chrome recedes, features stay. Direction for rules 8.0 | Accepted |
 | [0034](0034-press-is-a-tint.md) | Press is a tint, and nothing overshoots | Accepted |
 | [0035](0035-rungs-reassigned.md) | Controls take `lg`, cards take `xl`; `md` and `2xl` are pruned | Accepted |
+| [0036](0036-ink-primary.md) | The primary action is ink; the accent moves to links, focus, selection and identity | Accepted |
 
 ## Writing one
 

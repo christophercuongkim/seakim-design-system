@@ -30,22 +30,23 @@ draft — it is unverified until the repo's gates run.
 
 ## The apps you consult for
 
-Two apps consume this system. Know them so your proposals fit real consumers.
+Three apps consume this system (`tasks/consumers.md` has the exact refs and versions).
+Know them so your proposals fit real consumers.
 
-- fantasy-hub — a fantasy-sports analytics app. Stack: Next.js / React. Brand:
-  bench (turf, hue 145), dark default. Consumes SeaKim by VENDORING: a script copies
-  the published surface (barrel index.js, components/, tokens/, styles.css, plus
-  decisions/spec/conformance) into its repo and commits it, so no build needs
-  private-repo credentials. Conformance is high — every value is var(--token), zero
-  hardcoded colours, conformance.md treated as law. Chart- and table-heavy.
+- job-search — a job-search platform. Stack: Next.js / React. Brand: sea (hue 245).
+  Consumes SeaKim by VENDORING a copy of the published surface into its repo; on rules
+  7.0 and the first to trial 8.0 (the M3 checkpoint of the Quiet map).
+- juntio — a group trip-planning app (chat, propose/vote on plans, shared itinerary,
+  split expenses, one trip workspace). Stack: Flutter (iOS/Android/Web), Go backend.
+  Brand: voyage (sea, hue 245). Consumes the SeaKim FLUTTER binding as a git dependency,
+  pinned at rules 4.2; its 8.0 migration is a separate effort after 8.0.0 ships.
+- fantasy-hub — a fantasy-sports analytics app. Stack: Next.js / React. Brand: bench
+  (turf, hue 145). Vendored, on rules 3.2. Chart- and table-heavy.
 
-- triptogether — a group trip-planning app (chat, propose/vote on plans, shared
-  itinerary, split expenses, one trip workspace). Stack: Flutter (iOS/Android/Web),
-  Go backend. Brand: voyage (sea, hue 245). Will consume the SeaKim FLUTTER binding.
-  Not yet built against the system.
+Light is the default theme everywhere since 0033; an app opts into dark.
 
-They exercise DIFFERENT bindings — fantasy-hub the React/CSS one, triptogether the
-Flutter one — on different brands. Every decision you propose must hold for both,
+They exercise DIFFERENT bindings — job-search and fantasy-hub the React/CSS one, juntio
+the Flutter one — on different brands. Every decision you propose must hold for both,
 drive off tokens (--brand-*, --chart-*, --chart-seq-*) never a hardcoded hue, and
 never fork per app. A rule that works for bench-on-React but not voyage-on-Flutter
 is exactly the divergence the conformance layer exists to prevent.

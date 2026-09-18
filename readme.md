@@ -1,6 +1,6 @@
 # SeaKim Design System
 
-**SeaKim 1.0** · see [`CHANGELOG.md`](CHANGELOG.md) and
+**SeaKim rules 8.0 (Quiet, in flight)** · see [`CHANGELOG.md`](CHANGELOG.md) and
 [decision 0011](decisions/0011-versioning.md)
 
 A multi-product design system for the SeaKim family of apps. One warm-neutral
@@ -74,11 +74,11 @@ product code or Figma files exist, re-run against them and let the source win.
 
 Decisions taken from the user directly:
 
-- Vibe: Swiss-clean baseline, warm and human in tone, playful in motion and accent
+- Vibe: Swiss-clean baseline, warm and human in tone. Quiet since [0033](decisions/0033-quiet.md): chrome recedes, features stay
 - Palette: warm neutral core (achromatic), one accent per app
 - Mode: light and dark; **light is the default** (0033 flipped it; dark is a peer, never derived)
 - Type: one geometric sans across every role (0031 superseded the original three-family split; the original brief said "clean and wide")
-- Density: 7/10
+- Density: 7/10 in spacing; type is 14px UI / 16px body at weight 500 (adopted at the M1 checkpoint)
 - Corners: a closed seven-rung ladder, assigned by role (0035 moved controls to `lg` and cards to `xl`, and pruned `md` and `2xl`) (0030 superseded the original "sharp (0px)"; `none` is still the answer for dividers, table cells and full-bleed media)
 - Motion: quiet — ease-out only, at or under 150ms; nothing overshoots, nothing scales (0034)
 - Surface separation: fills and gaps; hairlines are alpha and the exception (0037). Shadows only for things that overlay
@@ -100,14 +100,16 @@ product's brand color got baked into every component. SeaKim inverts that: **the
 shared layer is achromatic**, and each app binds exactly one hue.
 
 ```html
-<html data-theme="dark" data-app="voyage">
+<html data-app="voyage">                <!-- light by default; data-theme="dark" opts in -->
 ```
 
 Every accent ramp step (`--brand-050` → `--brand-900`) is generated from
 `--hue-brand` in oklch, so lightness and chroma are identical across apps and
 only H moves. Swap `data-app` and the whole product reskins; contrast ratios
 hold. Components read `--fill-accent`, `--text-accent`, `--border-accent`,
-`--surface-selected`, and `--on-accent` — never a raw ramp step.
+`--surface-selected`, and `--on-accent` — never a raw ramp step. The primary action
+reads `--fill-primary` / `--on-primary`, which are stone in both themes (0036): the
+accent is identity and selection, not the loudest control.
 
 ---
 
@@ -153,12 +155,13 @@ so the system reads as paper and graphite, never blue-grey.
 - **Dark is a peer theme, opted into with `data-theme="dark"`.** `--surface-page: #0f0e0d`, never `#000`.
   Surfaces step up: page `#0f0e0d` → card `#181614` → raised `#211f1d` →
   overlay `#2b2a27`.
-- **Light is a peer**, not a filter of dark. Its card is pure `#ffffff` on a
-  `#faf9f7` page, so cards read *lighter* than the page — the inverse of dark
-  mode's logic. Never derive one from the other algorithmically.
+- **Light is the default and a peer**, not a filter of dark. The page is white and a
+  card is a `--stone-100` tint on it (0037): a region is its fill, not its outline.
+  Never derive one theme from the other algorithmically.
 - **One accent per screen, and the primary action is ink (0036).** Accent marks links, focus, selection, the active nav
   item, the selected state, and data emphasis. Nothing else. If two things on a
-  screen are accent-colored, one of them is wrong.
+  screen compete for a primary *action*, one of them is wrong; an identity fill may
+  repeat (0026).
 - **Status colors are not accents** and may coexist with the accent. Each has a
   `400` (dark-theme) and `500` (light-theme) tuning.
 - A new hue enters the system only after clearing 4.5:1 on `--stone-950` *and*
@@ -171,8 +174,10 @@ so the system reads as paper and graphite, never blue-grey.
 One text family, plus mono for data (decision 0031):
 
 - **Instrument Sans** — everything that is words. Display, headings, UI, body.
-  Hierarchy is carried by size and weight, not by a change of face. Set the large
-  end tight: `--tracking-tight` to `--tracking-tighter`.
+  UI text is 14px, body 16px, and every text role except data and eyebrow sits at
+  weight 500 with `--tracking-ui` (−0.01em) inherited from `<body>`. Hierarchy is
+  carried by size and colour, not by bold. Set the large end tight:
+  `--tracking-tight` to `--tracking-tighter`.
 - **JetBrains Mono** — data and eyebrows. Prices, times, confirmation codes,
   flight numbers, stat lines, and uppercase `--tracking-caps` eyebrow labels.
 
@@ -230,12 +235,18 @@ heavy grain, no grading toward the accent.
 
 ### Borders, cards & depth
 
-**Borders define, shadows lift.**
+**Fills and gaps define; a hairline is the exception, and it is alpha** (Tier 0
+§0.16, [0037](decisions/0037-fills-define.md)).
 
-- Every in-flow surface is defined by a **1px hairline** (`--border-subtle` on
-  quiet dividers, `--border-default` on controls). No shadow.
-- **Card recipe, entire:** 1px `--border-subtle`, `--radius-none`,
-  `--surface-card` fill, `--space-5` (16px) padding — `--space-4` when tight.
+- A region is its surface fill and the whitespace around it. Cards, panels and
+  navigation carry no outline.
+- A **hairline** is a 1px alpha border (`--border-subtle` on rows and dividers,
+  `--border-default` on inputs and overlay edges, `--border-strong` on hover) used
+  only where a gap cannot separate. Being alpha, one token composes on any surface
+  in both themes.
+- **Card recipe, entire:** `--surface-card` fill, `--radius-xl`, `--space-5` (16px)
+  padding — `--space-4` when tight. No border; a selected card gets a `--border-accent`
+  edge.
 - **Shadow means "floating above the page."** Only menus, popovers, tooltips,
   dialogs, sheets, toasts, and drag ghosts get one. If it is in the layout, it
   has no shadow. This single rule is what keeps dense screens from turning to soup.
@@ -244,10 +255,22 @@ heavy grain, no grading toward the accent.
 
 ### Corners
 
-`0px` everywhere. `--radius-full` (999px) is reserved for count badges, filter
-chips, and switch tracks; `--radius-circle` for avatars and status dots — shapes
-that are *conceptually* round. A pill-shaped button is off-system. Do not
-introduce a 4px radius.
+A closed seven-rung ladder ([0030](decisions/0030-corners-take-a-radius-ladder.md),
+[0035](decisions/0035-rungs-reassigned.md)); a component takes the rung its role names,
+never a value that looked right.
+
+| Rung | Value | Use |
+| --- | --- | --- |
+| `none` | 0px | Dividers, table cells, full-bleed images, the page |
+| `xs` | 2px | Tags, chips, inline marks |
+| `sm` | 4px | Checkboxes, menu items |
+| `lg` | 8px | Buttons, icon buttons, segmented control, inputs, selects, textareas |
+| `xl` | 12px | Cards, panels, dialogs, sheets, popovers, menus |
+| `full` | 999px | Count badges, toggle tracks, pills |
+| `circle` | 50% | Avatars, dots |
+
+A pill-shaped button is off-system. A concentric corner never rounds more than the
+corner it sits in ([0032](decisions/0032-concentric-corners.md)).
 
 ### Transparency & blur
 
@@ -272,9 +295,9 @@ Quiet (0034). One curve, nothing overshoots, nothing scales.
 
 | State | Treatment |
 | --- | --- |
-| Hover (solid) | Fill steps one ramp stop lighter in dark, darker in light. No lift, no shadow. |
+| Hover (solid) | `--fill-primary-hover` on the ink primary; `--fill-accent-hover` on an identity fill. No lift, no shadow. |
 | Hover (outline/ghost) | `--surface-hover` fill appears; border goes to `--border-strong`. |
-| Hover (card/row) | Background steps to `--surface-hover`. Border unchanged. |
+| Hover (card/row) | `--surface-hover`, an alpha tint that composes on any surface. No border appears. |
 | Press | The control's active fill (`--fill-*-active`, `--surface-active`) at 80ms. No scale, no ripple, nothing moves (0034). |
 | Focus | `--focus-ring`: 2px accent ring with a 2px canvas gap. Visible-only, never suppressed. |
 | Selected | 2px accent border, or `--surface-selected` fill plus `--text-accent`. |
@@ -312,7 +335,7 @@ Rules:
   24px in mobile tab bars, 32px+ only in empty states.
 - **`fill` marks "active"** — the current tab or nav item, a saved trip, a locked
   lineup. Nothing else.
-- **`bold` at 14px and below**, and inside solid accent buttons — regular strokes
+- **`bold` at 14px and below**, and inside solid primary buttons — regular strokes
   thin out at small sizes and against a filled background.
 - **`duotone` only in empty states and slides**, where an icon is doing decorative
   rather than functional work.

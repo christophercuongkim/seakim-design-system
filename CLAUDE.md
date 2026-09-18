@@ -63,3 +63,17 @@ returns.
 When something goes wrong in a way the next person would not predict, add it to
 `docs/lessons.md`: what happened, what it cost, and the rule that prevents it. Concrete
 over general — a lesson that could have been written before the incident is not a lesson.
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in Linear, project "SeaKim design system" on the Christopherkim (CHR) team, via the Linear MCP. Every ticket must be self-contained. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`); none exist in Linear yet, create on first use. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context. ADRs live in `decisions/`, not `docs/adr/`; no `CONTEXT.md` yet. See `docs/agents/domain.md`.

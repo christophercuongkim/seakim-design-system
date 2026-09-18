@@ -2,7 +2,9 @@ import 'package:flutter/widgets.dart';
 
 /// Borders define, shadows lift.
 ///
-/// Anything in the layout gets a 1px hairline and no shadow. Shadow is reserved
+/// Fills define (0037): a region in the layout is its surface fill, a hairline is
+/// the alpha exception where a gap cannot separate, and nothing in flow carries a
+/// shadow. Shadow is reserved
 /// for things that OVERLAY other content — menus, popovers, sheets, dialogs,
 /// toasts, drag ghosts — so elevation carries meaning instead of decoration.
 /// A raised bar is the one in-layout exception: a bar that scrolls over content

@@ -19,9 +19,10 @@ function Item({ item, active, collapsed }) {
         justifyContent: collapsed ? 'center' : 'flex-start',
         color: active ? 'var(--text-accent)' : hover ? 'var(--text-primary)' : 'var(--text-secondary)',
         background: active ? 'var(--surface-selected)' : hover ? 'var(--surface-hover)' : 'transparent',
-        boxShadow: active ? 'inset 2px 0 0 var(--fill-accent)' : 'none',
+        // The active edge is a border, not an inset shadow (0037); always present so nothing shifts.
+        borderLeft: `var(--border-emphasis) solid ${active ? 'var(--fill-accent)' : 'transparent'}`,
         fontFamily: 'var(--font-sans)', fontSize: 'var(--text-sm)',
-        fontWeight: active ? 'var(--weight-semibold)' : 'var(--weight-medium)',
+        fontWeight: 'var(--weight-medium)',
         textDecoration: 'none', transition: 'var(--transition-control)',
       }}
     >
@@ -38,14 +39,14 @@ export function SideNav({ brand, groups = [], active, collapsed = false, footer,
     <nav style={{
       width: collapsed ? 'var(--sidebar-w-collapsed, 56px)' : 'var(--sidebar-w, 232px)',
       flex: 'none', height: '100%', display: 'flex', flexDirection: 'column',
-      background: 'var(--surface-card)', borderRight: '1px solid var(--border-subtle)',
+      // A rail is a fill, not an outlined box (0037): no right border, header and footer separate by gap.
+      background: 'var(--surface-card)',
       transition: 'width var(--dur-slow) var(--ease-out)', ...style,
     }} {...rest}>
       {brand && (
         <div style={{
           height: 'var(--topbar-h, 52px)', flex: 'none', display: 'flex', alignItems: 'center',
           padding: collapsed ? 0 : '0 var(--space-5)', justifyContent: collapsed ? 'center' : 'flex-start',
-          borderBottom: '1px solid var(--border-subtle)',
           fontFamily: 'var(--font-display)', fontSize: 'var(--text-lg)',
           fontWeight: 'var(--weight-medium)', letterSpacing: 'var(--tracking-tight)',
           color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden',
@@ -67,7 +68,7 @@ export function SideNav({ brand, groups = [], active, collapsed = false, footer,
           </div>
         ))}
       </div>
-      {footer && <div style={{ flex: 'none', padding: 'var(--space-4)', borderTop: '1px solid var(--border-subtle)' }}>{footer}</div>}
+      {footer && <div style={{ flex: 'none', padding: 'var(--space-4)' }}>{footer}</div>}
     </nav>
   );
 }

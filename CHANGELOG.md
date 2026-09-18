@@ -67,6 +67,11 @@ is additive.
   `<body>` in `tokens/base.css`. `SkFontSize.sm` / `.md` and every `SkText` role follow.
   The 12-step scale and 0031 are unchanged; this is a revalue.
 
+- **Navigation surfaces are fills (M2).** SideNav loses its right border and the header
+  and footer hairlines; the active item's accent edge is a border, not an inset shadow.
+  Tabs' indicator height names `--border-emphasis`. Active nav and tab labels are weight
+  500 like everything else; the accent colour and fill carry the state.
+
 ### Added
 
 - The `alpha-hairline` gate in `tool/conformance-check.mjs`, which reads the resolved

@@ -33,7 +33,7 @@ export function TabBar({ items = [], active, onChange, style, ...rest }) {
             </span>
             <span style={{
               fontFamily: 'var(--font-sans)', fontSize: 'var(--text-2xs)',
-              fontWeight: on ? 'var(--weight-semibold)' : 'var(--weight-medium)',
+              fontWeight: 'var(--weight-medium)',
               letterSpacing: '0.01em',
             }}>{item.label}</span>
           </button>

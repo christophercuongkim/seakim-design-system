@@ -3,7 +3,7 @@ import { Icon } from '../core/Icon.jsx';
 import { Badge } from '../core/Badge.jsx';
 import { useCoarsePointer } from '../core/useCoarsePointer.js';
 
-/** Section switch within one screen. Indicator springs; nothing else moves. */
+/** Section switch within one screen. The indicator slides; nothing else moves. */
 export function Tabs({ tabs = [], value, defaultValue, onChange, size = 'md', style, ...rest }) {
   const coarse = useCoarsePointer();
   const first = tabs[0] && (typeof tabs[0] === 'string' ? tabs[0] : tabs[0].value);
@@ -32,7 +32,7 @@ export function Tabs({ tabs = [], value, defaultValue, onChange, size = 'md', st
               border: 'none', background: 'transparent', cursor: 'pointer',
               fontFamily: 'var(--font-sans)',
               fontSize: size === 'sm' ? 'var(--text-xs)' : 'var(--text-sm)',
-              fontWeight: on ? 'var(--weight-semibold)' : 'var(--weight-medium)',
+              fontWeight: 'var(--weight-medium)',
               color: on ? 'var(--text-primary)' : hoverKey === tab.value ? 'var(--text-primary)' : 'var(--text-secondary)',
               transition: 'color var(--dur-instant) var(--ease-out)',
             }}
@@ -41,7 +41,7 @@ export function Tabs({ tabs = [], value, defaultValue, onChange, size = 'md', st
             {tab.label}
             {tab.count != null && <Badge tone={on ? 'accent' : 'neutral'}>{tab.count}</Badge>}
             <span style={{
-              position: 'absolute', left: 0, right: 0, bottom: -1, height: 2,
+              position: 'absolute', left: 0, right: 0, bottom: -1, height: 'var(--border-emphasis)',
               background: 'var(--fill-accent)',
               transform: on ? 'scaleX(1)' : 'scaleX(0)',
               transition: 'transform var(--dur-base) var(--ease-out)',

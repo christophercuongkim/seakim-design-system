@@ -17,6 +17,19 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [8.2.0] — 2026-09-19
+
+### Added
+
+- **`SideNav` takes `brandCollapsed`**, what the 56px rail shows in place of the wordmark.
+
+### Fixed
+
+- **A collapsed `SideNav` with an element `brand` rendered `[`.** It took the first
+  character of `String(brand)`, which for a React element is `[object Object]`. A string
+  brand still collapses to its initial; an element brand now collapses to `brandCollapsed`,
+  or to nothing. Found on job-search's review rail (CHR-210).
+
 ## [8.1.0] — 2026-09-19
 
 ### Added

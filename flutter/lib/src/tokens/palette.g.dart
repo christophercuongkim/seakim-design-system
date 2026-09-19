@@ -106,6 +106,21 @@ class SkBrandRamps {
     s050: Color(0xFFF9EDFB),
     wash: Color(0xFF29182C),
   );
+
+  /// oklch(L C 215) — Job Search — the job-search platform. Picked by the owner from eight ramped candidates (CHR-211); 25° from the info hue, so info badges sit close to the accent there.
+  static const SkBrandRamp azure = SkBrandRamp(
+    s100: Color(0xFFC0EAF4),
+    s200: Color(0xFF90D8E9),
+    s300: Color(0xFF69CEE6),
+    s400: Color(0xFF00B8D6),
+    s500: Color(0xFF009DB7),
+    s600: Color(0xFF008399),
+    s700: Color(0xFF006374),
+    s800: Color(0xFF004552),
+    s900: Color(0xFF002A32),
+    s050: Color(0xFFE2F6FB),
+    wash: Color(0xFF00242C),
+  );
 }
 
 /// The warm achromatic spine. Never per-app.

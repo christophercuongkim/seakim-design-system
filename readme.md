@@ -26,6 +26,7 @@ SeaKim is building a portfolio of consumer apps.
 | --- | --- | --- | --- |
 | **Voyage** | Travel planning and booking | Responsive web + mobile | Sea `--hue-sea` (245) |
 | **Bench** | Fantasy sport | Responsive web + mobile | Turf `--hue-turf` (145) |
+| **Job Search** | Job-search platform | Responsive web | Azure `--hue-azure` (215) |
 | _next_ | reserved | — | Plum `--hue-plum` (320) |
 
 Internal slide decks are a third surface and share the same tokens.
@@ -58,12 +59,10 @@ Four things this table is here to stop anyone assuming:
 3. **Nothing audits them.** `tool/version-check.mjs` audits only the bindings in its own
    `BINDINGS` array, which is `flutter/pubspec.yaml`. A vendored copy declares no
    `seakim_rules` and is invisible, so the lag in this table had to be measured by hand.
-4. **`job-search` runs a hue this system does not define.** It declares
-   `[data-app="job-search"]` locally at hue 265 and hand-writes the whole `--brand-*` ramp
-   in its own `globals.css`, because the system reserves only brick, sea, turf and plum.
-   That is a fourth product answering to no slot, and it survived the 7.0.0 re-vendor
-   intact — the conformance checker shipped for consumers to run (0012) would flag those
-   literals if it were run there.
+4. **`job-search` ran a hue this system did not define** until 8.1.0: it declared
+   `[data-app="job-search"]` locally at hue 265 and hand-wrote the whole `--brand-*` ramp
+   in its own `globals.css`. 8.1.0 gives it a slot (azure, 215); the app-local ramp goes
+   when it re-vendors.
 
 ### Sources
 

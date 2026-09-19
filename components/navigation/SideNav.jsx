@@ -33,8 +33,13 @@ function Item({ item, active, collapsed }) {
   );
 }
 
-/** Persistent left navigation for web app surfaces. */
-export function SideNav({ brand, groups = [], active, collapsed = false, footer, style, ...rest }) {
+/**
+ * Persistent left navigation for web app surfaces. `brand` is the wordmark; `brandCollapsed`
+ * is what the 56px rail shows instead (a mark, an initial). Without it a string brand
+ * collapses to its first letter and an element brand collapses to nothing.
+ */
+export function SideNav({ brand, brandCollapsed, groups = [], active, collapsed = false, footer, style, ...rest }) {
+  const mark = brandCollapsed ?? (typeof brand === 'string' ? brand[0] : null);
   return (
     <nav style={{
       width: collapsed ? 'var(--sidebar-w-collapsed, 56px)' : 'var(--sidebar-w, 232px)',
@@ -43,14 +48,14 @@ export function SideNav({ brand, groups = [], active, collapsed = false, footer,
       background: 'var(--surface-card)',
       transition: 'width var(--dur-slow) var(--ease-out)', ...style,
     }} {...rest}>
-      {brand && (
+      {(collapsed ? mark : brand) && (
         <div style={{
           height: 'var(--topbar-h, 52px)', flex: 'none', display: 'flex', alignItems: 'center',
           padding: collapsed ? 0 : '0 var(--space-5)', justifyContent: collapsed ? 'center' : 'flex-start',
           fontFamily: 'var(--font-display)', fontSize: 'var(--text-lg)',
           fontWeight: 'var(--weight-medium)', letterSpacing: 'var(--tracking-tight)',
           color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden',
-        }}>{collapsed ? String(brand)[0] : brand}</div>
+        }}>{collapsed ? mark : brand}</div>
       )}
       <div style={{ flex: 1, overflowY: 'auto', padding: 'var(--space-4) var(--space-3)', display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
         {groups.map((g, gi) => (

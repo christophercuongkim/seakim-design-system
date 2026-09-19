@@ -363,6 +363,7 @@ function emitCssApps() {
     sea: ['voyage', 'travel'],
     turf: ['bench', 'fantasy'],
     plum: ['reserve', 'reserved'],
+    azure: ['job-search'],
   };
   for (const [name, h] of Object.entries(hues)) {
     const sel = (aliases[name] || [name]).map(a => `[data-app="${a}"]`).join(', ');

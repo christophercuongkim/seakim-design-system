@@ -7,7 +7,8 @@ enum SkAppBrand {
   seakim(SkBrandRamps.brick),
   voyage(SkBrandRamps.sea),
   bench(SkBrandRamps.turf),
-  reserve(SkBrandRamps.plum);
+  reserve(SkBrandRamps.plum),
+  jobSearch(SkBrandRamps.azure);
 
   const SkAppBrand(this.ramp);
   final SkBrandRamp ramp;

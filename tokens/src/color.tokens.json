@@ -19,6 +19,10 @@
     "plum": {
       "$value": 320,
       "$description": "Reserved for app three"
+    },
+    "azure": {
+      "$value": 215,
+      "$description": "Job Search — the job-search platform. Picked by the owner from eight ramped candidates (CHR-211); 25° from the info hue, so info badges sit close to the accent there."
     }
   },
   "brandRamp": {

@@ -11,6 +11,7 @@
   --hue-sea: 245;    /* Voyage — travel planning and booking */
   --hue-turf: 145;    /* Bench — fantasy sport */
   --hue-plum: 320;    /* Reserved for app three */
+  --hue-azure: 215;    /* Job Search — the job-search platform. Picked by the owner from eight ramped candidates (CHR-211); 25° from the info hue, so info badges sit close to the accent there. */
   --hue-brand: var(--hue-brick);
 
   /* ---- Brand ramp, generated from --hue-brand ---- */

@@ -17,6 +17,16 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [8.1.0] — 2026-09-19
+
+### Added
+
+- **A fifth app slot: `azure` (hue 215) for job-search.** `[data-app="job-search"]` in
+  `tokens/apps.css`, `SkBrandRamps.azure` and `SkAppBrand.jobSearch` in Flutter. Generated
+  from the hue like the others; the contrast gate covers it in both themes. job-search
+  deletes its hand-written ramp when it re-vendors. Picked by the owner from eight ramped
+  candidates (CHR-211).
+
 ## [8.0.0] — 2026-09-18
 
 The Quiet revamp, per [0033](decisions/0033-quiet.md): chrome recedes, features stay.

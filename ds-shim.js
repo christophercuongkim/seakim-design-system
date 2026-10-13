@@ -48,6 +48,7 @@
     'components/feedback/ErrorState.jsx',
     'components/feedback/Skeleton.jsx',
     'components/feedback/LoadingState.jsx',
+    'components/feedback/Progress.jsx',
     'components/data/Table.jsx',
     'components/data/Range.jsx',
     'components/navigation/Tabs.jsx',

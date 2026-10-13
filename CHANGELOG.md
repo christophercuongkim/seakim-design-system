@@ -21,6 +21,10 @@ ADRs say *why*. This says *what* and *when*.
 
 ### Added
 
+- **`Progress` / `SkProgress`**, a determinate linear bar: thin track, accent fill, an
+  optional "4 of 13" label after it, `sm` (4px) and `md` (8px). For a wizard, an upload, a
+  trial counter. `role="progressbar"` with the value; the fill width is the only thing that
+  moves, on `--dur-base`. First of the job-search batch (CHR-372, 0038).
 - **Decision 0038, promote on a spike.** A consumer's design spike naming a shape with no
   consumer nouns is enough to build it here; readme "Adding an app" step 4 now says so.
 - **Decision 0039, binding parity, and `tool/parity-check.mjs`.** Every `index.js` component

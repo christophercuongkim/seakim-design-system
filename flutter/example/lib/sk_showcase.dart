@@ -312,6 +312,19 @@ final List<SkDemo> skShowcase = <SkDemo>[
     );
   }),
 
+  // sk_progress.dart
+  SkDemo('Feedback', 'Progress', (BuildContext context) => const Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          SkProgress(value: 4, max: 13, label: '4 of 13'),
+          SizedBox(height: SkSpace.s3),
+          SkProgress(
+              value: 62,
+              size: SkProgressSize.md,
+              semanticLabel: 'Uploading résumé'),
+        ],
+      )),
+
   // sk_radio.dart
   SkDemo('Selection', 'Radio group', (BuildContext context) {
     String value = 'aisle';

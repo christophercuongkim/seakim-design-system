@@ -7,6 +7,7 @@ import { EmptyState } from './EmptyState.jsx';
 import { ErrorState } from './ErrorState.jsx';
 import { Skeleton } from './Skeleton.jsx';
 import { LoadingState } from './LoadingState.jsx';
+import { Progress } from './Progress.jsx';
 import { Dialog } from './Dialog.jsx';
 import { Button } from '../core/Button.jsx';
 import { IconButton } from '../core/IconButton.jsx';
@@ -70,6 +71,13 @@ export function Demo() {
           description="Holding your dates while we compare fares."
           compact
         />
+        <div className="lbl" style={{ marginTop: 'var(--space-4)' }}>Progress</div>
+        <div className="col" style={{ gap: 'var(--space-3)' }}>
+          <Progress value={1} max={13} label="1 of 13" />
+          <Progress value={4} max={13} label="4 of 13" />
+          <Progress value={13} max={13} label="13 of 13" />
+          <Progress value={62} size="md" aria-label="Uploading résumé" />
+        </div>
         <div className="lbl" style={{ marginTop: 'var(--space-4)' }}>ErrorState</div>
         <ErrorState
           title="Couldn't load places"

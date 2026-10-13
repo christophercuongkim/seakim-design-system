@@ -34,6 +34,7 @@
     "ErrorState":       { "surfaces": { "card": "yes" } },
     "Skeleton":         { "compositional": true, "surfaces": { "card": "yes" } },
     "LoadingState":     { "surfaces": { "card": "yes" } },
+    "Progress":         { "surfaces": { "card": "yes", "next": "yes" } },
     "Tabs":             { "surfaces": { "card": "yes" } },
     "SideNav":          { "surfaces": { "card": "yes" } },
     "TabBar":           { "surfaces": { "card": "yes" } }
@@ -43,12 +44,12 @@
     "components/core/core.card.html":         { "markers": ["Book trip"] },
     "components/forms/forms.card.html":        { "markers": ["SegmentedControl"] },
     "components/forms/pickers.card.html":      { "markers": ["Slider"] },
-    "components/feedback/feedback.card.html":  { "markers": ["Open dialog", "Checking 40 airlines…", "Popover", "Combobox", "ErrorState"] },
+    "components/feedback/feedback.card.html":  { "markers": ["Open dialog", "Checking 40 airlines…", "Popover", "Combobox", "ErrorState", "4 of 13"] },
     "components/data/data.card.html":          { "markers": ["projected", "Range ·"] },
     "components/navigation/navigation.card.html": { "markers": ["SideNav"] }
   },
 
   "next": {
-    "markers": ["Range", "aria-label", "Okafor"]
+    "markers": ["Range", "aria-label", "Okafor", "progressbar"]
   }
 }

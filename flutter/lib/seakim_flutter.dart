@@ -52,6 +52,7 @@ export 'src/widgets/sk_input.dart';
 export 'src/widgets/sk_loading_state.dart';
 export 'src/widgets/sk_popover.dart';
 export 'src/widgets/sk_pressable.dart';
+export 'src/widgets/sk_progress.dart';
 export 'src/widgets/sk_radio.dart';
 export 'src/widgets/sk_range.dart';
 export 'src/widgets/sk_segmented_control.dart';

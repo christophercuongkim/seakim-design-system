@@ -14,7 +14,8 @@ export function SegmentedControl({ options = [], value, defaultValue, onChange, 
     <div role="tablist" style={{
       display: fullWidth ? 'grid' : 'inline-grid',
       gridAutoFlow: 'column', gridAutoColumns: fullWidth ? '1fr' : 'auto',
-      height: SIZES[size] || SIZES.md,
+      // A minimum, not a height: on touch each segment grows to 44px and the well must grow with it.
+      minHeight: SIZES[size] || SIZES.md,
       borderRadius: 'var(--radius-lg)', padding: 2,
       background: 'var(--surface-sunken)', ...style,
     }} {...rest}>

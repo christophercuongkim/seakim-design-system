@@ -38,6 +38,7 @@ describes the present and then rots.
 | [Range](Range.md) | Built | React — Bench projections; Flutter owed |
 | [Popover](Popover.md) | Built | React, Flutter — anchored overlay species (0022) |
 | [AvatarStack](AvatarStack.md) | Built | React, Flutter — facepile primitive (0024) |
+| [PageHeader](PageHeader.md) | Built | React, Flutter — the shared page header (0038) |
 | [Combobox](Combobox.md) | Built | React, Flutter — searchable long-list picker (0028) |
 | [ErrorState](ErrorState.md) | Built | React, Flutter — first-class error treatment (0029) |
 

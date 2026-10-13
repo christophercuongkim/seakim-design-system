@@ -29,6 +29,10 @@ ADRs say *why*. This says *what* and *when*.
   optional meta on the right and a chevron that turns, the body below, over native
   `<details>` on the web. Several stack, more than one may be open, nothing closes a
   sibling. Controlled or uncontrolled. (CHR-379, 0038)
+- **`PageHeader` / `SkPageHeader`** and a new `components/layout/` category with its own
+  card. The page's `h1`, a `badge` beside it for the count or status, `actions` on the
+  right, an optional `description`, and a `toolbar` row for filters, tabs and the view
+  toggle. Not sticky. `spec/PageHeader.md`. (CHR-380, 0038)
 - **Decision 0038, promote on a spike.** A consumer's design spike naming a shape with no
   consumer nouns is enough to build it here; readme "Adding an app" step 4 now says so.
 - **Decision 0039, binding parity, and `tool/parity-check.mjs`.** Every `index.js` component

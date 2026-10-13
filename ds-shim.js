@@ -54,7 +54,8 @@
     'components/data/Range.jsx',
     'components/navigation/Tabs.jsx',
     'components/navigation/SideNav.jsx',
-    'components/navigation/TabBar.jsx'
+    'components/navigation/TabBar.jsx',
+    'components/layout/PageHeader.jsx'
   ];
 
   function fromBundle() {

@@ -51,6 +51,7 @@ export 'src/widgets/sk_icon.dart';
 export 'src/widgets/sk_icon_button.dart';
 export 'src/widgets/sk_input.dart';
 export 'src/widgets/sk_loading_state.dart';
+export 'src/widgets/sk_page_header.dart';
 export 'src/widgets/sk_popover.dart';
 export 'src/widgets/sk_pressable.dart';
 export 'src/widgets/sk_progress.dart';

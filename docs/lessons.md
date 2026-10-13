@@ -318,3 +318,23 @@ not exist. A written threshold with no code behind it reads exactly like an enfo
 a guideline gets a check in the same change, and the check runs over every product and both
 themes — a single-theme, single-hue spot check is how two of four hues shipped under the
 floor.
+
+## 19. A static property on a client component is `undefined` in a Server Component
+
+`SplitPane.Header` was attached as a static (`SplitPane.Header = Header`), the usual React
+idiom for a sub-component. Every local gate was green: the preview card rendered it, the
+Flutter twin passed, the barrel exported `SplitPane`. CI's `next build` then failed
+prerendering `/next` with *Element type is invalid … got: undefined*. The page is a Server
+Component, and what it imports from the `"use client"` barrel is a **client reference**, a
+proxy that carries the export's name and nothing else. `SplitPane.Header` on that proxy is
+`undefined`, and React only finds out when it tries to render it.
+
+Nothing local sees this. The preview card is plain React in a browser; the example app's
+`npm run build` takes nine minutes, so CI owns it, and this is the first sub-component the
+example page ever used.
+
+**Rule.** Every component a Server Component may render is a **named export** of the
+barrel, never only a static on another export. Keep the static for client code if the
+idiom is worth it, and add the named export beside it (`SplitPaneHeader`, mapped in the
+parity table). When a new component carries a sub-component, the `/next` page uses the
+named form, so the build proves it.

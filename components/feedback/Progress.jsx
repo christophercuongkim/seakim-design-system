@@ -1,6 +1,5 @@
 import React, { useId } from 'react';
-
-const SIZES = { sm: 'var(--space-2)', md: 'var(--space-3)' };
+import { trackStyle, fillStyle } from '../core/track.js';
 
 /**
  * A determinate linear progress bar: a thin track, an accent fill, an optional
@@ -19,7 +18,6 @@ export function Progress({ value = 0, max = 100, label, size = 'sm', style, ...r
   const id = useId();
   const clamped = Math.min(Math.max(Number(value) || 0, 0), max);
   const pct = max > 0 ? (clamped / max) * 100 : 0;
-  const height = SIZES[size] || SIZES.sm;
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', ...style }} {...rest}>
       <div
@@ -28,23 +26,9 @@ export function Progress({ value = 0, max = 100, label, size = 'sm', style, ...r
         aria-valuemin={0}
         aria-valuemax={max}
         aria-labelledby={label != null ? id : undefined}
-        style={{
-          flex: 1,
-          height,
-          borderRadius: 'var(--radius-full)',
-          background: 'var(--surface-sunken)',
-          overflow: 'hidden',
-        }}
+        style={{ flex: 1, ...trackStyle(size) }}
       >
-        <div
-          style={{
-            width: `${pct}%`,
-            height: '100%',
-            borderRadius: 'var(--radius-full)',
-            background: 'var(--fill-accent)',
-            transition: 'width var(--dur-base) var(--ease-out)',
-          }}
-        />
+        <div style={fillStyle(pct, { animate: true })} />
       </div>
       {label != null && (
         <span id={id} style={{ font: 'var(--type-caption)', color: 'var(--text-secondary)', whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' }}>

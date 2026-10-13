@@ -96,6 +96,7 @@ final int columns = bp.pick(sm: 1, md: 2, lg: 4);
 | `SplitPane` | `SkSplitPane` | |
 | `SplitPaneHeader` (also `SplitPane.Header`) | `SkSplitPaneHeader` | The header reads the pane's scope for back-versus-close |
 | `Stepper` | `SkStepper` | `steps` are `SkStep`s; `orientation` is `SkStepperOrientation` |
+| `Meter` | `SkMeter` | |
 | `Disclosure` | `SkDisclosure` | `open`/`onToggle` became `isOpen`/`onToggle`; uncontrolled with `initiallyOpen` |
 | `Tabs` / `SideNav` / `TabBar` | `SkTabs` / `SkSideNav` / `SkTabBar` | |
 | `PlayerSheet` pattern | `showSkSheet` | Bottom sheet at sm, centred panel from md up |

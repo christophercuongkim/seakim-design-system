@@ -43,6 +43,7 @@ export { Range } from "./components/data/Range.jsx";
 export { ListRow } from "./components/data/ListRow.jsx";
 export { ListGroup } from "./components/data/ListGroup.jsx";
 export { Stepper } from "./components/data/Stepper.jsx";
+export { Meter } from "./components/data/Meter.jsx";
 export { Dialog } from "./components/feedback/Dialog.jsx";
 export { Toast } from "./components/feedback/Toast.jsx";
 export { Tooltip } from "./components/feedback/Tooltip.jsx";

@@ -52,6 +52,10 @@ ADRs say *why*. This says *what* and *when*.
   Horizontal from `md`, vertical under it when `orientation` is `auto` (the one pipeline
   any phone reference showed). With `onSelect` the steps become buttons; which moves are
   legal stays the app's. `spec/Stepper.md`. (CHR-383, 0038)
+- **`Meter` / `SkMeter`**, a labelled measurement: label above-left, value above-right in
+  mono, a thin bar beneath; `role="meter"`; never animates; one accent fill and no
+  thresholds. Shares its track style with `Progress` through `components/core/track.js`.
+  (CHR-384, 0038)
 - **Decision 0038, promote on a spike.** A consumer's design spike naming a shape with no
   consumer nouns is enough to build it here; readme "Adding an app" step 4 now says so.
 - **Decision 0039, binding parity, and `tool/parity-check.mjs`.** Every `index.js` component

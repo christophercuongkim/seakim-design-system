@@ -4,6 +4,7 @@ import { Range } from './Range.jsx';
 import { ListRow } from './ListRow.jsx';
 import { ListGroup } from './ListGroup.jsx';
 import { Stepper } from './Stepper.jsx';
+import { Meter } from './Meter.jsx';
 import { Icon } from '../core/Icon.jsx';
 import { Badge } from '../core/Badge.jsx';
 import { Avatar } from '../core/Avatar.jsx';
@@ -156,7 +157,13 @@ export function Demo() {
           />
         </div>
         <div className="col" style={{ gap: 'var(--space-3)' }}>
-          <div className="lbl">Stepper · vertical, as under md</div>
+          <div className="lbl">Meter · three dimensions of one score</div>
+          <div className="col" style={{ gap: 'var(--space-4)' }}>
+            <Meter label="Skills" value={0.84} valueText="84" />
+            <Meter label="Seniority" value={0.62} valueText="62" />
+            <Meter label="Location" value={0.3} valueText="30" />
+          </div>
+          <div className="lbl" style={{ marginTop: 'var(--space-4)' }}>Stepper · vertical, as under md</div>
           <Stepper
             current="recruiter"
             orientation="vertical"

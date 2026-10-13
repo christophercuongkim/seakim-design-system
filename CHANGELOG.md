@@ -17,7 +17,13 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
-## [Unreleased]
+## [8.3.0] — 2026-10-13
+
+Eleven components for the job-search redesign (CHR-322), each with its React and Flutter
+binding, demo card, `/next` example, Flutter showcase entry and prompt doc, under
+decision 0038 and built to the spike picks (CHR-390); the Flutter binding moves to
+**5.2.0** against `seakim_rules: "8.3"` (0019 §2: it gained eleven widgets and a
+function mapping). Minor under 0011: nothing in Tier 0 changed and no token moved.
 
 ### Added
 

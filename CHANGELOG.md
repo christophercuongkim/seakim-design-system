@@ -17,6 +17,22 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [Unreleased]
+
+### Added
+
+- **Decision 0038, promote on a spike.** A consumer's design spike naming a shape with no
+  consumer nouns is enough to build it here; readme "Adding an app" step 4 now says so.
+- **Decision 0039, binding parity, and `tool/parity-check.mjs`.** Every `index.js` component
+  has a Flutter barrel widget and every barrel widget has a React component, by name or by a
+  row in `flutter/README.md`'s mapping table. Runs in CI, pre-push and the CLAUDE.md gate
+  list. Proven to fire on a dropped export, an unmatched export and a stale table row.
+
+### Fixed
+
+- The readme's consumers table said job-search was on 7.0.0; it has carried 8.2.0 since
+  2026-09-19.
+
 ## [8.2.0] — 2026-09-19
 
 ### Added

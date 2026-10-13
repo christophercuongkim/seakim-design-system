@@ -15,13 +15,14 @@ actually gone wrong here, and most of it is not guessable from the code.
 | Flutter binding | `flutter/` | `flutter/lib/src/` |
 | Next adapter | `next/` | thin; re-exports `index.js` |
 
-## Gates — all five must pass
+## Gates — all must pass
 
 ```bash
 node tool/version-check.mjs        # VERSION == package.json == CHANGELOG; bindings honest (0019)
 node tool/build-tokens.mjs --check # generated outputs match their source
 node tool/conformance-check.mjs    # Tier 0 rules, see conformance.md
 node tool/preview-check.mjs        # every component registered + demoed (static, 0020)
+node tool/parity-check.mjs         # every React component has its Flutter widget, and back (0039)
 node tool/preview-check.mjs --render  # cards mount, no blank/error (needs Chrome; CI runs this)
 cd flutter && flutter analyze && flutter test
 ```

@@ -41,7 +41,7 @@ them is visible to any gate here:
 | --- | --- | --- | --- | --- |
 | [`fantasy-hub`](https://github.com/christophercuongkim/fantasy-hub) | vendored copy, `web/vendor/seakim/` | `data-app="bench"` | **3.2.0** | 2026-08-07 |
 | [`juntio`](https://github.com/juntio/juntio) | `seakim_flutter` git dep pinned at `ref: 1cc352d`, plus a docs mirror | — | **4.2.0** | 2026-08-26 |
-| [`job-search`](https://github.com/christophercuongkim/job-search) | vendored copy, `web/vendor/seakim/` | `data-app="job-search"` | **7.0.0** — current | 2026-09-11 |
+| [`job-search`](https://github.com/christophercuongkim/job-search) | vendored copy, `web/vendor/seakim/` | `data-app="job-search"` | **8.2.0** — current | 2026-09-19 |
 
 Four things this table is here to stop anyone assuming:
 
@@ -429,5 +429,6 @@ first real build.
    `oklch(0.56 0.14 H)` clears 4.5:1 on `--stone-50`.
 2. Add `--hue-<name>` to `tokens/colors.css`.
 3. Add the `[data-app="<name>"]` binding to `tokens/apps.css`.
-4. Do not add app-specific components to the shared library. Build them in the
-   app and promote once a second app needs them.
+4. Build a shape here when a design spike names it and it carries none of the
+   app's nouns ([0038](decisions/0038-promote-on-a-spike.md)). Build it in the
+   app only while it still carries the app's nouns.

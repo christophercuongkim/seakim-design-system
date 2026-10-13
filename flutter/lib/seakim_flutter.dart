@@ -43,6 +43,7 @@ export 'src/widgets/sk_checkbox.dart';
 export 'src/widgets/sk_combobox.dart';
 export 'src/widgets/sk_date_picker.dart';
 export 'src/widgets/sk_dialog.dart';
+export 'src/widgets/sk_disclosure.dart';
 export 'src/widgets/sk_empty_state.dart';
 export 'src/widgets/sk_error_state.dart';
 export 'src/widgets/sk_field.dart';

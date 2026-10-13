@@ -42,73 +42,87 @@ const List<_Player> _players = <_Player>[
 /// Exactly one entry per `export 'src/widgets/sk_*.dart'` in the barrel.
 final List<SkDemo> skShowcase = <SkDemo>[
   // sk_avatar.dart
-  SkDemo('Avatars', 'Sizes and status', (BuildContext context) => const Wrap(
-        spacing: SkSpace.s4,
-        runSpacing: SkSpace.s4,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: <Widget>[
-          SkAvatar(name: 'Ada Okafor', size: SkAvatarSize.sm),
-          SkAvatar(name: 'Ravi Patel', status: SkAvatarStatus.live),
-          SkAvatar(
-              name: 'Mei Lin',
-              size: SkAvatarSize.lg,
-              status: SkAvatarStatus.idle),
-          SkAvatar(
-              name: 'Jonas Berg',
-              size: SkAvatarSize.xl,
-              status: SkAvatarStatus.out),
-        ],
-      )),
+  SkDemo(
+      'Avatars',
+      'Sizes and status',
+      (BuildContext context) => const Wrap(
+            spacing: SkSpace.s4,
+            runSpacing: SkSpace.s4,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: <Widget>[
+              SkAvatar(name: 'Ada Okafor', size: SkAvatarSize.sm),
+              SkAvatar(name: 'Ravi Patel', status: SkAvatarStatus.live),
+              SkAvatar(
+                  name: 'Mei Lin',
+                  size: SkAvatarSize.lg,
+                  status: SkAvatarStatus.idle),
+              SkAvatar(
+                  name: 'Jonas Berg',
+                  size: SkAvatarSize.xl,
+                  status: SkAvatarStatus.out),
+            ],
+          )),
 
   // sk_avatar_stack.dart
-  SkDemo('Avatars', 'Overlapping facepile', (BuildContext context) =>
-      const SkAvatarStack(
-        max: 3,
-        items: <SkAvatarData>[
-          SkAvatarData(name: 'Dana Okafor'),
-          SkAvatarData(name: 'Marcus Reid', status: SkAvatarStatus.live),
-          SkAvatarData(name: 'Priya Shah'),
-          SkAvatarData(name: 'Lena Cruz'),
-          SkAvatarData(name: 'Sam Iwu'),
-        ],
-      )),
+  SkDemo(
+      'Avatars',
+      'Overlapping facepile',
+      (BuildContext context) => const SkAvatarStack(
+            max: 3,
+            items: <SkAvatarData>[
+              SkAvatarData(name: 'Dana Okafor'),
+              SkAvatarData(name: 'Marcus Reid', status: SkAvatarStatus.live),
+              SkAvatarData(name: 'Priya Shah'),
+              SkAvatarData(name: 'Lena Cruz'),
+              SkAvatarData(name: 'Sam Iwu'),
+            ],
+          )),
 
   // sk_badge.dart
-  SkDemo('Badges', 'Tones', (BuildContext context) => const Wrap(
-        spacing: SkSpace.s3,
-        runSpacing: SkSpace.s3,
-        children: <Widget>[
-          SkBadge(label: 'Confirmed', tone: SkBadgeTone.success),
-          SkBadge(label: 'Pending'),
-        ],
-      )),
+  SkDemo(
+      'Badges',
+      'Tones',
+      (BuildContext context) => const Wrap(
+            spacing: SkSpace.s3,
+            runSpacing: SkSpace.s3,
+            children: <Widget>[
+              SkBadge(label: 'Confirmed', tone: SkBadgeTone.success),
+              SkBadge(label: 'Pending'),
+            ],
+          )),
 
   // sk_button.dart
-  SkDemo('Buttons', 'Primary and ghost', (BuildContext context) => Wrap(
-        spacing: SkSpace.s4,
-        runSpacing: SkSpace.s4,
-        children: <Widget>[
-          SkButton(
-            label: 'Save trip',
-            iconLeft: SkIcons.bookmarkSimple,
-            onPressed: () {},
-          ),
-          SkButton(
-            label: 'Discard',
-            variant: SkButtonVariant.ghost,
-            onPressed: () {},
-          ),
-        ],
-      )),
+  SkDemo(
+      'Buttons',
+      'Primary and ghost',
+      (BuildContext context) => Wrap(
+            spacing: SkSpace.s4,
+            runSpacing: SkSpace.s4,
+            children: <Widget>[
+              SkButton(
+                label: 'Save trip',
+                iconLeft: SkIcons.bookmarkSimple,
+                onPressed: () {},
+              ),
+              SkButton(
+                label: 'Discard',
+                variant: SkButtonVariant.ghost,
+                onPressed: () {},
+              ),
+            ],
+          )),
 
   // sk_card.dart
-  SkDemo('Cards', 'Surface with stat and badge',
+  SkDemo(
+      'Cards',
+      'Surface with stat and badge',
       (BuildContext context) => const SkCard(
             child: Padding(
               padding: EdgeInsets.all(SkSpace.s5),
               child: Row(
                 children: <Widget>[
-                  SkStat(label: 'Fare', value: '412', unit: 'USD', delta: '-18'),
+                  SkStat(
+                      label: 'Fare', value: '412', unit: 'USD', delta: '-18'),
                   Spacer(),
                   SkBadge(label: 'Confirmed', tone: SkBadgeTone.success),
                 ],
@@ -163,34 +177,39 @@ final List<SkDemo> skShowcase = <SkDemo>[
   }),
 
   // sk_dialog.dart
-  SkDemo('Dialog', 'Confirm discard', (BuildContext context) => SkButton(
-        label: 'Discard trip',
-        variant: SkButtonVariant.ghost,
-        onPressed: () => showSkDialog<void>(
-          context: context,
-          builder: (BuildContext context) => SkDialog(
-            title: 'Discard this trip?',
-            description:
-                'The itinerary and holds are removed. This cannot be undone.',
-            onClose: () => Navigator.of(context).pop(),
-            actions: <Widget>[
-              SkButton(
-                label: 'Keep trip',
-                variant: SkButtonVariant.ghost,
-                onPressed: () => Navigator.of(context).pop(),
+  SkDemo(
+      'Dialog',
+      'Confirm discard',
+      (BuildContext context) => SkButton(
+            label: 'Discard trip',
+            variant: SkButtonVariant.ghost,
+            onPressed: () => showSkDialog<void>(
+              context: context,
+              builder: (BuildContext context) => SkDialog(
+                title: 'Discard this trip?',
+                description:
+                    'The itinerary and holds are removed. This cannot be undone.',
+                onClose: () => Navigator.of(context).pop(),
+                actions: <Widget>[
+                  SkButton(
+                    label: 'Keep trip',
+                    variant: SkButtonVariant.ghost,
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  SkButton(
+                    label: 'Discard',
+                    variant: SkButtonVariant.danger,
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ],
               ),
-              SkButton(
-                label: 'Discard',
-                variant: SkButtonVariant.danger,
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-          ),
-        ),
-      )),
+            ),
+          )),
 
   // sk_empty_state.dart
-  SkDemo('Empty state', 'No saved trips',
+  SkDemo(
+      'Empty state',
+      'No saved trips',
       (BuildContext context) => SkEmptyState(
             title: 'No saved trips yet',
             description: 'Trips you save appear here, across every device.',
@@ -199,7 +218,9 @@ final List<SkDemo> skShowcase = <SkDemo>[
           )),
 
   // sk_error_state.dart
-  SkDemo('Error state', 'Failed load with retry',
+  SkDemo(
+      'Error state',
+      'Failed load with retry',
       (BuildContext context) => SkErrorState(
             title: "Couldn't load places",
             description: 'Check your connection and try again.',
@@ -208,7 +229,9 @@ final List<SkDemo> skShowcase = <SkDemo>[
           )),
 
   // sk_field.dart
-  SkDemo('Inputs', 'Field wrapping an input',
+  SkDemo(
+      'Inputs',
+      'Field wrapping an input',
       (BuildContext context) => SkField(
             label: 'Passenger name',
             hint: 'Exactly as printed on the passport',
@@ -221,11 +244,16 @@ final List<SkDemo> skShowcase = <SkDemo>[
           )),
 
   // sk_icon.dart
-  SkDemo('Icon', 'Duotone glyph', (BuildContext context) =>
-      SkIcon(SkIcons.bookmarkSimple, color: context.skColors.textAccent)),
+  SkDemo(
+      'Icon',
+      'Duotone glyph',
+      (BuildContext context) =>
+          SkIcon(SkIcons.bookmarkSimple, color: context.skColors.textAccent)),
 
   // sk_icon_button.dart
-  SkDemo('Icon buttons', 'Variants and states',
+  SkDemo(
+      'Icon buttons',
+      'Variants and states',
       (BuildContext context) => Wrap(
             spacing: SkSpace.s3,
             runSpacing: SkSpace.s3,
@@ -256,17 +284,23 @@ final List<SkDemo> skShowcase = <SkDemo>[
           )),
 
   // sk_input.dart
-  SkDemo('Inputs', 'Input with suffix', (BuildContext context) => const SkInput(
-        placeholder: '412',
-        suffix: 'USD',
-        mono: true,
-      )),
+  SkDemo(
+      'Inputs',
+      'Input with suffix',
+      (BuildContext context) => const SkInput(
+            placeholder: '412',
+            suffix: 'USD',
+            mono: true,
+          )),
 
   // sk_loading_state.dart
-  SkDemo('Loading', 'Full-page gate', (BuildContext context) => const SkLoadingState(
-        title: 'Checking 40 airlines…',
-        description: 'Holding your dates while we compare fares.',
-      )),
+  SkDemo(
+      'Loading',
+      'Full-page gate',
+      (BuildContext context) => const SkLoadingState(
+            title: 'Checking 40 airlines…',
+            description: 'Holding your dates while we compare fares.',
+          )),
 
   // sk_popover.dart
   SkDemo('Popover', 'Anchored menu', (BuildContext context) {
@@ -312,18 +346,44 @@ final List<SkDemo> skShowcase = <SkDemo>[
     );
   }),
 
+  // sk_disclosure.dart
+  SkDemo(
+      'Feedback',
+      'Disclosure',
+      (BuildContext context) => const Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SkDisclosure(
+                summary: Text('Fare breakdown'),
+                meta: Text('4 items'),
+                child:
+                    Text('Base fare \$312 · Taxes \$86 · Seat \$14 · Bag \$0'),
+              ),
+              SkDisclosure(
+                summary: Text('Cancellation'),
+                meta: Text('Free until 12 Mar'),
+                initiallyOpen: true,
+                child: Text(
+                    'Cancel for a full refund up to 24 hours before departure.'),
+              ),
+            ],
+          )),
+
   // sk_progress.dart
-  SkDemo('Feedback', 'Progress', (BuildContext context) => const Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          SkProgress(value: 4, max: 13, label: '4 of 13'),
-          SizedBox(height: SkSpace.s3),
-          SkProgress(
-              value: 62,
-              size: SkProgressSize.md,
-              semanticLabel: 'Uploading résumé'),
-        ],
-      )),
+  SkDemo(
+      'Feedback',
+      'Progress',
+      (BuildContext context) => const Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SkProgress(value: 4, max: 13, label: '4 of 13'),
+              SizedBox(height: SkSpace.s3),
+              SkProgress(
+                  value: 62,
+                  size: SkProgressSize.md,
+                  semanticLabel: 'Uploading résumé'),
+            ],
+          )),
 
   // sk_radio.dart
   SkDemo('Selection', 'Radio group', (BuildContext context) {
@@ -350,7 +410,9 @@ final List<SkDemo> skShowcase = <SkDemo>[
   }),
 
   // sk_range.dart
-  SkDemo('Range', 'Floor / mid / ceiling',
+  SkDemo(
+      'Range',
+      'Floor / mid / ceiling',
       (BuildContext context) => const SizedBox(
             width: 220,
             child: SkRange(low: 120, mid: 180, high: 260, domain: (0, 320)),
@@ -379,8 +441,7 @@ final List<SkDemo> skShowcase = <SkDemo>[
   SkDemo('Inputs', 'Select', (BuildContext context) {
     String value = 'economy';
     return StatefulBuilder(
-      builder: (BuildContext context, StateSetter setState) =>
-          SkSelect<String>(
+      builder: (BuildContext context, StateSetter setState) => SkSelect<String>(
         value: value,
         placeholder: 'Cabin',
         onChanged: (String v) => setState(() => value = v),
@@ -414,9 +475,7 @@ final List<SkDemo> skShowcase = <SkDemo>[
                         label: 'Explore',
                         icon: SkIcons.compass),
                     SkNavItem<String>(
-                        value: 'trips',
-                        label: 'Trips',
-                        icon: SkIcons.suitcase),
+                        value: 'trips', label: 'Trips', icon: SkIcons.suitcase),
                   ],
                 ),
                 SkNavGroup<String>(
@@ -437,17 +496,20 @@ final List<SkDemo> skShowcase = <SkDemo>[
   }),
 
   // sk_skeleton.dart
-  SkDemo('Loading', 'Skeleton rows', (BuildContext context) => const Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SkSkeleton(width: 220, height: SkSpace.s5),
-          SizedBox(height: SkSpace.s2),
-          SkSkeleton(width: 160),
-          SizedBox(height: SkSpace.s2),
-          SkSkeleton(width: 190),
-        ],
-      )),
+  SkDemo(
+      'Loading',
+      'Skeleton rows',
+      (BuildContext context) => const Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SkSkeleton(width: 220, height: SkSpace.s5),
+              SizedBox(height: SkSpace.s2),
+              SkSkeleton(width: 160),
+              SizedBox(height: SkSpace.s2),
+              SkSkeleton(width: 190),
+            ],
+          )),
 
   // sk_slider.dart
   SkDemo('Slider', 'Nightly budget', (BuildContext context) {
@@ -463,12 +525,15 @@ final List<SkDemo> skShowcase = <SkDemo>[
   }),
 
   // sk_stat.dart
-  SkDemo('Stat', 'Fare with delta', (BuildContext context) => const SkStat(
-        label: 'Fare',
-        value: '412',
-        unit: 'USD',
-        delta: '-18',
-      )),
+  SkDemo(
+      'Stat',
+      'Fare with delta',
+      (BuildContext context) => const SkStat(
+            label: 'Fare',
+            value: '412',
+            unit: 'USD',
+            delta: '-18',
+          )),
 
   // sk_switch.dart
   SkDemo('Selection', 'Switch', (BuildContext context) {
@@ -487,8 +552,7 @@ final List<SkDemo> skShowcase = <SkDemo>[
   SkDemo('Bottom tab bar', 'Explore / Trips / Account', (BuildContext context) {
     String active = 'explore';
     return StatefulBuilder(
-      builder: (BuildContext context, StateSetter setState) =>
-          SkTabBar<String>(
+      builder: (BuildContext context, StateSetter setState) => SkTabBar<String>(
         active: active,
         onChanged: (String v) => setState(() => active = v),
         items: const <SkTabBarItem<String>>[
@@ -504,8 +568,7 @@ final List<SkDemo> skShowcase = <SkDemo>[
   }),
 
   // sk_tabs.dart
-  SkDemo('Tabs', 'Itinerary / Lodging / Messages',
-      (BuildContext context) {
+  SkDemo('Tabs', 'Itinerary / Lodging / Messages', (BuildContext context) {
     String value = 'itinerary';
     return StatefulBuilder(
       builder: (BuildContext context, StateSetter setState) => SkTabs<String>(
@@ -526,31 +589,34 @@ final List<SkDemo> skShowcase = <SkDemo>[
   }),
 
   // sk_table.dart
-  SkDemo('Table', 'Roster', (BuildContext context) => SkTable<_Player>(
-        rowKey: (_Player p) => p.name,
-        columns: <SkTableColumn<_Player>>[
-          SkTableColumn<_Player>(
-            key: 'name',
-            label: 'Player',
-            identifying: true,
-            cell: (_Player p) => Text(p.name),
-            secondary: (_Player p) => p.role,
-          ),
-          SkTableColumn<_Player>(
-            key: 'role',
-            label: 'Role',
-            cell: (_Player p) => Text(p.role),
-          ),
-          SkTableColumn<_Player>(
-            key: 'pts',
-            label: 'Pts',
-            numeric: true,
-            survives: true,
-            cell: (_Player p) => Text(p.pts.toStringAsFixed(1)),
-          ),
-        ],
-        rows: _players,
-      )),
+  SkDemo(
+      'Table',
+      'Roster',
+      (BuildContext context) => SkTable<_Player>(
+            rowKey: (_Player p) => p.name,
+            columns: <SkTableColumn<_Player>>[
+              SkTableColumn<_Player>(
+                key: 'name',
+                label: 'Player',
+                identifying: true,
+                cell: (_Player p) => Text(p.name),
+                secondary: (_Player p) => p.role,
+              ),
+              SkTableColumn<_Player>(
+                key: 'role',
+                label: 'Role',
+                cell: (_Player p) => Text(p.role),
+              ),
+              SkTableColumn<_Player>(
+                key: 'pts',
+                label: 'Pts',
+                numeric: true,
+                survives: true,
+                cell: (_Player p) => Text(p.pts.toStringAsFixed(1)),
+              ),
+            ],
+            rows: _players,
+          )),
 
   // sk_tag.dart
   SkDemo('Tags', 'Selectable and removable', (BuildContext context) {
@@ -574,23 +640,32 @@ final List<SkDemo> skShowcase = <SkDemo>[
   }),
 
   // sk_textarea.dart
-  SkDemo('Inputs', 'Textarea', (BuildContext context) => const SkTextarea(
-        placeholder: 'Trip notes — anything the crew should know',
-        minLines: 3,
-        maxLines: 6,
-      )),
+  SkDemo(
+      'Inputs',
+      'Textarea',
+      (BuildContext context) => const SkTextarea(
+            placeholder: 'Trip notes — anything the crew should know',
+            minLines: 3,
+            maxLines: 6,
+          )),
 
   // sk_toast.dart
-  SkDemo('Toast', 'Trip saved', (BuildContext context) => SkButton(
-        label: 'Save trip',
-        iconLeft: SkIcons.bookmarkSimple,
-        onPressed: () => showSkToast(context, message: 'Trip saved'),
-      )),
+  SkDemo(
+      'Toast',
+      'Trip saved',
+      (BuildContext context) => SkButton(
+            label: 'Save trip',
+            iconLeft: SkIcons.bookmarkSimple,
+            onPressed: () => showSkToast(context, message: 'Trip saved'),
+          )),
 
   // sk_tooltip.dart
-  SkDemo('Tooltip', 'On an icon', (BuildContext context) => SkTooltip(
-        label: 'Saved to your trips',
-        child:
-            SkIcon(SkIcons.bookmarkSimple, color: context.skColors.textAccent),
-      )),
+  SkDemo(
+      'Tooltip',
+      'On an icon',
+      (BuildContext context) => SkTooltip(
+            label: 'Saved to your trips',
+            child: SkIcon(SkIcons.bookmarkSimple,
+                color: context.skColors.textAccent),
+          )),
 ];

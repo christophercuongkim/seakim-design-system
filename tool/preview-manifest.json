@@ -42,7 +42,8 @@
     "SideNav":          { "surfaces": { "card": "yes" } },
     "TabBar":           { "surfaces": { "card": "yes" } },
     "PageHeader":       { "surfaces": { "card": "yes", "next": "yes" } },
-    "SplitPane":        { "surfaces": { "card": "yes", "next": "yes" } }
+    "SplitPane":        { "surfaces": { "card": "yes", "next": "yes" } },
+    "SplitPaneHeader":  { "compositional": true, "surfaces": { "card": "yes", "next": "yes" } }
   },
 
   "cards": {

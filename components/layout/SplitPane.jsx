@@ -52,9 +52,10 @@ export function SplitPane({ list, detail, aside, detailOpen = false, onBack, lis
  * The detail column's own header: back on the phone or close otherwise, the
  * title, a counter ("3 of 12"), prev/next, and the pane's actions. Sticky to
  * the top of the scrolling detail. Escape anywhere in the detail calls
- * `onClose`, when given.
+ * `onClose`, when given. Also exported as `SplitPaneHeader` so a Server
+ * Component can render it (a client reference has no static properties).
  */
-function Header({ title, counter, onClose, onPrev, onNext, actions, style, ...rest }) {
+export function SplitPaneHeader({ title, counter, onClose, onPrev, onNext, actions, style, ...rest }) {
   const { narrow, onBack } = useContext(Scope);
   const ref = useRef(null);
   useEffect(() => {
@@ -93,4 +94,6 @@ function Header({ title, counter, onClose, onPrev, onNext, actions, style, ...re
     </div>
   );
 }
-SplitPane.Header = Header;
+// `SplitPane.Header` for client code; the named export is for Server Components,
+// where a client reference does not expose static properties.
+SplitPane.Header = SplitPaneHeader;

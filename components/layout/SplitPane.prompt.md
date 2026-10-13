@@ -16,6 +16,6 @@ A list on the left, the open item on the right, its properties further right.
 Give it a height (`100%` of a flex parent, or a fixed one): each column scrolls inside it,
 and a split pane that scrolls the page is the bug the component exists to prevent. Keep
 the selection in the URL or the app's state and pass `detailOpen`; the component never
-decides what is selected. Start the detail with `SplitPane.Header` so the phone gets its
+decides what is selected. Start the detail with `SplitPane.Header` (or the named `SplitPaneHeader` from a Server Component) so the phone gets its
 back control and the desktop its close and prev/next for free. The aside is for facts
 about the open item (stage, dates, owner), never for actions.

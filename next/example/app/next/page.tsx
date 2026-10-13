@@ -15,6 +15,7 @@ import {
   Progress,
   Slider,
   SplitPane,
+  SplitPaneHeader,
   Stat,
   Tag,
 } from "@seakim/design-system";
@@ -116,7 +117,7 @@ export default function Page() {
             }
             detail={
               <>
-                <SplitPane.Header title="Dana Okafor" counter="1 of 2" />
+                <SplitPaneHeader title="Dana Okafor" counter="1 of 2" />
                 <p style={{ padding: "var(--space-6)", font: "var(--type-body-sm)", color: "var(--text-secondary)" }}>
                   vs MIA tonight. Projected 18.4, live 24.6.
                 </p>

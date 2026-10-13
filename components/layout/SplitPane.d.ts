@@ -37,6 +37,8 @@ export interface SplitPaneHeaderProps extends React.HTMLAttributes<HTMLDivElemen
 }
 
 export declare function SplitPane(props: SplitPaneProps): JSX.Element;
+/** The same header as `SplitPane.Header`, importable by name from a Server Component. */
+export declare function SplitPaneHeader(props: SplitPaneHeaderProps): JSX.Element;
 export declare namespace SplitPane {
   function Header(props: SplitPaneHeaderProps): JSX.Element;
 }

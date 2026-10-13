@@ -276,10 +276,22 @@ class _SkBoardColumnState extends State<SkBoardColumn> {
             ),
           ),
           const SizedBox(height: SkSpace.s3),
-          for (int i = 0; i < widget.children.length; i++) ...<Widget>[
-            if (i > 0) const SizedBox(height: SkSpace.s3),
-            widget.children[i],
-          ],
+          // The cards scroll inside a bounded column (a board given a height)
+          // and take their own height in an unbounded one.
+          Flexible(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  for (int i = 0; i < widget.children.length; i++) ...<Widget>[
+                    if (i > 0) const SizedBox(height: SkSpace.s3),
+                    widget.children[i],
+                  ],
+                ],
+              ),
+            ),
+          ),
           if (widget.footer != null) ...<Widget>[
             const SizedBox(height: SkSpace.s3),
             widget.footer!,

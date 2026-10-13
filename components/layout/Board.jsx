@@ -33,6 +33,7 @@ export function Board({ children, collapseEmpty = false, columnWidth = '22rem', 
           } : undefined}
           style={{
             display: 'flex', alignItems: 'flex-start', gap: 'var(--space-4)',
+            flex: 1, minHeight: 0, maxHeight: '100%',
             overflowX: 'auto', overflowY: 'hidden',
             scrollSnapType: narrow ? 'x mandatory' : undefined,
             padding: narrow ? '0 var(--space-5)' : 0,
@@ -90,7 +91,7 @@ export function BoardColumn({ label, count, tone, menu, footer, children, empty,
       aria-labelledby={id}
       style={{
         flex: narrow ? '0 0 85%' : `0 0 ${columnWidth}`, scrollSnapAlign: narrow ? 'start' : undefined,
-        display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', minWidth: 0,
+        display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', minWidth: 0, maxHeight: '100%', boxSizing: 'border-box',
         padding: 'var(--space-4)', borderRadius: 'var(--radius-xl)', background: 'var(--surface-sunken)',
         ...style,
       }}
@@ -103,7 +104,7 @@ export function BoardColumn({ label, count, tone, menu, footer, children, empty,
         <span style={{ flex: 1 }} />
         {menu}
       </div>
-      <div role="list" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+      <div role="list" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', minHeight: 0, overflowY: 'auto' }}>
         {cards.map((card, i) => <div role="listitem" key={card.key ?? i}>{card}</div>)}
       </div>
       {footer}

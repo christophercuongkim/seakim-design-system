@@ -7,6 +7,7 @@ import {
   Disclosure,
   EmptyState,
   Field,
+  FileDrop,
   Icon,
   Input,
   ListGroup,
@@ -190,6 +191,13 @@ export default function Page() {
               Base fare $312 · Taxes $86 · Seat $14 · Bag $0
             </p>
           </Disclosure>
+        </div>
+      </Section>
+      <Section title="FileDrop">
+        <div style={{ width: 360 }}>
+          <Field label="Roster import">
+            <FileDrop accept=".csv" hint="CSV up to 2 MB" file={{ name: "week-6.csv", size: 18204 }} />
+          </Field>
         </div>
       </Section>
       <Section title="Forms">

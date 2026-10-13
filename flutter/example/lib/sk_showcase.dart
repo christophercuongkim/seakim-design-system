@@ -243,6 +243,17 @@ final List<SkDemo> skShowcase = <SkDemo>[
             ),
           )),
 
+  // sk_file_drop.dart
+  SkDemo(
+      'Inputs',
+      'File drop',
+      (BuildContext context) => SkFileDrop(
+            hint: 'PDF up to 5 MB',
+            onPick: () {},
+            file: const SkFileInfo(name: 'Ada Okafor résumé.pdf', size: 82261),
+            onRemove: () {},
+          )),
+
   // sk_icon.dart
   SkDemo(
       'Icon',

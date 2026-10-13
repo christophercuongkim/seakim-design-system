@@ -28,6 +28,7 @@ export { Switch } from "./components/forms/Switch";
 export { SegmentedControl } from "./components/forms/SegmentedControl";
 export { Slider } from "./components/forms/Slider";
 export { DatePicker } from "./components/forms/DatePicker";
+export { FileDrop } from "./components/forms/FileDrop";
 export { Table } from "./components/data/Table";
 export { Range } from "./components/data/Range";
 export { ListRow } from "./components/data/ListRow";

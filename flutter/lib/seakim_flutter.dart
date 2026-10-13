@@ -47,6 +47,7 @@ export 'src/widgets/sk_disclosure.dart';
 export 'src/widgets/sk_empty_state.dart';
 export 'src/widgets/sk_error_state.dart';
 export 'src/widgets/sk_field.dart';
+export 'src/widgets/sk_file_drop.dart';
 export 'src/widgets/sk_icon.dart';
 export 'src/widgets/sk_icon_button.dart';
 export 'src/widgets/sk_input.dart';

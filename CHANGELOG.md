@@ -17,6 +17,16 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [8.3.2] — 2026-10-13
+
+### Fixed
+
+- **`SegmentedControl` segments spilled out of the well on touch screens.** The well had a
+  fixed `height` (28px at `sm`, 34px at `md`) while each segment takes `min-height: 44px`
+  under a coarse pointer, so the raised segment hung below the sunken track. The well now
+  takes the size as a `min-height` and grows with its segments. Found on job-search's
+  settings page on a phone.
+
 ## [8.3.1] — 2026-10-13
 
 ### Fixed

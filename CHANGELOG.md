@@ -17,6 +17,21 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [8.3.3] — 2026-10-13
+
+### Fixed
+
+- **`Popover` was clipped by any scrolling or `overflow: hidden` ancestor.** The panel
+  was `position: absolute` inside the trigger, so a menu opened from a collapsed
+  sidebar, a table row or a board column showed as a sliver. That broke 0022's own
+  rule that an anchored overlay escapes its parent's clip. The panel is now
+  `position: fixed`, placed from the trigger's rectangle and kept inside the window.
+  A new `align` prop, `start` (default) or `end`, lines it up with the trigger's left
+  or right edge. It flips on measured height rather than a fixed budget, `side="top"`
+  now opens above (it was typed but always opened below), and it re-places on scroll
+  and resize.
+  Found on job-search's account menu.
+
 ## [8.3.2] — 2026-10-13
 
 ### Fixed

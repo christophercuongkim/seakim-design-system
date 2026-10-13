@@ -45,6 +45,12 @@ jobs:
       - name: Preview coverage (static)
         run: node tool/preview-check.mjs
 
+      # Both bindings this repo owns ship every component together (decision 0039):
+      # index.js exports ⇄ Flutter barrel widgets, with the README table as the
+      # declaration for function-shaped idioms.
+      - name: Binding parity
+        run: node tool/parity-check.mjs
+
   preview:
     name: Preview render
     runs-on: ubuntu-latest

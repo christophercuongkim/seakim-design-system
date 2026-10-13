@@ -33,8 +33,7 @@ void main() {
     await t.pumpAndSettle();
 
     expect(find.text('Trips'), findsOneWidget);
-    expect(t.getSemantics(find.text('Trips')).hasFlag(SemanticsFlag.isHeader),
-        isTrue);
+    expect(t.getSemantics(find.text('Trips')).flagsCollection.isHeader, isTrue);
     expect(find.text('12'), findsOneWidget);
     expect(find.text('New trip'), findsOneWidget);
     expect(find.text('Board'), findsOneWidget);

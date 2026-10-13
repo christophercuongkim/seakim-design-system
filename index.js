@@ -38,6 +38,7 @@ export { Switch } from "./components/forms/Switch.jsx";
 export { SegmentedControl } from "./components/forms/SegmentedControl.jsx";
 export { Slider } from "./components/forms/Slider.jsx";
 export { DatePicker } from "./components/forms/DatePicker.jsx";
+export { FileDrop } from "./components/forms/FileDrop.jsx";
 export { Table } from "./components/data/Table.jsx";
 export { Range } from "./components/data/Range.jsx";
 export { ListRow } from "./components/data/ListRow.jsx";

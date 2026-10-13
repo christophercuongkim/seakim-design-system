@@ -56,6 +56,12 @@ ADRs say *why*. This says *what* and *when*.
   mono, a thin bar beneath; `role="meter"`; never animates; one accent fill and no
   thresholds. Shares its track style with `Progress` through `components/core/track.js`.
   (CHR-384, 0038)
+- **`FileDrop` / `SkFileDrop`**, a drop zone around a native file input: dashed hairline,
+  icon, "Click to upload or drag and drop" with the verb link-coloured, a hint line; the
+  chosen file as a row beneath with its size and a remove control; a labelled wait on that
+  row while uploading (0021, never a bar); the error under the zone and announced. One
+  file. The Flutter widget renders the affordance and calls `onPick`; the app wires the
+  picker, so the package takes no plugin. (CHR-385, 0038)
 - **Decision 0038, promote on a spike.** A consumer's design spike naming a shape with no
   consumer nouns is enough to build it here; readme "Adding an app" step 4 now says so.
 - **Decision 0039, binding parity, and `tool/parity-check.mjs`.** Every `index.js` component

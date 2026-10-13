@@ -41,6 +41,7 @@
     'components/forms/SegmentedControl.jsx',
     'components/forms/Slider.jsx',
     'components/forms/DatePicker.jsx',
+    'components/forms/FileDrop.jsx',
     'components/feedback/Dialog.jsx',
     'components/feedback/Toast.jsx',
     'components/feedback/Tooltip.jsx',

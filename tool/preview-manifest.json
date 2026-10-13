@@ -23,6 +23,7 @@
     "SegmentedControl": { "surfaces": { "card": "yes" } },
     "Slider":           { "surfaces": { "card": "yes" } },
     "DatePicker":       { "surfaces": { "card": "yes" } },
+    "FileDrop":         { "surfaces": { "card": "yes", "next": "yes" } },
     "Table":            { "surfaces": { "card": "yes", "next": "yes" } },
     "Range":            { "surfaces": { "card": "yes", "next": "yes" } },
     "ListRow":          { "surfaces": { "card": "yes", "next": "yes" } },
@@ -50,7 +51,7 @@
 
   "cards": {
     "components/core/core.card.html":         { "markers": ["Book trip"] },
-    "components/forms/forms.card.html":        { "markers": ["SegmentedControl"] },
+    "components/forms/forms.card.html":        { "markers": ["SegmentedControl", "or drag and drop"] },
     "components/forms/pickers.card.html":      { "markers": ["Slider"] },
     "components/feedback/feedback.card.html":  { "markers": ["Open dialog", "Checking 40 airlines…", "Popover", "Combobox", "ErrorState", "4 of 13", "Fare breakdown"] },
     "components/data/data.card.html":          { "markers": ["projected", "Range ·", "Notifications", "Senior frontend engineer", "Recruiter screen", "Seniority"] },
@@ -59,6 +60,6 @@
   },
 
   "next": {
-    "markers": ["Range", "aria-label", "Okafor", "progressbar", "<details", "<h1", "aria-current", "aria-label=\"Detail\"", "aria-current=\"step\"", "role=\"meter\""]
+    "markers": ["Range", "aria-label", "Okafor", "progressbar", "<details", "<h1", "aria-current", "aria-label=\"Detail\"", "aria-current=\"step\"", "role=\"meter\"", "type=\"file\""]
   }
 }

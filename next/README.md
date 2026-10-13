@@ -78,8 +78,8 @@ Everything without function props renders straight from a Server Component.
 
 ### What you get
 
-34 components — `Avatar` `Badge` `Button` `Card` `Checkbox` `DatePicker` `Dialog`
-`Disclosure` `EmptyState` `Field` `Icon` `IconButton` `Input` `ListGroup` `ListRow` `Meter`
+35 components — `Avatar` `Badge` `Button` `Card` `Checkbox` `DatePicker` `Dialog`
+`Disclosure` `EmptyState` `Field` `FileDrop` `Icon` `IconButton` `Input` `ListGroup` `ListRow` `Meter`
 `PageHeader` `Progress` `Radio` `SegmentedControl` `Select` `SplitPane` `Stepper` `SideNav` `Slider` `Stat` `Switch` `TabBar` `Table` `Tabs` `Tag` `Textarea`
 `Toast` `Tooltip` — plus `Viewport` and `useMeasuredBreakpoint` for container-width layout.
 

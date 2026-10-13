@@ -1,6 +1,8 @@
 import {
   Avatar,
   Badge,
+  Board,
+  BoardColumn,
   Button,
   Card,
   DatePicker,
@@ -151,6 +153,20 @@ export default function Page() {
             <Button fullWidth>Continue with Google</Button>
             <Button variant="secondary" fullWidth>Continue with email</Button>
           </GateLayout>
+        </div>
+      </Section>
+      <Section title="Board">
+        <div style={{ width: "100%" }}>
+          <Board columnWidth="14rem">
+            <BoardColumn label="Starters" count={2}>
+              <Card eyebrow="PG · ATL" title="Dana Okafor" padding="var(--space-5)" />
+              <Card eyebrow="SG · BOS" title="Theo Lindqvist" padding="var(--space-5)" />
+            </BoardColumn>
+            <BoardColumn label="Bench" count={1}>
+              <Card eyebrow="C · ORL" title="Nikola Vrba" padding="var(--space-5)" />
+            </BoardColumn>
+            <BoardColumn label="Injured" count={0} />
+          </Board>
         </div>
       </Section>
       <Section title="Actions">

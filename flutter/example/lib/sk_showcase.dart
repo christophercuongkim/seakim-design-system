@@ -91,6 +91,41 @@ final List<SkDemo> skShowcase = <SkDemo>[
             ],
           )),
 
+  // sk_board.dart
+  SkDemo(
+      'Layout',
+      'Board',
+      (BuildContext context) => SizedBox(
+            height: 320,
+            child: SkBoard(
+              columnWidth: 220,
+              columns: <SkBoardColumn>[
+                SkBoardColumn(
+                  label: 'Pursuing',
+                  count: 2,
+                  tone: SkBadgeTone.accent,
+                  footer: SkButton(
+                      label: 'Add',
+                      variant: SkButtonVariant.ghost,
+                      size: SkButtonSize.sm,
+                      onPressed: () {}),
+                  children: const <Widget>[
+                    SkCard(
+                        eyebrow: 'Northwind Labs',
+                        title: 'Senior frontend engineer',
+                        padding: SkSpace.s5),
+                    SkCard(
+                        eyebrow: 'Lumen Works',
+                        title: 'Staff engineer, platform',
+                        padding: SkSpace.s5),
+                  ],
+                ),
+                const SkBoardColumn(label: 'Applied', count: 0),
+                const SkBoardColumn(label: 'Offer', count: 0),
+              ],
+            ),
+          )),
+
   // sk_button.dart
   SkDemo(
       'Buttons',

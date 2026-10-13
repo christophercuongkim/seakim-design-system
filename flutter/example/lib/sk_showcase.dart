@@ -293,6 +293,50 @@ final List<SkDemo> skShowcase = <SkDemo>[
             mono: true,
           )),
 
+  // sk_list_group.dart
+  SkDemo(
+      'Lists',
+      'Settings rows in a group',
+      (BuildContext context) => SkListGroup(
+            heading: 'Account',
+            children: <Widget>[
+              SkListRow(
+                leading: const SkIcon(SkIcons.bell, size: 18),
+                title: const Text('Notifications'),
+                trailing: const SkIcon(SkIcons.caretRight, size: 16),
+                onPressed: () {},
+              ),
+              SkListRow(
+                leading: const SkIcon(SkIcons.moon, size: 18),
+                title: const Text('Appearance'),
+                trailing: const Text('System'),
+                onPressed: () {},
+              ),
+            ],
+          )),
+
+  // sk_list_row.dart
+  SkDemo(
+      'Lists',
+      'Record row, selected',
+      (BuildContext context) => SkListRow(
+            leading:
+                const SkAvatar(name: 'Northwind Labs', size: SkAvatarSize.sm),
+            eyebrow: const Text('Northwind Labs'),
+            title: const Text('Senior frontend engineer'),
+            meta: const Text('Remote · \$180k–\$210k'),
+            trailing: const Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text('2h'),
+                SizedBox(width: SkSpace.s3),
+                SkBadge(label: '91', tone: SkBadgeTone.accent, mono: true),
+              ],
+            ),
+            selected: true,
+            onPressed: () {},
+          )),
+
   // sk_loading_state.dart
   SkDemo(
       'Loading',

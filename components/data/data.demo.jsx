@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Table } from './Table.jsx';
 import { Range } from './Range.jsx';
+import { ListRow } from './ListRow.jsx';
+import { ListGroup } from './ListGroup.jsx';
+import { Icon } from '../core/Icon.jsx';
 import { Badge } from '../core/Badge.jsx';
 import { Avatar } from '../core/Avatar.jsx';
 import { IconButton } from '../core/IconButton.jsx';
@@ -115,6 +118,24 @@ export function Demo() {
           Njoku's tight band is the safe start; Robinson's wide one is boom-or-bust. Same
           projected figure, different risk — the shape carries what the number can't. Hover
           promotes one row's band; the exact figures stay in the adjacent cell.
+        </div>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-8)', alignItems: 'start' }}>
+        <div className="col" style={{ gap: 'var(--space-3)' }}>
+          <div className="lbl">ListRow · one line, in a ListGroup</div>
+          <ListGroup heading="Account">
+            <ListRow leading={<Icon name="bell" size={18} />} title="Notifications" trailing={<Icon name="caret-right" size={16} />} href="#notifications" />
+            <ListRow leading={<Icon name="moon" size={18} />} title="Appearance" trailing={<><span>System</span><Icon name="caret-right" size={16} /></>} href="#appearance" />
+            <ListRow leading={<Icon name="sign-out" size={18} />} title="Sign out" onClick={() => {}} />
+          </ListGroup>
+        </div>
+        <div className="col" style={{ gap: 'var(--space-3)' }}>
+          <div className="lbl">ListRow · record rows, one selected</div>
+          <ListGroup heading="Today">
+            <ListRow leading={<Avatar name="Northwind Labs" size="sm" />} eyebrow="Northwind Labs" title="Senior frontend engineer" meta="Remote · $180k–$210k" trailing={<><span>2h</span><Badge tone="accent" mono>91</Badge></>} selected onClick={() => {}} />
+            <ListRow leading={<Avatar name="Harbor Health" size="sm" />} eyebrow="Harbor Health" title="Product engineer" meta="Boston · hybrid" trailing={<><span>5h</span><Badge mono>74</Badge></>} onClick={() => {}} />
+            <ListRow leading={<Avatar name="Lumen Works" size="sm" />} eyebrow="Lumen Works" title="Staff engineer, platform" meta="Remote" trailing={<><span>1d</span><Badge mono>66</Badge></>} onClick={() => {}} />
+          </ListGroup>
         </div>
       </div>
     </div>

@@ -40,6 +40,8 @@ export { Slider } from "./components/forms/Slider.jsx";
 export { DatePicker } from "./components/forms/DatePicker.jsx";
 export { Table } from "./components/data/Table.jsx";
 export { Range } from "./components/data/Range.jsx";
+export { ListRow } from "./components/data/ListRow.jsx";
+export { ListGroup } from "./components/data/ListGroup.jsx";
 export { Dialog } from "./components/feedback/Dialog.jsx";
 export { Toast } from "./components/feedback/Toast.jsx";
 export { Tooltip } from "./components/feedback/Tooltip.jsx";

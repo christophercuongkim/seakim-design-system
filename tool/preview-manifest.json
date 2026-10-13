@@ -25,6 +25,8 @@
     "DatePicker":       { "surfaces": { "card": "yes" } },
     "Table":            { "surfaces": { "card": "yes", "next": "yes" } },
     "Range":            { "surfaces": { "card": "yes", "next": "yes" } },
+    "ListRow":          { "surfaces": { "card": "yes", "next": "yes" } },
+    "ListGroup":        { "surfaces": { "card": "yes", "next": "yes" } },
     "Dialog":           { "surfaces": { "card": "yes" } },
     "Toast":            { "surfaces": { "card": "yes" } },
     "Tooltip":          { "surfaces": { "card": "yes" } },
@@ -47,12 +49,12 @@
     "components/forms/forms.card.html":        { "markers": ["SegmentedControl"] },
     "components/forms/pickers.card.html":      { "markers": ["Slider"] },
     "components/feedback/feedback.card.html":  { "markers": ["Open dialog", "Checking 40 airlines…", "Popover", "Combobox", "ErrorState", "4 of 13", "Fare breakdown"] },
-    "components/data/data.card.html":          { "markers": ["projected", "Range ·"] },
+    "components/data/data.card.html":          { "markers": ["projected", "Range ·", "Notifications", "Senior frontend engineer"] },
     "components/navigation/navigation.card.html": { "markers": ["SideNav"] },
     "components/layout/layout.card.html":        { "markers": ["Trips", "New trip"] }
   },
 
   "next": {
-    "markers": ["Range", "aria-label", "Okafor", "progressbar", "<details", "<h1"]
+    "markers": ["Range", "aria-label", "Okafor", "progressbar", "<details", "<h1", "aria-current"]
   }
 }

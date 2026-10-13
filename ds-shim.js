@@ -52,6 +52,8 @@
     'components/feedback/Disclosure.jsx',
     'components/data/Table.jsx',
     'components/data/Range.jsx',
+    'components/data/ListRow.jsx',
+    'components/data/ListGroup.jsx',
     'components/navigation/Tabs.jsx',
     'components/navigation/SideNav.jsx',
     'components/navigation/TabBar.jsx',

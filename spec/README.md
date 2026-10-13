@@ -42,6 +42,7 @@ describes the present and then rots.
 | [ListRow](ListRow.md) | Built | React, Flutter — the row every list is made of, and ListGroup (0038) |
 | [SplitPane](SplitPane.md) | Built | React, Flutter — list beside detail with a header and an aside (0038) |
 | [Stepper](Stepper.md) | Built | React, Flutter — a labelled pipeline, vertical under md (0038) |
+| [Sheet](Sheet.md) | Built | React `Sheet`, Flutter `showSkSheet` — bottom sheet under md, centred panel from md (0039) |
 | [Combobox](Combobox.md) | Built | React, Flutter — searchable long-list picker (0028) |
 | [ErrorState](ErrorState.md) | Built | React, Flutter — first-class error treatment (0029) |
 

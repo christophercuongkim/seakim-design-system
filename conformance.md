@@ -185,7 +185,7 @@ Ship unless the platform genuinely has no use case.
 
 Specced so they are consistent whenever they arrive.
 
-`Slider` · `DatePicker` · `Range` (the interval/distribution glyph, [0017](decisions/0017-distribution-interval-glyph.md)) · `Sheet` as a component distinct from a `Dialog` mode · `Progress` (determinate, [0038](decisions/0038-promote-on-a-spike.md)) · `Disclosure` (one fold, never an accordion) · `PageHeader` ([spec](spec/PageHeader.md)) · `ListRow` and `ListGroup` ([spec](spec/ListRow.md)) · `SplitPane` ([spec](spec/SplitPane.md)) · `Stepper` ([spec](spec/Stepper.md)) · `Meter` (a measurement; `Progress` is the one that moves) · `FileDrop` (one file, a labelled wait, the error under the zone) · `GateLayout` (the page outside the shell)
+`Slider` · `DatePicker` · `Range` (the interval/distribution glyph, [0017](decisions/0017-distribution-interval-glyph.md)) · `Sheet` ([spec](spec/Sheet.md); React `Sheet`, Flutter `showSkSheet`) · `Progress` (determinate, [0038](decisions/0038-promote-on-a-spike.md)) · `Disclosure` (one fold, never an accordion) · `PageHeader` ([spec](spec/PageHeader.md)) · `ListRow` and `ListGroup` ([spec](spec/ListRow.md)) · `SplitPane` ([spec](spec/SplitPane.md)) · `Stepper` ([spec](spec/Stepper.md)) · `Meter` (a measurement; `Progress` is the one that moves) · `FileDrop` (one file, a labelled wait, the error under the zone) · `GateLayout` (the page outside the shell)
 
 ### Forbidden (1)
 
@@ -320,11 +320,12 @@ anatomy visualised in
 that survives migration is visibly wrong in review rather than quietly almost-right, per
 [0002](decisions/0002-no-floating-action-button.md).
 
-**8. `Sheet` is not a distinct component.** The last on-demand item from
-[0008](decisions/0008-conformance-tiers.md). Today a sheet is a mode of `Dialog` —
-`showSkSheet` in Flutter picks bottom sheet at `sm` and centred panel from `md` up, and
-React's `PlayerSheet` does the same by hand. That works, so this is not urgent; promote it
-when a second product needs a sheet that is not a dialog.
+**8. ~~`Sheet` is not a distinct component.~~ Done, 2026-10-13.** The last on-demand item
+from [0008](decisions/0008-conformance-tiers.md). `showSkSheet` in Flutter had always
+picked a bottom sheet at `sm` and a centred panel from `md` up; React now has `Sheet` with
+the same species swap, against `spec/Sheet.md`, promoted when the job-search spikes needed
+a phone sheet (0038) and caught by the parity gate (0039) as the one Flutter-only
+component.
 
 **9. ~~`Range` is built in both bindings, pending 0017.~~ Done, [0017](decisions/0017-distribution-interval-glyph.md) accepted.**
 The interval/distribution glyph — `components/data/Range.jsx` and

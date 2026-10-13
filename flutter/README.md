@@ -101,7 +101,7 @@ final int columns = bp.pick(sm: 1, md: 2, lg: 4);
 | `FileDrop` | `SkFileDrop` | `onFile` became `onPick` with no file argument; the app opens its own picker |
 | `Disclosure` | `SkDisclosure` | `open`/`onToggle` became `isOpen`/`onToggle`; uncontrolled with `initiallyOpen` |
 | `Tabs` / `SideNav` / `TabBar` | `SkTabs` / `SkSideNav` / `SkTabBar` | |
-| `PlayerSheet` pattern | `showSkSheet` | Bottom sheet at sm, centred panel from md up |
+| `Sheet` | `showSkSheet` | A function in Flutter; both are a bottom sheet at sm and a centred panel from md up |
 | `Viewport` | `SkResponsive` | `LayoutBuilder` instead of `ResizeObserver` |
 | — | `SkPressable` | New. The hover/press/focus primitive every control sits on |
 

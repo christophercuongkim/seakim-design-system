@@ -53,6 +53,7 @@
     'components/feedback/LoadingState.jsx',
     'components/feedback/Progress.jsx',
     'components/feedback/Disclosure.jsx',
+    'components/feedback/Sheet.jsx',
     'components/data/Table.jsx',
     'components/data/Range.jsx',
     'components/data/ListRow.jsx',

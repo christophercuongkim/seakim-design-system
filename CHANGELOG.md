@@ -65,6 +65,11 @@ ADRs say *why*. This says *what* and *when*.
 - **`GateLayout` / `SkGateLayout`**, the page outside the shell: the brand centred above,
   one top-aligned 36rem column, an optional footer for the legal line, no card unless
   asked, full-bleed on a phone. For sign-in, gates, paywalls and wizards. (CHR-386, 0038)
+- **`Sheet`** in React, the twin of Flutter's `showSkSheet`: a bottom sheet with a grabber
+  under `md`, the same panel centred from `md`; no title by default, no close control; the
+  scrim and Escape dismiss; focus returns to the opener. `useWindowBreakpoint` joins the
+  barrel for overlays, which are not in a container. `spec/Sheet.md`. The first React-side
+  catch-up under 0039. (CHR-387)
 - **Decision 0038, promote on a spike.** A consumer's design spike naming a shape with no
   consumer nouns is enough to build it here; readme "Adding an app" step 4 now says so.
 - **Decision 0039, binding parity, and `tool/parity-check.mjs`.** Every `index.js` component

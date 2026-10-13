@@ -64,6 +64,7 @@ export 'src/widgets/sk_select.dart';
 export 'src/widgets/sk_side_nav.dart';
 export 'src/widgets/sk_skeleton.dart';
 export 'src/widgets/sk_slider.dart';
+export 'src/widgets/sk_split_pane.dart';
 export 'src/widgets/sk_stat.dart';
 export 'src/widgets/sk_switch.dart';
 export 'src/widgets/sk_tab_bar.dart';

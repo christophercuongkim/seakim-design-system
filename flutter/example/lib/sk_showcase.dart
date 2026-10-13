@@ -592,6 +592,55 @@ final List<SkDemo> skShowcase = <SkDemo>[
     );
   }),
 
+  // sk_split_pane.dart
+  SkDemo(
+      'Layout',
+      'Split pane',
+      (BuildContext context) => SizedBox(
+            height: 300,
+            child: SkSplitPane(
+              listWidth: 220,
+              list: SkListGroup(
+                heading: 'Trips',
+                children: <Widget>[
+                  SkListRow(
+                      title: const Text('Lisbon'),
+                      meta: const Text('14–21 Mar'),
+                      trailing: const Text('\$412'),
+                      onPressed: () {}),
+                  SkListRow(
+                      title: const Text('Kyoto'),
+                      meta: const Text('2–12 Apr'),
+                      trailing: const Text('\$1,180'),
+                      selected: true,
+                      onPressed: () {}),
+                ],
+              ),
+              detail: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  SkSplitPaneHeader(
+                    title: 'Kyoto',
+                    counter: '2 of 3',
+                    onClose: () {},
+                    onPrev: () {},
+                    onNext: () {},
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(SkSpace.s6),
+                    child: Text(
+                        '2–12 Apr with Mei. Flights held; the hotel is still a plan.'),
+                  ),
+                ],
+              ),
+              aside: const Padding(
+                padding: EdgeInsets.all(SkSpace.s6),
+                child: SkStat(
+                    label: 'Fare', value: '\$1,180', size: SkStatSize.sm),
+              ),
+            ),
+          )),
+
   // sk_stat.dart
   SkDemo(
       'Stat',

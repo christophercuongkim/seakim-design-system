@@ -14,6 +14,7 @@ import {
   PageHeader,
   Progress,
   Slider,
+  SplitPane,
   Stat,
   Tag,
 } from "@seakim/design-system";
@@ -101,6 +102,27 @@ export default function Page() {
               href="#lindqvist"
             />
           </ListGroup>
+        </div>
+      </Section>
+      <Section title="SplitPane">
+        <div style={{ width: "100%", height: 240 }}>
+          <SplitPane
+            listWidth="14rem"
+            list={
+              <ListGroup heading="Roster">
+                <ListRow title="Dana Okafor" meta="PG · ATL" trailing="24.6" selected href="#okafor" />
+                <ListRow title="Theo Lindqvist" meta="SG · BOS" trailing="11.2" href="#lindqvist" />
+              </ListGroup>
+            }
+            detail={
+              <>
+                <SplitPane.Header title="Dana Okafor" counter="1 of 2" />
+                <p style={{ padding: "var(--space-6)", font: "var(--type-body-sm)", color: "var(--text-secondary)" }}>
+                  vs MIA tonight. Projected 18.4, live 24.6.
+                </p>
+              </>
+            }
+          />
         </div>
       </Section>
       <Section title="Actions">

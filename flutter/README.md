@@ -93,6 +93,7 @@ final int columns = bp.pick(sm: 1, md: 2, lg: 4);
 | `Progress` | `SkProgress` | `label` is a widget-free String in both |
 | `PageHeader` | `SkPageHeader` | `actions` and `toolbar` are widget lists |
 | `ListRow` / `ListGroup` | `SkListRow` / `SkListGroup` | `href` and `onClick` became one `onPressed` |
+| `SplitPane` | `SkSplitPane` + `SkSplitPaneHeader` | The header reads the pane's scope for back-versus-close |
 | `Disclosure` | `SkDisclosure` | `open`/`onToggle` became `isOpen`/`onToggle`; uncontrolled with `initiallyOpen` |
 | `Tabs` / `SideNav` / `TabBar` | `SkTabs` / `SkSideNav` / `SkTabBar` | |
 | `PlayerSheet` pattern | `showSkSheet` | Bottom sheet at sm, centred panel from md up |

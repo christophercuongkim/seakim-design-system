@@ -33,6 +33,7 @@ export { Range } from "./components/data/Range";
 export { ListRow } from "./components/data/ListRow";
 export { ListGroup } from "./components/data/ListGroup";
 export { Stepper } from "./components/data/Stepper";
+export { Meter } from "./components/data/Meter";
 export { Dialog } from "./components/feedback/Dialog";
 export { Toast } from "./components/feedback/Toast";
 export { Tooltip } from "./components/feedback/Tooltip";

@@ -11,6 +11,7 @@ import {
   Input,
   ListGroup,
   ListRow,
+  Meter,
   PageHeader,
   Progress,
   Slider,
@@ -172,6 +173,11 @@ export default function Page() {
         <RosterTable />
       </div>
 
+      <Section title="Meter">
+        <div style={{ width: 240 }}>
+          <Meter label="Projection" value={18.4} max={30} valueText="18.4" />
+        </div>
+      </Section>
       <Section title="Progress">
         <div style={{ width: 320 }}>
           <Progress value={4} max={13} label="4 of 13" />

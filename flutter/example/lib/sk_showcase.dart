@@ -346,6 +346,21 @@ final List<SkDemo> skShowcase = <SkDemo>[
             description: 'Holding your dates while we compare fares.',
           )),
 
+  // sk_meter.dart
+  SkDemo(
+      'Feedback',
+      'Meter',
+      (BuildContext context) => const Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SkMeter(label: 'Skills', value: 0.84, valueText: '84'),
+              SizedBox(height: SkSpace.s4),
+              SkMeter(label: 'Seniority', value: 0.62, valueText: '62'),
+              SizedBox(height: SkSpace.s4),
+              SkMeter(label: 'Location', value: 0.3, valueText: '30'),
+            ],
+          )),
+
   // sk_page_header.dart
   SkDemo(
       'Layout',

@@ -53,6 +53,7 @@ export 'src/widgets/sk_input.dart';
 export 'src/widgets/sk_list_group.dart';
 export 'src/widgets/sk_list_row.dart';
 export 'src/widgets/sk_loading_state.dart';
+export 'src/widgets/sk_meter.dart';
 export 'src/widgets/sk_page_header.dart';
 export 'src/widgets/sk_popover.dart';
 export 'src/widgets/sk_pressable.dart';

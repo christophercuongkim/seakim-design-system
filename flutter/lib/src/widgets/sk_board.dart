@@ -4,22 +4,24 @@ import '../theme/sk_breakpoints.dart';
 import '../theme/sk_theme.dart';
 import 'sk_badge.dart';
 import 'sk_pressable.dart';
+import 'sk_tabs.dart';
 
 /// Kanban columns. Each [SkBoardColumn] has a header (label, count, an
 /// optional status dot, a menu), its cards, and a footer for the add row; the
 /// column is a sunken fill against the page, 352 wide with an [SkSpace.s4]
 /// gap, where ClickUp, Wrike, Asana, Programa, Slack and Trello all land.
 ///
-/// Empty columns stay full width unless [collapseEmpty]: no reference
-/// collapses one by default and ClickUp offers it as a toggle, off. Under
-/// `md`, measured on the container, the row becomes a [PageView] with one
-/// column at 85% and the next peeking, page dots under it: Jira, Asana and
-/// Notion all do this and none uses a tab picker.
+/// Empty columns collapse by default to a narrow vertical header that expands
+/// on press ([collapseEmpty], the job-search board pick; ClickUp has the same
+/// toggle). Under `md`, measured on the container, the row becomes a
+/// [PageView] with one column at 85% and the next peeking, an [SkTabs] row of
+/// the stages with counts above it that jumps the strip, and page dots under
+/// it: the pick's phone option over Jira's and Asana's peek alone.
 class SkBoard extends StatefulWidget {
   const SkBoard({
     super.key,
     required this.columns,
-    this.collapseEmpty = false,
+    this.collapseEmpty = true,
     this.columnWidth = 352,
   });
 
@@ -77,6 +79,27 @@ class _SkBoardState extends State<SkBoard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              if (narrow && widget.columns.length > 1) ...<Widget>[
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: SkSpace.s5),
+                  child: SkTabs<int>(
+                    dense: true,
+                    value: _page,
+                    onChanged: (int i) => _pages.animateToPage(i,
+                        duration: SkMotion.slow, curve: SkMotion.out),
+                    tabs: <SkTab<int>>[
+                      for (int i = 0; i < widget.columns.length; i++)
+                        SkTab<int>(
+                          value: i,
+                          label: widget.columns[i].label,
+                          count: widget.columns[i].count,
+                        ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: SkSpace.s3),
+              ],
               Expanded(
                 child: narrow
                     ? Padding(

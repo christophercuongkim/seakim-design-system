@@ -28,14 +28,14 @@ export function Demo() {
         <div className="lbl">PageHeader</div>
         <PageHeader
           title="Trips"
-          badge={<Badge mono>12</Badge>}
+          count={12}
           actions={<>
-            <IconButton icon="share-network" label="Share" variant="secondary" />
+            <SegmentedControl options={['List', 'Board']} defaultValue="List" size="sm" />
             <Button iconLeft="plus">New trip</Button>
           </>}
           toolbar={<>
-            <SegmentedControl options={['List', 'Board']} defaultValue="List" size="sm" />
             <Select size="sm" options={['All trips', 'Upcoming', 'Past']} defaultValue="All trips" />
+            <IconButton icon="funnel" label="Filter" variant="secondary" size="sm" />
           </>}
         />
       </div>
@@ -70,10 +70,10 @@ export function Demo() {
         </div>
       </div>
       <div>
-        <div className="lbl">GateLayout · sign-in, no card, footer</div>
+        <div className="lbl">GateLayout · the gate: a 24rem card centred, footer at the bottom</div>
         <GateLayout
           brand="Voyage"
-          style={{ minHeight: 0, background: 'var(--surface-sunken)' }}
+          style={{ minHeight: 420, background: 'var(--surface-sunken)' }}
           footer={<>By continuing you agree to the terms and the privacy policy.</>}
         >
           <h1 style={{ font: 'var(--type-title)', margin: 0 }}>Sign in</h1>
@@ -86,6 +86,7 @@ export function Demo() {
         <div className="lbl">PageHeader · description, no toolbar</div>
         <PageHeader
           title="Settings"
+          badge={<Badge tone="success" dot>Synced</Badge>}
           description="Account, notifications and the people who can see your trips."
           actions={<Button variant="secondary" size="sm">Sign out</Button>}
         />

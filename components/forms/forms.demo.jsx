@@ -74,10 +74,10 @@ export function Demo() {
             <FileDrop accept=".pdf" hint="PDF up to 5 MB" file={{ name: 'Ada Okafor résumé.pdf', size: 82261 }} onRemove={() => {}} />
           </Field>
           <Field label="Résumé">
-            <FileDrop accept=".pdf" hint="PDF up to 5 MB" file={{ name: 'Ada Okafor résumé.pdf', size: 82261 }} uploading />
+            <FileDrop accept=".pdf" hint="PDF up to 5 MB" uploading uploadingLabel="Reading your résumé…" />
           </Field>
           <Field label="Résumé">
-            <FileDrop accept=".pdf" hint="PDF up to 5 MB" error="That file is over 5 MB." onFile={() => {}} />
+            <FileDrop accept=".pdf" hint="PDF up to 5 MB" error="We couldn't read text from that PDF." onRetry={() => {}} />
           </Field>
         </div>
       </div>

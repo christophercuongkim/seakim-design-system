@@ -30,9 +30,10 @@ ADRs say *why*. This says *what* and *when*.
   `<details>` on the web. Several stack, more than one may be open, nothing closes a
   sibling. Controlled or uncontrolled. (CHR-379, 0038)
 - **`PageHeader` / `SkPageHeader`** and a new `components/layout/` category with its own
-  card. The page's `h1`, a `badge` beside it for the count or status, `actions` on the
-  right, an optional `description`, and a `toolbar` row for filters, tabs and the view
-  toggle. Not sticky. `spec/PageHeader.md`. (CHR-380, 0038)
+  card. The page's `h1`, a `count` in secondary text beside it, a `badge` chip for a
+  status, `actions` on the right for the view controls and the primary action, an
+  optional `description`, and a `toolbar` row for the filters. Not sticky.
+  `spec/PageHeader.md`. (CHR-380, CHR-390, 0038)
 - **`ListRow` and `ListGroup` / `SkListRow` and `SkListGroup`**. The row every list is
   made of: `leading`, stacked `eyebrow`/`title`/`meta`, `trailing`; the height comes from
   the content, so one component is both the one-line settings row and the three-line
@@ -57,14 +58,15 @@ ADRs say *why*. This says *what* and *when*.
   thresholds. Shares its track style with `Progress` through `components/core/track.js`.
   (CHR-384, 0038)
 - **`FileDrop` / `SkFileDrop`**, a drop zone around a native file input: dashed hairline,
-  icon, "Click to upload or drag and drop" with the verb link-coloured, a hint line; the
-  chosen file as a row beneath with its size and a remove control; a labelled wait on that
-  row while uploading (0021, never a bar); the error under the zone and announced. One
-  file. The Flutter widget renders the affordance and calls `onPick`; the app wires the
+  icon, "Click to upload or drag and drop" with the verb link-coloured, a hint line; a
+  labelled wait in the zone while uploading (0021, never a spinner); an `ErrorState` in the
+  zone on failure with a Try again; the chosen file as a row beneath with its size and a
+  remove control. One file. The Flutter widget renders the affordance and calls `onPick`; the app wires the
   picker, so the package takes no plugin. (CHR-385, 0038)
-- **`GateLayout` / `SkGateLayout`**, the page outside the shell: the brand centred above,
-  one top-aligned 36rem column, an optional footer for the legal line, no card unless
-  asked, full-bleed on a phone. For sign-in, gates, paywalls and wizards. (CHR-386, 0038)
+- **`GateLayout` / `SkGateLayout`**, the page outside the shell: the brand centred at the
+  top, one `Card` centred in the remaining height (24rem, full width on a phone), an
+  optional footer at the bottom; `width` and `align="top"` for a wizard. For sign-in,
+  gates, paywalls and wizards. (CHR-386, CHR-390, 0038)
 - **`Sheet`** in React, the twin of Flutter's `showSkSheet`: a bottom sheet with a grabber
   under `md`, the same panel centred from `md`; no title by default, no close control; the
   scrim and Escape dismiss; focus returns to the opener. `useWindowBreakpoint` joins the
@@ -72,9 +74,10 @@ ADRs say *why*. This says *what* and *when*.
   catch-up under 0039. (CHR-387)
 - **`Board` and `BoardColumn` / `SkBoard` and `SkBoardColumn`**, kanban columns: a sunken
   fill per column at 22rem, a header with label, count, status dot and menu, the cards as
-  the app's content, a footer for the add row. Empty columns stay full width unless
-  `collapseEmpty`. Under `md` the row is a scroll-snap strip at 85% with page dots, no tab
-  picker. `spec/Board.md`. (CHR-388, 0038)
+  the app's content, a footer for the add row. Empty columns collapse by default
+  (`collapseEmpty={false}` keeps them open). Under `md` the row is a scroll-snap strip at
+  85% with a `Tabs` row of the stages above it and page dots under. `spec/Board.md`.
+  (CHR-388, CHR-390, 0038)
 - **Decision 0038, promote on a spike.** A consumer's design spike naming a shape with no
   consumer nouns is enough to build it here; readme "Adding an app" step 4 now says so.
 - **Decision 0039, binding parity, and `tool/parity-check.mjs`.** Every `index.js` component

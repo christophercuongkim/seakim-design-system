@@ -4,18 +4,15 @@ import { useMeasuredBreakpoint } from '../core/useMeasuredBreakpoint.js';
 
 /**
  * The page outside the shell: sign-in, a gate ("you are not on the list"),
- * a paywall, a wizard. The brand centred above, one column of content
- * (36rem), the content top-aligned under a fixed margin, an optional footer
- * for the legal line, full-bleed on a phone.
- *
- * Sixteen references (logins, denied pages, paywalls): the brand sits
- * centred above the content in most; only three of eight logins and no
- * denied page put the content in a bordered card, so `card` is off by
- * default; the column is 34 to 40rem wide; five top-align against three that
- * centre; the legal line is inline under the button more often than in a
- * footer, so `footer` is optional. Measured on the container.
+ * a paywall, a wizard. The brand centred at the top, one `Card` centred in
+ * the remaining height (24rem on a desktop, full width on a phone), the
+ * footer at the bottom: the job-search gates pick (spike 3, option A). A
+ * wizard passes `width="36rem"` and `align="top"` (spike 4). The references
+ * (sixteen logins, denied pages and paywalls) put the brand above the content
+ * in most and the legal line in a footer in some, so `footer` is optional.
+ * Measured on the container.
  */
-export function GateLayout({ brand, children, footer, card = false, width = '36rem', style, ...rest }) {
+export function GateLayout({ brand, children, footer, card = true, width = '24rem', align = 'center', style, ...rest }) {
   const { ref, bp } = useMeasuredBreakpoint();
   const narrow = bp === 'sm';
   const body = card ? <Card padding="var(--space-7)">{children}</Card> : children;
@@ -38,7 +35,7 @@ export function GateLayout({ brand, children, footer, card = false, width = '36r
           {brand}
         </div>
       )}
-      <main style={{ width: '100%', maxWidth: width, display: 'flex', flexDirection: 'column', gap: 'var(--space-6)', minWidth: 0 }}>
+      <main style={{ width: '100%', maxWidth: width, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: align === 'center' ? 'center' : 'flex-start', gap: 'var(--space-6)', minWidth: 0 }}>
         {body}
       </main>
       {footer && (

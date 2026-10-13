@@ -4,11 +4,13 @@ import '../theme/sk_breakpoints.dart';
 import '../theme/sk_theme.dart';
 import 'sk_card.dart';
 
+enum SkGateAlign { center, top }
+
 /// The page outside the shell: sign-in, a gate, a paywall, a wizard. The
-/// [brand] centred above, one column of content ([width], 576 by default),
-/// top-aligned under a fixed margin, an optional [footer] for the legal line,
-/// full-bleed on a phone. [card] wraps the column in an [SkCard]; off by
-/// default, because most references put the content straight on the page.
+/// [brand] centred at the top, one [SkCard] centred in the remaining height
+/// ([width] 384, full width on a phone), the [footer] at the bottom: the
+/// job-search gates pick. A wizard passes `width: 576` and
+/// [SkGateAlign.top]. [card] is on by default.
 ///
 /// Fills its parent and scrolls when the content is taller; the footer stays
 /// at the bottom of the viewport until the content pushes it down.
@@ -18,8 +20,9 @@ class SkGateLayout extends StatelessWidget {
     required this.child,
     this.brand,
     this.footer,
-    this.card = false,
-    this.width = 576,
+    this.card = true,
+    this.width = 384,
+    this.align = SkGateAlign.center,
   });
 
   /// The wordmark or mark. Not a heading; the page's heading is in [child].
@@ -28,6 +31,10 @@ class SkGateLayout extends StatelessWidget {
   final Widget? footer;
   final bool card;
   final double width;
+
+  /// Where the column sits in the remaining height: centred for a gate, top
+  /// for a wizard whose screens change length.
+  final SkGateAlign align;
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +66,19 @@ class SkGateLayout extends StatelessWidget {
                         ),
                         const SizedBox(height: SkSpace.s8),
                       ],
-                      ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: width),
-                        child: SizedBox(width: double.infinity, child: body),
+                      Expanded(
+                        child: Align(
+                          alignment: align == SkGateAlign.center
+                              ? Alignment.center
+                              : Alignment.topCenter,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(maxWidth: width),
+                            child:
+                                SizedBox(width: double.infinity, child: body),
+                          ),
+                        ),
                       ),
                       if (footer != null) ...<Widget>[
-                        const Spacer(),
                         const SizedBox(height: SkSpace.s8),
                         ConstrainedBox(
                           constraints: BoxConstraints(maxWidth: width),

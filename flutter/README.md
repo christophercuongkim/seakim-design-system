@@ -97,7 +97,7 @@ final int columns = bp.pick(sm: 1, md: 2, lg: 4);
 | `SplitPaneHeader` (also `SplitPane.Header`) | `SkSplitPaneHeader` | The header reads the pane's scope for back-versus-close |
 | `Stepper` | `SkStepper` | `steps` are `SkStep`s; `orientation` is `SkStepperOrientation` |
 | `Meter` | `SkMeter` | |
-| `GateLayout` | `SkGateLayout` | `brand` and `footer` are widgets |
+| `GateLayout` | `SkGateLayout` | `brand` and `footer` are widgets; `align` is `SkGateAlign` |
 | `Board` / `BoardColumn` | `SkBoard` / `SkBoardColumn` | The phone strip is a `PageView` at 0.85 |
 | `FileDrop` | `SkFileDrop` | `onFile` became `onPick` with no file argument; the app opens its own picker |
 | `Disclosure` | `SkDisclosure` | `open`/`onToggle` became `isOpen`/`onToggle`; uncontrolled with `initiallyOpen` |

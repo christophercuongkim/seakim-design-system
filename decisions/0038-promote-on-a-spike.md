@@ -49,7 +49,10 @@ read the same in a travel app as in a job tracker; a `ScoreBar` fails, a `Meter`
   a second app starting from a full shelf; the inventory review in each Major release
   (0011) is where unused shapes get pruned.
 - A spike can be wrong, and the component inherits the error. The references rule (1) is
-  the hedge, and the addendum trail on the consumer's ticket is the audit.
+  the hedge, and the addendum trail on the consumer's ticket is the audit. Amended
+  2026-10-13 (CHR-390): where the consumer's pick was itself made with the references in
+  hand, the pick stands; rule (1) reaches a sketch nobody has checked, not a decision
+  somebody has.
 - Every promotion is a Minor bump under 0011; a batch of them is still one Minor.
 
 ## Rejected alternatives

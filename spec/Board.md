@@ -17,16 +17,18 @@ chip or one date; the record is a click away.
 
 ## Empty columns
 
-Full width by default. No reference collapses an empty column; Wrike, Asana, Programa and
-Trello all keep "0" columns at full width with their add row. ClickUp has a "Collapse
-empty columns" toggle, off, and that is `collapseEmpty`: a collapsed column is a narrow
-vertical header with the label and count, a button that expands it.
+Collapsed by default: a narrow vertical header with the label and count, a button that
+expands it. That is the job-search board pick (spike 7); with "to decide" gone from the
+board, the whole pipeline then fits a 1280px screen. ClickUp has the same as a toggle.
+Wrike, Asana, Programa and Trello keep "0" columns at full width, which `collapseEmpty`
+set to false gives you.
 
 ## Responsive
 
 Measured on the container. Under `md` the row is a scroll-snap strip: each column at 85%
-of the width so the next peeks, swipe to move, page dots beneath (Jira). No tab picker:
-none of the three phone references has one, and the peek is what says there is more.
+of the width so the next peeks, swipe to move, page dots beneath (Jira). A `Tabs` row of
+the stages with their counts sits above the strip and jumps it (the pick's phone option);
+Jira, Asana and Notion rely on the peek alone, and the peek is kept.
 
 ## What it is not
 

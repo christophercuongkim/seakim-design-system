@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useId, useState } from 'react';
+import React, { createContext, useContext, useId, useRef, useState } from 'react';
 import { useMeasuredBreakpoint } from '../core/useMeasuredBreakpoint.js';
+import { Tabs } from '../navigation/Tabs.jsx';
 
 const Scope = createContext({ narrow: false, collapseEmpty: false });
 
@@ -10,22 +11,39 @@ const Scope = createContext({ narrow: false, collapseEmpty: false });
  * where ClickUp, Wrike, Asana, Programa, Slack and Trello all land. Cards are
  * the app's content, usually a `Card` with an eyebrow, a title and one chip.
  *
- * Empty columns stay full width unless `collapseEmpty` is set: no reference
- * collapses one by default and ClickUp offers it as a toggle, off. A collapsed
- * column is a narrow vertical header that expands on click. Under `md`,
- * measured on the container, the row becomes a scroll-snap strip with one
- * column at 85% and the next peeking, page dots under it: Jira, Asana and
- * Notion all do this and none uses a tab picker.
+ * Empty columns collapse by default to a narrow vertical header that expands
+ * on click (`collapseEmpty`, the job-search board pick; ClickUp has the same
+ * toggle). Under `md`, measured on the container, the row becomes a
+ * scroll-snap strip with one column at 85% and the next peeking, a `Tabs` row
+ * of the stages with counts above it that jumps the strip, and page dots
+ * under it: the pick's phone option, over Jira's and Asana's peek-and-swipe.
  */
-export function Board({ children, collapseEmpty = false, columnWidth = '22rem', style, ...rest }) {
+export function Board({ children, collapseEmpty = true, columnWidth = '22rem', style, ...rest }) {
   const { ref, bp } = useMeasuredBreakpoint();
   const narrow = bp === 'sm';
   const [page, setPage] = useState(0);
+  const strip = useRef(null);
   const columns = React.Children.toArray(children).filter(Boolean);
+  const jump = (i) => {
+    const el = strip.current;
+    if (!el) return;
+    el.scrollTo({ left: (el.scrollWidth / Math.max(columns.length, 1)) * i, behavior: 'smooth' });
+  };
   return (
     <Scope.Provider value={{ narrow, collapseEmpty, columnWidth }}>
       <div ref={ref} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', minWidth: 0, ...style }} {...rest}>
+        {narrow && columns.length > 1 && (
+          <div style={{ overflowX: 'auto', padding: '0 var(--space-5)' }}>
+            <Tabs
+              size="sm"
+              value={String(page)}
+              onChange={(v) => jump(Number(v))}
+              tabs={columns.map((c, i) => ({ value: String(i), label: c.props.label, count: c.props.count }))}
+            />
+          </div>
+        )}
         <div
+          ref={strip}
           onScroll={narrow ? (e) => {
             const el = e.currentTarget;
             const step = el.scrollWidth / Math.max(columns.length, 1);

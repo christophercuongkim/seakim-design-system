@@ -16,7 +16,9 @@ void main() {
     final SemanticsHandle handle = t.ensureSemantics();
     await t.pumpWidget(host(SkPageHeader(
       title: 'Trips',
-      badge: const SkBadge(label: '12', mono: true),
+      count: '12',
+      badge:
+          const SkBadge(label: 'Synced', tone: SkBadgeTone.success, dot: true),
       description: 'Everything booked and everything still a plan.',
       actions: <Widget>[SkButton(label: 'New trip', onPressed: () {})],
       toolbar: <Widget>[
@@ -35,6 +37,7 @@ void main() {
     expect(find.text('Trips'), findsOneWidget);
     expect(t.getSemantics(find.text('Trips')).flagsCollection.isHeader, isTrue);
     expect(find.text('12'), findsOneWidget);
+    expect(find.text('Synced'), findsOneWidget);
     expect(find.text('New trip'), findsOneWidget);
     expect(find.text('Board'), findsOneWidget);
     expect(t.takeException(), isNull);

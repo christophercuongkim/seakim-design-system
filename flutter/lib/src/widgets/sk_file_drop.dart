@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import '../theme/sk_theme.dart';
 import '../tokens/sk_icons.g.dart';
 import 'sk_icon.dart';
+import 'sk_error_state.dart';
 import 'sk_icon_button.dart';
 import 'sk_pressable.dart';
 import 'sk_touch_target.dart';
@@ -27,10 +28,11 @@ class SkFileInfo {
 }
 
 /// A drop zone's affordance: dashed hairline, an icon, 'Tap to upload' with the
-/// verb link-coloured, a hint line for the types and size. The chosen file is a
-/// row beneath with its name, size and a remove control; uploading is a
-/// labelled wait on that row (0021), never a bar; the error renders under the
-/// zone. One file.
+/// verb link-coloured, a hint line for the types and size. While it uploads the
+/// zone itself shows a labelled wait (0021, never a spinner); on failure the
+/// zone shows a compact [SkErrorState] with a Try again; done is the file as a
+/// row beneath with its name, size and a remove control: the job-search
+/// onboarding pick. One file.
 ///
 /// It renders the affordance and calls [onPick] when the zone is pressed; the
 /// app opens its own picker, so the package takes no plugin dependency. Drag
@@ -42,7 +44,9 @@ class SkFileDrop extends StatelessWidget {
     this.file,
     this.onRemove,
     this.uploading = false,
+    this.uploadingLabel = 'Uploading…',
     this.error,
+    this.onRetry,
     this.hint,
     this.icon = SkIcons.uploadSimple,
     this.action = 'Tap to upload',
@@ -55,7 +59,13 @@ class SkFileDrop extends StatelessWidget {
   final SkFileInfo? file;
   final VoidCallback? onRemove;
   final bool uploading;
+
+  /// The wait's text. Say what is happening: 'Reading your résumé…'.
+  final String uploadingLabel;
+
+  /// Shown as a compact [SkErrorState] in the zone, with [onRetry].
   final String? error;
+  final VoidCallback? onRetry;
 
   /// The types-and-size line: 'PDF up to 5 MB'.
   final String? hint;
@@ -75,9 +85,65 @@ class SkFileDrop extends StatelessWidget {
     final Color ink = disabled ? c.textDisabled : c.textPrimary;
     final Color tertiary = disabled ? c.textDisabled : c.textTertiary;
 
+    final Widget zoneContent = error != null
+        ? SkErrorState(title: error!, onRetry: onRetry, compact: true)
+        : uploading
+            ? Semantics(
+                liveRegion: true,
+                label: uploadingLabel,
+                child: Row(
+                  children: <Widget>[
+                    DecoratedBox(
+                      decoration: BoxDecoration(color: c.surfaceShimmer),
+                      child: const SizedBox(width: SkSpace.s9, height: 2),
+                    ),
+                    const SizedBox(width: SkSpace.s4),
+                    Expanded(
+                      child: Text(uploadingLabel,
+                          style: SkText.body.copyWith(color: c.textSecondary)),
+                    ),
+                  ],
+                ),
+              )
+            : Row(
+                children: <Widget>[
+                  if (icon != null) ...<Widget>[
+                    SkIcon(icon!, size: 20, color: tertiary),
+                    const SizedBox(width: SkSpace.s4),
+                  ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text.rich(
+                          TextSpan(
+                            style: SkText.body.copyWith(color: ink),
+                            children: <InlineSpan>[
+                              TextSpan(
+                                text: action,
+                                style: TextStyle(
+                                    color:
+                                        disabled ? c.textDisabled : c.textLink),
+                              ),
+                              TextSpan(text: ' $label'),
+                            ],
+                          ),
+                        ),
+                        if (hint != null) ...<Widget>[
+                          const SizedBox(height: SkSpace.s1),
+                          Text(hint!,
+                              style: SkText.caption.copyWith(color: tertiary)),
+                        ],
+                      ],
+                    ),
+                  ),
+                ],
+              );
+
     final Widget zone = SkPressable(
       onPressed: onPick,
-      disabled: disabled || onPick == null,
+      disabled: disabled || onPick == null || uploading || error != null,
       semanticLabel: '$action $label',
       builder: (BuildContext context, SkInteraction s) => SkFocusRing(
         visible: s.focused,
@@ -107,41 +173,7 @@ class SkFileDrop extends StatelessWidget {
                       : c.surfaceRaised,
               borderRadius: BorderRadius.circular(SkRadius.lg),
             ),
-            child: Row(
-              children: <Widget>[
-                if (icon != null) ...<Widget>[
-                  SkIcon(icon!, size: 20, color: tertiary),
-                  const SizedBox(width: SkSpace.s4),
-                ],
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Text.rich(
-                        TextSpan(
-                          style: SkText.body.copyWith(color: ink),
-                          children: <InlineSpan>[
-                            TextSpan(
-                              text: action,
-                              style: TextStyle(
-                                  color:
-                                      disabled ? c.textDisabled : c.textLink),
-                            ),
-                            TextSpan(text: ' $label'),
-                          ],
-                        ),
-                      ),
-                      if (hint != null) ...<Widget>[
-                        const SizedBox(height: SkSpace.s1),
-                        Text(hint!,
-                            style: SkText.caption.copyWith(color: tertiary)),
-                      ],
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            child: zoneContent,
           ),
         ),
       ),
@@ -152,7 +184,7 @@ class SkFileDrop extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         zone,
-        if (file != null) ...<Widget>[
+        if (file != null && !uploading) ...<Widget>[
           const SizedBox(height: SkSpace.s3),
           ConstrainedBox(
             constraints: const BoxConstraints(minHeight: SkControl.md),
@@ -177,25 +209,7 @@ class SkFileDrop extends StatelessWidget {
                   ),
                 ],
                 const Spacer(),
-                if (uploading)
-                  Semantics(
-                    liveRegion: true,
-                    label: 'Uploading',
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        DecoratedBox(
-                          decoration: BoxDecoration(color: c.surfaceShimmer),
-                          child: const SizedBox(width: SkSpace.s9, height: 2),
-                        ),
-                        const SizedBox(width: SkSpace.s3),
-                        Text('Uploading…',
-                            style: SkText.caption
-                                .copyWith(color: c.textSecondary)),
-                      ],
-                    ),
-                  )
-                else if (onRemove != null)
+                if (onRemove != null)
                   SkIconButton(
                     icon: SkIcons.x,
                     label: 'Remove ${file!.name}',
@@ -205,14 +219,6 @@ class SkFileDrop extends StatelessWidget {
                   ),
               ],
             ),
-          ),
-        ],
-        if (error != null) ...<Widget>[
-          const SizedBox(height: SkSpace.s3),
-          Semantics(
-            liveRegion: true,
-            child: Text(error!,
-                style: SkText.caption.copyWith(color: c.textDanger)),
           ),
         ],
       ],

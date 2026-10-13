@@ -12,7 +12,8 @@ Widget host(Widget child, double width) => MaterialApp(
     );
 
 void main() {
-  testWidgets('brand above a column no wider than width, footer at the bottom',
+  testWidgets(
+      'brand above a 384 card centred in the height, footer at the bottom',
       (WidgetTester t) async {
     await t.pumpWidget(host(
       SkGateLayout(
@@ -23,22 +24,30 @@ void main() {
       700,
     ));
     await t.pumpAndSettle();
-    expect(t.getSize(find.byType(SkButton)).width, lessThanOrEqualTo(576));
+    expect(find.byType(SkCard), findsOneWidget);
+    expect(t.getSize(find.byType(SkCard)).width, 384);
     expect(t.getTopLeft(find.text('Voyage')).dy,
-        lessThan(t.getTopLeft(find.byType(SkButton)).dy));
+        lessThan(t.getTopLeft(find.byType(SkCard)).dy));
+    expect(t.getTopLeft(find.byType(SkCard)).dy, greaterThan(150));
     expect(t.getBottomLeft(find.text('Legal line')).dy, greaterThan(500));
     expect(t.takeException(), isNull);
   });
 
-  testWidgets('full-bleed at sm, and the column is a card when asked',
+  testWidgets(
+      'full-bleed at sm; align top puts a wizard column under the brand',
       (WidgetTester t) async {
     await t.pumpWidget(host(
-      SkGateLayout(card: true, child: SkButton(label: 'Go', onPressed: () {})),
+      SkGateLayout(
+        width: 576,
+        align: SkGateAlign.top,
+        brand: const Text('Voyage'),
+        child: SkButton(label: 'Go', onPressed: () {}),
+      ),
       360,
     ));
     await t.pumpAndSettle();
-    expect(find.byType(SkCard), findsOneWidget);
     expect(t.getSize(find.byType(SkCard)).width, 360 - 2 * SkSpace.s5);
+    expect(t.getTopLeft(find.byType(SkCard)).dy, lessThan(120));
     expect(t.takeException(), isNull);
   });
 }

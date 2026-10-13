@@ -1,22 +1,24 @@
-One file, dropped or picked, with where it stands shown beneath.
+One file, dropped or picked, with where it stands shown in the zone.
 
 ```jsx
 <Field label="Résumé">
   <FileDrop
     accept=".pdf"
-    hint="PDF up to 5 MB"
+    hint="One PDF, up to 10 MB"
     file={resume}
-    onFile={setResume}
+    onFile={upload}
     onRemove={() => setResume(null)}
     uploading={saving}
-    error={tooBig ? 'That file is over 5 MB.' : undefined}
+    uploadingLabel="Reading your résumé…"
+    error={failure}
+    onRetry={() => setFailure(null)}
   />
 </Field>
 ```
 
-Put it in a `Field` for the label. Keep the hint to the types and the limit; the zone's
-own line already says how. Pass `file` back once you have it (a `File` or just
-`{ name, size }` from the server) so the row shows, and `uploading` while it saves: the
-row takes a labelled wait, not a spinner and not a bar. Put the failure in `error`; the
-references toast it, and a toast is gone before the user looks down. Multiple files are
-several `FileDrop`s or a different control.
+Put it in a `Field` for the label. Choosing a file submits at once; there is no separate
+upload button, so pass `uploading` while it saves and the zone says what it is doing.
+Put the failure in `error` with the cause the server gave and an `onRetry`; the zone
+becomes the error state until the user tries again. Pass `file` back once you have it (a
+`File` or `{ name, size }` from the server) so the row shows under the zone. Multiple files
+are several `FileDrop`s or a different control.

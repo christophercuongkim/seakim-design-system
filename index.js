@@ -56,6 +56,7 @@ export { Skeleton } from "./components/feedback/Skeleton.jsx";
 export { LoadingState } from "./components/feedback/LoadingState.jsx";
 export { Progress } from "./components/feedback/Progress.jsx";
 export { Disclosure } from "./components/feedback/Disclosure.jsx";
+export { Sheet } from "./components/feedback/Sheet.jsx";
 export { Tabs } from "./components/navigation/Tabs.jsx";
 export { SideNav } from "./components/navigation/SideNav.jsx";
 export { TabBar } from "./components/navigation/TabBar.jsx";
@@ -63,6 +64,7 @@ export { PageHeader } from "./components/layout/PageHeader.jsx";
 export { SplitPane, SplitPaneHeader } from "./components/layout/SplitPane.jsx";
 export { GateLayout } from "./components/layout/GateLayout.jsx";
 export { Viewport, useMeasuredBreakpoint, breakpointFor, BREAKPOINTS } from "./ui_kits/shared/Frames.jsx";
+export { useWindowBreakpoint } from "./components/core/useMeasuredBreakpoint.js";
 
 // Filter matchers for the searchable picker (0028) — shared so every long list
 // ranks identically. Utilities, not components (hence not a .jsx path).

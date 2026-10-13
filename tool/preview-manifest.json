@@ -41,6 +41,7 @@
     "LoadingState":     { "surfaces": { "card": "yes" } },
     "Progress":         { "surfaces": { "card": "yes", "next": "yes" } },
     "Disclosure":       { "surfaces": { "card": "yes", "next": "yes" } },
+    "Sheet":            { "surfaces": { "card": "yes", "next": "pending: an overlay opened by a handler; the Server Component page cannot pass one" } },
     "Tabs":             { "surfaces": { "card": "yes" } },
     "SideNav":          { "surfaces": { "card": "yes" } },
     "TabBar":           { "surfaces": { "card": "yes" } },
@@ -54,7 +55,7 @@
     "components/core/core.card.html":         { "markers": ["Book trip"] },
     "components/forms/forms.card.html":        { "markers": ["SegmentedControl", "or drag and drop"] },
     "components/forms/pickers.card.html":      { "markers": ["Slider"] },
-    "components/feedback/feedback.card.html":  { "markers": ["Open dialog", "Checking 40 airlines…", "Popover", "Combobox", "ErrorState", "4 of 13", "Fare breakdown"] },
+    "components/feedback/feedback.card.html":  { "markers": ["Open dialog", "Checking 40 airlines…", "Popover", "Combobox", "ErrorState", "4 of 13", "Fare breakdown", "Open sheet"] },
     "components/data/data.card.html":          { "markers": ["projected", "Range ·", "Notifications", "Senior frontend engineer", "Recruiter screen", "Seniority"] },
     "components/navigation/navigation.card.html": { "markers": ["SideNav"] },
     "components/layout/layout.card.html":        { "markers": ["Trips", "New trip", "2 of 3", "Continue with email"] }

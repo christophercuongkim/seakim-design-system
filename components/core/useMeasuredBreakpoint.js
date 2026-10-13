@@ -37,3 +37,23 @@ export function useMeasuredBreakpoint() {
   }, []);
   return { ref, width, bp: breakpointFor(width || 1440) };
 }
+
+/**
+ * The window's breakpoint, for the one kind of component that is not in a
+ * container: an overlay. Everything else measures its container. SSR-safe:
+ * `lg` until the browser answers.
+ */
+export function useWindowBreakpoint() {
+  const [bp, setBp] = useState('lg');
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return undefined;
+    const md = window.matchMedia(`(min-width: ${BREAKPOINTS.md}px)`);
+    const lg = window.matchMedia(`(min-width: ${BREAKPOINTS.lg}px)`);
+    const update = () => setBp(lg.matches ? 'lg' : md.matches ? 'md' : 'sm');
+    update();
+    md.addEventListener('change', update);
+    lg.addEventListener('change', update);
+    return () => { md.removeEventListener('change', update); lg.removeEventListener('change', update); };
+  }, []);
+  return bp;
+}

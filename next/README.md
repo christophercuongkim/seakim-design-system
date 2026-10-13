@@ -78,9 +78,9 @@ Everything without function props renders straight from a Server Component.
 
 ### What you get
 
-36 components — `Avatar` `Badge` `Button` `Card` `Checkbox` `DatePicker` `Dialog`
+37 components — `Avatar` `Badge` `Button` `Card` `Checkbox` `DatePicker` `Dialog`
 `Disclosure` `EmptyState` `Field` `FileDrop` `GateLayout` `Icon` `IconButton` `Input` `ListGroup` `ListRow` `Meter`
-`PageHeader` `Progress` `Radio` `SegmentedControl` `Select` `SplitPane` `Stepper` `SideNav` `Slider` `Stat` `Switch` `TabBar` `Table` `Tabs` `Tag` `Textarea`
+`PageHeader` `Progress` `Radio` `SegmentedControl` `Select` `Sheet` `SplitPane` `Stepper` `SideNav` `Slider` `Stat` `Switch` `TabBar` `Table` `Tabs` `Tag` `Textarea`
 `Toast` `Tooltip` — plus `Viewport` and `useMeasuredBreakpoint` for container-width layout.
 
 Every component ships a `.d.ts`, so props autocomplete. Usage notes per component are

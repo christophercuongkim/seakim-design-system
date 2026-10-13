@@ -9,12 +9,16 @@ import { Skeleton } from './Skeleton.jsx';
 import { LoadingState } from './LoadingState.jsx';
 import { Progress } from './Progress.jsx';
 import { Disclosure } from './Disclosure.jsx';
+import { Sheet } from './Sheet.jsx';
+import { ListRow } from '../data/ListRow.jsx';
+import { Icon } from '../core/Icon.jsx';
 import { Dialog } from './Dialog.jsx';
 import { Button } from '../core/Button.jsx';
 import { IconButton } from '../core/IconButton.jsx';
 
 export function Demo() {
   const [open, setOpen] = useState(false);
+  const [sheet, setSheet] = useState(false);
   const [currency, setCurrency] = useState('EUR');
   return (
     <div className="grid" style={{ gridTemplateColumns: '1fr 1fr', alignItems: 'start' }}>
@@ -28,6 +32,7 @@ export function Demo() {
           <Tooltip label="Add leg"><IconButton icon="plus" label="Add leg" variant="secondary" /></Tooltip>
           <Tooltip label="Saved trips" side="right"><IconButton icon="bookmark-simple" label="Saved trips" variant="secondary" /></Tooltip>
           <Button variant="secondary" size="sm" onClick={() => setOpen(true)}>Open dialog</Button>
+          <Button variant="secondary" size="sm" onClick={() => setSheet(true)}>Open sheet</Button>
         </div>
         <div className="lbl" style={{ marginTop: 'var(--space-4)' }}>Popover</div>
         <Popover
@@ -96,6 +101,11 @@ export function Demo() {
           onRetry={() => {}}
         />
       </div>
+      <Sheet open={sheet} onClose={() => setSheet(false)}>
+        <ListRow leading={<Icon name="arrow-right" size={18} />} title="Move to Applied" onClick={() => setSheet(false)} />
+        <ListRow leading={<Icon name="prohibit" size={18} />} title="Skip" onClick={() => setSheet(false)} />
+        <ListRow leading={<Icon name="trash" size={18} />} title="Delete" onClick={() => setSheet(false)} />
+      </Sheet>
       <Dialog
         open={open}
         title="Delete this trip"

@@ -70,6 +70,11 @@ ADRs say *why*. This says *what* and *when*.
   scrim and Escape dismiss; focus returns to the opener. `useWindowBreakpoint` joins the
   barrel for overlays, which are not in a container. `spec/Sheet.md`. The first React-side
   catch-up under 0039. (CHR-387)
+- **`Board` and `BoardColumn` / `SkBoard` and `SkBoardColumn`**, kanban columns: a sunken
+  fill per column at 22rem, a header with label, count, status dot and menu, the cards as
+  the app's content, a footer for the add row. Empty columns stay full width unless
+  `collapseEmpty`. Under `md` the row is a scroll-snap strip at 85% with page dots, no tab
+  picker. `spec/Board.md`. (CHR-388, 0038)
 - **Decision 0038, promote on a spike.** A consumer's design spike naming a shape with no
   consumer nouns is enough to build it here; readme "Adding an app" step 4 now says so.
 - **Decision 0039, binding parity, and `tool/parity-check.mjs`.** Every `index.js` component

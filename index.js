@@ -63,6 +63,7 @@ export { TabBar } from "./components/navigation/TabBar.jsx";
 export { PageHeader } from "./components/layout/PageHeader.jsx";
 export { SplitPane, SplitPaneHeader } from "./components/layout/SplitPane.jsx";
 export { GateLayout } from "./components/layout/GateLayout.jsx";
+export { Board, BoardColumn } from "./components/layout/Board.jsx";
 export { Viewport, useMeasuredBreakpoint, breakpointFor, BREAKPOINTS } from "./ui_kits/shared/Frames.jsx";
 export { useWindowBreakpoint } from "./components/core/useMeasuredBreakpoint.js";
 

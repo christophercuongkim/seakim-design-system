@@ -181,11 +181,11 @@ Ship unless the platform genuinely has no use case.
 `Avatar` · `Stat` · `Tag` · `Textarea` · `Radio` · `SegmentedControl` · `Tabs` ·
 `Tooltip` · `Table`
 
-### On demand (14)
+### On demand (15)
 
 Specced so they are consistent whenever they arrive.
 
-`Slider` · `DatePicker` · `Range` (the interval/distribution glyph, [0017](decisions/0017-distribution-interval-glyph.md)) · `Sheet` ([spec](spec/Sheet.md); React `Sheet`, Flutter `showSkSheet`) · `Progress` (determinate, [0038](decisions/0038-promote-on-a-spike.md)) · `Disclosure` (one fold, never an accordion) · `PageHeader` ([spec](spec/PageHeader.md)) · `ListRow` and `ListGroup` ([spec](spec/ListRow.md)) · `SplitPane` ([spec](spec/SplitPane.md)) · `Stepper` ([spec](spec/Stepper.md)) · `Meter` (a measurement; `Progress` is the one that moves) · `FileDrop` (one file, a labelled wait, the error under the zone) · `GateLayout` (the page outside the shell)
+`Slider` · `DatePicker` · `Range` (the interval/distribution glyph, [0017](decisions/0017-distribution-interval-glyph.md)) · `Sheet` ([spec](spec/Sheet.md); React `Sheet`, Flutter `showSkSheet`) · `Progress` (determinate, [0038](decisions/0038-promote-on-a-spike.md)) · `Disclosure` (one fold, never an accordion) · `PageHeader` ([spec](spec/PageHeader.md)) · `ListRow` and `ListGroup` ([spec](spec/ListRow.md)) · `SplitPane` ([spec](spec/SplitPane.md)) · `Stepper` ([spec](spec/Stepper.md)) · `Meter` (a measurement; `Progress` is the one that moves) · `FileDrop` (one file, a labelled wait, the error under the zone) · `GateLayout` (the page outside the shell) · `Board` and `BoardColumn` ([spec](spec/Board.md))
 
 ### Forbidden (1)
 

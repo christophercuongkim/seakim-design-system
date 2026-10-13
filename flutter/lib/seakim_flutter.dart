@@ -37,6 +37,7 @@ export 'src/theme/sk_breakpoints.dart';
 export 'src/widgets/sk_avatar.dart';
 export 'src/widgets/sk_avatar_stack.dart';
 export 'src/widgets/sk_badge.dart';
+export 'src/widgets/sk_board.dart';
 export 'src/widgets/sk_button.dart';
 export 'src/widgets/sk_card.dart';
 export 'src/widgets/sk_checkbox.dart';

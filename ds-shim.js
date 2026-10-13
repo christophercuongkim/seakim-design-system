@@ -65,7 +65,8 @@
     'components/navigation/TabBar.jsx',
     'components/layout/PageHeader.jsx',
     'components/layout/SplitPane.jsx',
-    'components/layout/GateLayout.jsx'
+    'components/layout/GateLayout.jsx',
+    'components/layout/Board.jsx'
   ];
 
   function fromBundle() {

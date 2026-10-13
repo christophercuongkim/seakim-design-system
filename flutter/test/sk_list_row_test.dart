@@ -37,7 +37,7 @@ void main() {
     expect(presses, 1);
     expect(
       t.getSemantics(find.byType(SkListRow).first),
-      containsSemantics(isSelected: true),
+      isSemantics(isSelected: true),
     );
     expect(find.byType(SkListRow), findsNWidgets(2));
     expect(t.takeException(), isNull);

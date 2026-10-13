@@ -46,7 +46,8 @@
     "TabBar":           { "surfaces": { "card": "yes" } },
     "PageHeader":       { "surfaces": { "card": "yes", "next": "yes" } },
     "SplitPane":        { "surfaces": { "card": "yes", "next": "yes" } },
-    "SplitPaneHeader":  { "compositional": true, "surfaces": { "card": "yes", "next": "yes" } }
+    "SplitPaneHeader":  { "compositional": true, "surfaces": { "card": "yes", "next": "yes" } },
+    "GateLayout":       { "surfaces": { "card": "yes", "next": "yes" } }
   },
 
   "cards": {
@@ -56,10 +57,10 @@
     "components/feedback/feedback.card.html":  { "markers": ["Open dialog", "Checking 40 airlines…", "Popover", "Combobox", "ErrorState", "4 of 13", "Fare breakdown"] },
     "components/data/data.card.html":          { "markers": ["projected", "Range ·", "Notifications", "Senior frontend engineer", "Recruiter screen", "Seniority"] },
     "components/navigation/navigation.card.html": { "markers": ["SideNav"] },
-    "components/layout/layout.card.html":        { "markers": ["Trips", "New trip", "2 of 3"] }
+    "components/layout/layout.card.html":        { "markers": ["Trips", "New trip", "2 of 3", "Continue with email"] }
   },
 
   "next": {
-    "markers": ["Range", "aria-label", "Okafor", "progressbar", "<details", "<h1", "aria-current", "aria-label=\"Detail\"", "aria-current=\"step\"", "role=\"meter\"", "type=\"file\""]
+    "markers": ["Range", "aria-label", "Okafor", "progressbar", "<details", "<h1", "aria-current", "aria-label=\"Detail\"", "aria-current=\"step\"", "role=\"meter\"", "type=\"file\"", "Continue with email"]
   }
 }

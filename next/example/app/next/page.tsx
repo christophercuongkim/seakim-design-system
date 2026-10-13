@@ -8,6 +8,7 @@ import {
   EmptyState,
   Field,
   FileDrop,
+  GateLayout,
   Icon,
   Input,
   ListGroup,
@@ -141,6 +142,15 @@ export default function Page() {
               { key: "offer", label: "Offer" },
             ]}
           />
+        </div>
+      </Section>
+      <Section title="GateLayout">
+        <div style={{ width: "100%" }}>
+          <GateLayout brand="Bench" style={{ minHeight: 0, background: "var(--surface-sunken)" }} footer="A demo, not a login.">
+            <h2 style={{ font: "var(--type-title)", margin: 0 }}>Sign in</h2>
+            <Button fullWidth>Continue with Google</Button>
+            <Button variant="secondary" fullWidth>Continue with email</Button>
+          </GateLayout>
         </div>
       </Section>
       <Section title="Actions">

@@ -51,4 +51,5 @@ export { SideNav } from "./components/navigation/SideNav";
 export { TabBar } from "./components/navigation/TabBar";
 export { PageHeader } from "./components/layout/PageHeader";
 export { SplitPane, SplitPaneHeader } from "./components/layout/SplitPane";
+export { GateLayout } from "./components/layout/GateLayout";
 export { Viewport, useMeasuredBreakpoint, breakpointFor, BREAKPOINTS } from "./ui_kits/shared/Frames";

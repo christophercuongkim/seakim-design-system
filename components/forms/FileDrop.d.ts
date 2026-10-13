@@ -7,9 +7,9 @@ export interface FileDropFile {
 }
 
 /**
- * A drop zone around a native file input, with the chosen file as a row beneath,
- * a labelled uploading state on that row (never a bar) and the error rendered under
- * the zone. One file.
+ * A drop zone around a native file input: a labelled wait in the zone while uploading,
+ * an `ErrorState` in the zone on failure, the chosen file as a row beneath when done.
+ * One file.
  */
 export interface FileDropProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onError'> {
   /** Same syntax as the input's `accept`: ".pdf", "application/pdf". */
@@ -20,10 +20,14 @@ export interface FileDropProps extends Omit<React.HTMLAttributes<HTMLDivElement>
   file?: FileDropFile | File | null;
   /** Shows a remove control on the row. */
   onRemove?: () => void;
-  /** Replaces the remove control with a labelled uploading state (0021). */
+  /** The zone shows a labelled wait in place of its copy (0021). */
   uploading?: boolean;
-  /** Rendered under the zone in the danger colour and announced. */
+  /** The wait's text. Defaults to "Uploading…"; say what is happening: "Reading your résumé…". */
+  uploadingLabel?: string;
+  /** The zone shows a compact `ErrorState` with this as its title and a Try again. */
   error?: string;
+  /** The Try again in the error state. */
+  onRetry?: () => void;
   /** The types-and-size line: "PDF up to 5 MB". */
   hint?: string;
   /** Phosphor icon in the zone. Defaults to `upload-simple`; pass `null` for none. */

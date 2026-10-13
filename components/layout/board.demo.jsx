@@ -26,7 +26,7 @@ export function Demo() {
   return (
     <div className="col" style={{ gap: 'var(--space-7)' }}>
       <div>
-        <div className="lbl">Board · empty columns at full width</div>
+        <div className="lbl">Board · the default: empty columns collapsed</div>
         <Board columnWidth="16rem">
           <BoardColumn label="Pursuing" count={3} tone="accent" menu={menu} footer={add}>
             {CARDS.map(p => <Posting key={p.id} p={p} />)}
@@ -39,8 +39,8 @@ export function Demo() {
         </Board>
       </div>
       <div>
-        <div className="lbl">Board · collapseEmpty</div>
-        <Board columnWidth="16rem" collapseEmpty>
+        <div className="lbl">Board · collapseEmpty={false}: every column open</div>
+        <Board columnWidth="16rem" collapseEmpty={false}>
           <BoardColumn label="Pursuing" count={1} footer={add}>
             <Posting p={CARDS[0]} />
           </BoardColumn>

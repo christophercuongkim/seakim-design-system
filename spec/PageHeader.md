@@ -6,21 +6,23 @@ under [0038](../decisions/0038-promote-on-a-spike.md).
 
 ## Anatomy
 
-1. **Title row.** The page's name at `--type-title`, the page's one level-one heading. A
-   `badge` sits after it: a count (mono `Badge`) or a status chip. Right of the row, the
-   `actions`: the primary action and at most two more; a fourth is an overflow.
+1. **Title row.** The page's name at `--type-title`, the page's one level-one heading, the
+   `count` in secondary text beside it, and a `badge` chip after that for a status or a
+   plan. Right of the row, the `actions`: the view controls and the primary action, at most
+   three; a fourth is an overflow.
 2. **Description.** One line at `--type-body-sm`, secondary colour, optional. A list page
    rarely has one; a settings page often does.
-3. **Toolbar.** The second row: filters, tabs, sort, the view toggle. Everything that
-   changes what the page shows lives here, never on the title row. Five of six references
-   have this row.
+3. **Toolbar.** The second row: the filters, tabs and sort. Five of six references have
+   this row. The view toggle sits in `actions` by the shell pick (spike 1, option A); the
+   references split on it (Airtable row two, Linear a popover), so either reads.
 
 ## What it is not
 
 - Not sticky. A page that wants its header pinned is scrolling the wrong element; scroll
   the list, not the page.
-- Not a place for the count as text. The references never put "12" beside a title as
-  prose; a chip after the title is the nearest, hence the `badge` slot.
+- Not a place for a status as text. The count is secondary text beside the title (the
+  shell pick); a status or a plan is a chip in `badge`, which is what the references show
+  beside a title.
 - Not a breadcrumb bar and not a search slot. Search is a toolbar child.
 
 ## Responsive

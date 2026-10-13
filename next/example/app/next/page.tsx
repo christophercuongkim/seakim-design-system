@@ -83,7 +83,7 @@ export default function Page() {
         <div style={{ width: "100%" }}>
           <PageHeader
             title="Roster"
-            badge={<Badge mono>12</Badge>}
+            count={12}
             description="Everyone on the bench this week."
           />
         </div>
@@ -148,7 +148,7 @@ export default function Page() {
       </Section>
       <Section title="GateLayout">
         <div style={{ width: "100%" }}>
-          <GateLayout brand="Bench" style={{ minHeight: 0, background: "var(--surface-sunken)" }} footer="A demo, not a login.">
+          <GateLayout brand="Bench" style={{ minHeight: 360, background: "var(--surface-sunken)" }} footer="A demo, not a login.">
             <h2 style={{ font: "var(--type-title)", margin: 0 }}>Sign in</h2>
             <Button fullWidth>Continue with Google</Button>
             <Button variant="secondary" fullWidth>Continue with email</Button>

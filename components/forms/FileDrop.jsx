@@ -1,6 +1,7 @@
 import React, { useRef, useState, useId } from 'react';
 import { Icon } from '../core/Icon.jsx';
 import { IconButton } from '../core/IconButton.jsx';
+import { ErrorState } from '../feedback/ErrorState.jsx';
 import { useCoarsePointer } from '../core/useCoarsePointer.js';
 
 const HIDDEN_INPUT = { position: 'absolute', width: 1, height: 1, opacity: 0, overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap' };
@@ -19,15 +20,15 @@ export function formatFileSize(bytes) {
  * types and size. The references (Remote, Mercor, Lindy, Employment Hero)
  * agree on all of that; two of four are compact, so this is.
  *
- * The chosen file is a row under the zone with its name, size and a remove
- * control. Uploading is a labelled fallback on that row (0021), never a bar:
- * no reference shows one. The error renders under the zone as a Field-style
- * line and is announced; the references toast it, and a toast can be missed.
- * One file. The input is the focus target, so Enter and Space open the picker
- * and the ring is the system's.
+ * While it uploads the zone itself shows a labelled wait ("Reading your
+ * résumé…", 0021, never a spinner); on failure the zone shows a compact
+ * `ErrorState` with the cause and a Try again; done is the file as a row under
+ * the zone with its name, size and a remove control. That is the job-search
+ * onboarding pick (spike 4, upload A). One file. The input is the focus
+ * target, so Enter and Space open the picker and the ring is the system's.
  */
 export function FileDrop({
-  accept, onFile, file, onRemove, uploading = false, error, hint,
+  accept, onFile, file, onRemove, uploading = false, uploadingLabel = 'Uploading…', error, onRetry, hint,
   icon = 'upload-simple', action = 'Click to upload', label = 'or drag and drop',
   disabled = false, style, ...rest
 }) {
@@ -59,46 +60,51 @@ export function FileDrop({
           border: `1px dashed ${disabled ? 'var(--border-disabled)' : border}`,
           background: disabled ? 'var(--fill-disabled)' : over ? 'var(--surface-hover)' : 'var(--surface-raised)',
           boxShadow: focus ? 'var(--focus-ring)' : 'none',
-          cursor: disabled ? 'not-allowed' : 'pointer',
+          cursor: disabled ? 'not-allowed' : uploading || error ? 'default' : 'pointer',
           transition: 'var(--transition-control), box-shadow var(--dur-instant) var(--ease-out)',
         }}
       >
         <input
           type="file"
           accept={accept}
-          disabled={disabled}
-          aria-describedby={error ? `${id}-error` : hint ? `${id}-hint` : undefined}
+          disabled={disabled || uploading}
+          aria-describedby={hint && !error && !uploading ? `${id}-hint` : undefined}
           aria-invalid={error ? true : undefined}
           onChange={(e) => { pick(e.target.files); e.target.value = ''; }}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
           style={HIDDEN_INPUT}
         />
-        {icon && <Icon name={icon} size={20} style={{ color: disabled ? 'var(--text-disabled)' : 'var(--text-tertiary)' }} />}
-        <span style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)', minWidth: 0 }}>
-          <span style={{ font: 'var(--type-body)', color: disabled ? 'var(--text-disabled)' : 'var(--text-primary)' }}>
-            <span style={{ color: disabled ? 'var(--text-disabled)' : 'var(--text-link)' }}>{action}</span> {label}
+        {error ? (
+          <ErrorState compact title={error} onRetry={onRetry} style={{ flex: 1, padding: 'var(--space-4)' }} onClick={(e) => e.preventDefault()} />
+        ) : uploading ? (
+          <span role="status" aria-busy="true" aria-live="polite" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', font: 'var(--type-body)', color: 'var(--text-secondary)' }}>
+            <span aria-hidden="true" style={{ width: 'var(--space-9)', height: 'var(--space-1)', background: 'var(--surface-shimmer)' }} />
+            {uploadingLabel}
           </span>
-          {hint && <span id={`${id}-hint`} style={{ font: 'var(--type-caption)', color: disabled ? 'var(--text-disabled)' : 'var(--text-tertiary)' }}>{hint}</span>}
-        </span>
+        ) : (
+          <>
+            {icon && <Icon name={icon} size={20} style={{ color: disabled ? 'var(--text-disabled)' : 'var(--text-tertiary)' }} />}
+            <span style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)', minWidth: 0 }}>
+              <span style={{ font: 'var(--type-body)', color: disabled ? 'var(--text-disabled)' : 'var(--text-primary)' }}>
+                <span style={{ color: disabled ? 'var(--text-disabled)' : 'var(--text-link)' }}>{action}</span> {label}
+              </span>
+              {hint && <span id={`${id}-hint`} style={{ font: 'var(--type-caption)', color: disabled ? 'var(--text-disabled)' : 'var(--text-tertiary)' }}>{hint}</span>}
+            </span>
+          </>
+        )}
       </label>
-      {file && (
+      {file && !uploading && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', padding: '0 var(--space-2) 0 var(--space-3)', minHeight: 'var(--control-h-md)' }}>
           <Icon name="paperclip" size={16} style={{ color: 'var(--text-tertiary)' }} />
           <span style={{ font: 'var(--type-body-sm)', color: 'var(--text-primary)', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{file.name}</span>
           {file.size != null && <span style={{ font: 'var(--type-caption)', color: 'var(--text-tertiary)', whiteSpace: 'nowrap' }}>{formatFileSize(file.size)}</span>}
           <span style={{ flex: 1 }} />
-          {uploading ? (
-            <span role="status" aria-busy="true" aria-live="polite" style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-3)', font: 'var(--type-caption)', color: 'var(--text-secondary)' }}>
-              <span aria-hidden="true" style={{ width: 'var(--space-9)', height: 'var(--space-1)', background: 'var(--surface-shimmer)' }} />
-              Uploading…
-            </span>
-          ) : onRemove && (
+          {onRemove && (
             <IconButton icon="x" label={`Remove ${file.name}`} variant="ghost" size="sm" onClick={onRemove} disabled={disabled} />
           )}
         </div>
       )}
-      {error && <div id={`${id}-error`} role="alert" style={{ font: 'var(--type-caption)', color: 'var(--text-danger)' }}>{error}</div>}
     </div>
   );
 }

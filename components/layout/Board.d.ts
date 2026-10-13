@@ -3,13 +3,13 @@ import * as React from 'react';
 /**
  * Kanban columns: a sunken fill per column, 22rem wide, a header with label, count, an
  * optional status dot and a menu, cards as the app's content, a footer for the add row.
- * Empty columns stay full width unless `collapseEmpty`. Under `md` the row is a
- * scroll-snap strip with one column at 85% and page dots.
+ * Empty columns collapse by default. Under `md` the row is a scroll-snap strip with one
+ * column at 85%, a `Tabs` row of the stages above it and page dots under.
  */
 export interface BoardProps extends React.HTMLAttributes<HTMLDivElement> {
   /** `BoardColumn`s. */
   children?: React.ReactNode;
-  /** Collapse empty columns to a narrow vertical header that expands on click. Off by default. */
+  /** Collapse empty columns to a narrow vertical header that expands on click. On by default; pass `false` to keep them full width. */
   collapseEmpty?: boolean;
   /** Any CSS length. Defaults to `22rem`. */
   columnWidth?: string;

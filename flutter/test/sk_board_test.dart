@@ -22,10 +22,11 @@ List<SkBoardColumn> columns() => <SkBoardColumn>[
     ];
 
 void main() {
-  testWidgets('wide: every column at full width, empties included',
+  testWidgets('wide with collapseEmpty off: every column at full width',
       (WidgetTester t) async {
-    await t
-        .pumpWidget(host(SkBoard(columns: columns(), columnWidth: 200), 900));
+    await t.pumpWidget(host(
+        SkBoard(columns: columns(), collapseEmpty: false, columnWidth: 200),
+        900));
     await t.pumpAndSettle();
     expect(find.text('PURSUING'), findsOneWidget);
     expect(find.text('APPLIED'), findsOneWidget);
@@ -34,11 +35,10 @@ void main() {
     expect(t.takeException(), isNull);
   });
 
-  testWidgets('collapseEmpty folds the empties into buttons that expand',
+  testWidgets('the default folds the empties into buttons that expand',
       (WidgetTester t) async {
-    await t.pumpWidget(host(
-        SkBoard(columns: columns(), collapseEmpty: true, columnWidth: 200),
-        900));
+    await t
+        .pumpWidget(host(SkBoard(columns: columns(), columnWidth: 200), 900));
     await t.pumpAndSettle();
     expect(find.byType(SkPressable), findsNWidgets(2));
     await t.tap(find.byType(SkPressable).first);
@@ -47,13 +47,13 @@ void main() {
     expect(t.takeException(), isNull);
   });
 
-  testWidgets('sm: a page view with dots and no collapse',
+  testWidgets('sm: a tabs row over a page view, no collapse',
       (WidgetTester t) async {
-    await t.pumpWidget(
-        host(SkBoard(columns: columns(), collapseEmpty: true), 360));
+    await t.pumpWidget(host(SkBoard(columns: columns()), 360));
     await t.pumpAndSettle();
     expect(find.byType(PageView), findsOneWidget);
-    expect(find.byType(SkPressable), findsNothing);
+    expect(find.byType(SkTabs<int>), findsOneWidget);
+    expect(find.text('Applied'), findsOneWidget);
     expect(find.text('PURSUING'), findsOneWidget);
     expect(t.takeException(), isNull);
   });

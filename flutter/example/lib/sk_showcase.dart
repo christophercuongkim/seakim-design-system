@@ -298,6 +298,7 @@ final List<SkDemo> skShowcase = <SkDemo>[
             child: SkGateLayout(
               brand: const Text('Voyage'),
               footer: const Text('By continuing you agree to the terms.'),
+              card: false,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
@@ -442,7 +443,7 @@ final List<SkDemo> skShowcase = <SkDemo>[
       'Page header',
       (BuildContext context) => SkPageHeader(
             title: 'Trips',
-            badge: const SkBadge(label: '12', mono: true),
+            count: '12',
             actions: <Widget>[
               SkButton(
                   label: 'New trip', iconLeft: SkIcons.plus, onPressed: () {}),

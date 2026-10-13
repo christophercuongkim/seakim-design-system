@@ -44,4 +44,5 @@ export { Disclosure } from "./components/feedback/Disclosure";
 export { Tabs } from "./components/navigation/Tabs";
 export { SideNav } from "./components/navigation/SideNav";
 export { TabBar } from "./components/navigation/TabBar";
+export { PageHeader } from "./components/layout/PageHeader";
 export { Viewport, useMeasuredBreakpoint, breakpointFor, BREAKPOINTS } from "./ui_kits/shared/Frames";

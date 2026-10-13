@@ -302,6 +302,30 @@ final List<SkDemo> skShowcase = <SkDemo>[
             description: 'Holding your dates while we compare fares.',
           )),
 
+  // sk_page_header.dart
+  SkDemo(
+      'Layout',
+      'Page header',
+      (BuildContext context) => SkPageHeader(
+            title: 'Trips',
+            badge: const SkBadge(label: '12', mono: true),
+            actions: <Widget>[
+              SkButton(
+                  label: 'New trip', iconLeft: SkIcons.plus, onPressed: () {}),
+            ],
+            toolbar: <Widget>[
+              SkSegmentedControl<String>(
+                segments: const <SkSegment<String>>[
+                  SkSegment<String>(value: 'list', label: 'List'),
+                  SkSegment<String>(value: 'board', label: 'Board'),
+                ],
+                value: 'list',
+                size: SkControl.sm,
+                onChanged: (String _) {},
+              ),
+            ],
+          )),
+
   // sk_popover.dart
   SkDemo('Popover', 'Anchored menu', (BuildContext context) {
     bool open = false;

@@ -9,6 +9,7 @@ import {
   Field,
   Icon,
   Input,
+  PageHeader,
   Progress,
   Slider,
   Stat,
@@ -68,6 +69,15 @@ export default function Page() {
         SeaKim in Next.js
       </h1>
 
+      <Section title="PageHeader">
+        <div style={{ width: "100%" }}>
+          <PageHeader
+            title="Roster"
+            badge={<Badge mono>12</Badge>}
+            description="Everyone on the bench this week."
+          />
+        </div>
+      </Section>
       <Section title="Actions">
         <Button variant="primary">Book trip</Button>
         <Button variant="secondary">Hold</Button>

@@ -54,6 +54,7 @@ export { Disclosure } from "./components/feedback/Disclosure.jsx";
 export { Tabs } from "./components/navigation/Tabs.jsx";
 export { SideNav } from "./components/navigation/SideNav.jsx";
 export { TabBar } from "./components/navigation/TabBar.jsx";
+export { PageHeader } from "./components/layout/PageHeader.jsx";
 export { Viewport, useMeasuredBreakpoint, breakpointFor, BREAKPOINTS } from "./ui_kits/shared/Frames.jsx";
 
 // Filter matchers for the searchable picker (0028) — shared so every long list

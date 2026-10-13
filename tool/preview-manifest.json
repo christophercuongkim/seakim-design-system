@@ -38,7 +38,8 @@
     "Disclosure":       { "surfaces": { "card": "yes", "next": "yes" } },
     "Tabs":             { "surfaces": { "card": "yes" } },
     "SideNav":          { "surfaces": { "card": "yes" } },
-    "TabBar":           { "surfaces": { "card": "yes" } }
+    "TabBar":           { "surfaces": { "card": "yes" } },
+    "PageHeader":       { "surfaces": { "card": "yes", "next": "yes" } }
   },
 
   "cards": {
@@ -47,10 +48,11 @@
     "components/forms/pickers.card.html":      { "markers": ["Slider"] },
     "components/feedback/feedback.card.html":  { "markers": ["Open dialog", "Checking 40 airlines…", "Popover", "Combobox", "ErrorState", "4 of 13", "Fare breakdown"] },
     "components/data/data.card.html":          { "markers": ["projected", "Range ·"] },
-    "components/navigation/navigation.card.html": { "markers": ["SideNav"] }
+    "components/navigation/navigation.card.html": { "markers": ["SideNav"] },
+    "components/layout/layout.card.html":        { "markers": ["Trips", "New trip"] }
   },
 
   "next": {
-    "markers": ["Range", "aria-label", "Okafor", "progressbar", "<details"]
+    "markers": ["Range", "aria-label", "Okafor", "progressbar", "<details", "<h1"]
   }
 }

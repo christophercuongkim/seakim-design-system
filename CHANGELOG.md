@@ -25,6 +25,10 @@ ADRs say *why*. This says *what* and *when*.
   optional "4 of 13" label after it, `sm` (4px) and `md` (8px). For a wizard, an upload, a
   trial counter. `role="progressbar"` with the value; the fill width is the only thing that
   moves, on `--dur-base`. First of the job-search batch (CHR-372, 0038).
+- **`Disclosure` / `SkDisclosure`**, one collapsible section: a summary row with an
+  optional meta on the right and a chevron that turns, the body below, over native
+  `<details>` on the web. Several stack, more than one may be open, nothing closes a
+  sibling. Controlled or uncontrolled. (CHR-379, 0038)
 - **Decision 0038, promote on a spike.** A consumer's design spike naming a shape with no
   consumer nouns is enough to build it here; readme "Adding an app" step 4 now says so.
 - **Decision 0039, binding parity, and `tool/parity-check.mjs`.** Every `index.js` component

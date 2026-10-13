@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   DatePicker,
+  Disclosure,
   EmptyState,
   Field,
   Icon,
@@ -101,6 +102,15 @@ export default function Page() {
       <Section title="Progress">
         <div style={{ width: 320 }}>
           <Progress value={4} max={13} label="4 of 13" />
+        </div>
+      </Section>
+      <Section title="Disclosure">
+        <div style={{ width: 320 }}>
+          <Disclosure summary="Fare breakdown" meta="4 items">
+            <p style={{ font: "var(--type-body-sm)", color: "var(--text-secondary)" }}>
+              Base fare $312 · Taxes $86 · Seat $14 · Bag $0
+            </p>
+          </Disclosure>
         </div>
       </Section>
       <Section title="Forms">

@@ -8,6 +8,7 @@ import { ErrorState } from './ErrorState.jsx';
 import { Skeleton } from './Skeleton.jsx';
 import { LoadingState } from './LoadingState.jsx';
 import { Progress } from './Progress.jsx';
+import { Disclosure } from './Disclosure.jsx';
 import { Dialog } from './Dialog.jsx';
 import { Button } from '../core/Button.jsx';
 import { IconButton } from '../core/IconButton.jsx';
@@ -77,6 +78,15 @@ export function Demo() {
           <Progress value={4} max={13} label="4 of 13" />
           <Progress value={13} max={13} label="13 of 13" />
           <Progress value={62} size="md" aria-label="Uploading résumé" />
+        </div>
+        <div className="lbl" style={{ marginTop: 'var(--space-4)' }}>Disclosure</div>
+        <div className="col" style={{ gap: 0 }}>
+          <Disclosure summary="Fare breakdown" meta="4 items">
+            <p style={{ font: 'var(--type-body-sm)', color: 'var(--text-secondary)', margin: 0 }}>Base fare $312 · Taxes $86 · Seat $14 · Bag $0</p>
+          </Disclosure>
+          <Disclosure summary="Cancellation" meta="Free until 12 Mar" defaultOpen>
+            <p style={{ font: 'var(--type-body-sm)', color: 'var(--text-secondary)', margin: 0 }}>Cancel for a full refund up to 24 hours before departure. After that, the fare is held as credit.</p>
+          </Disclosure>
         </div>
         <div className="lbl" style={{ marginTop: 'var(--space-4)' }}>ErrorState</div>
         <ErrorState

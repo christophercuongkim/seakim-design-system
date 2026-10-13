@@ -17,6 +17,16 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [8.3.1] — 2026-10-13
+
+### Fixed
+
+- **`PageHeader` split a short title mid-word** ("Posting / s") inside a narrow container
+  when the count sat beside it: the `h1` had `overflow-wrap: anywhere` and `min-width: 0`,
+  which lets a wrapping flex row shrink a word below its own width. Now `break-word`, so
+  the count wraps to the next line and a title only breaks when one word is wider than the
+  column. Found on job-search's split view (CHR-338).
+
 ## [8.3.0] — 2026-10-13
 
 Eleven components for the job-search redesign (CHR-322), each with its React and Flutter

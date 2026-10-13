@@ -28,7 +28,9 @@ export function PageHeader({ title, count, badge, description, actions, toolbar,
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-5)' }}>
         <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
-          <h1 style={{ font: 'var(--type-title)', color: 'var(--text-primary)', margin: 0, minWidth: 0, overflowWrap: 'anywhere' }}>
+          {/* break-word, not anywhere: a short title must never split mid-word to make
+              room for the count; the count wraps to the next line instead. */}
+          <h1 style={{ font: 'var(--type-title)', color: 'var(--text-primary)', margin: 0, overflowWrap: 'break-word' }}>
             {title}
           </h1>
           {count != null && (

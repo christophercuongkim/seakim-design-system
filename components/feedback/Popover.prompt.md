@@ -19,3 +19,9 @@ Escape, outside-press, or trigger blur. Pass `modal` for a reaction bar — it a
 a scrim, moves focus into the panel, and dismisses on scrim-click or Escape. Gets
 `--shadow-popover` and a hairline border because it floats. It flips above the
 trigger when `bottom` would run off-screen.
+
+The panel is fixed to the window, placed from the trigger, so it is never clipped
+by a scrolling or `overflow: hidden` parent: a sidebar, a table, a board column.
+`align="start"` (default) lines it up with the trigger's left edge, `align="end"`
+with its right edge, for a `⋯` at the end of a row. Don't pass `left`/`right` in
+`style` to align it.

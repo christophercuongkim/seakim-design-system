@@ -21,6 +21,8 @@ export interface PopoverProps extends React.HTMLAttributes<HTMLDivElement> {
   modal?: boolean;
   /** Preferred side; flips to stay on-screen. */
   side?: 'bottom' | 'top';
+  /** Which trigger edge the panel lines up with: left (start) or right (end). Default start. */
+  align?: 'start' | 'end';
   style?: React.CSSProperties;
 }
 export declare function Popover(props: PopoverProps): JSX.Element;

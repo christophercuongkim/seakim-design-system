@@ -215,7 +215,7 @@ nobody has needed yet, not one we owe you.
 | | React | Flutter | Next.js | SwiftUI · Compose · other |
 | --- | --- | --- | --- | --- |
 | Status | Reference binding | Written; unbuilt (see 3) | Adapter over React | Unclaimed |
-| Version | 8.3.2 | 5.2.0 | 8.3.2 | — |
+| Version | 8.3.3 | 5.2.0 | 8.3.3 | — |
 | Targets rules | 8.3 | 8.3 | 8.3 | — |
 | Conforms to | SeaKim 8.3 | SeaKim 8.3 | SeaKim 8.3 | — |
 | Tier 0 | Pass, except light unverified | Pass, except light unverified | Inherits React | — |

@@ -652,6 +652,24 @@ final List<SkDemo> skShowcase = <SkDemo>[
             delta: '-18',
           )),
 
+  // sk_stepper.dart
+  SkDemo(
+      'Lists',
+      'Stepper',
+      (BuildContext context) => const SkStepper(
+            current: 'recruiter',
+            steps: <SkStep>[
+              SkStep(key: 'pursuing', label: 'Pursuing'),
+              SkStep(key: 'applied', label: 'Applied', description: 'Oct 3'),
+              SkStep(
+                  key: 'recruiter',
+                  label: 'Recruiter screen',
+                  description: 'Thu 2pm'),
+              SkStep(key: 'phone', label: 'Phone screen'),
+              SkStep(key: 'offer', label: 'Offer'),
+            ],
+          )),
+
   // sk_switch.dart
   SkDemo('Selection', 'Switch', (BuildContext context) {
     bool value = true;

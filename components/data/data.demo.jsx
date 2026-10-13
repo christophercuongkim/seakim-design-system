@@ -3,6 +3,7 @@ import { Table } from './Table.jsx';
 import { Range } from './Range.jsx';
 import { ListRow } from './ListRow.jsx';
 import { ListGroup } from './ListGroup.jsx';
+import { Stepper } from './Stepper.jsx';
 import { Icon } from '../core/Icon.jsx';
 import { Badge } from '../core/Badge.jsx';
 import { Avatar } from '../core/Avatar.jsx';
@@ -136,6 +137,37 @@ export function Demo() {
             <ListRow leading={<Avatar name="Harbor Health" size="sm" />} eyebrow="Harbor Health" title="Product engineer" meta="Boston · hybrid" trailing={<><span>5h</span><Badge mono>74</Badge></>} onClick={() => {}} />
             <ListRow leading={<Avatar name="Lumen Works" size="sm" />} eyebrow="Lumen Works" title="Staff engineer, platform" meta="Remote" trailing={<><span>1d</span><Badge mono>66</Badge></>} onClick={() => {}} />
           </ListGroup>
+        </div>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 'var(--space-8)', alignItems: 'start' }}>
+        <div className="col" style={{ gap: 'var(--space-3)' }}>
+          <div className="lbl">Stepper · horizontal, third step current</div>
+          <Stepper
+            current="recruiter"
+            orientation="horizontal"
+            steps={[
+              { key: 'pursuing', label: 'Pursuing' },
+              { key: 'applied', label: 'Applied', description: 'Oct 3' },
+              { key: 'recruiter', label: 'Recruiter screen', description: 'Thu 2pm' },
+              { key: 'phone', label: 'Phone screen' },
+              { key: 'onsite', label: 'Onsite' },
+              { key: 'offer', label: 'Offer' },
+            ]}
+          />
+        </div>
+        <div className="col" style={{ gap: 'var(--space-3)' }}>
+          <div className="lbl">Stepper · vertical, as under md</div>
+          <Stepper
+            current="recruiter"
+            orientation="vertical"
+            onSelect={() => {}}
+            steps={[
+              { key: 'applied', label: 'Applied', description: 'Oct 3' },
+              { key: 'recruiter', label: 'Recruiter screen', description: 'Thu 2pm' },
+              { key: 'phone', label: 'Phone screen' },
+              { key: 'offer', label: 'Offer' },
+            ]}
+          />
         </div>
       </div>
     </div>

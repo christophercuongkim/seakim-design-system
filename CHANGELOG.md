@@ -47,6 +47,11 @@ ADRs say *why*. This says *what* and *when*.
   `spec/SplitPane.md`. The measured-breakpoint hook moved to
   `components/core/useMeasuredBreakpoint.js`; `Viewport` and the barrel re-export it
   unchanged. (CHR-382, 0038)
+- **`Stepper` / `SkStepper`**, a labelled pipeline: every step named, the current one an
+  ink fill, the ones behind it checked, the ones ahead outlined, a connector between.
+  Horizontal from `md`, vertical under it when `orientation` is `auto` (the one pipeline
+  any phone reference showed). With `onSelect` the steps become buttons; which moves are
+  legal stays the app's. `spec/Stepper.md`. (CHR-383, 0038)
 - **Decision 0038, promote on a spike.** A consumer's design spike naming a shape with no
   consumer nouns is enough to build it here; readme "Adding an app" step 4 now says so.
 - **Decision 0039, binding parity, and `tool/parity-check.mjs`.** Every `index.js` component

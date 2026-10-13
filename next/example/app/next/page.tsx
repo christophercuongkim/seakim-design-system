@@ -17,6 +17,7 @@ import {
   SplitPane,
   SplitPaneHeader,
   Stat,
+  Stepper,
   Tag,
 } from "@seakim/design-system";
 
@@ -123,6 +124,20 @@ export default function Page() {
                 </p>
               </>
             }
+          />
+        </div>
+      </Section>
+      <Section title="Stepper">
+        <div style={{ width: "100%" }}>
+          <Stepper
+            current="recruiter"
+            orientation="horizontal"
+            steps={[
+              { key: "applied", label: "Applied" },
+              { key: "recruiter", label: "Recruiter screen" },
+              { key: "onsite", label: "Onsite" },
+              { key: "offer", label: "Offer" },
+            ]}
           />
         </div>
       </Section>

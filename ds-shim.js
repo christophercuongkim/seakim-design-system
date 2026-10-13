@@ -55,6 +55,7 @@
     'components/data/Range.jsx',
     'components/data/ListRow.jsx',
     'components/data/ListGroup.jsx',
+    'components/data/Stepper.jsx',
     'components/navigation/Tabs.jsx',
     'components/navigation/SideNav.jsx',
     'components/navigation/TabBar.jsx',

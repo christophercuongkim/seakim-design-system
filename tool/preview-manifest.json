@@ -27,6 +27,7 @@
     "Range":            { "surfaces": { "card": "yes", "next": "yes" } },
     "ListRow":          { "surfaces": { "card": "yes", "next": "yes" } },
     "ListGroup":        { "surfaces": { "card": "yes", "next": "yes" } },
+    "Stepper":          { "surfaces": { "card": "yes", "next": "yes" } },
     "Dialog":           { "surfaces": { "card": "yes" } },
     "Toast":            { "surfaces": { "card": "yes" } },
     "Tooltip":          { "surfaces": { "card": "yes" } },
@@ -51,12 +52,12 @@
     "components/forms/forms.card.html":        { "markers": ["SegmentedControl"] },
     "components/forms/pickers.card.html":      { "markers": ["Slider"] },
     "components/feedback/feedback.card.html":  { "markers": ["Open dialog", "Checking 40 airlines…", "Popover", "Combobox", "ErrorState", "4 of 13", "Fare breakdown"] },
-    "components/data/data.card.html":          { "markers": ["projected", "Range ·", "Notifications", "Senior frontend engineer"] },
+    "components/data/data.card.html":          { "markers": ["projected", "Range ·", "Notifications", "Senior frontend engineer", "Recruiter screen"] },
     "components/navigation/navigation.card.html": { "markers": ["SideNav"] },
     "components/layout/layout.card.html":        { "markers": ["Trips", "New trip", "2 of 3"] }
   },
 
   "next": {
-    "markers": ["Range", "aria-label", "Okafor", "progressbar", "<details", "<h1", "aria-current", "aria-label=\"Detail\""]
+    "markers": ["Range", "aria-label", "Okafor", "progressbar", "<details", "<h1", "aria-current", "aria-label=\"Detail\"", "aria-current=\"step\""]
   }
 }

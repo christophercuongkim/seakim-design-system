@@ -254,6 +254,35 @@ final List<SkDemo> skShowcase = <SkDemo>[
             onRemove: () {},
           )),
 
+  // sk_gate_layout.dart
+  SkDemo(
+      'Layout',
+      'Gate layout',
+      (BuildContext context) => SizedBox(
+            height: 360,
+            child: SkGateLayout(
+              brand: const Text('Voyage'),
+              footer: const Text('By continuing you agree to the terms.'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  const Text('Sign in', style: SkText.title),
+                  const SizedBox(height: SkSpace.s6),
+                  SkButton(
+                      label: 'Continue with Google',
+                      fullWidth: true,
+                      onPressed: () {}),
+                  const SizedBox(height: SkSpace.s4),
+                  SkButton(
+                      label: 'Continue with email',
+                      variant: SkButtonVariant.secondary,
+                      fullWidth: true,
+                      onPressed: () {}),
+                ],
+              ),
+            ),
+          )),
+
   // sk_icon.dart
   SkDemo(
       'Icon',

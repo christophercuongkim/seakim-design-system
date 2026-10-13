@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PageHeader } from './PageHeader.jsx';
 import { SplitPane } from './SplitPane.jsx';
+import { GateLayout } from './GateLayout.jsx';
 import { ListRow } from '../data/ListRow.jsx';
 import { ListGroup } from '../data/ListGroup.jsx';
 import { Stat } from '../core/Stat.jsx';
@@ -67,6 +68,19 @@ export function Demo() {
             aside={<div className="col" style={{ padding: 'var(--space-6)', gap: 'var(--space-5)' }}><Stat label="Fare" value={trip.fare} size="sm" /><Stat label="Travellers" value={String(trip.who.split(',').length)} size="sm" /></div>}
           />
         </div>
+      </div>
+      <div>
+        <div className="lbl">GateLayout · sign-in, no card, footer</div>
+        <GateLayout
+          brand="Voyage"
+          style={{ minHeight: 0, background: 'var(--surface-sunken)' }}
+          footer={<>By continuing you agree to the terms and the privacy policy.</>}
+        >
+          <h1 style={{ font: 'var(--type-title)', margin: 0 }}>Sign in</h1>
+          <p style={{ font: 'var(--type-body-sm)', color: 'var(--text-secondary)', margin: 0 }}>Your trips, your bookings, your people.</p>
+          <Button fullWidth>Continue with Google</Button>
+          <Button variant="secondary" fullWidth>Continue with email</Button>
+        </GateLayout>
       </div>
       <div>
         <div className="lbl">PageHeader · description, no toolbar</div>

@@ -62,6 +62,9 @@ ADRs say *why*. This says *what* and *when*.
   row while uploading (0021, never a bar); the error under the zone and announced. One
   file. The Flutter widget renders the affordance and calls `onPick`; the app wires the
   picker, so the package takes no plugin. (CHR-385, 0038)
+- **`GateLayout` / `SkGateLayout`**, the page outside the shell: the brand centred above,
+  one top-aligned 36rem column, an optional footer for the legal line, no card unless
+  asked, full-bleed on a phone. For sign-in, gates, paywalls and wizards. (CHR-386, 0038)
 - **Decision 0038, promote on a spike.** A consumer's design spike naming a shape with no
   consumer nouns is enough to build it here; readme "Adding an app" step 4 now says so.
 - **Decision 0039, binding parity, and `tool/parity-check.mjs`.** Every `index.js` component

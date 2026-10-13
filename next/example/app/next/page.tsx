@@ -8,6 +8,7 @@ import {
   Field,
   Icon,
   Input,
+  Progress,
   Slider,
   Stat,
   Tag,
@@ -97,6 +98,11 @@ export default function Page() {
         <RosterTable />
       </div>
 
+      <Section title="Progress">
+        <div style={{ width: 320 }}>
+          <Progress value={4} max={13} label="4 of 13" />
+        </div>
+      </Section>
       <Section title="Forms">
         <div style={{ minWidth: 260 }}>
           <Field label="Destination" hint="City or airport">

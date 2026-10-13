@@ -49,6 +49,7 @@ export { EmptyState } from "./components/feedback/EmptyState.jsx";
 export { ErrorState } from "./components/feedback/ErrorState.jsx";
 export { Skeleton } from "./components/feedback/Skeleton.jsx";
 export { LoadingState } from "./components/feedback/LoadingState.jsx";
+export { Progress } from "./components/feedback/Progress.jsx";
 export { Tabs } from "./components/navigation/Tabs.jsx";
 export { SideNav } from "./components/navigation/SideNav.jsx";
 export { TabBar } from "./components/navigation/TabBar.jsx";

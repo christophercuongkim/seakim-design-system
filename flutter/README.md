@@ -90,6 +90,7 @@ final int columns = bp.pick(sm: 1, md: 2, lg: 4);
 | `Toast` | `SkToast` + `showSkToast` | Helper handles overlay placement and auto-dismiss |
 | `Tooltip` | `SkTooltip` | |
 | `EmptyState` | `SkEmptyState` | |
+| `Progress` | `SkProgress` | `label` is a widget-free String in both |
 | `Tabs` / `SideNav` / `TabBar` | `SkTabs` / `SkSideNav` / `SkTabBar` | |
 | `PlayerSheet` pattern | `showSkSheet` | Bottom sheet at sm, centred panel from md up |
 | `Viewport` | `SkResponsive` | `LayoutBuilder` instead of `ResizeObserver` |

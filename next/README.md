@@ -78,10 +78,10 @@ Everything without function props renders straight from a Server Component.
 
 ### What you get
 
-26 components — `Avatar` `Badge` `Button` `Card` `Checkbox` `DatePicker` `Dialog`
-`EmptyState` `Field` `Icon` `IconButton` `Input` `Radio` `SegmentedControl` `Select`
-`SideNav` `Slider` `Stat` `Switch` `TabBar` `Table` `Tabs` `Tag` `Textarea` `Toast`
-`Tooltip` — plus `Viewport` and `useMeasuredBreakpoint` for container-width layout.
+27 components — `Avatar` `Badge` `Button` `Card` `Checkbox` `DatePicker` `Dialog`
+`EmptyState` `Field` `Icon` `IconButton` `Input` `Progress` `Radio` `SegmentedControl`
+`Select` `SideNav` `Slider` `Stat` `Switch` `TabBar` `Table` `Tabs` `Tag` `Textarea`
+`Toast` `Tooltip` — plus `Viewport` and `useMeasuredBreakpoint` for container-width layout.
 
 Every component ships a `.d.ts`, so props autocomplete. Usage notes per component are
 in `components/*/<Name>.prompt.md`; the platform-neutral contracts are in `spec/`, and

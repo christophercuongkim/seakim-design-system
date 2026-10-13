@@ -92,6 +92,7 @@ final int columns = bp.pick(sm: 1, md: 2, lg: 4);
 | `EmptyState` | `SkEmptyState` | |
 | `Progress` | `SkProgress` | `label` is a widget-free String in both |
 | `PageHeader` | `SkPageHeader` | `actions` and `toolbar` are widget lists |
+| `ListRow` / `ListGroup` | `SkListRow` / `SkListGroup` | `href` and `onClick` became one `onPressed` |
 | `Disclosure` | `SkDisclosure` | `open`/`onToggle` became `isOpen`/`onToggle`; uncontrolled with `initiallyOpen` |
 | `Tabs` / `SideNav` / `TabBar` | `SkTabs` / `SkSideNav` / `SkTabBar` | |
 | `PlayerSheet` pattern | `showSkSheet` | Bottom sheet at sm, centred panel from md up |

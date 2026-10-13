@@ -33,6 +33,12 @@ ADRs say *why*. This says *what* and *when*.
   card. The page's `h1`, a `badge` beside it for the count or status, `actions` on the
   right, an optional `description`, and a `toolbar` row for filters, tabs and the view
   toggle. Not sticky. `spec/PageHeader.md`. (CHR-380, 0038)
+- **`ListRow` and `ListGroup` / `SkListRow` and `SkListGroup`**. The row every list is
+  made of: `leading`, stacked `eyebrow`/`title`/`meta`, `trailing`; the height comes from
+  the content, so one component is both the one-line settings row and the three-line
+  inbox row. `href` renders a link, `onClick` a button; `selected` is a fill and
+  `aria-current`. The group carries the eyebrow heading and the hairline dividers.
+  `spec/ListRow.md`. (CHR-381, 0038)
 - **Decision 0038, promote on a spike.** A consumer's design spike naming a shape with no
   consumer nouns is enough to build it here; readme "Adding an app" step 4 now says so.
 - **Decision 0039, binding parity, and `tool/parity-check.mjs`.** Every `index.js` component

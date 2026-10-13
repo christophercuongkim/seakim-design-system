@@ -9,6 +9,8 @@ import {
   Field,
   Icon,
   Input,
+  ListGroup,
+  ListRow,
   PageHeader,
   Progress,
   Slider,
@@ -76,6 +78,29 @@ export default function Page() {
             badge={<Badge mono>12</Badge>}
             description="Everyone on the bench this week."
           />
+        </div>
+      </Section>
+      <Section title="ListRow">
+        <div style={{ width: 360 }}>
+          <ListGroup heading="Roster">
+            <ListRow
+              leading={<Avatar name="Dana Okafor" size="sm" />}
+              eyebrow="PG · ATL"
+              title="Dana Okafor"
+              meta="vs MIA tonight"
+              trailing="24.6"
+              selected
+              href="#okafor"
+            />
+            <ListRow
+              leading={<Avatar name="Theo Lindqvist" size="sm" />}
+              eyebrow="SG · BOS"
+              title="Theo Lindqvist"
+              meta="@ NYK tonight"
+              trailing="11.2"
+              href="#lindqvist"
+            />
+          </ListGroup>
         </div>
       </Section>
       <Section title="Actions">

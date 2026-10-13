@@ -20,6 +20,7 @@
   var FILES = [
     'components/core/Icon.jsx',
     'components/core/useCoarsePointer.js',
+    'components/core/useMeasuredBreakpoint.js',
     'components/core/match.js',
     'components/core/Button.jsx',
     'components/core/IconButton.jsx',
@@ -57,7 +58,8 @@
     'components/navigation/Tabs.jsx',
     'components/navigation/SideNav.jsx',
     'components/navigation/TabBar.jsx',
-    'components/layout/PageHeader.jsx'
+    'components/layout/PageHeader.jsx',
+    'components/layout/SplitPane.jsx'
   ];
 
   function fromBundle() {

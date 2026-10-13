@@ -181,11 +181,11 @@ Ship unless the platform genuinely has no use case.
 `Avatar` · `Stat` · `Tag` · `Textarea` · `Radio` · `SegmentedControl` · `Tabs` ·
 `Tooltip` · `Table`
 
-### On demand (9)
+### On demand (10)
 
 Specced so they are consistent whenever they arrive.
 
-`Slider` · `DatePicker` · `Range` (the interval/distribution glyph, [0017](decisions/0017-distribution-interval-glyph.md)) · `Sheet` as a component distinct from a `Dialog` mode · `Progress` (determinate, [0038](decisions/0038-promote-on-a-spike.md)) · `Disclosure` (one fold, never an accordion) · `PageHeader` ([spec](spec/PageHeader.md)) · `ListRow` and `ListGroup` ([spec](spec/ListRow.md))
+`Slider` · `DatePicker` · `Range` (the interval/distribution glyph, [0017](decisions/0017-distribution-interval-glyph.md)) · `Sheet` as a component distinct from a `Dialog` mode · `Progress` (determinate, [0038](decisions/0038-promote-on-a-spike.md)) · `Disclosure` (one fold, never an accordion) · `PageHeader` ([spec](spec/PageHeader.md)) · `ListRow` and `ListGroup` ([spec](spec/ListRow.md)) · `SplitPane` ([spec](spec/SplitPane.md))
 
 ### Forbidden (1)
 

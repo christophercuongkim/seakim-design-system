@@ -39,6 +39,14 @@ ADRs say *why*. This says *what* and *when*.
   inbox row. `href` renders a link, `onClick` a button; `selected` is a fill and
   `aria-current`. The group carries the eyebrow heading and the hairline dividers.
   `spec/ListRow.md`. (CHR-381, 0038)
+- **`SplitPane` / `SkSplitPane`** with `SplitPane.Header` / `SkSplitPaneHeader`. A list
+  beside its detail and an optional properties `aside`; each column scrolls on its own.
+  Measured on the container: one column under `md` (the detail when `detailOpen`, with
+  a back control in the header), two from `md`, three from `lg`. The header carries back
+  or close, the title, a counter, prev/next and actions; Escape in the detail closes.
+  `spec/SplitPane.md`. The measured-breakpoint hook moved to
+  `components/core/useMeasuredBreakpoint.js`; `Viewport` and the barrel re-export it
+  unchanged. (CHR-382, 0038)
 - **Decision 0038, promote on a spike.** A consumer's design spike naming a shape with no
   consumer nouns is enough to build it here; readme "Adding an app" step 4 now says so.
 - **Decision 0039, binding parity, and `tool/parity-check.mjs`.** Every `index.js` component

@@ -17,6 +17,22 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [8.5.0] — 2026-10-15
+
+The Flutter binding moves to **5.4.0** against `seakim_rules: "8.5"`. Minor under 0011:
+one prop added, default off, no token.
+
+### Added
+
+- **`Tabs fill` / `SkTabs(fill: true)`.** The row and its track span the width given. Tabs
+  that fit at their natural widths share it (equally when the widest allows), and a row
+  that does not fit scrolls at natural widths, track still full width. The widget decides
+  from its own measured width, never a breakpoint. When `value` changes, from a tap or a
+  scroll-spy, a scrolling row moves the least distance that shows the active tab; reduced
+  motion jumps. In Flutter, whose row always scrolled, that applies with or without
+  `fill`; in React only `fill` rows scroll. Found on Juntio's itinerary day chips.
+  (CHR-422, 0038)
+
 ## [8.4.0] — 2026-10-15
 
 Shapes for the Juntio redesign (spikes 1, 5 and 9), each in both bindings with a demo,

@@ -3,7 +3,7 @@
 What a binding must do to legitimately call itself SeaKim. Tiers defined in
 [0008](decisions/0008-conformance-tiers.md); this is the working checklist.
 
-**Rules version 8.4** — a binding claims conformance *to a version*, because this document
+**Rules version 8.5** — a binding claims conformance *to a version*, because this document
 changes. Declare it alongside your own version, per
 [0011](decisions/0011-versioning.md) and [0019](decisions/0019-versioning-second-pass.md):
 
@@ -205,7 +205,7 @@ renames for platform correctness, the mapping goes in its readme —
 
 Honest rather than flattering.
 
-Rules layer: **SeaKim 8.4**. Each binding declares the rules version it conforms to, and a
+Rules layer: **SeaKim 8.5**. Each binding declares the rules version it conforms to, and a
 binding that lags is behind rather than broken — see
 [0011](decisions/0011-versioning.md).
 
@@ -215,9 +215,9 @@ nobody has needed yet, not one we owe you.
 | | React | Flutter | Next.js | SwiftUI · Compose · other |
 | --- | --- | --- | --- | --- |
 | Status | Reference binding | Written; unbuilt (see 3) | Adapter over React | Unclaimed |
-| Version | 8.4.0 | 5.3.0 | 8.4.0 | — |
-| Targets rules | 8.4 | 8.4 | 8.4 | — |
-| Conforms to | SeaKim 8.4 | SeaKim 8.4 | SeaKim 8.4 | — |
+| Version | 8.5.0 | 5.4.0 | 8.5.0 | — |
+| Targets rules | 8.5 | 8.5 | 8.5 | — |
+| Conforms to | SeaKim 8.5 | SeaKim 8.5 | SeaKim 8.5 | — |
 | Tier 0 | Pass, except light unverified | Pass, except light unverified | Inherits React | — |
 | Tier 1 documented | Partial | Yes, in `flutter/README.md` | Yes, in `next/README.md` | — |
 | Mandatory 14 | 14 / 14 | 14 / 14 | Inherits React | — |

@@ -865,6 +865,7 @@ final List<SkDemo> skShowcase = <SkDemo>[
     String value = 'itinerary';
     return StatefulBuilder(
       builder: (BuildContext context, StateSetter setState) => SkTabs<String>(
+        fill: true,
         value: value,
         onChanged: (String v) => setState(() => value = v),
         tabs: const <SkTab<String>>[

@@ -105,7 +105,7 @@ final int columns = bp.pick(sm: 1, md: 2, lg: 4);
 | `Board` / `BoardColumn` | `SkBoard` / `SkBoardColumn` | The phone strip is a `PageView` at 0.85 |
 | `FileDrop` | `SkFileDrop` | `onFile` became `onPick` with no file argument; the app opens its own picker |
 | `Disclosure` | `SkDisclosure` | `open`/`onToggle` became `isOpen`/`onToggle`; uncontrolled with `initiallyOpen` |
-| `Tabs` / `SideNav` / `TabBar` | `SkTabs` / `SkSideNav` / `SkTabBar` | `SideNav.brand` is a `String` (`brand`) or a widget (`brandWidget`) in Flutter, never both |
+| `Tabs` / `SideNav` / `TabBar` | `SkTabs` / `SkSideNav` / `SkTabBar` | `Tabs.fill` is `SkTabs.fill`; Flutter's row always scrolled, so its active tab scrolls into view with or without it. `SideNav.brand` is a `String` (`brand`) or a widget (`brandWidget`) in Flutter, never both |
 | `Sheet` | `showSkSheet` | A function in Flutter; both are a bottom sheet at sm and a centred panel from md up |
 | `Viewport` | `SkResponsive` | `LayoutBuilder` instead of `ResizeObserver` |
 | — | `SkPressable` | New. The hover/press/focus primitive every control sits on |

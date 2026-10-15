@@ -62,7 +62,7 @@
     "components/forms/pickers.card.html":      { "markers": ["Slider"] },
     "components/feedback/feedback.card.html":  { "markers": ["Open dialog", "Checking 40 airlines…", "Popover", "Combobox", "ErrorState", "4 of 13", "Fare breakdown", "Open sheet"] },
     "components/data/data.card.html":          { "markers": ["projected", "Range ·", "Notifications", "Senior frontend engineer", "Recruiter screen", "Seniority"] },
-    "components/navigation/navigation.card.html": { "markers": ["SideNav"] },
+    "components/navigation/navigation.card.html": { "markers": ["SideNav", "Day 20", "Go to day 17"] },
     "components/layout/layout.card.html":        { "markers": ["Trips", "New trip", "2 of 3", "Continue with email", "Lisbon", "Your balance", "the rail is hidden"] },
     "components/layout/board.card.html":         { "markers": ["Pursuing", "Phone screen"] }
   },

@@ -17,6 +17,42 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [8.4.0] — 2026-10-15
+
+Shapes for the Juntio redesign (spikes 1, 5 and 9), each in both bindings with a demo,
+a `/next` example, a Flutter showcase entry and a prompt doc, under decision 0038. The
+Flutter binding moves to **5.3.0** against `seakim_rules: "8.4"` (0019: it gained three
+widgets, a function and two `SkSideNav` parameters). Minor under 0011: everything is
+added, nothing in Tier 0 changed and no token moved.
+
+### Added
+
+- **`TopBar` / `SkTopBar`**, layout.md's 52px top bar and the phone's screen header: back
+  or close, the title, up to two icon actions. `onTitleClick` (`onTitleTap`) makes the
+  title a button with a caret; `titleMenu` is shown in a `Popover` under it while
+  `titleMenuOpen`, the app owning the state and the content. `--surface-card`, no
+  hairline, `--shadow-raised-topbar` / `SkDepth.raisedTopBar` only while `scrolledUnder`;
+  the top safe-area inset sits above the row. (CHR-419, 0038)
+- **`PageBody` / `SkPageBody`** and **`pagePad(bp)` / `skPagePad(bp)`**. Page padding for
+  the measured breakpoint outside, a content ceiling inside (`list` 48rem, `form` 620px,
+  `prose` 68ch, `full`), centred. layout.md has said both kits expose `pagePad`; now the
+  library does. (CHR-419, 0038)
+- **`ContentRail` / `SkContentRail`**, layout.md pattern 2: content beside a 300 to 320px
+  rail of panels at `lg`, a hairline between, each scrolling on its own. Below `lg` the
+  rail follows the content (`railBelow`, the default) or is hidden (`railBelow: false`,
+  for a chat thread over its composer). (CHR-420, CHR-421, 0038)
+- **`SkSideNav.brandWidget` and `brandCollapsed`.** The brand row takes a widget (a mark,
+  a context switcher) and the 56px rail its own content, as React's `SideNav` already
+  did; `brand` stays a `String` and the two cannot both be set. (CHR-419, 0039)
+- **layout.md: a fourth content ceiling.** Single-column lists and feeds cap at 768px
+  (48rem), centred, page padding outside; tables, boards, split panes, maps and
+  dashboards stay full width. Pattern 2 says when the rail may hide instead of stacking.
+  (CHR-419, CHR-420)
+- **`spec/MessageBubble.md`**, a note with no component: a chat bubble is a surface at
+  `--radius-xl`, with `--radius-sm` on the sender-side corners where bubbles in a run
+  join; a display-only reaction chip is the count-badge role, `--radius-full`. The
+  readme's ladder table names both. (CHR-421)
+
 ## [8.3.3] — 2026-10-13
 
 ### Fixed

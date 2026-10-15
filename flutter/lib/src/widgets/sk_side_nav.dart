@@ -44,9 +44,12 @@ class SkSideNav<T> extends StatelessWidget {
     required this.active,
     this.onNavigate,
     this.brand,
+    this.brandWidget,
+    this.brandCollapsed,
     this.collapsed = false,
     this.footer,
-  });
+  }) : assert(brand == null || brandWidget == null,
+            'Pass brand or brandWidget, not both.');
 
   final List<SkNavGroup<T>> groups;
   final T active;
@@ -56,12 +59,27 @@ class SkSideNav<T> extends StatelessWidget {
   /// so this is type, deliberately.
   final String? brand;
 
+  /// The brand row as a widget instead: a mark beside the name, or a context
+  /// switcher (name and a caret that opens a menu). Same 52px row and padding
+  /// as [brand]. Collapses to [brandCollapsed], or to nothing without it.
+  final Widget? brandWidget;
+
+  /// What the 56px rail shows in place of the brand: a mark, an initial.
+  /// Without it a [brand] collapses to its first letter.
+  final Widget? brandCollapsed;
+
   final bool collapsed;
   final Widget? footer;
 
   @override
   Widget build(BuildContext context) {
     final SkColors c = context.skColors;
+    // Collapsed: brandCollapsed, else a String brand's first letter, else
+    // nothing (a widget brand has no first letter), as React's SideNav does.
+    final Widget? brandRow = collapsed
+        ? brandCollapsed ??
+            (brand == null ? null : Text(brand!.characters.first))
+        : brandWidget ?? (brand == null ? null : Text(brand!));
 
     return AnimatedContainer(
       duration: SkMotion.slow,
@@ -73,17 +91,17 @@ class SkSideNav<T> extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          if (brand != null)
+          if (brandRow != null)
             Container(
               height: SkChrome.topBar,
               alignment: collapsed ? Alignment.center : Alignment.centerLeft,
               padding:
                   EdgeInsets.symmetric(horizontal: collapsed ? 0 : SkSpace.s5),
-              child: Text(
-                collapsed ? brand!.characters.first : brand!,
+              child: DefaultTextStyle.merge(
                 maxLines: 1,
                 overflow: TextOverflow.clip,
                 style: SkText.subheading.copyWith(color: c.textPrimary),
+                child: brandRow,
               ),
             ),
           Expanded(

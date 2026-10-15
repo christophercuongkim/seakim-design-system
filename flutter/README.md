@@ -97,11 +97,15 @@ final int columns = bp.pick(sm: 1, md: 2, lg: 4);
 | `SplitPaneHeader` (also `SplitPane.Header`) | `SkSplitPaneHeader` | The header reads the pane's scope for back-versus-close |
 | `Stepper` | `SkStepper` | `steps` are `SkStep`s; `orientation` is `SkStepperOrientation` |
 | `Meter` | `SkMeter` | |
+| `TopBar` | `SkTopBar` | `title` is a widget; `onTitleClick` became `onTitleTap`, `titleMenu` a `WidgetBuilder`; the safe-area inset comes from `MediaQuery` |
+| `PageBody` | `SkPageBody` | `width` is `SkPageWidth`; `prose` measures 68 zeros of `SkText.body` |
+| `pagePad` | `skPagePad` | Returns `EdgeInsets` instead of a CSS `padding` string |
+| `ContentRail` | `SkContentRail` | `rail` is a widget list; with `railBelow` the widget scrolls the content, so pass a non-scrolling one |
 | `GateLayout` | `SkGateLayout` | `brand` and `footer` are widgets; `align` is `SkGateAlign` |
 | `Board` / `BoardColumn` | `SkBoard` / `SkBoardColumn` | The phone strip is a `PageView` at 0.85 |
 | `FileDrop` | `SkFileDrop` | `onFile` became `onPick` with no file argument; the app opens its own picker |
 | `Disclosure` | `SkDisclosure` | `open`/`onToggle` became `isOpen`/`onToggle`; uncontrolled with `initiallyOpen` |
-| `Tabs` / `SideNav` / `TabBar` | `SkTabs` / `SkSideNav` / `SkTabBar` | |
+| `Tabs` / `SideNav` / `TabBar` | `SkTabs` / `SkSideNav` / `SkTabBar` | `SideNav.brand` is a `String` (`brand`) or a widget (`brandWidget`) in Flutter, never both |
 | `Sheet` | `showSkSheet` | A function in Flutter; both are a bottom sheet at sm and a centred panel from md up |
 | `Viewport` | `SkResponsive` | `LayoutBuilder` instead of `ResizeObserver` |
 | — | `SkPressable` | New. The hover/press/focus primitive every control sits on |

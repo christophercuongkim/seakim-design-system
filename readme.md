@@ -264,8 +264,8 @@ never a value that looked right.
 | `xs` | 2px | Tags, chips, inline marks |
 | `sm` | 4px | Checkboxes, menu items |
 | `lg` | 8px | Buttons, icon buttons, segmented control, inputs, selects, textareas |
-| `xl` | 12px | Cards, panels, dialogs, sheets, popovers, menus |
-| `full` | 999px | Count badges, toggle tracks, pills |
+| `xl` | 12px | Cards, panels, dialogs, sheets, popovers, menus, message bubbles ([spec](spec/MessageBubble.md)) |
+| `full` | 999px | Count badges (a display-only reaction chip is one), toggle tracks, pills |
 | `circle` | 50% | Avatars, dots |
 
 A pill-shaped button is off-system. A concentric corner never rounds more than the

@@ -5,6 +5,7 @@ import {
   BoardColumn,
   Button,
   Card,
+  ContentRail,
   DatePicker,
   Disclosure,
   EmptyState,
@@ -16,6 +17,7 @@ import {
   ListGroup,
   ListRow,
   Meter,
+  PageBody,
   PageHeader,
   Progress,
   Slider,
@@ -24,6 +26,7 @@ import {
   Stat,
   Stepper,
   Tag,
+  TopBar,
 } from "@seakim/design-system";
 
 import { RosterTable } from "./roster-table";
@@ -153,6 +156,22 @@ export default function Page() {
             <Button fullWidth>Continue with Google</Button>
             <Button variant="secondary" fullWidth>Continue with email</Button>
           </GateLayout>
+        </div>
+      </Section>
+      <Section title="TopBar, PageBody, ContentRail">
+        <div style={{ width: "100%", height: 320, overflow: "auto", background: "var(--surface-page)" }}>
+          <TopBar title="Lisbon" scrolledUnder />
+          <ContentRail
+            content={
+              <PageBody width="list">
+                <ListGroup heading="Activity">
+                  <ListRow title="Hotel, 3 nights" meta="Paid by Ada" trailing="$412" />
+                  <ListRow title="Dinner at Taberna" meta="Paid by Ravi" trailing="$86" />
+                </ListGroup>
+              </PageBody>
+            }
+            rail={<Stat label="Your balance" value="$84.50" size="sm" />}
+          />
         </div>
       </Section>
       <Section title="Board">

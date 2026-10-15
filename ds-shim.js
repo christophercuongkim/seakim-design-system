@@ -66,6 +66,9 @@
     'components/layout/PageHeader.jsx',
     'components/layout/SplitPane.jsx',
     'components/layout/GateLayout.jsx',
+    'components/layout/TopBar.jsx',
+    'components/layout/PageBody.jsx',
+    'components/layout/ContentRail.jsx',
     'components/layout/Board.jsx'
   ];
 

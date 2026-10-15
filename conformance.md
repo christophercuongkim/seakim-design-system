@@ -3,7 +3,7 @@
 What a binding must do to legitimately call itself SeaKim. Tiers defined in
 [0008](decisions/0008-conformance-tiers.md); this is the working checklist.
 
-**Rules version 8.3** — a binding claims conformance *to a version*, because this document
+**Rules version 8.4** — a binding claims conformance *to a version*, because this document
 changes. Declare it alongside your own version, per
 [0011](decisions/0011-versioning.md) and [0019](decisions/0019-versioning-second-pass.md):
 
@@ -181,11 +181,11 @@ Ship unless the platform genuinely has no use case.
 `Avatar` · `Stat` · `Tag` · `Textarea` · `Radio` · `SegmentedControl` · `Tabs` ·
 `Tooltip` · `Table`
 
-### On demand (15)
+### On demand (18)
 
 Specced so they are consistent whenever they arrive.
 
-`Slider` · `DatePicker` · `Range` (the interval/distribution glyph, [0017](decisions/0017-distribution-interval-glyph.md)) · `Sheet` ([spec](spec/Sheet.md); React `Sheet`, Flutter `showSkSheet`) · `Progress` (determinate, [0038](decisions/0038-promote-on-a-spike.md)) · `Disclosure` (one fold, never an accordion) · `PageHeader` ([spec](spec/PageHeader.md)) · `ListRow` and `ListGroup` ([spec](spec/ListRow.md)) · `SplitPane` ([spec](spec/SplitPane.md)) · `Stepper` ([spec](spec/Stepper.md)) · `Meter` (a measurement; `Progress` is the one that moves) · `FileDrop` (one file, a labelled wait, the error under the zone) · `GateLayout` (the page outside the shell) · `Board` and `BoardColumn` ([spec](spec/Board.md))
+`Slider` · `DatePicker` · `Range` (the interval/distribution glyph, [0017](decisions/0017-distribution-interval-glyph.md)) · `Sheet` ([spec](spec/Sheet.md); React `Sheet`, Flutter `showSkSheet`) · `Progress` (determinate, [0038](decisions/0038-promote-on-a-spike.md)) · `Disclosure` (one fold, never an accordion) · `PageHeader` ([spec](spec/PageHeader.md)) · `ListRow` and `ListGroup` ([spec](spec/ListRow.md)) · `SplitPane` ([spec](spec/SplitPane.md)) · `Stepper` ([spec](spec/Stepper.md)) · `Meter` (a measurement; `Progress` is the one that moves) · `FileDrop` (one file, a labelled wait, the error under the zone) · `GateLayout` (the page outside the shell) · `Board` and `BoardColumn` ([spec](spec/Board.md)) · `TopBar` (the 52px bar, raised only over content) · `PageBody` (page padding and a content ceiling) · `ContentRail` (layout pattern 2; the rail stacks below `lg`, or hides for a pane that cannot stack)
 
 ### Forbidden (1)
 
@@ -205,7 +205,7 @@ renames for platform correctness, the mapping goes in its readme —
 
 Honest rather than flattering.
 
-Rules layer: **SeaKim 8.3**. Each binding declares the rules version it conforms to, and a
+Rules layer: **SeaKim 8.4**. Each binding declares the rules version it conforms to, and a
 binding that lags is behind rather than broken — see
 [0011](decisions/0011-versioning.md).
 
@@ -215,14 +215,14 @@ nobody has needed yet, not one we owe you.
 | | React | Flutter | Next.js | SwiftUI · Compose · other |
 | --- | --- | --- | --- | --- |
 | Status | Reference binding | Written; unbuilt (see 3) | Adapter over React | Unclaimed |
-| Version | 8.3.3 | 5.2.0 | 8.3.3 | — |
-| Targets rules | 8.3 | 8.3 | 8.3 | — |
-| Conforms to | SeaKim 8.3 | SeaKim 8.3 | SeaKim 8.3 | — |
+| Version | 8.4.0 | 5.3.0 | 8.4.0 | — |
+| Targets rules | 8.4 | 8.4 | 8.4 | — |
+| Conforms to | SeaKim 8.4 | SeaKim 8.4 | SeaKim 8.4 | — |
 | Tier 0 | Pass, except light unverified | Pass, except light unverified | Inherits React | — |
 | Tier 1 documented | Partial | Yes, in `flutter/README.md` | Yes, in `next/README.md` | — |
 | Mandatory 14 | 14 / 14 | 14 / 14 | Inherits React | — |
 | Expected 9 | 9 / 9 | 9 / 9 | Inherits React | — |
-| On demand 15 | 15 / 15 | 15 / 15 | Inherits React | — |
+| On demand 18 | 18 / 18 | 18 / 18 | Inherits React | — |
 | Forbidden | Clean | Clean | Clean | — |
 
 ### Open non-conformance

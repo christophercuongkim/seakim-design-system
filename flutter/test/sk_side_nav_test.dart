@@ -36,4 +36,66 @@ void main() {
     expect(find.text('Trips'), findsOneWidget);
     expect(find.byType(SkTooltip), findsNothing);
   });
+
+  testWidgets(
+      'a widget brand shows expanded and its collapsed mark on the rail',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(_host(
+      const SkSideNav<int>(
+        active: 0,
+        groups: _groups,
+        brandWidget: Text('Lisbon trip'),
+        brandCollapsed: Text('L'),
+      ),
+    ));
+    expect(find.text('Lisbon trip'), findsOneWidget);
+    expect(
+        tester
+            .getSize(find
+                .ancestor(
+                    of: find.text('Lisbon trip'),
+                    matching: find.byType(Container))
+                .first)
+            .height,
+        SkChrome.topBar);
+
+    await tester.pumpWidget(_host(
+      const SkSideNav<int>(
+        active: 0,
+        groups: _groups,
+        collapsed: true,
+        brandWidget: Text('Lisbon trip'),
+        brandCollapsed: Text('L'),
+      ),
+    ));
+    expect(find.text('Lisbon trip'), findsNothing);
+    expect(find.text('L'), findsOneWidget);
+  });
+
+  testWidgets('a widget brand without brandCollapsed collapses to nothing',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(_host(
+      const SkSideNav<int>(
+          active: 0,
+          groups: _groups,
+          collapsed: true,
+          brandWidget: Text('Lisbon trip')),
+    ));
+    expect(find.text('Lisbon trip'), findsNothing);
+    expect(find.text('L'), findsNothing);
+
+    await tester.pumpWidget(_host(
+      const SkSideNav<int>(
+          active: 0, groups: _groups, collapsed: true, brand: 'Juntio'),
+    ));
+    expect(find.text('J'), findsOneWidget);
+  });
+
+  test('brand and brandWidget cannot both be set', () {
+    expect(
+      () => SkSideNav<int>(
+          active: 0, groups: _groups, brand: 'A', brandWidget: Text('B')),
+      throwsAssertionError,
+    );
+  });
 }

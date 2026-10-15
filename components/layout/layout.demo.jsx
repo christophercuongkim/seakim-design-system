@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { PageHeader } from './PageHeader.jsx';
 import { SplitPane } from './SplitPane.jsx';
 import { GateLayout } from './GateLayout.jsx';
+import { TopBar } from './TopBar.jsx';
+import { PageBody } from './PageBody.jsx';
+import { ContentRail } from './ContentRail.jsx';
 import { ListRow } from '../data/ListRow.jsx';
 import { ListGroup } from '../data/ListGroup.jsx';
 import { Stat } from '../core/Stat.jsx';
@@ -22,6 +25,17 @@ export function Demo() {
   const [open, setOpen] = useState(2);
   const trip = TRIPS.find(t => t.id === open) || TRIPS[0];
   const index = TRIPS.indexOf(trip);
+  const [menu, setMenu] = useState(false);
+  const [under, setUnder] = useState(false);
+  const balances = [
+    <div key="you"><Stat label="Your balance" value="$84.50" size="sm" /><Button size="sm" style={{ marginTop: 'var(--space-4)' }}>Settle up</Button></div>,
+    <div key="all" className="col" style={{ gap: 'var(--space-4)' }}><Stat label="Ada" value="-$40.00" size="sm" /><Stat label="Ravi" value="-$44.50" size="sm" /></div>,
+  ];
+  const feed = (
+    <ListGroup heading="Activity">
+      {TRIPS.map(t => <ListRow key={t.id} title={`${t.city} hotel`} meta={t.dates} trailing={t.fare} />)}
+    </ListGroup>
+  );
   return (
     <div className="col" style={{ gap: 'var(--space-7)' }}>
       <div>
@@ -38,6 +52,49 @@ export function Demo() {
             <IconButton icon="funnel" label="Filter" variant="secondary" size="sm" />
           </>}
         />
+      </div>
+      <div>
+        <div className="lbl">TopBar · back, a title that opens a menu, raised once content scrolls under it</div>
+        <div style={{ height: 200, overflow: 'auto', background: 'var(--surface-page)' }} onScroll={e => setUnder(e.currentTarget.scrollTop > 0)}>
+          <TopBar
+            title="Lisbon"
+            onBack={() => {}}
+            onTitleClick={() => setMenu(m => !m)}
+            titleMenu={<div className="col" style={{ padding: 'var(--space-4) var(--space-5)', gap: 'var(--space-3)', font: 'var(--type-body-sm)' }}><span>Trip settings</span><span>Invite people</span><span>Kyoto</span></div>}
+            titleMenuOpen={menu}
+            onTitleMenuDismiss={() => setMenu(false)}
+            actions={<><IconButton icon="magnifying-glass" label="Search" /><IconButton icon="gear" label="Settings" /></>}
+            scrolledUnder={under}
+          />
+          <PageBody width="list">
+            <p style={{ font: 'var(--type-body-sm)', color: 'var(--text-secondary)', margin: 0, height: 400 }}>Scroll this box: the bar picks up its shadow once the page passes under it.</p>
+          </PageBody>
+        </div>
+      </div>
+      <div>
+        <div className="lbl">PageBody · list ceiling (48rem), page padding outside, centred</div>
+        <div style={{ background: 'var(--surface-sunken)' }}>
+          <PageBody width="list">{feed}</PageBody>
+        </div>
+      </div>
+      <div>
+        <div className="lbl">ContentRail · lg: rail beside the content (a 1060px container, drawn at 62%)</div>
+        <div style={{ height: 174, overflow: 'hidden' }}>
+          <div style={{ width: 1060, height: 280, transform: 'scale(0.62)', transformOrigin: 'top left', background: 'var(--surface-page)' }}>
+            <ContentRail content={<PageBody width="list">{feed}</PageBody>} rail={balances} />
+          </div>
+        </div>
+      </div>
+      <div>
+        <div className="lbl">ContentRail · below lg: rail under the content, or hidden with railBelow false</div>
+        <div className="row" style={{ alignItems: 'stretch' }}>
+          <div style={{ flex: 1, height: 360, background: 'var(--surface-page)' }}>
+            <ContentRail content={<PageBody width="list">{feed}</PageBody>} rail={balances} />
+          </div>
+          <div style={{ flex: 1, height: 360, background: 'var(--surface-page)' }}>
+            <ContentRail railBelow={false} content={<PageBody width="full"><span style={{ font: 'var(--type-body-sm)' }}>A chat thread; the rail is hidden.</span></PageBody>} rail={balances} />
+          </div>
+        </div>
       </div>
       <div>
         <div className="lbl">SplitPane · list, detail with header, aside from lg</div>

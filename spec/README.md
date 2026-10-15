@@ -44,6 +44,7 @@ describes the present and then rots.
 | [Stepper](Stepper.md) | Built | React, Flutter — a labelled pipeline, vertical under md (0038) |
 | [Sheet](Sheet.md) | Built | React `Sheet`, Flutter `showSkSheet` — bottom sheet under md, centred panel from md (0039) |
 | [Board](Board.md) | Built | React, Flutter — kanban columns, a peek-and-swipe strip under md (0038) |
+| [MessageBubble](MessageBubble.md) | Note | No component — the bubble's corners on the ladder and the reaction chip as `pill` (0038) |
 | [Combobox](Combobox.md) | Built | React, Flutter — searchable long-list picker (0028) |
 | [ErrorState](ErrorState.md) | Built | React, Flutter — first-class error treatment (0029) |
 

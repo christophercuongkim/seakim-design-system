@@ -198,6 +198,41 @@ final List<SkDemo> skShowcase = <SkDemo>[
     );
   }),
 
+  // sk_content_rail.dart
+  SkDemo(
+      'Layout',
+      'Content and rail',
+      (BuildContext context) => SizedBox(
+            height: 300,
+            child: SkContentRail(
+              content: SkPageBody(
+                width: SkPageWidth.list,
+                child: SkListGroup(
+                  heading: 'Activity',
+                  children: <Widget>[
+                    SkListRow(
+                        title: const Text('Hotel, 3 nights'),
+                        meta: const Text('Paid by Ada'),
+                        trailing: const Text('\$412'),
+                        onPressed: () {}),
+                    SkListRow(
+                        title: const Text('Dinner at Taberna'),
+                        meta: const Text('Paid by Ravi'),
+                        trailing: const Text('\$86'),
+                        onPressed: () {}),
+                  ],
+                ),
+              ),
+              rail: const <Widget>[
+                SkStat(
+                    label: 'Your balance',
+                    value: '\$84.50',
+                    size: SkStatSize.sm),
+                SkStat(label: 'Ada', value: '-\$40.00', size: SkStatSize.sm),
+              ],
+            ),
+          )),
+
   // sk_date_picker.dart
   SkDemo('Date picker', 'Departure', (BuildContext context) {
     DateTime? date = DateTime(2026, 8, 20);
@@ -437,6 +472,30 @@ final List<SkDemo> skShowcase = <SkDemo>[
             ],
           )),
 
+  // sk_page_body.dart
+  SkDemo(
+      'Layout',
+      'Page body, list ceiling',
+      (BuildContext context) => ColoredBox(
+            color: context.skColors.surfaceSunken,
+            child: SkPageBody(
+              width: SkPageWidth.list,
+              child: SkListGroup(
+                heading: 'Trips',
+                children: <Widget>[
+                  SkListRow(
+                      title: const Text('Lisbon'),
+                      meta: const Text('14–21 Mar'),
+                      onPressed: () {}),
+                  SkListRow(
+                      title: const Text('Kyoto'),
+                      meta: const Text('2–12 Apr'),
+                      onPressed: () {}),
+                ],
+              ),
+            ),
+          )),
+
   // sk_page_header.dart
   SkDemo(
       'Layout',
@@ -623,7 +682,15 @@ final List<SkDemo> skShowcase = <SkDemo>[
         child: Row(
           children: <Widget>[
             SkSideNav<String>(
-              brand: 'SeaKim',
+              brandWidget: Row(
+                children: <Widget>[
+                  const Flexible(child: Text('Lisbon trip')),
+                  const SizedBox(width: SkSpace.s2),
+                  SkIcon(SkIcons.caretDown,
+                      size: 16, color: context.skColors.textSecondary),
+                ],
+              ),
+              brandCollapsed: const Text('L'),
               active: active,
               onNavigate: (String v) => setState(() => active = v),
               groups: const <SkNavGroup<String>>[
@@ -894,4 +961,46 @@ final List<SkDemo> skShowcase = <SkDemo>[
             child: SkIcon(SkIcons.bookmarkSimple,
                 color: context.skColors.textAccent),
           )),
+
+  // sk_top_bar.dart
+  SkDemo('Layout', 'Top bar', (BuildContext context) {
+    bool menu = false;
+    bool under = false;
+    return StatefulBuilder(
+      builder: (BuildContext context, StateSetter setState) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          SkTopBar(
+            title: const Text('Lisbon'),
+            onBack: () {},
+            onTitleTap: () => setState(() => menu = !menu),
+            titleMenu: (BuildContext context) => Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: SkSpace.s5, vertical: SkSpace.s4),
+              child: Text('Trip settings · Invite people · Kyoto',
+                  style: SkText.bodySm
+                      .copyWith(color: context.skColors.textPrimary)),
+            ),
+            titleMenuOpen: menu,
+            onTitleMenuDismiss: () => setState(() => menu = false),
+            actions: <Widget>[
+              SkIconButton(
+                  icon: SkIcons.magnifyingGlass,
+                  label: 'Search',
+                  onPressed: () {}),
+              SkIconButton(
+                  icon: SkIcons.gear, label: 'Settings', onPressed: () {}),
+            ],
+            scrolledUnder: under,
+          ),
+          const SizedBox(height: SkSpace.s4),
+          SkButton(
+            label: under ? 'Flatten the bar' : 'Raise the bar',
+            variant: SkButtonVariant.secondary,
+            onPressed: () => setState(() => under = !under),
+          ),
+        ],
+      ),
+    );
+  }),
 ];

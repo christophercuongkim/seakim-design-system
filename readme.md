@@ -41,7 +41,12 @@ them is visible to any gate here:
 | --- | --- | --- | --- | --- |
 | [`fantasy-hub`](https://github.com/christophercuongkim/fantasy-hub) | vendored copy, `web/vendor/seakim/` | `data-app="bench"` | **3.2.0** | 2026-08-07 |
 | [`juntio`](https://github.com/juntio/juntio) | `seakim_flutter` git dep pinned at `ref: 1cc352d`, plus a docs mirror | — | **4.2.0** | 2026-08-26 |
-| [`job-search`](https://github.com/christophercuongkim/job-search) | vendored copy, `web/vendor/seakim/` | `data-app="job-search"` | **8.2.0** — current | 2026-09-19 |
+| [`job-search`](https://github.com/christophercuongkim/job-search) | vendored copy, `web/vendor/seakim/` | `data-app="job-search"` | **8.2.0** | 2026-09-19 |
+| [`base-app`](https://github.com/christophercuongkim/base-app) | vendored copy, `web/vendor/seakim/` | `data-app="seakim"` | **8.3.0** | 2026-10-18 |
+
+`base-app` is the template every new app starts from (quick-app and full-app are retired).
+An app made from it inherits its vendored copy at whatever version base-app carried, and
+`init.sh` re-vendors the newest; list each one here when it ships.
 
 Four things this table is here to stop anyone assuming:
 

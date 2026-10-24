@@ -152,6 +152,7 @@ trail, not the latitude.
 | Springy curves | Enters overshoot, exits never | Exact felt overshoot — compositors differ |
 | Accessibility API | Every control labelled, focusable, announced | ARIA, Semantics, accessibilityLabel |
 | Pointer affordances | Present on pointer devices | Native cursor and scrollbar styling is fine |
+| Learning profile | Opt-in per app with `data-profile="learning"` on the root, per [0040](decisions/0040-learning-profile.md): the primary action, progress and the next step take the accent; titles go semibold; one in-flow object per screen may carry `--shadow-card`. Verdicts and status stay semantic; the shared layer and every other app are unchanged | How the attribute is set; which object is the raised one on each screen |
 
 ### Icon weights
 

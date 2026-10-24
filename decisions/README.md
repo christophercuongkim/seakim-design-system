@@ -59,6 +59,7 @@ the value is in the trail, and a silently edited ADR is worse than none.
 | [0037](0037-fills-define.md) | Fills and gaps define; a hairline is the exception, and it is alpha | Accepted |
 | [0038](0038-promote-on-a-spike.md) | A design spike's say-so promotes a shape into the library | Accepted |
 | [0039](0039-flutter-parity.md) | The two bindings this repo owns ship every component together, and a gate proves it | Accepted |
+| [0040](0040-learning-profile.md) | A learning profile: an opt-in that puts the accent on the primary action, progress and the next step | Accepted |
 
 ## Writing one
 

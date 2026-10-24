@@ -55,7 +55,7 @@
   --brand-wash: oklch(0.24 0.045 145);
 }
 
-[data-app="reserve"], [data-app="reserved"] {
+[data-app="interview-prep"], [data-app="reserve"], [data-app="reserved"] {
   --hue-brand: var(--hue-plum);
   --brand-100: oklch(0.91 0.045 320);
   --brand-200: oklch(0.84 0.075 320);

@@ -48,6 +48,7 @@ const PALETTE_FILES = [
   /tokens\/src\//,
   /tokens\/colors\.css$/,
   /tokens\/theme-light\.css$/,
+  /tokens\/profiles\.css$/, // the semantic layer of a profile (0040): it re-points semantic tokens at ramp steps, as theme-light does
   /tokens\/apps\.css$/,
   /tokens\/depth\.css$/,
   /tokens\/generated\//,

@@ -362,7 +362,7 @@ function emitCssApps() {
     brick: ['seakim', 'house'],
     sea: ['voyage', 'travel'],
     turf: ['bench', 'fantasy'],
-    plum: ['reserve', 'reserved'],
+    plum: ['interview-prep', 'reserve', 'reserved'],
     azure: ['job-search'],
   };
   for (const [name, h] of Object.entries(hues)) {

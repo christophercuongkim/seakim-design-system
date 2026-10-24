@@ -18,7 +18,7 @@
     },
     "plum": {
       "$value": 320,
-      "$description": "Reserved for app three"
+      "$description": "interview-prep — interview practice (CHR-521). The reserve aliases stay for anything that bound them."
     },
     "azure": {
       "$value": 215,

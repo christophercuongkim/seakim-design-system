@@ -3,11 +3,13 @@
 @import "tokens/colors.css";
 @import "tokens/theme-light.css";
 @import "tokens/apps.css";
-@import "tokens/profiles.css";
 @import "tokens/typography.css";
 @import "tokens/spacing.css";
 @import "tokens/radius.css";
 @import "tokens/depth.css";
 @import "tokens/layout.css";
 @import "tokens/motion.css";
+/* Profiles re-point tokens from every file above, so they come last: on the
+   html element [data-profile] ties :root on specificity and wins on order. */
+@import "tokens/profiles.css";
 @import "tokens/base.css";

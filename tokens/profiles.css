@@ -1,5 +1,6 @@
 /* ============================================================
-   SeaKim — profiles. Hand-written; nothing generates this file.
+   SeaKim — profiles. Hand-written; nothing generates this file. Imported
+   last by styles.css: it re-points tokens from every other token file.
    A profile is an opt-in an app sets on its root beside data-app. It
    re-points semantic tokens inside that subtree and touches nothing in the
    shared layer, so an app that sets no profile is exactly what 0036 and 0037

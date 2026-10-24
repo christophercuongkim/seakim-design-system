@@ -17,6 +17,18 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [8.6.1] — 2026-10-24
+
+Patch under 0011: no value changes; one import moves.
+
+### Fixed
+
+- **`profiles.css` is imported last.** It was imported after `apps.css` and before
+  `typography.css`, so on the `<html>` element, where `[data-profile]` ties `:root` on
+  specificity, the type tokens from `typography.css` won on source order and a learning
+  app kept medium titles. The colour tokens applied because their files come earlier.
+  Found on interview-prep's QA (CHR-522).
+
 ## [8.6.0] — 2026-10-24
 
 Minor under 0011: a slot, a Tier 1 allowance and new tokens added; nothing removed or

@@ -48,6 +48,7 @@ const PALETTE_FILES = [
   /tokens\/src\//,
   /tokens\/colors\.css$/,
   /tokens\/theme-light\.css$/,
+  /tokens\/profiles\.css$/, // the semantic layer of a profile (0040): it re-points semantic tokens at ramp steps, as theme-light does
   /tokens\/apps\.css$/,
   /tokens\/depth\.css$/,
   /tokens\/generated\//,
@@ -649,6 +650,44 @@ try {
         detail: `${theme}: --fill-primary resolves to rgb(${scaled.map(Math.round).join(', ')}) — channel spread ${spread.toFixed(0)}, ink allows ${INK_SPREAD}`,
         text: 'The primary action is ink (0036). Point --fill-primary at a stone step, not a brand step.',
       });
+    }
+  }
+} catch {
+  // Token files absent — a consuming repo running the checker over its own source.
+}
+
+/* ------------------------------------------ profile contrast (0040) */
+
+/**
+ * A profile re-points --fill-primary at a brand step, which the ink gate above
+ * never sees (it reads the root and the app slots). So the profile's own primary
+ * pair is measured here, for every app slot, in both themes: --on-primary over
+ * --fill-primary at the same 4.5:1 floor as the shared layer.
+ */
+try {
+  const strip = f => readFileSync(join(ROOT, f), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+  const base = cssDecls(strip('tokens/colors.css'));
+  const light = cssDecls(strip('tokens/theme-light.css'));
+  const appsSrc = strip('tokens/apps.css');
+  const profSrc = strip('tokens/profiles.css');
+  const apps = {};
+  for (const m of appsSrc.matchAll(/\[data-app="([\w-]+)"\][^{]*\{([^}]*)\}/g)) apps[m[1]] ??= cssDecls(`x{${m[2]}}`);
+  for (const profile of new Set([...profSrc.matchAll(/\[data-profile="(\w+)"\]/g)].map(m => m[1]))) {
+    const anyTheme = cssDecls(profSrc, new RegExp(`^\\[data-profile="${profile}"\\]`));
+    const dark = cssDecls(profSrc, new RegExp(`data-theme="dark".*data-profile="${profile}"`));
+    for (const [app, appVars] of Object.entries(apps)) {
+      for (const [theme, over] of [['dark', { ...anyTheme, ...dark }], ['light', { ...light, ...anyTheme }]]) {
+        const map = { ...base, ...appVars, ...over };
+        const F = toRgb('--on-primary', map), B = toRgb('--fill-primary', map);
+        if (!F || !B) continue;
+        const r = contrast(F, B);
+        if (r >= 4.5) continue;
+        violations.push({
+          rule: 'profile-contrast', clause: '0.8', file: 'tokens/profiles.css', line: 0,
+          detail: `${profile}/${app}/${theme}: --on-primary on --fill-primary is ${r.toFixed(2)}:1, floor is 4.5:1`,
+          text: 'A profile that moves the primary action onto the brand ramp (0040) keeps the contrast floor of guidelines/accessibility.md.',
+        });
+      }
     }
   }
 } catch {

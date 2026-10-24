@@ -92,7 +92,7 @@ class SkBrandRamps {
     wash: Color(0xFF102511),
   );
 
-  /// oklch(L C 320) — Reserved for app three
+  /// oklch(L C 320) — interview-prep — interview practice (CHR-521). The reserve aliases stay for anything that bound them.
   static const SkBrandRamp plum = SkBrandRamp(
     s100: Color(0xFFEFD8F4),
     s200: Color(0xFFE1BBE9),

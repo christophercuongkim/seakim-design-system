@@ -8,6 +8,7 @@ enum SkAppBrand {
   voyage(SkBrandRamps.sea),
   bench(SkBrandRamps.turf),
   reserve(SkBrandRamps.plum),
+  interviewPrep(SkBrandRamps.plum),
   jobSearch(SkBrandRamps.azure);
 
   const SkAppBrand(this.ramp);

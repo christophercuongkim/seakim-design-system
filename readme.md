@@ -27,7 +27,7 @@ SeaKim is building a portfolio of consumer apps.
 | **Voyage** | Travel planning and booking | Responsive web + mobile | Sea `--hue-sea` (245) |
 | **Bench** | Fantasy sport | Responsive web + mobile | Turf `--hue-turf` (145) |
 | **Job Search** | Job-search platform | Responsive web | Azure `--hue-azure` (215) |
-| _next_ | reserved | — | Plum `--hue-plum` (320) |
+| **interview-prep** | Interview practice: coding, system design, recall cards | Responsive web | Plum `--hue-plum` (320), under the learning profile ([0040](decisions/0040-learning-profile.md)) |
 
 Internal slide decks are a third surface and share the same tokens.
 
@@ -43,6 +43,7 @@ them is visible to any gate here:
 | [`juntio`](https://github.com/juntio/juntio) | `seakim_flutter` git dep pinned at `ref: 1cc352d`, plus a docs mirror | — | **4.2.0** | 2026-08-26 |
 | [`job-search`](https://github.com/christophercuongkim/job-search) | vendored copy, `web/vendor/seakim/` | `data-app="job-search"` | **8.2.0** | 2026-09-19 |
 | [`base-app`](https://github.com/christophercuongkim/base-app) | vendored copy, `web/vendor/seakim/` | `data-app="seakim"` | **8.3.0** | 2026-10-18 |
+| [`interview-prep`](https://github.com/christophercuongkim/interview-prep) | vendored copy, `web/vendor/seakim/` | `data-app="interview-prep"` + `data-profile="learning"` | **8.3.3** | 2026-10-20 |
 
 `base-app` is the template every new app starts from (quick-app and full-app are retired).
 An app made from it inherits its vendored copy at whatever version base-app carried, and

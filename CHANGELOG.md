@@ -17,6 +17,26 @@ ADRs say *why*. This says *what* and *when*.
 
 ---
 
+## [8.6.0] — 2026-10-24
+
+Minor under 0011: a slot, a Tier 1 allowance and new tokens added; nothing removed or
+renamed. The Flutter binding stays at **5.4.0** against `seakim_rules: "8.5"`; it gains
+one enum case and no behaviour.
+
+### Added
+
+- **`interview-prep` takes the plum slot.** `data-app="interview-prep"` (and
+  `SkAppBrand.interviewPrep`) bind the plum ramp, hue 320. The `reserve` and `reserved`
+  aliases stay. The readme's app and consumer tables list it.
+- **The learning profile, [0040](decisions/0040-learning-profile.md).** A new hand-written
+  `tokens/profiles.css`, imported after `apps.css`. An app that sets
+  `data-profile="learning"` beside `data-app` gets, inside that subtree: `--fill-primary`
+  and friends on the brand ramp (700 light, 400 dark, `--on-primary` stone-50 / stone-950;
+  a new `profile-contrast` gate holds every slot at 4.5:1 in both themes); new `--fill-progress` and `--fill-next` for bars and rings; a new
+  `--shadow-card` for one raised in-flow object per screen; semibold display, title,
+  heading and subheading with regular body. One Tier 1 row in `conformance.md` carries
+  the paper trail. An app that sets no profile resolves every token as before.
+
 ## [8.5.0] — 2026-10-15
 
 The Flutter binding moves to **5.4.0** against `seakim_rules: "8.5"`. Minor under 0011:

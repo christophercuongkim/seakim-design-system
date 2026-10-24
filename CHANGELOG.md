@@ -31,8 +31,8 @@ one enum case and no behaviour.
 - **The learning profile, [0040](decisions/0040-learning-profile.md).** A new hand-written
   `tokens/profiles.css`, imported after `apps.css`. An app that sets
   `data-profile="learning"` beside `data-app` gets, inside that subtree: `--fill-primary`
-  and friends on the brand ramp (600 light, 400 dark, `--on-primary` stone-50 / stone-950,
-  4.7:1 and 7.4:1); new `--fill-progress` and `--fill-next` for bars and rings; a new
+  and friends on the brand ramp (700 light, 400 dark, `--on-primary` stone-50 / stone-950;
+  a new `profile-contrast` gate holds every slot at 4.5:1 in both themes); new `--fill-progress` and `--fill-next` for bars and rings; a new
   `--shadow-card` for one raised in-flow object per screen; semibold display, title,
   heading and subheading with regular body. One Tier 1 row in `conformance.md` carries
   the paper trail. An app that sets no profile resolves every token as before.

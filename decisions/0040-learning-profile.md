@@ -39,12 +39,16 @@ up. Everything else is SeaKim as written.**
    `apps.css`. It re-points semantic tokens under `[data-profile="learning"]` and declares
    nothing at `:root`. An app that sets no profile resolves every token exactly as before,
    so the `ink-primary` gate, which reads the root and app slots, is unaffected and still
-   guards the shared layer.
-2. Primary action: `--fill-primary` becomes `--brand-600` (light) and `--brand-400`
+   guards the shared layer. A second gate, `profile-contrast`, measures the profile's own
+   `--on-primary` over `--fill-primary` for every app slot in both themes at the 4.5:1
+   floor. `data-theme` sits on the profile element or above it; the dark selectors do not
+   reach a theme attribute set on a descendant.
+2. Primary action: `--fill-primary` becomes `--brand-700` (light) and `--brand-400`
    (dark), hover and active one step further, `--on-primary` stone-50 and stone-950.
-   Measured at hue 320 with `tool/oklch.mjs`: 4.7:1 light and 7.4:1 dark, over the 4.5:1
-   floor; the accent as text (`--brand-700` on stone-0, `--brand-300` on stone-900) reads
-   7.6:1 and 9.3:1.
+   700, not 600, in light: 600 under stone-50 clears 4.5:1 for plum (4.7) and brick but
+   not for sea (4.4), turf (4.2) or azure (4.2), and the profile has to hold for every
+   slot. At hue 320: 7.3:1 light and 7.4:1 dark. The accent as text (`--brand-700` on
+   stone-0, `--brand-300` on stone-900) reads 7.6:1 and 9.3:1.
 3. Progress and the next step: two new tokens, `--fill-progress` and `--fill-next` (both
    `--brand-500`). They are bars and rings, never a surface for text (brand-500 under
    stone-50 is 3.5:1), so no on-colour is defined. An app points its own state tokens at

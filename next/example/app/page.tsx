@@ -9,7 +9,8 @@ import { Badge, Card, Icon } from "@seakim/design-system";
  * a neutral one went unnoticed for as long as both existed, because nobody could
  * see them together.
  *
- * Everything except /next is served statically from public/ — see the Dockerfile.
+ * The whole site is static. Everything except / and /next is copied into public/
+ * by .github/workflows/deploy-qa.yml.
  */
 
 interface Target {
@@ -26,7 +27,7 @@ const targets: Target[] = [
     href: "/next",
     name: "Next.js",
     icon: "browsers",
-    what: "The package, installed and server-rendered",
+    what: "The package, installed and prerendered",
     how: "App Router, React 19, components imported from @seakim/design-system with the barrel's single client boundary. This page is part of it.",
     live: true,
   },

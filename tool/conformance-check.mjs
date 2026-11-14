@@ -33,7 +33,9 @@ if (!existsSync(ROOT)) {
 /* ------------------------------------------------------------------ scope */
 
 const SKIP_DIRS = new Set([
-  'node_modules', '.git', 'build', 'dist', '.dart_tool', '.next',
+  // `out` and `public` are next/example's static export and the copies
+  // deploy-qa assembles into it: build output, like .next.
+  'node_modules', '.git', 'build', 'dist', '.dart_tool', '.next', 'out', 'public',
   'coverage', 'ios', 'android', 'macos', 'windows', 'linux', 'web',
 ]);
 

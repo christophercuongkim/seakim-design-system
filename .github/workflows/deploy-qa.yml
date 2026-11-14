@@ -47,10 +47,11 @@ on:
         type: string
         default: main
 
-# One QA deploy at a time; a newer run supersedes an in-flight one.
+# One QA deploy at a time. A running publish is never cancelled, as GitHub's
+# own Pages workflow advises; a newer run replaces the one waiting behind it.
 concurrency:
   group: deploy-qa
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: read

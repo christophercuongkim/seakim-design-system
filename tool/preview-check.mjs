@@ -148,7 +148,7 @@ function runRender() {
     if (pid) spawnSync('kill', [pid]);
   }
 
-  // /next — server-rendered, so its DOM carries real markers. CI builds and serves
+  // /next — prerendered at build, so its DOM carries real markers. CI builds and serves
   // the Next example, then passes its URL here. Skipped (announced) when unset.
   if (process.env.NEXT_URL) {
     const { dom, errors } = loadPage(chrome, process.env.NEXT_URL);

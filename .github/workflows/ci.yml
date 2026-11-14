@@ -68,18 +68,18 @@ jobs:
       - name: Install Chrome
         uses: browser-actions/setup-chrome@v1
 
-      # Build and serve /next (server-rendered, real DOM) on :3000. Mirrors the QA
-      # Dockerfile's build.
+      # Build /next (prerendered at build, real DOM) and serve the static export
+      # on :3000. Mirrors deploy-qa's build.
       - name: Build and serve /next
         working-directory: next/example
         run: |
           npm ci --no-audit --no-fund
           npm run build
-          npm start &
-          npx --yes wait-on http://localhost:3000/next --timeout 120000
+          python3 -m http.server 3000 -d out &
+          npx --yes wait-on http://localhost:3000/next/ --timeout 120000
 
       # Build /flutter web and serve it under /flutter/ (static) on :8080. Same
-      # build flags the Dockerfile deploys with, so the gate renders what ships.
+      # build flags deploy-qa uses, so the gate renders what ships.
       - name: Build and serve /flutter
         working-directory: flutter/example
         run: |
@@ -93,7 +93,7 @@ jobs:
       # Root gallery cards + /next markers + /flutter boot, all in one Chrome pass.
       - name: Preview render gate
         env:
-          NEXT_URL: http://localhost:3000/next
+          NEXT_URL: http://localhost:3000/next/
           FLUTTER_URL: http://localhost:8080/flutter/
         run: node tool/preview-check.mjs --render
 

@@ -1,25 +1,27 @@
 name: deploy-qa
 
-# Deploy a branch to the shared QA slot. The Dokploy app builds from the `qa`
-# branch, so "deploy branch X" = force-point `qa` at X, then trigger the webhook.
-# Same shape as fantasy-hub's, minus the database — there is no DB here, so the
-# prepare job is only the pointer move.
+# Deploy a branch to the shared QA slot, a static site on GitHub Pages at
+# design-system-qa.chriskim.cloud (VPS-29). This workflow builds the whole site
+# and publishes it; nothing runs on a server. The repo is public, so the
+# minutes are free.
 #
 # Three triggers:
 #   - pull_request (opened/synchronize/reopened) auto-deploys the PR's branch,
-#     so a reviewer sees the change on QA before it merges.
+#     so a reviewer sees the change on QA before it merges. A PR from a fork is
+#     not deployed: its code would be published on our domain.
 #   - push to main auto-deploys the merged result, so QA tracks main once a PR
-#     lands — no manual `qa` fast-forward.
-#   - workflow_dispatch is the manual override — deploy a branch with no open PR,
+#     lands.
+#   - workflow_dispatch is the manual override: deploy a branch with no open PR,
 #     or force a redeploy.
 #
 # Both event triggers share ONE path filter (the anchor below): only a change to
 # something that renders redeploys. A docs/tooling/ADR-only change (a new gate, a
-# decision) does not — QA would look byte-identical, so a multi-minute image
-# rebuild would buy nothing. That is why a tooling PR shows no deploy check.
+# decision) does not. QA would look byte-identical. That is why a tooling PR
+# shows no deploy check.
 #
-# QA is a SINGLE shared slot: one `qa` pointer, one app. With two PRs open, the
-# last deployed is what is live. Deliberate — see docs/12-qa-environment.md.
+# QA is a SINGLE shared slot: one Pages site. With two PRs open, the last
+# deployed is what is live.
+
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -33,8 +35,7 @@ on:
       - "styles.css"
       - "index.html"
       - "ds-shim.js"
-      # Flutter now renders on QA too, so its changes must trigger a deploy —
-      # and they are the slow ones, since the image rebuilds the web bundle.
+      # Flutter renders on QA too, so its changes must trigger a deploy.
       - "flutter/**"
   push:
     branches: [main]
@@ -46,25 +47,28 @@ on:
         type: string
         default: main
 
-# One QA deploy at a time; a newer run supersedes an in-flight one.
+# One QA deploy at a time. A running publish is never cancelled, as GitHub's
+# own Pages workflow advises; a newer run replaces the one waiting behind it.
 concurrency:
   group: deploy-qa
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
-  contents: write # force-push the chosen branch to `qa`
+  contents: read
+  pages: write # publish the site
+  id-token: write # deploy-pages proves which workflow built the artifact
 
 jobs:
-  prepare:
+  build:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
         with:
-          # workflow_dispatch → inputs.branch; pull_request → the PR's head branch;
-          # push → github.ref_name (main). head_ref is empty on a push event, so the
-          # ref_name fallback is what makes the push trigger deploy main, not empty.
+          # workflow_dispatch: inputs.branch; pull_request: the PR's head branch;
+          # push: github.ref_name (main). head_ref is empty on a push event, so
+          # the ref_name fallback is what makes the push trigger deploy main.
           ref: ${{ inputs.branch || github.head_ref || github.ref_name }}
-          fetch-depth: 0 # full history so the force-push to `qa` isn't shallow
 
       - uses: actions/setup-node@v4
         with:
@@ -78,24 +82,47 @@ jobs:
           node tool/build-tokens.mjs --check
           node tool/conformance-check.mjs
 
-      - name: Point `qa` at the deployed branch
-        run: git push --force origin HEAD:refs/heads/qa
+      # Tracks `stable`, so a Flutter release that breaks the build shows up
+      # here first.
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      # sk_icons.g.dart and the fonts are committed, so there is no generate
+      # step. --pwa-strategy=none drops the service worker: the default races
+      # its install against the entrypoint load and intermittently never
+      # paints, and it caches a deploy so hard that the next one is invisible.
+      - name: Flutter to web
+        working-directory: flutter/example
+        run: |
+          flutter pub get
+          flutter build web --release --base-href /flutter/ --pwa-strategy=none
+
+      # Four bindings in one site. Only Next is built here; the plain-HTML and
+      # React previews are the repo's own files, served as-is. Their tree shape
+      # is kept because index.html reaches styles.css and the kits reach
+      # ../../ds-shim.js by relative path.
+      - name: Assemble and build the site
+        working-directory: next/example
+        run: |
+          npm ci --no-audit --no-fund
+          mkdir -p public/preview
+          cp -r ../../index.html ../../styles.css ../../ds-shim.js ../../theme-toggle.js public/preview/
+          cp -r ../../tokens ../../components ../../ui_kits public/preview/
+          cp -r ../../flutter/example/build/web public/flutter
+          npm run build
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: next/example/out
 
   deploy:
-    needs: prepare
+    needs: build
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Join tailnet
-        uses: tailscale/github-action@v3
-        with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:ci
-
-      - name: Trigger the Dokploy QA deploy
-        run: |
-          curl --fail --show-error -X POST \
-            -H "Content-Type: application/json" \
-            -H "X-GitHub-Event: push" \
-            -d '{"ref":"refs/heads/qa"}' \
-            "${{ secrets.DOKPLOY_DS_QA_WEBHOOK }}"
+      - id: deployment
+        uses: actions/deploy-pages@v4
